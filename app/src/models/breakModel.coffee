@@ -1,5 +1,8 @@
 models = require './mongoModel'
 
+class Break
+	constructor: (@name) ->
+
 exports.findAll = (callback) ->
 
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
