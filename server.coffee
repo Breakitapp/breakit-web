@@ -1,5 +1,5 @@
 ###
-# Breakit web app. Written in Coffeescript
+# Breakit web server. Written in Coffeescript
 # v 1.0.0
 # Mikko Majuri (majuri.mikko@gmail.com)
 ###
@@ -13,37 +13,37 @@ settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
 
-app = module.exports = express()
+server = module.exports = express()
 
 #Configuration
-app.configure ->
+server.configure ->
 	publicDir = __dirname + '/web/public'
 	viewsDir  = __dirname + '/web/templates'
-	coffeeDir = '#{viewsDir}/coffeescript'
+	#coffeeDir = '#{viewsDir}/coffeescript'
 	#Set the views folder
-	app.set 'views', viewsDir
+	server.set 'views', viewsDir
 	#Set the view engine and options
-	app.set 'view engine', 'jade'
-	app.set 'view options', {layout: false}
+	server.set 'view engine', 'jade'
+	server.set 'view options', {layout: false}
 	#Use middleware
-	app.use express.bodyParser()
-	app.use express.methodOverride()
+	server.use express.bodyParser()
+	server.use express.methodOverride()
 	#CSS templating
-	app.use(stylus.middleware debug: true, src: viewsDir, dest: publicDir, compile: compileMethod)
-	app.use express.static(publicDir)
-	###app.use app.cookieParser()
+	server.use(stylus.middleware debug: true, src: viewsDir, dest: publicDir, compile: compileMethod)
+	server.use express.static(publicDir)
+	###server.use server.cookieParser()
 	#Initiate session handling through mongo
-	app.use express.session({
+	server.use express.session({
 		secret		:	settings.cookie_secret
 		store			:	new mongoStore({
 			db			:	settings.db
 		})
 	})
-	app.use express.compiler(
+	server.use express.compiler(
 		src: viewsDir, 
 		dest: publicDir, 
 		enable: ['coffeescript'])###
-	app.use app.router
+	server.use server.router
 
 db = mongoose.connect(settings.mongo_auth.db)
 
@@ -53,32 +53,32 @@ compileMethod = (str, path) ->
 		.set('compress', true)
 
 
-app.configure "development", ->
-	app.use express.errorHandler(
+server.configure "development", ->
+	server.use express.errorHandler(
 		dumpExceptions: true
 		showStack: true
 	)
 
-app.configure "production", ->
-	app.use express.errorHandler()
+server.configure "production", ->
+	server.use express.errorHandler()
 
 
 #General
-app.get '/', site.index
+server.all '/', site.index
 
 #Users
-app.all '/users', user.list
-app.get '/users/:id', user.view
-app.get '/users/:id/edit', user.edit
-app.put '/users/:id/edit', user.update
-app.post '/users/:id', user.create
+server.all '/users', user.list
+server.get '/users/:id', user.view
+server.get '/users/:id/edit', user.edit
+server.put '/users/:id/edit', user.update
+server.post '/users/:id', user.create
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
-app.all '/breaks', breaks.list
-app.get '/breaks/:id', breaks.view
-app.post '/breaks/:id', breaks.create
+server.all '/breaks', breaks.list
+server.get '/breaks/:id', breaks.view
+server.post '/breaks/:id', breaks.create
 
-#Starting the app
-app.listen 3000
+#Starting the server
+server.listen 3000
 console.log 'Breakit express server listening to port 3000 in dev mode'
-#console.log 'Express app listening on port %d in %s mode', app.address().port, app.settings.env
+#console.log 'Express server listening on port %d in %s mode', server.address().port, server.settings.env
