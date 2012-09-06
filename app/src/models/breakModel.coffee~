@@ -8,4 +8,3 @@ exports.findAll = (callback) ->
 		callback 'null', breaks_
 		return breaks_
 	)
-	

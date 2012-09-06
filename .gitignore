@@ -1,0 +1,6 @@
+*~
+app/lib/
+web/lib/
+data/
+node_modules/
+*.js
