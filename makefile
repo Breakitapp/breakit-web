@@ -11,8 +11,6 @@ compile-coffee:
 	coffee --compile --output web/lib/ web/src/ && coffee --compile --output app/lib/ app/src/ && coffee -c server.coffee && coffee -c settings.coffee
 
 # Run every test!
-test:
-	@./node_modules/.bin/mocha
-		--compilers coffee:coffee-script  
-		--reporter spec
+run-test:
+	@./node_modules/.bin/mocha --compilers coffee:coffee-script --reporter spec
 
