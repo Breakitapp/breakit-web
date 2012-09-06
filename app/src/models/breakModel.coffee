@@ -3,7 +3,7 @@ models = require './mongoModel'
 class Break
 	constructor: (@name) ->
 
-exports.findAll = (callback) ->
+	findAll: (callback) ->
 
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 		#Errorhandling goes here //if err throw err
@@ -11,3 +11,6 @@ exports.findAll = (callback) ->
 		callback 'null', breaks_
 		return breaks_
 	)
+
+root = exports ? window
+root.Break = Break

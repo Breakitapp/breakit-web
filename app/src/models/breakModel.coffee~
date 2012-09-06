@@ -1,7 +1,7 @@
 models = require './mongoModel'
 
 class Break
-	constructor: (name) ->
+	constructor: (@name) ->
 
 exports.findAll = (callback) ->
 
@@ -11,3 +11,6 @@ exports.findAll = (callback) ->
 		callback 'null', breaks_
 		return breaks_
 	)
+
+root = exports ? window
+root.Break = Break
