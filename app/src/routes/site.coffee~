@@ -1,0 +1,6 @@
+###
+#
+#
+###
+exports.index = (req, res) ->
+	res.render 'index', title: 'Breakit web-app, build with node, coffeescript and backbone'

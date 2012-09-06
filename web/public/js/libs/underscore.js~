@@ -1,0 +1,3 @@
+define(['order!../public/js/libs/underscore/underscore-min'], function(){
+  return _;
+});

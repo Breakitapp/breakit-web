@@ -1,0 +1,18 @@
+{
+"name"					: "breakit-web",
+"description"		: "A single page web application, showing what's happening around you",
+"version"				: "0.1.0",
+"author"				: "Mikko Majuri",
+"contributors"	:	[{
+	"name"	:	"Mikko Majuri",
+	"email"	:	"majuri.mikko@gmail.com"
+}],
+"private"				: "true",
+"dependencies"	:	{
+		"express"		:	"3.x",
+		"jade"			:	">=0.25.0",
+		"stylus"		:	">=0.25.0",
+		"async"			:	">=0.0.1",
+		"mongoose"	:	">=0.0.1"
+	}
+}
