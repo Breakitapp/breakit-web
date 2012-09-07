@@ -1,8 +1,11 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
+toLower = (v) ->
+	return v.toLowerCase()
+
+
 BreakSchema = new Schema
-	name					:			{type: String, index: true}
 	headline			:			{type: String}
 	user					:			{type: String}
 	points				:			{type: Number, default: 1}
