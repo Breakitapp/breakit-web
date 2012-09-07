@@ -1,10 +1,22 @@
 models = require './mongoModel'
 
 class Break
-	constructor: (@id, @loc, @location_name) ->
+	constructor: (@id, @longitude, @latitude, @location_name) ->
+		@date = new Date()
+		@user = 'anonymous'
 
-	add: ->
-		
+	save: (user) ->
+		@user = user
+		break1 = new models.Break
+			id						:		@id
+			loc						:		{lon: @longitude, lat: @latitude}
+			location_name	:		@location_name
+			user					:		@user
+		break1.save (err) ->
+			if err 
+				throw err
+			else
+				console.log 'saved a new break # #{@id} for #{@user}' 
 
 	findAll: (callback) ->
 
