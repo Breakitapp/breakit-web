@@ -6,7 +6,7 @@ toLower = (v) ->
 
 
 BreakSchema = new Schema
-	id						:			{type: String, index: true}
+	id						:			{type: Number, index: true}
 	headline			:			{type: String}
 	user					:			{type: String}
 	points				:			{type: Number, default: 1}
@@ -28,6 +28,7 @@ UserSchema = new Schema
 	date			:		{type: Date, default: Date.now}
 	beta			:		{type: Boolean, default: false}
 	phone			:		{type: String}
+	breaks		:		[Break]
 
 CommentSchema = new Schema
 	comment		:		{type: String}

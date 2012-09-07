@@ -6,6 +6,7 @@ toLower = (v) ->
 
 
 BreakSchema = new Schema
+	id						:			{type: Number, index: true}
 	headline			:			{type: String}
 	user					:			{type: String}
 	points				:			{type: Number, default: 1}

@@ -7,11 +7,11 @@ describe 'Break instance', ->
 	break1 = null
 
 	it 'Should have an id', ->
-		break1 = new Break '1'
-		break1.id.should.equal '1'
+		break1 = new Break 1, 65, 65, 'venture garage'
+		break1.id.should.equal 1
 
 	it 'should be able to be saved to db', ->
-		
+		break1.save().should.exist
 
 	it 'should have initial score of 1', ->
 		break1.score.should.equal '1'
