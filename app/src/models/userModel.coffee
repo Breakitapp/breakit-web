@@ -29,37 +29,37 @@ class User
 	changeAttribute: (toBeChanged, newValue) ->
 		
 		if toBeChanged is 'fName' 
-			if typeof newValue is String
-				then fName = newValue
+			if typeof newValue is String then fName = newValue
 			else throw 'fName must be a String'
 			
 		else if toBeChanged is 'lName' 
-			if typeof newValue is String
-				then lName = newValue
+			if typeof newValue is String then lName = newValue
 			else throw 'lName must be a String'
 			
 		else if toBeChanged is 'nName' 
-			if typeof newValue is String
-				then nName = newValue
+			if typeof newValue is String then nName = newValue
 			else throw 'nName must be a String'
 			
 		else if toBeChanged is 'email' 
-			if typeof newValue is String
+			if typeof newValue is String then email = newValue
 				
 				#Testing if email is in a valid format?
 				
-				then email = newValue
 			else throw 'Invalid email format'	
 			
-		# TODO: OTHER ATTRIBUTE OPTIONS
-		
+		else if toBeChanged is 'phone'
+			if typeof newValue is String then phone = newValue
+			else throw 'Invalid phone model format'
+			
+		else if toBeChanged is 'beta'
+			if typeof newValue is Boolean then beta = newValue
+			else throw 'Beta value must be Boolean'
+				
 		else throw 'No such attribute #{toBeChanged}'
 				
+				
 	#find: -> 
-	
-	
-
-
+	#Based on what?
 
 root = exports ? window
 root.User = User
