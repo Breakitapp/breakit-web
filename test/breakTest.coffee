@@ -1,5 +1,6 @@
 chai = require 'chai'
 chai.should()
+chai.expect()
 
 {Break} = require '../app/src/models/breakModel'
 

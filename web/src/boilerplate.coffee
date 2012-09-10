@@ -1,6 +1,7 @@
 define([
-	'jQuery',
-	'Underscore',
+	'jQuery'
+	'Underscore'
 	'Backbone'
+	'Jade'
 ], ($, _, Backbone) ->
 	return {})

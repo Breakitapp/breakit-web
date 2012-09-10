@@ -1,4 +1,4 @@
-models = require '.mongoModel'
+models = require './mongoModel'
 
 class User
 	constructor: (@fName, @lName, @nName, @email, @phone) ->
@@ -11,7 +11,7 @@ class User
 			nName : @nName
 			email : @email
 			phone : @phone
-		user.save(err)
+		user.save (err) ->
 			if err
 				throw error
 			else
