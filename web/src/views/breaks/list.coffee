@@ -1,7 +1,8 @@
 define([
-	'jQuery',
-	'Underscore',
-	'Backbone',
+	'jQuery'
+	'Underscore'
+	'Backbone'
+	'Jade'
 	'text!templates/break/list.html'
 ], ($, _, Backbone, breakListTemplate) ->
 	breakListView = Backbone.View.extend ->
