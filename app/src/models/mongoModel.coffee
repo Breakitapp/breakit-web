@@ -21,13 +21,13 @@ BreakSchema = new Schema
 BreakSchema.index {loc: '2d'}
 
 UserSchema = new Schema
-	fName			:		{type: String}
-	lName			:		{type: String}
-	nName			:		{type: String}
-	email			:		{type: String, set: toLower}
+	fName			:		{type: String, required: true}
+	lName			:		{type: String, required: true}
+	nName			:		{type: String, required: true, unique: true}
+	email			:		{type: String, set: toLower, required: true, unique: true}
 	date			:		{type: Date, default: Date.now}
 	beta			:		{type: Boolean, default: false}
-	phone			:		{type: String}
+	phone			:		{type: String, required: true}
 	breaks		:		[Break]
 
 CommentSchema = new Schema

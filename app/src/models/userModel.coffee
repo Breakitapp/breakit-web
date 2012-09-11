@@ -7,7 +7,7 @@ class User
 		
 		@breaks = null
 		
-	save: ->
+	save: (callback) ->
 		user = new models.User
 			fName : @fName
 			lName : @lName
@@ -16,9 +16,13 @@ class User
 			phone : @phone
 		user.save (err) ->
 			if err
-				throw error
+				callback(err)
+				throw err
 			else
-				console.log 'saved a new user #{nName}'
+				console.log 'saved a new user ' + @nName
+	
+	remove: () ->
+		
 	
 	addBreak: (break_) ->
 		if typeof break_ is Break
@@ -58,8 +62,14 @@ class User
 		else throw 'No such attribute #{toBeChanged}'
 				
 				
-	#find: -> 
-	#Based on what?
+list = (callback) ->
+	models.User.find().exec (err, data) ->
+
+		#Error handling?
+
+		users = (user for user in data)
+		callback users
 
 root = exports ? window
 root.User = User
+root.list = list

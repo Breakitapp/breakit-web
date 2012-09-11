@@ -71,8 +71,10 @@ server.all '/users', user.list
 server.all '/users/new', user.create
 server.get '/users/:id', user.view
 server.get '/users/:id/edit', user.edit
+server.get '/userlist', user.list
 server.put '/users/:id/edit', user.update
 server.post '/users/:id', user.submit
+
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
 server.all '/breaks', breaks.list
