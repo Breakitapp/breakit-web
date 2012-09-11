@@ -7,5 +7,6 @@ define([
 			name : 'Anonymous break'
 			location : 'In my pants'
 			user : 'Hotty McHottie'
+
 	return breakModel
 )

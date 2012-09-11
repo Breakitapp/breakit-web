@@ -1,8 +1,7 @@
 extend layout
+block scripts
+	script(type='text/javascript', src='../lib/app.js')
 block contents
-	p moi
+	include break
 block footerscripts
-	script(data-main='../lib/main', src='../public/js/libs/require')
-	script(type='text/javascript', src='../lib/app')
-	script(type='text/javascript', src='../lib/modules/store')
-	script(type='text/javascript', src='../lib/modules/models')
+
