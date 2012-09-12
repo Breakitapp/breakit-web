@@ -1,0 +1,21 @@
+extend layout
+block contents
+	form(name="input", action="/users/new", method="post")
+		label First name: 
+		input(type="text", name="fn")
+		br
+		label Last name: 
+		input(type="text", name="ln")
+		br
+		label Nickname: 
+		input(type="text", name="nn")
+		br
+		label email: 
+		input(type="text", name="em")
+		br
+		label Phone model: 
+		select(name="ph")
+			option(value="iPhone") iPhone
+			option(value="Android") Android
+		br
+		input(type="submit", value="Submit")
