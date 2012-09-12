@@ -28,6 +28,7 @@ UserSchema = new Schema
 	date			:		{type: Date, default: Date.now}
 	beta			:		{type: Boolean, default: false}
 	phone			:		{type: String}
+	breaks		:		[Break]
 
 CommentSchema = new Schema
 	comment		:		{type: String}

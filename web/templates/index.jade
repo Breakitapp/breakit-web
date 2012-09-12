@@ -1,5 +1,6 @@
 extend layout
 block contents
-	p moi
+	include breakFeed
 block footerscripts
-	script(data-main='../lib/main', src='../public/js/libs/require')
+	script(type='text/javascript', src='../lib/app.js')
+

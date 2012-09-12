@@ -17,7 +17,7 @@ server = module.exports = express()
 
 #Configuration
 server.configure ->
-	publicDir = __dirname + '/web/public'
+	publicDir = __dirname + '/web'
 	viewsDir  = __dirname + '/web/templates'
 	#coffeeDir = '#{viewsDir}/coffeescript'
 	#Set the views folder
