@@ -21,6 +21,7 @@ BreakSchema = new Schema
 BreakSchema.index {loc: '2d'}
 
 UserSchema = new Schema
+	id 				:		{type: Number, required: true, unique: true, index: true}
 	fName			:		{type: String, required: true}
 	lName			:		{type: String, required: true}
 	nName			:		{type: String, required: true, unique: true}

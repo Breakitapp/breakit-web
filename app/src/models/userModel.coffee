@@ -6,6 +6,8 @@ class User
 		#Testing if email is in a valid format?
 		
 		@breaks = null
+		@id = models.User.find().count()
+		console.log 'New user id assigned: ' + @id
 		
 	save: (callback) ->
 		user = new models.User
@@ -16,13 +18,20 @@ class User
 			phone : @phone
 		user.save (err) ->
 			if err
-				callback(err)
-				throw err
+				callback new Error 'Saving user failed'
 			else
-				console.log 'saved a new user ' + @nName
+				console.log 'Saved a new user: ' + @email
+				callback null
 	
-	remove: () ->
-		
+	remove: (id, callback) ->
+		models.User.findOne id: id, (err, user) ->
+			if err
+				callback err
+			else if user 
+				user.remove (err) ->
+					callback err
+			else
+				callback new Error 'No user found with that id'
 	
 	addBreak: (break_) ->
 		if typeof break_ is Break
