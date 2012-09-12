@@ -1,13 +1,12 @@
 (($) ->
-	alert 'böö again muthafucka'
 	breaks = [
 		{name: 'lololol', points: '1000'}
 		{name: 'trololo', points: '10'}
 	]
+
 	window.Break = Backbone.Model.extend
 		defaults:
-			photo: '/img/placeholder.png'
-
+			beta: false
 
 	window.BreakList = Backbone.Collection.extend
 		model: Break
@@ -18,23 +17,23 @@
 		template	:	$('#breakTemplate').html()
 
 		initialize: ->
-			_.bindAll @, 'render', 'close', 'remove'
+			_.bindAll this, 'render', 'remove'
 			@model.bind 'change', @render
 			@model.bind 'destroy', @remove
 
 		render: ->
-			element = jQuery.tmpl @template, @model.toJSON()
-			$(@el).html(element)
+			tmpl = _.template @template
+			@.$el.html tmpl @model.toJSON()
+			return @
 
 		remove: ->
 			$(@el).remove()
+
 
 	window.AppView = Backbone.View.extend
 		el: $('#breakFeed')
 
 		initialize: ->
-			alert 'suplies, muthafucka!'
-			console.log 'suplies, muthafucka!'
 			@collection = new BreakList(breaks)
 			@render()
 
@@ -45,9 +44,9 @@
 			, @
 
 		renderBreak: (item) ->
-			breakView = new breakView
+			breakView = new BreakView
 				model: item
-			@$el.append breakView.render().el 
+			@.$el.append breakView.render().el 
 
 	appView = new AppView
 	)(jQuery)

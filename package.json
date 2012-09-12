@@ -6,6 +6,10 @@
 "contributors"	:	[{
 	"name"	:	"Mikko Majuri",
 	"email"	:	"majuri.mikko@gmail.com"
+},
+{
+	"name"	:	"Eerik Puska",
+	"email"	:	"eerik.puska@gmail.com"
 }],
 "private"				: "true",
 "dependencies"	:	{
