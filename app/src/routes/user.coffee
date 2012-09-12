@@ -1,4 +1,6 @@
-user = require '../models/userModel' 
+async = require "async"
+user = require '../models/userModel'
+models = require '../models/mongoModel'
 
 exports.create = (req, res) ->
 	
@@ -14,26 +16,54 @@ exports.submit = (req, res) ->
 	em = req.body.em
 	ph = req.body.ph
 
-	newUser = new user.User fn, ln, nn, em, ph
-	newUser.save (err) ->
-		if err
-			res.send 'Error creating new user...'
-			# redirect back and append the error message
-		else
-			res.send 'New user registered successfully!'
+	async.waterfall [
+		
+		#Counting id for the new user.
+		#It would be nicer to perform this in constructor, but this creates some problems
+		(callback) ->
+			models.User.count {}, (err, c) ->
+				id = c + 1
+				console.log 'New user id assigned: ' + id
+				callback null, id
+		,
+		(id, callback) ->
+			newUser = new user.User fn, ln, nn, em, ph, id
+			callback null, newUser
+	], 
+	(err, newUser) ->
+		newUser.save (err) ->
+			if err
+				res.send 'Error creating new user'
+			else
+				res.send 'New user registered successfully!'
 	
 exports.view = (req,res) ->
-	
-	res.render 'viewUser', title : 'User ' + req.id, fn: 'pena'
+		
+	user.find req.params.id, (targetUser) ->
+		res.render 'viewUser', title : 'User ' + req.params.id, user: targetUser
+	#view also beta
 	
 exports.list = (req, res) ->
 
 	user.list (users) ->
 		
-		console.log users
 		res.render 'userlist', title : 'Breakit userlist', users: users
 		
 exports.update = (req,res) ->
+	console.log 'Update on user data received. Id: ' + req.params.id
 	
+	editedUser = user.find req.params.id
+	
+	if editedUser.fName != req.body.fn
+		editedUser.changeAttribute fName req.body.fn
+	if editedUser.lName != req.body.ln
+		editedUser.changeAttribute lName req.body.ln
+	if editedUser.nName != req.body.nn
+		editedUser.changeAttribute nName req.body.nn
+	if editedUser.email != req.body.em
+		editedUser.changeAttribute email req.body.em
+	if editedUser.phone != req.body.ph
+		editedUser.changeAttribute phone req.body.ph
+		
 exports.remove = (req,res) ->
 	# delete userById req.id

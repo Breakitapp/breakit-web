@@ -1,20 +1,20 @@
 extend layout
 block contents
 
-	p View / modify user:
+	p View / modify user: #{user.id}
 	
-	form(name="input", action="/users/:id", method="put")
+	form(name="input", action="/users/#{user.id}", method="put")
 		label First name:
-		input(type="text", name="fn", value='jee')
+		input(type="text", name="fn", value=user.fName)
 		br
 		label Last name: 
-		input(type="text", name="ln")
+		input(type="text", name="ln", value=user.lName)
 		br
 		label Nickname: 
-		input(type="text", name="nn")
+		input(type="text", name="nn", value=user.nName)
 		br
 		label email: 
-		input(type="text", name="em")
+		input(type="text", name="em", value=user.email)
 		br
 		label Phone model: 
 		select(name="ph")
@@ -25,7 +25,7 @@ block contents
 		
 	p
 	
-	form(name="input", action="/users/:id", method="delete")
+	form(name="input", action="/users/#{user.id}", method="delete")
 		label Delete user?
 		br
 		input(type="submit", value="DELETE")
