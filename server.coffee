@@ -68,13 +68,12 @@ server.all '/', site.index
 
 #Users
 server.all '/users', user.list
-server.all '/users/new', user.create
-server.get '/users/:id', user.view
-server.get '/users/:id/edit', user.edit
-server.get '/userlist', user.list
-server.put '/users/:id/edit', user.update
+server.get '/users/new', user.create
+server.post '/users/new', user.submit
+server.get '/users/:id', user.view #todo
+server.put '/users/:id', user.update #todo
 server.post '/users/:id', user.submit
-
+server.delete '/users/:id', user.remove #todo
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
 server.all '/breaks', breaks.list
