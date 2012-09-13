@@ -65,6 +65,8 @@ server.configure "production", ->
 
 #General
 server.all '/', site.index
+server.all '/break', site.break_tmp
+
 
 #Users
 server.all '/users', user.list
