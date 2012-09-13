@@ -3,7 +3,7 @@ block contents
 
 	p View / modify user: #{user.id}
 	
-	form(name="input", action="/users/#{user.id}", method="put")
+	form(name="input", action="/users/#{user.id}", method="post")
 		label First name:
 		input(type="text", name="fn", value=user.fName)
 		br

@@ -72,9 +72,9 @@ server.all '/break', site.break_tmp
 server.all '/users', user.list
 server.get '/users/new', user.create
 server.post '/users/new', user.submit
-server.get '/users/:id', user.view #todo
-server.put '/users/:id', user.update #todo
-server.post '/users/:id', user.submit
+server.get '/users/:id', user.view
+server.post '/users/:id', user.update
+#server.post '/users/:id', user.submit
 server.delete '/users/:id', user.remove #todo
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)

@@ -32,7 +32,7 @@ class User
 			if err
 				callback err
 			else
-				console.log 'Saved a new user: ' + @email
+				console.log 'Saved a new user: ' + user.id
 				callback null
 	
 	remove: (id, callback) ->
@@ -52,9 +52,7 @@ class User
 			throw 'this is not a break'
 			
 	changeAttribute: (toBeChanged, newValue) ->
-		
-		#Not working?
-		
+				
 		if toBeChanged is 'fName' 
 			if typeof newValue is String then @fName = newValue
 			else throw 'fName must be a String'
@@ -88,7 +86,7 @@ list = (callback) ->
 	models.User.find().exec (err, data) ->
 
 		if err
-			callback err
+			throw err
 		else
 			users = (user for user in data)
 			callback users
