@@ -19,7 +19,7 @@ exports.submit = (req, res) ->
 	async.waterfall [
 		
 		#Counting id for the new user.
-		#It would be nicer to perform this in constructor, but this creates some problems
+		#It would be nicer to perform this in constructor, but this creates some complications
 		(callback) ->
 			models.User.count {}, (err, c) ->
 				id = c + 1
@@ -52,18 +52,37 @@ exports.list = (req, res) ->
 exports.update = (req,res) ->
 	console.log 'Update on user data received. Id: ' + req.params.id
 	
-	editedUser = user.find req.params.id
+	user.find req.params.id, (editedUser) ->
+
+		console.log 'Found the user to be updated: ' + editedUser.id
+		
+		changedSomething = 0
 	
-	if editedUser.fName != req.body.fn
-		editedUser.changeAttribute fName req.body.fn
-	if editedUser.lName != req.body.ln
-		editedUser.changeAttribute lName req.body.ln
-	if editedUser.nName != req.body.nn
-		editedUser.changeAttribute nName req.body.nn
-	if editedUser.email != req.body.em
-		editedUser.changeAttribute email req.body.em
-	if editedUser.phone != req.body.ph
-		editedUser.changeAttribute phone req.body.ph
+		if editedUser.fName != req.body.fn
+			editedUser.changeAttribute 'fName', req.body.fn
+			console.log 'Updated first name for user ' + editedUser.id
+			changedSomething = 1
+		if editedUser.lName != req.body.ln
+			editedUser.changeAttribute 'lName', req.body.ln
+			console.log 'Updated last name for user ' + editedUser.id
+			changedSomething = 1
+		if editedUser.nName != req.body.nn
+			editedUser.changeAttribute 'nName', req.body.nn
+			console.log 'Updated nickname for user ' + editedUser.id
+			changedSomething = 1
+		if editedUser.email != req.body.em
+			editedUser.changeAttribute 'email', req.body.em
+			console.log 'Updated email for user ' + editedUser.id
+			changedSomething = 1
+		if editedUser.phone != req.body.ph
+			editedUser.changeAttribute 'phone', req.body.ph
+			console.log 'Updated phone model for user ' + editedUser.id
+			changedSomething = 1
+			
+		if changedSomething
+			res.send('User updated successfully!')
+		else
+			res.send('Nothing changed.')
 		
 exports.remove = (req,res) ->
 	# delete userById req.id
