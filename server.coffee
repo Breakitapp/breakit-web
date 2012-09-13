@@ -8,7 +8,6 @@ express				= require 'express'
 site					= require './app/lib/routes/site'
 user					= require './app/lib/routes/user'
 breaks				= require './app/lib/routes/breaks'
-#mongoStore		= require 'connect-mongo'.(express)
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
@@ -19,19 +18,17 @@ server = module.exports = express()
 server.configure ->
 	publicDir = __dirname + '/web'
 	viewsDir  = __dirname + '/web/templates'
-	stylesDir = publicDir + '/public/css/'
-	#coffeeDir = '#{viewsDir}/coffeescript'
 	#Set the views folder
 	server.set 'views', viewsDir
 	#Set the view engine and options
 	server.set 'view engine', 'jade'
-	server.set 'view options', {layout: false}
+	server.set 'view options', layout: false
 	#Use middleware
 	server.use express.bodyParser()
 	server.use express.methodOverride()
 	#CSS templating
-	server.use(stylus.middleware debug: true, src: stylesDir, dest: publicDir, compile: compileMethod)
-	server.use express.static(publicDir)
+	server.use(stylus.middleware src: publicDir)
+	server.use express.static publicDir
 	###server.use server.cookieParser()
 	#Initiate session handling through mongo
 	server.use express.session({
@@ -47,11 +44,6 @@ server.configure ->
 	server.use server.router
 
 db = mongoose.connect(settings.mongo_auth.db)
-
-compileMethod = (str, path) ->
-	stylus(str)
-		.set('filename', path)
-		.set('compress', true)
 
 
 server.configure "development", ->

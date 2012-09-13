@@ -1,4 +1,12 @@
-*~
+makefile~
+*.json~
+*.styl~
+*.js~
+*.md~
+*.coffee~
+*.jade~
+*.css~
+*.css
 app/lib/
 web/lib/
 data/
