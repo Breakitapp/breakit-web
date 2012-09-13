@@ -19,6 +19,7 @@ server = module.exports = express()
 server.configure ->
 	publicDir = __dirname + '/web'
 	viewsDir  = __dirname + '/web/templates'
+	stylesDir = publicDir + '/public/css/'
 	#coffeeDir = '#{viewsDir}/coffeescript'
 	#Set the views folder
 	server.set 'views', viewsDir
@@ -29,7 +30,7 @@ server.configure ->
 	server.use express.bodyParser()
 	server.use express.methodOverride()
 	#CSS templating
-	server.use(stylus.middleware debug: true, src: viewsDir, dest: publicDir, compile: compileMethod)
+	server.use(stylus.middleware debug: true, src: stylesDir, dest: publicDir, compile: compileMethod)
 	server.use express.static(publicDir)
 	###server.use server.cookieParser()
 	#Initiate session handling through mongo
