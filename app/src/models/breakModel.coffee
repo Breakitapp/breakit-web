@@ -17,7 +17,7 @@ class Break
 				saved = true
 				console.log 'saved a new break # #{@id} for #{@user}'
 
-	findAll: (callback) ->
+findAll = (callback) ->
 
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
@@ -28,3 +28,4 @@ class Break
 
 root = exports ? window
 root.Break = Break
+root.findAll = findAll

@@ -29,18 +29,6 @@ server.configure ->
 	#CSS templating
 	server.use(stylus.middleware src: publicDir)
 	server.use express.static publicDir
-	###server.use server.cookieParser()
-	#Initiate session handling through mongo
-	server.use express.session({
-		secret		:	settings.cookie_secret
-		store			:	new mongoStore({
-			db			:	settings.db
-		})
-	})
-	server.use express.compiler(
-		src: viewsDir, 
-		dest: publicDir, 
-		enable: ['coffeescript'])###
 	server.use server.router
 
 db = mongoose.connect(settings.mongo_auth.db)
@@ -71,7 +59,7 @@ server.post '/users/:id', user.update
 server.delete '/users/:id', user.remove #todo
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
-server.all '/breaks', breaks.list
+server.get '/breaks', breaks.list
 server.get '/breaks/:id', breaks.view
 server.post '/breaks/:id', breaks.create
 
