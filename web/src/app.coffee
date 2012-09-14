@@ -10,6 +10,7 @@
 
 	window.BreakList = Backbone.Collection.extend
 		model: Break
+		url: '/breaks'
 
 	BreakView = Backbone.View.extend
 		tagName		:	'div'
@@ -29,19 +30,20 @@
 		remove: ->
 			$(@el).remove()
 
-
 	window.AppView = Backbone.View.extend
 		el: $('#breakFeed')
 
 		initialize: ->
-			@collection = new BreakList(breaks)
-			@render()
+			@collection = new BreakList
+			that.render()
 
 		render: ->
 			that = @
-			_.each @collection.models, (item) ->
-				that.renderBreak item
-			, @
+			@collection.fetch
+				success	: (breaks) ->
+					_.each breaks.models, (item) ->
+							that.renderBreak item
+						, @
 
 		renderBreak: (item) ->
 			breakView = new BreakView
