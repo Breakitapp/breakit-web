@@ -1,3 +1,35 @@
-script#breakTemplate(type='text/template')
-	div.break
-		h1 <%=name %>
+block contents
+	script#breakTemplate(type='text/template')
+		div.break
+			#ContainerUp
+			#BreakHeaderHolder
+				#BreakHeaderLeft
+					img(src='public/images/MyProfileIcon.png')
+					p.red <%= user%>
+					br
+					h2 <%= headline%>
+				#BreakHeaderRight
+					p range
+					ul
+						li
+							img(src='public/images/clock.png')
+						li  time
+					ul
+						#DivLi
+							li
+								img(src='public/images/LocationIcon.png')
+							li.red <%= location_name%>
+						ul
+			#BreakContent
+				img(src='lol')
+			#BreakFooter
+				p <%= story%>
+				ul
+					li
+						img(src='public/images/voteUp.png')
+					li
+						img(src='public/images/voteDown.png')
+					li
+						img(src='public/images/comments.png')
+			img.PlaceDots(src='public/images/dots.png')
+			#ContainerDown
