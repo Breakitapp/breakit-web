@@ -1,7 +1,0 @@
-extend layout
-block scripts
-	script(type='text/javascript', src='../lib/app.js')
-block contents
-	include break
-block footerscripts
-
