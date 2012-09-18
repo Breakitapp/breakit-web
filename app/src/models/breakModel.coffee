@@ -19,6 +19,7 @@ class Break
 				saved = true
 				console.log 'saved a new break # #{@id} for #{@user}'
 
+#find all the breaks
 findAll = (callback) ->
 
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
@@ -28,6 +29,24 @@ findAll = (callback) ->
 			return breaks_
 		)
 
+#finds an x amout of breaks in the vicinity
+findNear = (number, longitude, latitude,  callback) ->
+	breaks = []
+	models.Break.db.db.executeDbCommand {
+		geoNear: 'breaks' 
+		near : [longitude, latitude] 
+		spherical : true
+		}, (err, docs) ->
+			#the results are in format {dist: x, obj: {}}, needs to be put in one object only
+			b = docs.documents[0].results
+			for object in b
+				break_tmp = object.obj
+				break_tmp.dis = object.dis
+				breaks.push break_tmp
+			callback null, breaks
+	return breaks
+
 root = exports ? window
 root.Break = Break
 root.findAll = findAll
+root.findNear = findNear
