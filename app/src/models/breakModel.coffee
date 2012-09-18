@@ -1,7 +1,7 @@
 models = require './mongoModel'
 
 class Break
-	constructor: (@id, @longitude, @latitude, @location_name, @user = 'anonymous') ->
+	constructor: (@id, @longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
 
 	save: (user = @user) ->
 		@user = user
@@ -9,6 +9,8 @@ class Break
 			id						:		@id
 			loc						:		{lon: @longitude, lat: @latitude}
 			location_name	:		@location_name
+			story					:		@story
+			headline			:		@headline
 			user					:		@user
 		break1.save (err) ->
 			if err 
