@@ -48,6 +48,7 @@ server.configure "production", ->
 #General
 server.all '/', site.index
 server.all '/break', site.break_tmp
+server.post '/ios', site.ios
 
 
 #Users

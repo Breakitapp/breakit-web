@@ -8,3 +8,6 @@ exports.index = (req, res) ->
 
 exports.break_tmp = (req, res) ->
 	res.render 'tmp/break', title: 'Break-template'
+
+exports.ios = (req, res) ->
+	res.render 'index', title: 'IOS-client'
