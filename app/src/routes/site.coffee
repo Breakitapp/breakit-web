@@ -10,4 +10,6 @@ exports.break_tmp = (req, res) ->
 	res.render 'tmp/break', title: 'Break-template'
 
 exports.ios = (req, res) ->
+	console.log req.body.lat
+	console.log req.body.lon
 	res.render 'index', title: 'IOS-client'
