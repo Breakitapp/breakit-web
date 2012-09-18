@@ -1,29 +1,28 @@
 block contents
+	div#breakFeed
 	script#breakTemplate(type='text/template')
 		div.break
-			#ContainerUp
 			#BreakHeaderHolder
 				#BreakHeaderLeft
-					img(src='public/images/MyProfileIcon.png')
-					p.red <%= user%>
+					img(src='/public/images/MyProfileIcon.png')
+					p.red <%= user %>
 					br
-					h2 <%= headline%>
+					h2 headline
 				#BreakHeaderRight
 					p range
 					ul
 						li
-							img(src='public/images/clock.png')
+							img(src='/public/images/clock.png')
 						li  time
 					ul
 						#DivLi
 							li
-								img(src='public/images/LocationIcon.png')
-							li.red <%= location_name%>
-						ul
+								img(src='/public/images/LocationIcon.png')
+							li.red li.red location_name
 			#BreakContent
-				img(src='lol')
+				img(src='/public/images/testpicture.jpg')
 			#BreakFooter
-				p <%= story%>
+				p <%= story %>
 				ul
 					li
 						img(src='public/images/voteUp.png')
@@ -31,5 +30,13 @@ block contents
 						img(src='public/images/voteDown.png')
 					li
 						img(src='public/images/comments.png')
+					li
+						img(src='public/images/views.png')
 			img.PlaceDots(src='public/images/dots.png')
-			#ContainerDown
+			#DivComments
+				p 001
+			#DivViews
+				p 001
+				
+block footerscripts
+	script(type='text/javascript', src='../lib/app.js')

@@ -1,7 +1,7 @@
 (($) ->
 	breaks = [
-		{name: 'lololol', points: '1000'}
-		{name: 'trololo', points: '10'}
+		{name: 'lololol', story: 'tämä on tarina, fuck yeah', user: 'herra hakkarainen', headline: 'onko tässä headeri'}
+		{name: 'moikke', story: 'tässäkin tarina', user: 'herra hakkarainen', headline: 'on tässä headeri'}
 	]
 
 	window.Break = Backbone.Model.extend
@@ -34,20 +34,21 @@
 		el: $('#breakFeed')
 
 		initialize: ->
-			@collection = new BreakList
-			that.render()
+			@collection = new BreakList(breaks)
+			@render()
 
 		render: ->
 			that = @
 			@collection.fetch
 				success	: (breaks) ->
 					_.each breaks.models, (item) ->
-							that.renderBreak item
+						that.renderBreak item
 						, @
 
 		renderBreak: (item) ->
 			breakView = new BreakView
 				model: item
+			console.log @$el
 			@.$el.append breakView.render().el 
 
 	appView = new AppView

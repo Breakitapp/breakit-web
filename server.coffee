@@ -11,6 +11,8 @@ breaks				= require './app/lib/routes/breaks'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
+#Dummydata insert
+#dummy					= require './app/lib/models/dummyModel'
 
 server = module.exports = express()
 
@@ -33,7 +35,6 @@ server.configure ->
 
 db = mongoose.connect(settings.mongo_auth.db)
 
-
 server.configure "development", ->
 	server.use express.errorHandler(
 		dumpExceptions: true
@@ -47,6 +48,7 @@ server.configure "production", ->
 #General
 server.all '/', site.index
 server.all '/break', site.break_tmp
+server.post '/ios', site.ios
 
 
 #Users

@@ -1,7 +1,7 @@
 models = require './mongoModel'
 
 class User
-	constructor: (@fName, @lName, @nName, @email, @phone, @id) ->
+	constructor: (@id, @fName, @lName, @nName, @email, @phone) ->
 		
 		#Testing if email is in a valid format?
 		
