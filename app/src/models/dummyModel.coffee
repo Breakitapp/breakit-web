@@ -2,6 +2,7 @@
 
 breakModel = require './breakModel'
 userModel = require './userModel'
+albumModel = require './albumModel'
 
 #Create dummydata
 
@@ -34,3 +35,7 @@ break5.save user2
 break6.save user3
 break7.save user1
 break8.save user2
+
+#Albums
+
+album1 = new albumModel.Album

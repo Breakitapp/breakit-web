@@ -17,7 +17,9 @@ class Break
 				throw err
 			else
 				saved = true
-				console.log 'saved a new break # #{@id} for #{@user}'
+				@_id = break1._id
+				console.log 'saved a new break #' + @id + ' for ' + @user
+
 
 #find all the breaks
 findAll = (callback) ->
