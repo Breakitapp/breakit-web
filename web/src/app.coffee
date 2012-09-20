@@ -10,7 +10,9 @@
 
 	window.BreakList = Backbone.Collection.extend
 		model: Break
-		url: '/breaks'
+		url: -> 
+			return '/breaks/' + page
+		page = 1
 
 	BreakView = Backbone.View.extend
 		tagName		:	'div'
@@ -31,19 +33,34 @@
 			$(@el).remove()
 
 	window.AppView = Backbone.View.extend
-		el: $('#breakFeed')
+		el: '#breakFeed'
 
 		initialize: ->
 			@collection = new BreakList(breaks)
 			@render()
 
 		render: ->
+			@loadResults()
+			
+		loadResults: ->
 			that = @
 			@collection.fetch
 				success	: (breaks) ->
 					_.each breaks.models, (item) ->
 						that.renderBreak item
 						, @
+
+		events: 
+			'scroll' : 'checkScroll'
+
+		checkScroll: ->
+			#alert 'böö muthafucka!'
+			triggerPoint : 100
+			#if @el.scrollTop + @el.clientHeight + triggerPoint > @el.scrollHeight
+			alert 'load more breaks!'
+			@collection.page += 1
+			alert 'onward to page '+ @collection.page 
+			@loadResults()
 
 		renderBreak: (item) ->
 			breakView = new BreakView

@@ -8,6 +8,7 @@ express				= require 'express'
 site					= require './app/lib/routes/site'
 user					= require './app/lib/routes/user'
 breaks				= require './app/lib/routes/breaks'
+ios						= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
@@ -48,9 +49,14 @@ server.configure "production", ->
 #General
 server.all '/', site.index
 server.all '/break', site.break_tmp
-server.post '/ios', site.ios
 
 
+#iOS
+server.post '/ios', ios.index
+server.post '/ios/:user/:picture' ios.post_break
+
+
+#WEB
 #Users
 server.all '/users', user.list
 server.get '/users/new', user.create
@@ -63,6 +69,7 @@ server.post '/users/delete/:id', user.remove #temporary?
 server.get '/breaks', breaks.list
 server.get '/breaks/:id', breaks.view
 server.post '/breaks/:id', breaks.create
+server.get '/breaks/:page', breaks.infinite
 
 #Starting the server
 server.listen 3000
