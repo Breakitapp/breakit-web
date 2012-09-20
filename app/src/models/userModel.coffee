@@ -16,8 +16,7 @@ class User
 				throw err
 			else
 				@id = c + 1
-				console.log 'New user id assigned: ' + @id
-				
+				console.log 'New user id assigned: ' + @id	
 		###
 		
 	save: (callback) ->
@@ -30,6 +29,7 @@ class User
 			phone : @phone
 		user.save (err) ->
 			if err
+				console.log err
 				callback err
 			else
 				console.log 'Saved a new user: ' + user.id
@@ -45,13 +45,10 @@ class User
 			throw 'this is not a break'
 			
 remove = (id, callback) ->
-	@find id, (deletedUser) ->
-		console.log 'User to be deleted: ' + deletedUser.id
-		if err
-			callback err
-		else if user 
-			#Probably not working
-			deletedUser.remove (err) ->
+	@find id, (delUser) ->
+		if delUser 
+			console.log 'User to be deleted: ' + delUser.id
+			delUser.remove (err) ->
 				callback err
 		else
 			callback new Error 'No user found with that id'
@@ -136,7 +133,7 @@ find = (id, callback) ->
 		
 		if err
 			console.log 'Failed to find user: ' + id
-			throw err	
+			callback null	
 		else
 			console.log 'Found user: ' + foundUser.id
 			callback foundUser

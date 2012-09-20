@@ -57,8 +57,7 @@ server.get '/users/new', user.create
 server.post '/users/new', user.submit
 server.get '/users/:id', user.view
 server.post '/users/:id', user.update
-#server.post '/users/:id', user.submit
-server.delete '/users/:id', user.remove #todo
+server.post '/users/delete/:id', user.remove #temporary?
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
 server.get '/breaks', breaks.list

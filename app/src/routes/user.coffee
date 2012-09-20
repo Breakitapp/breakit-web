@@ -27,7 +27,7 @@ exports.submit = (req, res) ->
 				callback null, id
 		,
 		(id, callback) ->
-			newUser = new user.User fn, ln, nn, em, ph, id
+			newUser = new user.User id, fn, ln, nn, em, ph
 			callback null, newUser
 	], 
 	(err, newUser) ->
@@ -60,7 +60,7 @@ exports.update = (req,res) ->
 			res.send('User updated successfully!')
 		
 exports.remove = (req,res) ->
-	user.remove req.params.id (err) ->
+	user.remove req.params.id, (err) ->
 		if err
 			res.send('Removing user failed.')
 		else
