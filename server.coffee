@@ -53,8 +53,7 @@ server.all '/break', site.break_tmp
 
 #iOS
 server.post '/ios', ios.index
-server.post '/ios/:user/:picture' ios.post_break
-
+server.post '/ios/:user/:picture', ios.post_break
 
 #WEB
 #Users
