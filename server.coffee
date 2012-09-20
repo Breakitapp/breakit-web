@@ -11,6 +11,8 @@ breaks				= require './app/lib/routes/breaks'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
+#Dummydata insert
+#dummy					= require './app/lib/models/dummyModel'
 
 server = module.exports = express()
 
@@ -29,22 +31,9 @@ server.configure ->
 	#CSS templating
 	server.use(stylus.middleware src: publicDir)
 	server.use express.static publicDir
-	###server.use server.cookieParser()
-	#Initiate session handling through mongo
-	server.use express.session({
-		secret		:	settings.cookie_secret
-		store			:	new mongoStore({
-			db			:	settings.db
-		})
-	})
-	server.use express.compiler(
-		src: viewsDir, 
-		dest: publicDir, 
-		enable: ['coffeescript'])###
 	server.use server.router
 
 db = mongoose.connect(settings.mongo_auth.db)
-
 
 server.configure "development", ->
 	server.use express.errorHandler(
@@ -59,6 +48,7 @@ server.configure "production", ->
 #General
 server.all '/', site.index
 server.all '/break', site.break_tmp
+server.post '/ios', site.ios
 
 
 #Users
@@ -71,7 +61,7 @@ server.post '/users/:id', user.update
 server.delete '/users/:id', user.remove #todo
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
-server.all '/breaks', breaks.list
+server.get '/breaks', breaks.list
 server.get '/breaks/:id', breaks.view
 server.post '/breaks/:id', breaks.create
 

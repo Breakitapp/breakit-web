@@ -17,6 +17,7 @@ BreakSchema = new Schema
 	tags					:			{type: String}
 	publish				:			{type: Boolean, default: false}
 	comments			:			[Comment]
+	
 
 BreakSchema.index {loc: '2d'}
 
@@ -31,16 +32,25 @@ UserSchema = new Schema
 	phone			:		{type: String, required: true}
 	breaks		:		[Break]
 
+AlbumSchema = new Schema
+	name			:		{type: String}
+	date			:		{type: Date, default: Date.now}
+	breaks		:		[Break]
+	points		:		{type: Number, default: 0}
+	location	:		{lon: Number, lat: Number}
+
+AlbumSchema.index {loc: '2d'}
+
 CommentSchema = new Schema
 	comment		:		{type: String}
 	date			:		{type: String}
 
 Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
-#Feedback	= mongoose.model 'Feedback', FeedbackSchema
 Comment		= mongoose.model 'Comment', CommentSchema
+Album			=	mongoose.model 'Album', AlbumSchema
 
 exports.User			= User
 exports.Break			= Break
-#exports.Feedback	= Feedback
 exports.Comment		= Comment
+exports.Album			= Album

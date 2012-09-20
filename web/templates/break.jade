@@ -1,4 +1,42 @@
-script#breakTemplate(type='text/template')
-	div.break
-		h1 <%=name %>
-		p <%=points %>
+block contents
+	div#breakFeed
+	script#breakTemplate(type='text/template')
+		div.break
+			#BreakHeaderHolder
+				#BreakHeaderLeft
+					img(src='/public/images/MyProfileIcon.png')
+					p.red <%= user %>
+					br
+					h2 headline
+				#BreakHeaderRight
+					p range
+					ul
+						li
+							img(src='/public/images/clock.png')
+						li  time
+					ul
+						#DivLi
+							li
+								img(src='/public/images/LocationIcon.png')
+							li.red li.red location_name
+			#BreakContent
+				img(src='/public/images/testpicture.jpg')
+			#BreakFooter
+				p <%= story %>
+				ul
+					li
+						img(src='public/images/voteUp.png')
+					li
+						img(src='public/images/voteDown.png')
+					li
+						img(src='public/images/comments.png')
+					li
+						img(src='public/images/views.png')
+			img.PlaceDots(src='public/images/dots.png')
+			#DivComments
+				p 001
+			#DivViews
+				p 001
+				
+block footerscripts
+	script(type='text/javascript', src='../lib/app.js')
