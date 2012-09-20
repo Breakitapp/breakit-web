@@ -8,9 +8,9 @@ albumModel = require './albumModel'
 
 #Users
 
-user1 = new userModel.User 'Seppo', 'Taalasmaa', 'Sepi', 'sepi@talonmies.com', 1
-user2 = new userModel.User 'Ismo', 'Laitela', 'Iso-Ismo', 'ismo@turpaan.com', 2
-user3 = new userModel.User 'Hra', 'Hakkarainen', 'hh', 'hakkarainen@koirala.com', 3
+user1 = new userModel.User 1, 'Seppo', 'Taalasmaa', 'Sepi', 'sepi@talonmies.com', 'nokia 6510'
+user2 = new userModel.User 2, 'Ismo', 'Laitela', 'Iso-Ismo', 'ismo@turpaan.com', 'Benefon i'
+user3 = new userModel.User 3, 'Hra', 'Hakkarainen', 'hh', 'hakkarainen@koirala.com', 'Mutsis luuri, lol'
 
 user1.save ->
 user2.save ->
@@ -38,4 +38,28 @@ break8.save user2
 
 #Albums
 
-album1 = new albumModel.Album
+album1 = new albumModel.Album 'venture garage'
+album2 = new albumModel.Album 'by'
+
+album1.save (id) ->
+	album1.dbid = id
+	console.log album1.dbid
+album2.save (id) ->
+	album2.dbid = id
+	console.log album2.dbid
+
+console.log 'waiting muthafucka'
+console.log album1.dbid
+console.log album2.dbid
+albumModel.addBreak album1.dbid, break1
+albumModel.addBreak album2.dbid, break2
+albumModel.addBreak album1.dbid, break3
+albumModel.addBreak album2.dbid, break4
+albumModel.addBreak album1.dbid, break5
+albumModel.addBreak album2.dbid, break6
+albumModel.addBreak album1.dbid, break7
+albumModel.addBreak album2.dbid, break8
+
+setTimeout 'lol', 200
+
+#albumModel.remove album2.dbid

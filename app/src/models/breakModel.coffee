@@ -12,13 +12,14 @@ class Break
 			story					:		@story
 			headline			:		@headline
 			user					:		@user
+		that = @
 		break1.save (err) ->
 			if err 
 				throw err
 			else
 				saved = true
-				@_id = break1._id
-				console.log 'saved a new break #' + @id + ' for ' + @user
+				that._id = break1._id
+				console.log 'BREAK: saved a new break #' + that.id + ' for ' + that.user.nName
 
 
 #find all the breaks

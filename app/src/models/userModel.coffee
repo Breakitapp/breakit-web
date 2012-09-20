@@ -32,7 +32,7 @@ class User
 				console.log err
 				callback err
 			else
-				console.log 'Saved a new user: ' + user.id
+				console.log 'USER: Saved a new user: ' + user.id
 				@dbid = user._id
 				callback null
 	
