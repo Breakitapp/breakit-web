@@ -48,14 +48,16 @@ findNear = (longitude, latitude, page, callback) ->
 		}, (err, docs) ->
 			if err
 				throw err
-			if docs.documents[0].results
-				b = docs.documents[0].results
-				for object in b
+			b = docs.documents[0].results
+			if b[0] 
+				i = 0
+				while b[page*10+i] and i < 10
+					object = b[page*10+i]
 					found_break = object.obj
 					found_break.dis = object.dis
 					breaks.push found_break
-					#Slice the array to contain only 10/page and return the 10 breaks
-					breaks = breaks[page*10..(page+1)*10]
+					i++
+			#TODO handling of the last breaks modulus
 			callback null, breaks
 	return breaks
 
