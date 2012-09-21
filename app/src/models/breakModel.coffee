@@ -22,8 +22,8 @@ class Break
 
 
 createBreak = (data, callback) ->
-	break_ = new Break data.lon, data.lat, data.location_name, data.story, data.headline, data.user
-	break_.save(callback)
+	break_ = new Break data.lon, data.lat, data.location_name, data.story, data.headline
+	break_.save(data.user, callback)
 
 
 #find all the breaks
