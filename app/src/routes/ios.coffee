@@ -20,7 +20,7 @@ exports.index = (req, res) ->
 			res.render '404'
 		else
 			#Send the breaks as a JSON to client
-			console.log breaks, page
+			console.log breaks
 			res.send [breaks, page]
 
 #create a new break

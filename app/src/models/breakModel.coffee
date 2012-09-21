@@ -44,7 +44,9 @@ findNear = (longitude, latitude, page, callback) ->
 		near : [longitude, latitude] 
 		spherical : true
 		}, (err, docs) ->
-			#the results are in format {dist: x, obj: {}}, needs to be put in one object only
+			if err
+				throw err
+			console.log docs
 			if docs.documents[0].results
 				b = docs.documents[0].results
 				for object in b
