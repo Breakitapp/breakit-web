@@ -9,6 +9,7 @@ fs			= require 'fs'
 
 #Main page for ios, response sends 10 breaks / page, ordered according to distance only.
 exports.index = (req, res) ->
+	console.log req.body
 	#Change page and location to numbers
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
