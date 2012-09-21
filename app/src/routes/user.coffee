@@ -27,7 +27,7 @@ exports.submit = (req, res) ->
 				callback null, id
 		,
 		(id, callback) ->
-			newUser = new user.User fn, ln, nn, em, ph, id
+			newUser = new user.User id, fn, ln, nn, em, ph
 			callback null, newUser
 	], 
 	(err, newUser) ->
@@ -41,7 +41,7 @@ exports.view = (req,res) ->
 		
 	user.find req.params.id, (targetUser) ->
 		res.render 'viewUser', title : 'User ' + req.params.id, user: targetUser
-	#view also beta
+	#TODO: view also beta value (in jade)
 	
 exports.list = (req, res) ->
 
@@ -52,37 +52,19 @@ exports.list = (req, res) ->
 exports.update = (req,res) ->
 	console.log 'Update on user data received. Id: ' + req.params.id
 	
-	user.find req.params.id, (editedUser) ->
+	user.changeAttribute req.params.id, req.body.fn, req.body.ln, req.body.nn, req.body.em, req.body.ph, (err) ->		
 
-		console.log 'Found the user to be updated: ' + editedUser.id
-		
-		changedSomething = 0
-	
-		if editedUser.fName != req.body.fn
-			editedUser.changeAttribute 'fName', req.body.fn
-			console.log 'Updated first name for user ' + editedUser.id
-			changedSomething = 1
-		if editedUser.lName != req.body.ln
-			editedUser.changeAttribute 'lName', req.body.ln
-			console.log 'Updated last name for user ' + editedUser.id
-			changedSomething = 1
-		if editedUser.nName != req.body.nn
-			editedUser.changeAttribute 'nName', req.body.nn
-			console.log 'Updated nickname for user ' + editedUser.id
-			changedSomething = 1
-		if editedUser.email != req.body.em
-			editedUser.changeAttribute 'email', req.body.em
-			console.log 'Updated email for user ' + editedUser.id
-			changedSomething = 1
-		if editedUser.phone != req.body.ph
-			editedUser.changeAttribute 'phone', req.body.ph
-			console.log 'Updated phone model for user ' + editedUser.id
-			changedSomething = 1
-			
-		if changedSomething
-			res.send('User updated successfully!')
+		if err
+			res.send('User updating failed.')
 		else
-			res.send('Nothing changed.')
+			res.send('User updated successfully!')
 		
 exports.remove = (req,res) ->
-	# delete userById req.id
+	user.remove req.params.id, (err) ->
+		if err
+			res.send('Removing user failed.')
+		else
+		  	res.send('User removed successfully.')
+		
+			
+		

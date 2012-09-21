@@ -25,7 +25,7 @@ block contents
 		
 	p
 	
-	form(name="input", action="/users/#{user.id}", method="delete")
+	form(name="input", action="/users/delete/#{user.id}", method="post")
 		label Delete user
 		br
 		input(type="submit", value="DELETE")
