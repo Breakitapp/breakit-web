@@ -2,6 +2,7 @@ models = require './mongoModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
+		console.log 'CREATED A NEW BREAK'+@headline+' to ' + @location_name
 
 	save: (user = @user, callback) ->
 		@user = user
@@ -23,7 +24,7 @@ class Break
 
 createBreak = (data, callback) ->
 	console.log 'CREATEBREAK : ' + data.longitude
-	break_ = new Break parseFloat data.longitude, parseFloat data.latitude, data.location_name, data.story, data.headline
+	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
 
 
@@ -47,15 +48,16 @@ findNear = (longitude, latitude, page, callback) ->
 		}, (err, docs) ->
 			if err
 				throw err
-			console.log docs
 			if docs.documents[0].results
 				b = docs.documents[0].results
 				for object in b
 					found_break = object.obj
 					found_break.dis = object.dis
 					breaks.push found_break
+					console.log breaks
 					#Slice the array to contain only 10/page and return the 10 breaks
 					#breaks = breaks[page*10..(page+1)*10]
+			console.log breaks
 			callback null, breaks
 	return breaks
 
