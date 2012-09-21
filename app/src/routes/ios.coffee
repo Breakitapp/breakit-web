@@ -39,4 +39,4 @@ exports.post_break = (req, res) ->
 
 exports.get_break = (req, res) ->
 	id = req.params.id
-	res.sendfile './app/res/images/' + id + 'jpeg'
+	res.sendfile './app/res/images/' + id + '.jpeg'
