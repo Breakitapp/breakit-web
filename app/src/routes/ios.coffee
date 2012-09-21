@@ -14,6 +14,7 @@ exports.index = (req, res) ->
 	page	= parseInt req.body.ios.page, 10
 	lon		= parseFloat req.body.ios.lon
 	lat		= parseFloat req.body.ios.lat
+	console.log page, lon, lat
 	#Get breaks sorted according to location
 	breaks.findNear lon, lat, page, (err, breaks) ->
 		if err
