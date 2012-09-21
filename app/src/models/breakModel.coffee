@@ -17,7 +17,7 @@ class Break
 				throw err
 			else
 				saved = true
-				console.log 'BREAK: saved a new break #' + that.id + ' for ' + that.user.nName
+				console.log 'BREAK: saved a new break ' + that.story + ' for ' + that.user.nName
 				callback null, break_
 
 
@@ -45,13 +45,14 @@ findNear = (longitude, latitude, page, callback) ->
 		spherical : true
 		}, (err, docs) ->
 			#the results are in format {dist: x, obj: {}}, needs to be put in one object only
-			b = docs.documents[0].results
-			for object in b
-				found_break = object.obj
-				found_break.dis = object.dis
-				breaks.push found_break
-				#Slice the array to contain only 10/page and return the 10 breaks
-				breaks = breaks[page*10..(page+1)*10]
+			if docs.documents[0].results
+				b = docs.documents[0].results
+				for object in b
+					found_break = object.obj
+					found_break.dis = object.dis
+					breaks.push found_break
+					#Slice the array to contain only 10/page and return the 10 breaks
+					breaks = breaks[page*10..(page+1)*10]
 			callback null, breaks
 	return breaks
 

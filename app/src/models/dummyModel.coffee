@@ -17,7 +17,11 @@ user2.save ->
 user3.save ->
 
 #Breaks
+data = lon : 65, lat : 65, location_name : 'venture', story : 'mutha<fucka', headline : 'booo', user: user1
 
+breakModel.createBreak data, (err, docs) ->
+	console.log docs
+###
 break1 = new breakModel.Break  65, 64, 'Shangri-La', 'Here be something fun', 'Chillin at Shangri-la'
 break2 = new breakModel.Break  62, 61, 'Hobocave', 'Hobos', 'Damn nigga, it smells here!'
 break3 = new breakModel.Break  65.6, 64.9, 'Queens palace', 'Walking the corgis', 'I was walking the queens corgis, when suddenly Daniel Craig rushed us and kidnapped the dogs. Please, someone, HALP!'
@@ -83,7 +87,7 @@ break29.save user2
 break30.save user3
 break31.save user1
 break32.save user2
-
+###
 #Albums
 ###
 album1 = new albumModel.Album 'venture garage'
