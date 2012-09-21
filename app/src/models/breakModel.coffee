@@ -22,12 +22,7 @@ class Break
 
 
 createBreak = (data, callback) ->
-	break_ = new Break 
-		parseFloat data.longitude 
-		parseFloat data.latitude 
-		data.location_name 
-		data.story 
-		data.headline
+	break_ = new Break parseFloat data.longitude, parseFloat data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
 
 
