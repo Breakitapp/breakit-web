@@ -22,7 +22,9 @@ exports.index = (req, res) ->
 			#Send the breaks as a JSON to client
 			res.send breaks
 
+#create a new break
 exports.post_break = (req, res) ->
+	console.log req.body
 	breaks.createBreak req.body, (err, break_) ->
 		tmp_path = req.files.image.path
 		target_path = '../../res/user/' + req.body.user + '/images/' + break_._id + '.png'
