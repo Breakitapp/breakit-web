@@ -54,10 +54,8 @@ findNear = (longitude, latitude, page, callback) ->
 					found_break = object.obj
 					found_break.dis = object.dis
 					breaks.push found_break
-					console.log breaks
 					#Slice the array to contain only 10/page and return the 10 breaks
 					#breaks = breaks[page*10..(page+1)*10]
-			console.log breaks
 			callback null, breaks
 	return breaks
 

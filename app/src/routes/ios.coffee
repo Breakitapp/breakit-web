@@ -27,7 +27,7 @@ exports.post_break = (req, res) ->
 	breaks.createBreak req.body, (err, break_) ->
 		tmp_path = req.files.image.path
 		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
-		target_path ='../../../web/public/images/' + break_._id + '.jpeg'
+		target_path ='./web/public/images/' + break_._id + '.jpeg'
 		fs.readFile tmp_path, (err, data) ->
 			if err
 				throw err
