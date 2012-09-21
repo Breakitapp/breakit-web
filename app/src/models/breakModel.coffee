@@ -39,6 +39,7 @@ findAll = (callback) ->
 
 #finds an x amout of breaks in the vicinity
 findNear = (longitude, latitude, page, callback) ->
+	console.log 'FIND NEAR lon: ' + longitude + ' lat: ' + latitude 
 	breaks = []
 	models.Break.db.db.executeDbCommand {
 		geoNear: 'breaks' 
