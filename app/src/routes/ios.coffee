@@ -10,6 +10,7 @@ fs			= require 'fs'
 #Main page for ios, response sends 10 breaks / page, ordered according to distance only.
 exports.index = (req, res) ->
 	#Change page and location to numbers
+	console.log req.body
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
@@ -21,7 +22,6 @@ exports.index = (req, res) ->
 			res.render '404'
 		else
 			#Send the breaks as a JSON to client
-			console.log breaks
 			res.send [breaks, page]
 
 #create a new break
