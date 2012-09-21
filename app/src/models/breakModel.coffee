@@ -22,7 +22,7 @@ class Break
 
 
 createBreak = (data, callback) ->
-	break_ = new Break data.lon, data.lat, data.location_name, data.story, data.headline
+	break_ = new Break parseFloat data.lon, parseFloat data.lat, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
 
 
@@ -54,7 +54,7 @@ findNear = (longitude, latitude, page, callback) ->
 					found_break.dis = object.dis
 					breaks.push found_break
 					#Slice the array to contain only 10/page and return the 10 breaks
-					breaks = breaks[page*10..(page+1)*10]
+					#breaks = breaks[page*10..(page+1)*10]
 			callback null, breaks
 	return breaks
 
