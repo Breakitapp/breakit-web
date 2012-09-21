@@ -22,7 +22,7 @@ class Break
 
 
 createBreak = (data, callback) ->
-	console.log 'CREATEBREAK : ' + data
+	console.log 'CREATEBREAK : ' + data.longitude
 	break_ = new Break parseFloat data.longitude, parseFloat data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
 
@@ -39,7 +39,6 @@ findAll = (callback) ->
 
 #finds an x amout of breaks in the vicinity
 findNear = (longitude, latitude, page, callback) ->
-	console.log 'FIND NEAR lon: ' + longitude + ' lat: ' + latitude 
 	breaks = []
 	models.Break.db.db.executeDbCommand {
 		geoNear: 'breaks' 
