@@ -67,6 +67,11 @@ findInfinite = (page, callback) ->
 		callback null, breaks_
 		return breaks_
 	)
+	
+findById = (id, callback) ->
+	models.Break.findById(id).exec((err, breaks) ->
+		callback err, breaks
+	)
 
 root = exports ? window
 root.Break = Break
@@ -74,3 +79,4 @@ root.createBreak = createBreak
 root.findAll = findAll
 root.findNear = findNear
 root.findInfinite = findInfinite
+root.findById = findById
