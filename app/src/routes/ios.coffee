@@ -35,7 +35,7 @@ exports.post_break = (req, res) ->
 				if err
 					throw err
 					res.send err
-				breaks.findById break_._id (err, b) ->
+				breaks.findById break_._id, (err, b) ->
 					if err
 						throw err
 					res.send b
