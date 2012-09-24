@@ -33,7 +33,7 @@ UserSchema = new Schema
 	breaks		:		[Break]
 
 AlbumSchema = new Schema
-	name			:		{type: String}
+	name			:		{type: String, unique: true, index: true}
 	date			:		{type: Date, default: Date.now}
 	breaks		:		[Break]
 	topBreak	:		[Break]

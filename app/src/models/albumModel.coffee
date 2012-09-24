@@ -34,8 +34,9 @@ updateAttr = (id, attr, value, callback) ->
 
 addBreak = (id, b) ->
 	find id, (album) ->
-		console.log 'ALBUM: found album ' + album.name
 		album.breaks.push b
+		if album.topBreak.score < b.score
+			album.topBreak = b
 		album.save (err) ->
 			console.log 'ALBUM: saving new break' + b.headline + ' to ' + album.name
 			if err

@@ -1,4 +1,5 @@
 models = require './mongoModel'
+albumModel = require './albumModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
@@ -13,6 +14,7 @@ class Break
 			headline			:		@headline
 			user					:		@user
 		that = @
+		albumModel.addBreak(@location_name, @)
 		break_.save (err) ->
 			if err 
 				throw err
