@@ -7,6 +7,7 @@ makefile~
 *.jade~
 *.css~
 *.css
+*.project
 app/lib/
 web/lib/
 data/

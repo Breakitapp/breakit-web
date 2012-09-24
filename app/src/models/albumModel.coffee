@@ -49,6 +49,17 @@ remove = (id) ->
 		else
 			console.log 'ALBUM: removed the album correctly' 
 
+# get the next page content according to location and points
+nextFeed = (array, best, page, userLocation) ->
+  _.without(best)
+  range = 50+50*page
+  # get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
+  closest = _.first(array, range)
+  # sort by points
+  sorted = _.sortBy(closest, topBreak)
+  best = _.first(closest, 10)
+
+
 root = exports ? window
 root.Album = Album
 root.find = find
