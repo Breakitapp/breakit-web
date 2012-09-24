@@ -17,7 +17,7 @@ exports.index = (req, res) ->
 	breaks.findNear lon, lat, page, (err, breaks) ->
 		if err
 			throw err
-			res.render '404'
+			res.send '404'
 		else
 			#Send the breaks as a JSON to client
 			res.send [breaks, page]
@@ -35,7 +35,7 @@ exports.post_break = (req, res) ->
 				if err
 					throw err
 					res.send err
-				res.send 'Break sent'
+				res.send break_._id
 
 exports.get_break = (req, res) ->
 	id = req.params.id
