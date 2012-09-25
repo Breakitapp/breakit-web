@@ -14,7 +14,6 @@ class Break
 			headline			:		@headline
 			user					:		@user
 		that = @
-		albumModel.addBreak(@location_name, @)
 		break_.save (err) ->
 			if err 
 				throw err
@@ -25,14 +24,13 @@ class Break
 
 
 createBreak = (data, callback) ->
-	console.log 'CREATEBREAK : ' + data.longitude
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
+	albumModel.addBreak break_.location_name, break_
 
 
 #find all the breaks
 findAll = (callback) ->
-
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
 			breaks_ = (b for b in breaks)

@@ -18,24 +18,23 @@ createFromId = (id) ->
 		if err
 			throw err
 		else
-			newAlbum = new Album album._id, album.name, album.location, album.breaks, album.topBreak
+			newAlbum = new Album album.name, album.location, album.breaks, album.topBreak
 			return newAlbum
 
 find = (name, callback) ->
 	models.Album.findOne name: name, (err, album) ->
 		if err
-			album = new Album name
-			album.save()
 			throw err
 		else
 			callback album
 			return album
 
-updateAttr = (id, attr, value, callback) ->
-	models.Album.findByIdAndUpdate id, attr : value
-
-addBreak = (id, b) ->
-	find id, (album) ->
+addBreak = (name, b) ->
+	find name, (album) ->
+		if album is null
+			console.log 'ALBUM: Adding break and creating new album'
+			album = new Album b.location_name, [b.longitude, b.latitude]
+			album.save
 		album.breaks.push b
 		if album.topBreak.score < b.score
 			album.topBreak = b
@@ -63,6 +62,7 @@ nextFeed = (array, best, page, userLocation) ->
 
 findBreak = (album, page, callback) ->
 	models.Album.find({'name': album}).sort({'topBreak.score': 'desc'}).skip(page).limit(1).exec((err, docs) ->
+		console.log 'ALBUM Finding pictures'
 		callback err, docs
 	)
 

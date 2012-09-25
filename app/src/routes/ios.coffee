@@ -48,7 +48,7 @@ exports.get_break = (req, res) ->
 
 
 exports.get_albumpage = (req, res) ->
-	console.log 'GETTING ALBUM PAGE ' + req
+	console.log 'GETTING ALBUM PAGE ' + req.body
 	album = req.params.album
 	page = req.params.page
 	albums.findBreak album, page, (err, docs) ->
