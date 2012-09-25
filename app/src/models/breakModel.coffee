@@ -3,7 +3,7 @@ albumModel = require './albumModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
-		console.log 'CREATED A NEW BREAK'+@headline+' to ' + @location_name
+		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
 
 	save: (user = @user, callback) ->
 		@user = user
@@ -19,7 +19,6 @@ class Break
 			if err 
 				throw err
 			else
-				console.log 'BREAK: saved a new break ' + that.story + ' for ' + that.user.nName
 				callback null, break_
 
 

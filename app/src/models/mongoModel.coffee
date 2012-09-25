@@ -17,7 +17,6 @@ BreakSchema = new Schema
 	tags					:			{type: String}
 	publish				:			{type: Boolean, default: false}
 	comments			:			[Comment]
-	
 
 BreakSchema.index {loc: '2d'}
 
