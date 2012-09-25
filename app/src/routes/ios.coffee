@@ -43,12 +43,12 @@ exports.post_break = (req, res) ->
 					res.send b
 
 exports.get_break = (req, res) ->
-	console.log req
 	id = req.params.id
 	res.sendfile './app/res/images/' + id + '.jpeg'
 
 
 exports.get_albumpage = (req, res) ->
+	console.log 'GETTING ALBUM PAGE ' + req
 	album = req.params.album
 	page = req.params.page
 	albums.findBreak album, page, (err, docs) ->

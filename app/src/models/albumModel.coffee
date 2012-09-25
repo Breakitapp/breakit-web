@@ -11,6 +11,7 @@ class Album
 		album.save (err) ->
 			if err
 				throw err
+			console.log 'ALBUM: created a new album ' + @name
 
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
