@@ -34,18 +34,20 @@ addBreak = (name, b) ->
 	find name, (album) ->
 		if album is null
 			console.log 'ALBUM: Adding break and creating new album'
-			album = new Album b.location_name, [b.longitude, b.latitude], [], null, (album) ->
+			jsalbum = new Album b.location_name, [b.longitude, b.latitude], [], null, (album) ->
 				console.log album
 				album.breaks.push b
+				album.topBreak = b
 				album.saveToDB()
+				return
 		else
 			album.breaks.push b
-		if album.topBreak is null or album.topBreak.score < b.score
-			album.topBreak = b
-		album.save (err) ->
-			console.log 'ALBUM: saving new break' + b.headline + ' to ' + album.name
-			if err
-				throw err
+			if album.topBreak is null or album.topBreak.score < b.score
+				album.topBreak = b
+			album.save (err) ->
+				console.log 'ALBUM: saving new break' + b.headline + ' to ' + album.name
+				if err
+					throw err
 
 remove = (id) ->
 	models.Album.findByIdAndRemove id, (err) ->
