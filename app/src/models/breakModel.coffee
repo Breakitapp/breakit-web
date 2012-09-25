@@ -19,7 +19,6 @@ class Break
 			if err 
 				throw err
 			else
-				saved = true
 				console.log 'BREAK: saved a new break ' + that.story + ' for ' + that.user.nName
 				callback null, break_
 
@@ -27,9 +26,6 @@ class Break
 createBreak = (data, callback) ->
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
-	#Call the albums to add a new break to the album with the name location_name
-	albumModel.addBreak break_.location_name, break_
-
 
 #find all the breaks
 findAll = (callback) ->
