@@ -36,7 +36,7 @@ AlbumSchema = new Schema
 	name			:		{type: String, unique: true, index: true}
 	date			:		{type: Date, default: Date.now}
 	breaks		:		[Break]
-	topBreak	:		{type: Break}
+	topBreak	:		[Break]
 	location	:		{lon: Number, lat: Number}
 
 AlbumSchema.index {loc: '2d'}
