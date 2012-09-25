@@ -35,6 +35,7 @@ addBreak = (name, b) ->
 		if album is null
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
 			jsalbum = new Album b.location_name, [b.longitude, b.latitude], [], null, (album) ->
+				console.log b
 				album.breaks.push b
 				album.topBreak = b
 				album.saveToDB()
