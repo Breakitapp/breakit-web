@@ -2,13 +2,12 @@ models = require './mongoModel'
 _ = require 'underscore'
 
 class Album
-	constructor: (@name, @location, @breaks, @topBreak, callback) ->
+	constructor: (@name, @breaks, @topBreak, callback) ->
 		callback @
 
 	saveToDB : () ->
 		album = new models.Album
 			name			: @name
-			location	: @location
 			breaks		:	@breaks
 			topBreak	: @topBreak
 		album.save (err) ->
@@ -37,7 +36,7 @@ addBreak = (name, b) ->
 		if album is null
 			console.log b
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
-			jsalbum = new Album b.location_name, [b.longitude, b.latitude], [b], b, (album) ->
+			jsalbum = new Album b.location_name, [b], b, (album) ->
 				album.saveToDB()
 				console.log "ALBUM: what we just saved " + album.location
 				return
@@ -69,9 +68,9 @@ nextFeed = (array, best, page, userLocation) ->
 	best = _.first(closest, 10)
 
 findBreak = (album, page, callback) ->
-	models.Album.find({'name': album}).sort({'topBreak.score': 'desc'}).skip(page).limit(1).exec((err, docs) ->
-		console.log 'ALBUM Finding pictures'
-		callback err, docs
+	models.Album.find({'name': album}).exec((err, docs) ->
+		b = docs[0].breaks[page]
+		callback err, b
 	)
 
 root = exports ? window
