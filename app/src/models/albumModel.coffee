@@ -2,7 +2,8 @@ models = require './mongoModel'
 _ = require 'underscore'
 
 class Album
-	constructor: (@name, @location = [60.188289, 24.83739], @breaks = null, @topBreak = null, @dbid = null) ->
+	constructor: (@name, @location = [60.188289, 24.83739], @breaks = null, @topBreak = null, @dbid = null, callback) ->
+		callback @
 
 	save : () ->
 		album = new models.Album
@@ -33,9 +34,9 @@ addBreak = (name, b) ->
 	find name, (album) ->
 		if album is null
 			console.log 'ALBUM: Adding break and creating new album'
-			album = new Album b.location_name, [b.longitude, b.latitude]
-			album.breaks.push b
-			album.save
+			album = new Album b.location_name, [b.longitude, b.latitude], (album) ->
+				album.breaks.push b
+				album.save
 		else
 			album.breaks.push b
 		if album.topBreak.score < b.score
