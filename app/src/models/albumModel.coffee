@@ -69,7 +69,7 @@ nextFeed = (array, best, page, userLocation) ->
 
 findBreak = (album, page, callback) ->
 	models.Album.find({'name': album}).exec((err, docs) ->
-		b = docs[0].breaks[page]
+		b = docs[0].breaks
 		callback err, b
 	)
 
