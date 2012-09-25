@@ -40,7 +40,7 @@ addBreak = (name, b) ->
 				album.save()
 		else
 			album.breaks.push b
-		if album.topBreak.score < b.score
+		if album.topBreak is null or album.topBreak.score < b.score
 			album.topBreak = b
 		album.save (err) ->
 			console.log 'ALBUM: saving new break' + b.headline + ' to ' + album.name
