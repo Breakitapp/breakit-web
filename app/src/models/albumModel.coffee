@@ -9,10 +9,12 @@ class Album
 		album = new models.Album
 			name			: @name
 			location	: @location
+			breaks		:	@breaks
+			topBreak	: @topBreak
 		album.save (err) ->
 			if err
 				throw err
-			console.log 'ALBUM: created a new album ' + album.name
+			console.log 'ALBUM: created a new album ' + album.name + ' with topBreak ' + album.topBreak
 
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
