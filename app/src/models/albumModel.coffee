@@ -2,7 +2,7 @@ models = require './mongoModel'
 _ = require 'underscore'
 
 class Album
-	constructor: (@name, @location = [60.188289, 24.83739],[@breaks], @topBreak, callback) ->
+	constructor: (@name, @location, @breaks, @topBreak, callback) ->
 		callback @
 
 	saveToDB : () ->
@@ -37,7 +37,7 @@ addBreak = (name, b) ->
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
 			jsalbum = new Album b.location_name, [b.longitude, b.latitude], [b], b, (album) ->
 				album.saveToDB()
-				console.log "ALBUM: what we just saved " + album
+				console.log "ALBUM: what we just saved " + album.location
 				return
 		else
 			album.breaks.push b
