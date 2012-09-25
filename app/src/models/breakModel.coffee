@@ -13,6 +13,7 @@ class Break
 			story					:		@story
 			headline			:		@headline
 			user					:		@user
+			score					:		1
 		that = @
 		break_.save (err) ->
 			if err 
