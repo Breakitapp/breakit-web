@@ -34,8 +34,10 @@ addBreak = (name, b) ->
 		if album is null
 			console.log 'ALBUM: Adding break and creating new album'
 			album = new Album b.location_name, [b.longitude, b.latitude]
+			album.breaks.push b
 			album.save
-		album.breaks.push b
+		else
+			album.breaks.push b
 		if album.topBreak.score < b.score
 			album.topBreak = b
 		album.save (err) ->
