@@ -55,6 +55,7 @@ server.all '/break', site.break_tmp
 server.post '/ios', ios.index
 server.post '/ios/:user/:break', ios.post_break
 server.get '/ios/:id', ios.get_break
+server.get '/ios/:album/:page', ios.get_albumpage
 
 #WEB
 #Users

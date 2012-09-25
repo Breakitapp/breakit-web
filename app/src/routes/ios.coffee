@@ -5,6 +5,7 @@
 ###
 
 breaks	= require '../models/breakModel'
+albums	= require '../models/albumModel'
 fs			= require 'fs'
 
 #Main page for ios, response sends 10 breaks / page, ordered according to distance only.
@@ -21,6 +22,7 @@ exports.index = (req, res) ->
 		else
 			#Send the breaks as a JSON to client
 			res.send [breaks, page]
+
 
 #create a new break
 exports.post_break = (req, res) ->
@@ -41,5 +43,15 @@ exports.post_break = (req, res) ->
 					res.send b
 
 exports.get_break = (req, res) ->
+	console.log req
 	id = req.params.id
 	res.sendfile './app/res/images/' + id + '.jpeg'
+
+
+exports.get_albumpage = (req, res) ->
+	album = req.params.album
+	page = req.params.page
+	albums.findBreak album, page, (err, docs) ->
+		if err
+			throw err
+		res.send docs
