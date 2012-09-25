@@ -5,7 +5,7 @@ class Album
 	constructor: (@name, @location = [60.188289, 24.83739], @breaks = null, @topBreak = null, callback) ->
 		callback @
 
-	save : () ->
+	saveToDB : () ->
 		album = new models.Album
 			name			: @name
 			location	: @location
@@ -37,7 +37,7 @@ addBreak = (name, b) ->
 			album = new Album b.location_name, [b.longitude, b.latitude], [], null, (album) ->
 				console.log album
 				album.breaks.push b
-				album.save()
+				album.saveToDB()
 		else
 			album.breaks.push b
 		if album.topBreak is null or album.topBreak.score < b.score
