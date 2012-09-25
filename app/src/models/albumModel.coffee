@@ -33,16 +33,17 @@ find = (name, callback) ->
 addBreak = (name, b) ->
 	find name, (album) ->
 		if album is null
-			console.log 'ALBUM: Adding break and creating new album'
+			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
 			jsalbum = new Album b.location_name, [b.longitude, b.latitude], [], null, (album) ->
-				console.log album
 				album.breaks.push b
 				album.topBreak = b
 				album.saveToDB()
+				console.log "ALBUM: what we just saved " + album
 				return
 		else
 			album.breaks.push b
 			if album.topBreak is null or album.topBreak.score < b.score
+				console.log 'ALBUM: changing the topbreak'
 				album.topBreak = b
 			album.save (err) ->
 				console.log 'ALBUM: saving new break' + b.headline + ' to ' + album.name
