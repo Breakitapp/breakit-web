@@ -69,8 +69,12 @@ nextFeed = (array, best, page, userLocation) ->
 
 findBreak = (album, page, callback) ->
 	models.Album.find({'name': album}).exec((err, docs) ->
-		b = docs[0].breaks
-		callback err, b
+		if docs is not null or docs[1] is not null
+			b = docs[0].breaks
+			b.splice 0,1
+			callback err, b
+		else
+			callback err, docs
 	)
 
 root = exports ? window
