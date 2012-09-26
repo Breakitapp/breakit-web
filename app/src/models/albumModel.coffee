@@ -51,9 +51,8 @@ find = (name, loc, callback) ->
 			return album
 
 addBreak = (b) ->
-	find b.location_name, b.loc, (album) ->
+	find b.location_name,  (album) ->
 		if album is null
-			console.log b
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
 			jsalbum = new Album b.location_name, [b], b, (album) ->
 				album.saveToDB()
