@@ -24,7 +24,7 @@ createFromId = (id) ->
 			return newAlbum
 
 find = (name, loc, callback) ->
-	models.Album.db.db.executeDbCommand {
+	###models.Album.db.db.executeDbCommand {
 		geoNear: 'albums' 
 		near : loc
 		spherical : true
@@ -42,7 +42,7 @@ find = (name, loc, callback) ->
 					i++
 			#TODO handling of the last breaks modulus
 			callback null, breaks
-	return breaks
+	return breaks###
 	models.Album.findOne name: name, (err, album) ->
 		if err
 			throw err
