@@ -27,7 +27,7 @@ exports.index = (req, res) ->
 #create a new break
 exports.post_break = (req, res) ->
 	breaks.createBreak req.body, (err, break_) ->
-		albums.addBreak break_.location_name, break_
+		albums.addBreak break_
 		tmp_path = req.files.image.path
 		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
 		target_path ='./app/res/images/' + break_._id + '.jpeg'

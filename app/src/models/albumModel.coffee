@@ -23,7 +23,26 @@ createFromId = (id) ->
 			newAlbum = new Album album.name, album.location, album.breaks, album.topBreak
 			return newAlbum
 
-find = (name, callback) ->
+find = (name, loc, callback) ->
+	models.Album.db.db.executeDbCommand {
+		geoNear: 'albums' 
+		near : loc
+		spherical : true
+		}, (err, docs) ->
+			if err
+				throw err
+			b = docs.documents[0].results
+			if b[0] and b[page*10]
+				i = 0
+				while b[page*10+i] and i < 10
+					object = b[page*10+i]
+					found_break = object.obj
+					found_break.dis = object.dis
+					breaks.push found_break
+					i++
+			#TODO handling of the last breaks modulus
+			callback null, breaks
+	return breaks
 	models.Album.findOne name: name, (err, album) ->
 		if err
 			throw err
@@ -31,8 +50,8 @@ find = (name, callback) ->
 			callback album
 			return album
 
-addBreak = (name, b) ->
-	find name, (album) ->
+addBreak = (b) ->
+	find b.location_name, b.loc, (album) ->
 		if album is null
 			console.log b
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
@@ -69,7 +88,7 @@ nextFeed = (array, best, page, userLocation) ->
 
 findBreak = (album, page, callback) ->
 	models.Album.find({'name': album}).exec((err, docs) ->
-		if docs is not null or docs[1] is not null
+		if docs is not null and docs[1] is not null
 			b = docs[0].breaks
 			b.splice 0,1
 			callback err, b

@@ -1,0 +1,29 @@
+!!! 5
+html
+	head
+		title Breakit beta-signup
+		link(rel='stylesheet', href='/public/css/signup.css')
+		link(rel='icon', type='image/ico', href='/images/logos/breakit.ico')
+		script(type='text/javascript')
+			var _gaq = _gaq || [];
+
+			_gaq.push(['_setAccount', 'UA-34204739-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+	body
+		div#container
+			div#signup_box
+				div#breakit_logo
+					img(src='/public/images/logos/logo_notext.png')
+			div#signup_tab
+				div#confirm_tab
+					p 
+						strong Thank you for signing up as a beta tester.  
+						– You will soon recieve a confirm email. We will contact you, when our private beta is ready to be downloaded and tested. 
+					a(href='/signup') << Back to signup
+
