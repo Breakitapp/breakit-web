@@ -1,23 +1,7 @@
 models = require './mongoModel'
 
 class User
-	constructor: (@id, @fName, @lName, @nName, @email, @phone) ->
-		
-		#Testing if email is in a valid format?
-		
-		@breaks = null
-		
-		###
-		It would be nicer to count id inside the constructor, 
-		but this creates some problems...
-		
-		models.User.count {}, (err, c) ->
-			if err
-				throw err
-			else
-				@id = c + 1
-				console.log 'New user id assigned: ' + @id	
-		###
+	constructor: (@id, @fName, @lName, @nName, @email, @phone, @breaks = null) ->
 		
 	save: (callback) ->
 		user = new models.User
@@ -30,11 +14,10 @@ class User
 		user.save (err) ->
 			if err
 				console.log err
-				callback err
-			else
-				console.log 'USER: Saved a new user: ' + user.id
-				@dbid = user._id
 				callback null
+			else
+				console.log 'USER: Saved a new user: ' + user._id
+				callback user._id
 	
 	addBreak: (break_) ->
 		if typeof break_ is Break

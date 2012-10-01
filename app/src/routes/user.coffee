@@ -31,16 +31,18 @@ exports.submit = (req, res) ->
 			callback null, newUser
 	], 
 	(err, newUser) ->
-		newUser.save (err) ->
-			if err
-				res.send 'Error creating new user'
-			else
+		newUser.save (id) ->	
+			if id
 				res.send 'New user registered successfully!'
+			else 
+				res.send 'Error creating new user'
 	
 exports.view = (req,res) ->
 		
 	user.find req.params.id, (targetUser) ->
 		res.render 'viewUser', title : 'User ' + req.params.id, user: targetUser
+		#consider changing to _id
+	
 	#TODO: view also beta value (in jade)
 	
 exports.list = (req, res) ->

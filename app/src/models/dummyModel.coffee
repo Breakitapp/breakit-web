@@ -1,3 +1,5 @@
+async = require "async"
+
 #Dummy data for Breakit
 
 breakModel = require './breakModel'
@@ -7,7 +9,6 @@ albumModel = require './albumModel'
 #Create dummydata
 
 #Users
-
 user1 = new userModel.User 1, 'Seppo', 'Taalasmaa', 'Sepi', 'sepi@talonmies.com', 'nokia 6510'
 user2 = new userModel.User 2, 'Ismo', 'Laitela', 'Iso-Ismo', 'ismo@turpaan.com', 'Benefon i'
 user3 = new userModel.User 3, 'Hra', 'Hakkarainen', 'hh', 'hakkarainen@koirala.com', 'Mutsis luuri, lol'
@@ -21,7 +22,7 @@ data = lon : 65, lat : 65, location_name : 'venture', story : 'mutha<fucka', hea
 
 breakModel.createBreak data, (err, docs) ->
 	console.log docs
-###
+
 break1 = new breakModel.Break  65, 64, 'Shangri-La', 'Here be something fun', 'Chillin at Shangri-la'
 break2 = new breakModel.Break  62, 61, 'Hobocave', 'Hobos', 'Damn nigga, it smells here!'
 break3 = new breakModel.Break  65.6, 64.9, 'Queens palace', 'Walking the corgis', 'I was walking the queens corgis, when suddenly Daniel Craig rushed us and kidnapped the dogs. Please, someone, HALP!'
@@ -55,6 +56,22 @@ break30 = new breakModel.Break  4, 15, 'Poopville', 'hihihihihihi', 'pooop'
 break31 = new breakModel.Break  62, 69, 'Boobville', 'hihihihihih', 'Boob'
 break32 = new breakModel.Break  63, 60, 'Shangri-La', 'Again @ shangri-la', 'Chillin at Shangri-la'
 
+album1 = new albumModel.Album 'venture garage'
+album2 = new albumModel.Album 'Breakit HQ'
+
+album1.save (id) ->
+	album1.dbid = id
+	console.log 'album1: ' + album1.dbid
+album2.save (id) ->
+	album2.dbid = id
+	console.log 'album2: ' + album2.dbid
+	
+console.log 'waiting muthafucka'
+setTimeout 'lol', 2000
+
+console.log album1.dbid # null
+console.log album2.dbid # null
+
 break1.save user1
 break2.save user2
 break3.save user3
@@ -87,22 +104,14 @@ break29.save user2
 break30.save user3
 break31.save user1
 break32.save user2
+
+setTimeout 'lol', 200
+
+
 ###
 #Albums
 ###
-album1 = new albumModel.Album 'venture garage'
-album2 = new albumModel.Album 'by'
 
-album1.save (id) ->
-	album1.dbid = id
-	console.log album1.dbid
-album2.save (id) ->
-	album2.dbid = id
-	console.log album2.dbid
-
-console.log 'waiting muthafucka'
-console.log album1.dbid
-console.log album2.dbid
 albumModel.addBreak album1.dbid, break1
 albumModel.addBreak album2.dbid, break2
 albumModel.addBreak album1.dbid, break3
@@ -113,5 +122,7 @@ albumModel.addBreak album1.dbid, break7
 albumModel.addBreak album2.dbid, break8
 
 setTimeout 'lol', 200
+
+
 ###
 #albumModel.remove album2.dbid

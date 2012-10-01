@@ -7,11 +7,14 @@ class Album
 		album = new models.Album
 			name			: @name
 			location	: @location
+			breaks : @breaks
+			topbreak : @topBreak
 		album.save (err) ->
 			if err
 				throw err
 			else
-				callback(album._id)
+				console.log 'ALBUM: Album saved.'
+				callback album._id
 
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
@@ -24,10 +27,21 @@ createFromId = (id) ->
 find = (id, callback) ->
 	models.Album.findById id, (err, album) ->
 		if err
-			throw err
+			callback err
 		else
 			callback album
 			return album
+
+findIdByName = (name, callback) ->
+	models.Album.findOne(name : name).exec (err, foundAlbum) ->
+		
+		if err
+			console.log 'Failed to find album: ' + name
+			callback null	
+		else
+			console.log 'Found album: ' + foundAlbum._id
+			callback foundAlbum._id
+			return foundAlbum._id
 
 updateAttr = (id, attr, value, callback) ->
 	models.Album.findByIdAndUpdate id, attr : value
@@ -38,7 +52,7 @@ addBreak = (id, b) ->
 		if album.topBreak.score < b.score
 			album.topBreak = b
 		album.save (err) ->
-			console.log 'ALBUM: saving new break' + b.headline + ' to ' + album.name
+			console.log 'ALBUM: saving new break ' + b.headline + ' to ' + album.name
 			if err
 				throw err
 
@@ -63,6 +77,7 @@ nextFeed = (array, best, page, userLocation) ->
 root = exports ? window
 root.Album = Album
 root.find = find
+root.findIdByName = findIdByName
 root.remove = remove
 root.addBreak = addBreak
 root.createFromId = createFromId

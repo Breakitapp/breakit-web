@@ -3,7 +3,7 @@ albumModel = require './albumModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
-		console.log 'CREATED A NEW BREAK'+@headline+' to ' + @location_name
+		console.log 'CREATED A NEW BREAK '+@headline+' to ' + @location_name
 
 	save: (user = @user, callback) ->
 		@user = user
@@ -14,18 +14,25 @@ class Break
 			headline			:		@headline
 			user					:		@user
 		that = @
-		albumModel.addBreak(@location_name, @)
-		break_.save (err) ->
-			if err 
-				throw err
+		
+		albumModel.findIdByName @location_name, (id) ->
+			if id
+				albumModel.addBreak(id, @)
+				break_.save (err) ->
+					if err 
+						throw err
+					else
+						saved = true
+						console.log 'BREAK: saved a new break ' + that.story + ' for ' + that.user.nName
+						callback null, break_
 			else
-				saved = true
-				console.log 'BREAK: saved a new break ' + that.story + ' for ' + that.user.nName
-				callback null, break_
-
-
+				console.log 'No such album. Creating a new one.'
+				album = new models.Album (@location_name, loc, that, that)
+				album.save (dbid) ->
+					
+		
 createBreak = (data, callback) ->
-	console.log 'CREATEBREAK : ' + data.longitude
+	console.log 'CREATEBREAK : ' + data.lon
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
 
