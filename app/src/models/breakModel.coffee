@@ -3,7 +3,9 @@ albumModel = require './albumModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
-		console.log 'CREATED A NEW BREAK '+@headline+' to ' + @location_name
+
+		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
+
 
 	save: (user = @user, callback) ->
 		@user = user
@@ -13,8 +15,12 @@ class Break
 			story					:		@story
 			headline			:		@headline
 			user					:		@user
+			score					:		1
 		that = @
 		
+		albumModel.addBreak(@)
+		
+		###
 		albumModel.findIdByName @location_name, (id) ->
 			if id
 				albumModel.addBreak(id, @)
@@ -28,18 +34,15 @@ class Break
 			else
 				console.log 'No such album. Creating a new one.'
 				album = new models.Album (@location_name, loc, that, that)
-				album.save (dbid) ->
-					
-		
+				album.save (dbid) ->					
+		###
+
 createBreak = (data, callback) ->
-	console.log 'CREATEBREAK : ' + data.lon
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
 
-
 #find all the breaks
 findAll = (callback) ->
-
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
 			breaks_ = (b for b in breaks)

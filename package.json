@@ -10,6 +10,10 @@
 {
 	"name"	:	"Eerik Puska",
 	"email"	:	"eerik.puska@gmail.com"
+},
+{
+	"name"	:	"Marko Oksanen",
+	"email"	:	"marko.oksanen@aceconsulting.fi"
 }],
 "private"				: "true",
 "dependencies"	:	{
@@ -22,6 +26,7 @@
 		"chai"					:	">=1.2.0",
 		"backbone"			:	">=0.9.0",
 		"underscore"		:	">=1.3.0",
-		"coffee-script"	:	">=1.3.0"
+		"coffee-script"	:	">=1.3.0",
+		"nodemailer"		:	">= 0.3.10"
 	}
 }

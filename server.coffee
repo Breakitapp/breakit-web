@@ -55,8 +55,14 @@ server.all '/break', site.break_tmp
 server.post '/ios', ios.index
 server.post '/ios/:user/:break', ios.post_break
 server.get '/ios/:id', ios.get_break
+server.get '/ios/:album/:page', ios.get_breaks_from_album
 
 #WEB
+
+#Signup
+server.get '/signup', site.signup
+server.post '/signup', site.signup_post
+
 #Users
 server.all '/users', user.list
 server.get '/users/new', user.create

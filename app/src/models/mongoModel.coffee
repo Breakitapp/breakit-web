@@ -6,10 +6,10 @@ toLower = (v) ->
 
 
 BreakSchema = new Schema
-	id						:			{type: Number, index: true}
+	#id						:			{type: Number, index: true, unique: true, required: true}
 	headline			:			{type: String}
 	user					:			{type: String}
-	points				:			{type: Number, default: 1}
+	score					:			{type: Number, default: 1}
 	loc						:			{lon: Number, lat: Number}
 	location_name	:			{type: String}
 	story					:			{type: String, index: true}
@@ -17,7 +17,6 @@ BreakSchema = new Schema
 	tags					:			{type: String}
 	publish				:			{type: Boolean, default: false}
 	comments			:			[Comment]
-	
 
 BreakSchema.index {loc: '2d'}
 
@@ -37,7 +36,7 @@ AlbumSchema = new Schema
 	date			:		{type: Date, default: Date.now}
 	breaks		:		[Break]
 	topBreak	:		[Break]
-	location	:		{lon: Number, lat: Number}
+	loc	:		{lon: Number, lat: Number}
 
 AlbumSchema.index {loc: '2d'}
 
