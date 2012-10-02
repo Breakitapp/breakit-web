@@ -1,0 +1,7 @@
+extend layout
+block contents
+	form(name="input", action="/albums/new", method="post")
+		label Name: 
+		input(type="text", name="name")
+		br
+		input(type="submit", value="Submit")

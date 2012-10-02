@@ -1,0 +1,19 @@
+extend layout
+block contents
+	form(name="input", action="/breaks/new", method="post")
+		label Longitude: 
+		input(type="text", name="lon")
+		br
+		label Latitude: 
+		input(type="text", name="lat")
+		br
+		label Place name: 
+		input(type="text", name="name")
+		br
+		label Story: 
+		input(type="text", name="story")
+		br
+		label Headline: 
+		input(type="text", name="headline")
+		br
+		input(type="submit", value="Submit")
