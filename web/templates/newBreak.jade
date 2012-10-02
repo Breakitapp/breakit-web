@@ -2,10 +2,10 @@ extend layout
 block contents
 	form(name="input", action="/breaks/new", method="post")
 		label Longitude: 
-		input(type="text", name="lon")
+		input(type="text", name="longitude")
 		br
 		label Latitude: 
-		input(type="text", name="lat")
+		input(type="text", name="latitude")
 		br
 		label Place name: 
 		input(type="text", name="name")
@@ -15,5 +15,8 @@ block contents
 		br
 		label Headline: 
 		input(type="text", name="headline")
+		br
+		label Image: 
+		input(type="file", name="image", enctype="multipart/form-data")
 		br
 		input(type="submit", value="Submit")

@@ -75,7 +75,7 @@ addBreak = (b) ->
 				console.log 'ALBUM: changing the topbreak'
 				album.topBreak = b
 			album.save (err) ->
-				console.log 'ALBUM: saving new break' + b.headline + ' to ' + album.name
+				console.log 'ALBUM: saving new break ' + b.headline + ' to ' + album.name
 				if err
 					throw err
 
