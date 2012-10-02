@@ -74,11 +74,11 @@ server.post '/users/delete/:id', user.remove #temporary?
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
 server.all '/breaks', breaks.list
+server.get '/breaks/new', breaks.webCreate
+server.post '/breaks/new', breaks.webSubmit
 server.get '/breaks/:id', breaks.view
 server.post '/breaks/:id', breaks.create
 server.get '/breaks/:page', breaks.infinite
-server.get '/breaks/new', breaks.webCreate
-server.post '/breaks/new', breaks.webSubmit
 
 #Albums
 server.all '/albums', albums.list

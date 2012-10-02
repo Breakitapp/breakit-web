@@ -14,7 +14,6 @@ exports.create = (req, res) ->
 	breaks.create
 
 exports.webCreate = (req, res) ->
-	console.log 'jee webcreate'
 	res.render 'newBreak', title : 'Create a new Break'
 	
 exports.webSubmit = (req, res) ->

@@ -12,4 +12,7 @@ exports.submit = (req, res) ->
 	
 	name = req.body.name 
 	
-	newAlbum = new albums.Album name, null, null, (album) ->
+	new albums.Album name, null, null, (album) ->
+		
+		album.saveToDB () ->
+		res.send 'Created a new album: ' + album.name
