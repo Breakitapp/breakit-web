@@ -17,15 +17,17 @@ class Break
 		that = @
 		break_.save (err) ->
 			if err 
+				console.log 'BREAK: Break save failed'
 				throw err
 			else
+				console.log 'BREAK: Break saved successfully.'
 				callback null, break_
 
-
+#is this necessary?
 createBreak = (data, callback) ->
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
-
+	
 #find all the breaks
 findAll = (callback) ->
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->

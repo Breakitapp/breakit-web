@@ -49,6 +49,16 @@ find = (name, loc, callback) ->
 		else
 			callback album
 			return album
+			
+list = (callback) ->
+
+	models.Album.find().exec (err, data) ->
+
+		if err
+			throw err
+		else
+			albums = (album for album in data)
+			callback albums
 
 addBreak = (b) ->
 	find b.location_name,  (album) ->
@@ -98,6 +108,7 @@ findBreak = (album, page, callback) ->
 root = exports ? window
 root.Album = Album
 root.find = find
+root.list = list
 root.remove = remove
 root.addBreak = addBreak
 root.createFromId = createFromId

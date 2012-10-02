@@ -8,6 +8,7 @@ express				= require 'express'
 site					= require './app/lib/routes/site'
 user					= require './app/lib/routes/user'
 breaks				= require './app/lib/routes/breaks'
+albums				= require './app/lib/routes/albums'
 ios						= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
@@ -72,10 +73,17 @@ server.post '/users/:id', user.update
 server.post '/users/delete/:id', user.remove #temporary?
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
-server.get '/breaks', breaks.list
+server.all '/breaks', breaks.list
 server.get '/breaks/:id', breaks.view
 server.post '/breaks/:id', breaks.create
 server.get '/breaks/:page', breaks.infinite
+server.get '/breaks/new', breaks.webCreate
+server.post '/breaks/new', breaks.webSubmit
+
+#Albums
+server.all '/albums', albums.list
+server.get '/albums/new', albums.create
+server.post '/albums/new', albums.submit
 
 #Starting the server
 server.listen 3000

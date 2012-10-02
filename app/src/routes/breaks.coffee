@@ -1,4 +1,5 @@
 breaks = require '../models/breakModel'
+albums = require '../models/albumModel'
 
 exports.list = (req, res) ->
 	breaks.findNear 100, 65, 65, (err, docs) ->
@@ -11,3 +12,17 @@ exports.infinite = (req, res) ->
 
 exports.create = (req, res) ->
 	breaks.create
+
+exports.webCreate = (req, res) ->
+	console.log 'jee webcreate'
+	res.render 'newBreak', title : 'Create a new Break'
+	
+exports.webSubmit = (req, res) ->
+	lon = (Number) req.body.lon
+	lat = (Number) req.body.lat
+	name = req.body.name
+	story = req.body.story
+	headline = req.body.headline
+	
+	newBreak = new breaks.Break lon, lat, name, story, headline
+	albums.addBreak newBreak
