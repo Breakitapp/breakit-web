@@ -23,7 +23,10 @@ createFromId = (id) ->
 			newAlbum = new Album album.name, album.location, album.breaks, album.topBreak
 			return newAlbum
 
-find = (name, loc, callback) ->
+find = (name, callback) ->
+	
+	console.log 'name: ' + name
+	
 	###models.Album.db.db.executeDbCommand {
 		geoNear: 'albums' 
 		near : loc
