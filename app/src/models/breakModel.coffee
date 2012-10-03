@@ -1,5 +1,6 @@
 models = require './mongoModel'
 albumModel = require './albumModel'
+commentModel = require './commentModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
@@ -23,10 +24,19 @@ class Break
 				console.log 'BREAK: Break saved successfully.'
 				callback null, break_
 
-#is this necessary?
 createBreak = (data, callback) ->
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
+	
+comment = (comment, breakId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			console.log 'BREAK: failed to find break to be commented'
+			callback err, null
+		else
+			break_.comments.push comment
+			console.log 'BREAK: new comment added successfully to break: ' + break_._id
+			callback null, break_.comments.length()
 	
 #find all the breaks
 findAll = (callback) ->

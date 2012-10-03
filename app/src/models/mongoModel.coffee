@@ -43,6 +43,7 @@ AlbumSchema.index {loc: '2d'}
 CommentSchema = new Schema
 	comment		:		{type: String}
 	date			:		{type: String}
+	user : {type: String}
 
 Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema

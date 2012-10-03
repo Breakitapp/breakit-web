@@ -6,6 +6,7 @@
 
 breaks	= require '../models/breakModel'
 albums	= require '../models/albumModel'
+comments = require './commentModel'
 fs			= require 'fs'
 
 #Main page for ios, response sends 10 breaks / page, ordered according to distance only.
@@ -42,6 +43,14 @@ exports.post_break = (req, res) ->
 					if err
 						throw err
 					res.send b
+					
+exports.post_comment = (req, res) ->
+	newComment = new comments.Comment req.comment, req.user
+	breaks.comment newComment, req.breakId, (err, commentCount) ->
+		if err
+			res.send 'Commenting failed.'
+		else
+			res.send newComment, commentCount
 
 exports.get_break = (req, res) ->
 	id = req.params.id

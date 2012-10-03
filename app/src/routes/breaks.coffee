@@ -19,7 +19,6 @@ exports.webCreate = (req, res) ->
 	
 exports.webSubmit = (req, res) ->
 	
-	console.log req.body
 	console.log req.files
 	console.log req.files.image.path
 	

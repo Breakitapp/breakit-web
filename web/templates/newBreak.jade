@@ -1,6 +1,6 @@
 extend layout
 block contents
-	form(name="input", action="/breaks/new", method="post")
+	form(name="input", action="/breaks/new", method="post", enctype="multipart/form-data")
 		label Longitude: 
 		input(type="text", name="longitude")
 		br
@@ -17,6 +17,6 @@ block contents
 		input(type="text", name="headline")
 		br
 		label Image: 
-		input(type="file", name="image", enctype="multipart/form-data")
+		input(type="file", name="image")
 		br
 		input(type="submit", value="Submit")
