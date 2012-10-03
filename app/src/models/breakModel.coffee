@@ -35,8 +35,13 @@ comment = (comment, breakId, callback) ->
 			callback err, null
 		else
 			break_.comments.push comment
-			console.log 'BREAK: new comment added successfully to break: ' + break_._id
-			callback null, break_.comments.length
+			break_.save (err) ->
+				if err
+					console.log 'BREAK: Break save failed'
+					callback err, null
+				else
+					console.log 'BREAK: new comment added successfully to break: ' + break_._id + ' comment: ' + break_.comments[0].comment
+					callback null, break_.comments.length
 	
 #find all the breaks
 findAll = (callback) ->
