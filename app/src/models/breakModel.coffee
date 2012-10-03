@@ -37,10 +37,10 @@ comment = (comment, breakId, callback) ->
 			break_.comments.push comment
 			break_.save (err) ->
 				if err
-					console.log 'BREAK: Break save failed'
+					console.log 'BREAK: Break save failed after new comment'
 					callback err, null
 				else
-					console.log 'BREAK: new comment added successfully to break: ' + break_._id + ' comment: ' + break_.comments[0].comment
+					console.log 'BREAK: New comment added successfully to break: ' + break_._id
 					callback null, break_.comments.length
 	
 #find all the breaks
@@ -86,6 +86,36 @@ findById = (id, callback) ->
 	models.Break.findById(id).exec((err, breaks) ->
 		callback err, breaks
 	)
+	
+upvote = (breakId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			console.log 'BREAK: failed to find break to be upvoted'
+			callback err, null
+		else
+			break_.score++
+			break_.save (err) ->
+				if err
+					console.log 'BREAK: Break save failed after upvote'
+					callback err, null
+				else
+					console.log 'BREAK: Upvote successful: ' + break_._id
+					callback null, break_.score
+					
+downvote = (breakId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			console.log 'BREAK: failed to find break to be upvoted'
+			callback err, null
+		else
+			break_.score--
+			break_.save (err) ->
+				if err
+					console.log 'BREAK: Break save failed after downvote'
+					callback err, null
+				else
+					console.log 'BREAK: Downvote successful: ' + break_._id
+					callback null, break_.score	
 
 root = exports ? window
 root.Break = Break
@@ -95,3 +125,5 @@ root.findAll = findAll
 root.findNear = findNear
 root.findInfinite = findInfinite
 root.findById = findById
+root.upvote = upvote
+root.downvote = downvote

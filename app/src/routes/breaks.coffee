@@ -80,3 +80,22 @@ exports.postComment = (req, res) ->
 			res.send 'Commenting failed.'
 		else
 			res.send 'Commenting successful. Count: ' + commentCount
+
+exports.vote = (req, res) ->
+	if req.body.which == 'up'
+		breaks.upvote req.body.breakId, (err, score) ->
+			if err
+				res.send 'Vote failed'
+			else
+				res.send 'Vote successful! New score: ' + score
+			
+	else if req.body.which == 'down'
+		breaks.downvote req.body.breakId, (err, score) ->
+			if err
+				res.send 'Vote failed'
+			else
+				res.send 'Vote successful! New score: ' + score
+	else
+		res.send 'invalid vote'
+	
+	
