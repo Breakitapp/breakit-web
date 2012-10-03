@@ -46,7 +46,8 @@ exports.post_break = (req, res) ->
 					
 exports.post_comment = (req, res) ->
 	
-	console.log req
+	console.log req.body
+	console.log req.comment
 	
 	newComment = new comments.Comment req.comment, req.user
 	breaks.comment newComment, req.breakId, (err, commentCount) ->

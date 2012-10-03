@@ -84,6 +84,7 @@ findById = (id, callback) ->
 
 root = exports ? window
 root.Break = Break
+root.comment = comment
 root.createBreak = createBreak
 root.findAll = findAll
 root.findNear = findNear
