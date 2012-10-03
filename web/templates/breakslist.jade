@@ -1,0 +1,4 @@
+extend layout
+block contents
+	for break_ in breaks
+		p= break_._id + " " + break_.headline + " " + break_.user + " " + break_.comments[0].comment
