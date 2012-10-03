@@ -36,7 +36,7 @@ comment = (comment, breakId, callback) ->
 		else
 			break_.comments.push comment
 			console.log 'BREAK: new comment added successfully to break: ' + break_._id
-			callback null, break_.comments.length()
+			callback null, break_.comments.length
 	
 #find all the breaks
 findAll = (callback) ->
