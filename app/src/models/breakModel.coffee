@@ -31,7 +31,7 @@ createBreak = (data, callback) ->
 comment = (comment, breakId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
-			console.log 'BREAK: failed to find break to be commented'
+			console.log 'BREAK: failed to find break to be commented. Id: ' + breakId
 			callback err, null
 		else
 			break_.comments.push comment

@@ -1,5 +1,5 @@
 async = require "async"
-user = require '../models/userModel'
+users = require '../models/userModel'
 models = require '../models/mongoModel'
 
 exports.create = (req, res) ->
@@ -16,6 +16,14 @@ exports.submit = (req, res) ->
 	em = req.body.em
 	ph = req.body.ph
 
+	newUser = new users.User fn, ln, nn, em, ph
+	newUser.save (err, user) ->
+		if err
+			res.send('Error creating new user')
+		else
+			res.redirect('/users/' + user._id)
+
+###
 	async.waterfall [
 		
 		#Counting id for the new user.
@@ -36,31 +44,36 @@ exports.submit = (req, res) ->
 				res.send 'Error creating new user'
 			else
 				res.send 'New user registered successfully!'
+###
 	
 exports.view = (req,res) ->
 		
-	user.find req.params.id, (targetUser) ->
-		res.render 'viewUser', title : 'User ' + req.params.id, user: targetUser
-	#TODO: view also beta value (in jade)
-	
+	users.findById req.params.id, (err, targetUser) ->
+		if err
+			res.send('Did not find user.')
+		else
+			res.render 'viewUser', title : 'User ' + req.params.id, user: targetUser
+    
 exports.list = (req, res) ->
 
-	user.list (users) ->
-		
-		res.render 'userlist', title : 'Breakit userlist', users: users
+	users.list (userlist) ->
+		if userlist == null
+			res.send('No users found.')
+		else
+			res.render 'userlist', title : 'Breakit userlist', users: userlist
 		
 exports.update = (req,res) ->
 	console.log 'Update on user data received. Id: ' + req.params.id
 	
-	user.changeAttribute req.params.id, req.body.fn, req.body.ln, req.body.nn, req.body.em, req.body.ph, (err) ->		
+	users.changeAttributes req.params.id, req.body.fn, req.body.ln, req.body.nn, req.body.em, req.body.ph, (err, user) ->		
 
 		if err
 			res.send('User updating failed.')
 		else
-			res.send('User updated successfully!')
+			res.redirect('/users/' + user._id)
 		
 exports.remove = (req,res) ->
-	user.remove req.params.id, (err) ->
+	users.remove req.params.id, (err) ->
 		if err
 			res.send('Removing user failed.')
 		else

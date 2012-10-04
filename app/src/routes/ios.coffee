@@ -53,7 +53,7 @@ exports.post_comment = (req, res) ->
 		if err
 			res.send 'Commenting failed.'
 		else
-			res.send newComment, commentCount
+			res.send newComment
 
 #Simplified voting functionality
 #Takes a req that contains 2 fields: "breakId" and "which" ('up' or 'down')

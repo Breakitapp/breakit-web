@@ -81,21 +81,21 @@ exports.postComment = (req, res) ->
 		else
 			res.send 'Commenting successful. Count: ' + commentCount
 
-#req needs to contain "which" ('up' or 'down') field and "breakId" field
+#req needs to contain "which" field ('up' or 'down') and "breakId" field
 exports.vote = (req, res) ->
 	if req.body.which == 'up'
 		breaks.upvote req.body.breakId, (err, score) ->
 			if err
 				res.send 'Vote failed'
 			else
-				res.send 'Vote successful! New score: ' + score
+				res.redirect('/breaks/all')
 			
 	else if req.body.which == 'down'
 		breaks.downvote req.body.breakId, (err, score) ->
 			if err
 				res.send 'Vote failed'
 			else
-				res.send 'Vote successful! New score: ' + score
+				res.redirect('/breaks/all')
 	else
 		res.send 'invalid vote'
 	
