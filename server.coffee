@@ -59,7 +59,7 @@ server.post '/ios/:user/:break', ios.post_break
 server.get '/ios/:id', ios.get_break
 server.get '/ios/:album/:page', ios.get_breaks_from_album
 
-#WEB
+#WEB (only for testing through the web interface)
 
 #Signup
 server.get '/signup', site.signup

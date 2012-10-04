@@ -1,7 +1,7 @@
 extend layout
 block contents
 	for break_ in breaks
-		p= break_._id + " " + break_.headline + " " + break_.user + " " + break_.score + " " + break_.comments[0].comment
+		p= "Break id: " + break_._id + ", headline: " + break_.headline + ", user: " + break_.user + ", created: " + break_.date + ", score: " + break_.score + ", comment count: " + break_.comments.length
 		form(name="input1", action="/breaks/vote", method="post")
 			input(type="hidden", name="breakId", value=break_._id)
 			input(type="hidden", name="which", value="up")

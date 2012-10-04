@@ -42,7 +42,7 @@ AlbumSchema.index {loc: '2d'}
 
 CommentSchema = new Schema
 	comment		:		{type: String}
-	date			:		{type: String}
+	date			:		{type: Date, default: Date.now}
 	user : {type: String}
 
 Break			= mongoose.model 'Break', BreakSchema

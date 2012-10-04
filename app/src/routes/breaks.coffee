@@ -81,6 +81,7 @@ exports.postComment = (req, res) ->
 		else
 			res.send 'Commenting successful. Count: ' + commentCount
 
+#req needs to contain "which" ('up' or 'down') field and "breakId" field
 exports.vote = (req, res) ->
 	if req.body.which == 'up'
 		breaks.upvote req.body.breakId, (err, score) ->
