@@ -1,12 +1,21 @@
-extend layout
-block contents
-	for break_ in breaks
-		p= "Break id: " + break_._id + ", headline: " + break_.headline + ", user: " + break_.user + ", created: " + break_.date + ", score: " + break_.score + ", comment count: " + break_.comments.length
-		form(name="input1", action="/breaks/vote", method="post")
-			input(type="hidden", name="breakId", value=break_._id)
-			input(type="hidden", name="which", value="up")
-			input(type="submit", value="Upvote")
-		form(name="input2", action="/breaks/vote", method="post")
-			input(type="hidden", name="breakId", value=break_._id)
-			input(type="hidden", name="which", value="down")
-			input(type="submit", value="Downvote")
+!!! 5
+html
+	head
+		title= title
+		meta(name='viewport', content='width=device-width,initial-scale=1')
+		block scripts
+			script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
+			script(type='text/javascript', src='../public/js/libs/underscore-min.js')
+			script(type='text/javascript', src='../public/js/libs/backbone-min.js')
+	body
+		block contents
+			for break_ in breaks
+				p= "Break id: " + break_._id + ", headline: " + break_.headline + ", user: " + break_.user + ", created: " + break_.date + ", score: " + break_.score + ", comment count: " + break_.comments.length
+				form(name="input1", action="/breaks/vote", method="post")
+					input(type="hidden", name="breakId", value=break_._id)
+					input(type="hidden", name="which", value="up")
+					input(type="submit", value="Upvote")
+					form(name="input2", action="/breaks/vote", method="post")
+					input(type="hidden", name="breakId", value=break_._id)
+					input(type="hidden", name="which", value="down")
+					input(type="submit", value="Downvote")		block footerscripts
