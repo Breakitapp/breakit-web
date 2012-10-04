@@ -17,7 +17,7 @@ class User
 				console.log err
 				callback err, null
 			else
-				console.log 'USER: Saved a new user: ' + user.id
+				console.log 'USER: Saved a new user: ' + user._id
 				callback null, user
 	
 addBreak = (userId, break_, callback) ->

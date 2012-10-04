@@ -18,9 +18,8 @@ exports.signup = (req, res) ->
 	
 exports.signup_post = (req, res) ->
 	email = req.body.email
-	user = new models.User
+	user = new models.BetaUser
 		email		:		email
-		beta		:		'true'
 		phone		:		req.body.phone
 
 	user.save (err) ->

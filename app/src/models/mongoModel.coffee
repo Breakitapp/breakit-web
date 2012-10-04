@@ -30,6 +30,12 @@ UserSchema = new Schema
 	phone			:		{type: String, required: true}
 	breaks		:		[Break]
 
+#This is only for receiving beta registrations
+BetaSchema = new Schema
+	email			:		{type: String, set: toLower, required: true, unique: true}
+	date			:		{type: Date, default: Date.now}
+	phone			:		{type: String, required: true}
+
 AlbumSchema = new Schema
 	name			:		{type: String, unique: true, index: true}
 	date			:		{type: Date, default: Date.now}
@@ -46,10 +52,12 @@ CommentSchema = new Schema
 
 Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
+BetaUser = mongoose.model 'BetaUser', BetaSchema
 Comment		= mongoose.model 'Comment', CommentSchema
 Album			=	mongoose.model 'Album', AlbumSchema
 
 exports.User			= User
+exports.BetaUser = BetaUser
 exports.Break			= Break
 exports.Comment		= Comment
 exports.Album			= Album
