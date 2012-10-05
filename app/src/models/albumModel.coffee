@@ -99,9 +99,17 @@ nextFeed = (array, best, page, userLocation) ->
 findBreak = (album, page, callback) ->
 	models.Album.find({'name': album}).exec((err, docs) ->
 		if docs is not null and docs[1] is not null
+			breaks = []
 			b = docs[0].breaks
+			#This splice should be removed once we send albums directly to the client.
 			b.splice 0,1
-			callback err, b
+			if b[0]
+				i = 0
+				while b[page*10+i] and i < 10
+					found_break = b[page*10+i]
+					breaks.push found_break
+					i++
+				callback err, breaks
 		else
 			callback err, docs
 	)

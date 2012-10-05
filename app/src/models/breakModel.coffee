@@ -52,7 +52,7 @@ findAll = (callback) ->
 			return breaks_
 		)
 
-#finds an x amout of breaks in the vicinity
+#finds an x amout of breaks in the vicinity 
 findNear = (longitude, latitude, page, callback) ->
 	breaks = []
 	models.Break.db.db.executeDbCommand {
@@ -63,7 +63,7 @@ findNear = (longitude, latitude, page, callback) ->
 			if err
 				throw err
 			b = docs.documents[0].results
-			if b[0] and b[page*10]
+			if b[0]
 				i = 0
 				while b[page*10+i] and i < 10
 					object = b[page*10+i]
@@ -71,7 +71,6 @@ findNear = (longitude, latitude, page, callback) ->
 					found_break.dis = object.dis
 					breaks.push found_break
 					i++
-			#TODO handling of the last breaks modulus
 			callback null, breaks
 	return breaks
 
