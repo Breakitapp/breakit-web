@@ -76,7 +76,7 @@ addBreak = (b) ->
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
 			jsalbum = new Album b.longitude, b.latitude, b.location_name, [b], b, (album) ->
 				album.saveToDB()
-				console.log "ALBUM: what we just saved " + album.location
+				console.log "ALBUM: created a new album @ " + album.longitude + ' : ' + album.latitude
 				return
 		else
 			album.breaks.push b
