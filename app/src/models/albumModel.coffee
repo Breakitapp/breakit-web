@@ -3,11 +3,12 @@ _ = require 'underscore'
 
 #TODO add location for album
 class Album
-	constructor: (@name, @breaks, @topBreak, callback) ->
+	constructor: (@longitude, @latitude, @name, @breaks, @topBreak, callback) ->
 		callback @
 
 	saveToDB : () ->
 		album = new models.Album
+			loc				:	{lon: @longitude, lat: @latitude}
 			name			: @name
 			breaks		:	@breaks
 			topBreak	: @topBreak
@@ -58,16 +59,17 @@ findNear = (longitude, latitude, page, callback) ->
 					object = a[page*10+i]
 					found_album = object.obj
 					found_album.dis = object.dis
+					found_album.breaks = null
 					albums.push found_album
 					i++
-			callback null, breaks
+			callback null, albums
 	return breaks
 	
 addBreak = (b) ->
 	find b.location_name,  (album) ->
 		if album is null
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
-			jsalbum = new Album b.location_name, [b], b, (album) ->
+			jsalbum = new Album b.longitude, b.latitude, b.location_name, [b], b, (album) ->
 				album.saveToDB()
 				console.log "ALBUM: what we just saved " + album.location
 				return
@@ -82,6 +84,7 @@ addBreak = (b) ->
 					throw err
 
 remove = (id) ->
+	#This need to iteratively remove all breaks too
 	models.Album.findByIdAndRemove id, (err) ->
 		if err
 			throw err
@@ -99,11 +102,11 @@ nextFeed = (array, best, page, userLocation) ->
 	best = _.first(closest, 10)
 
 findBreak = (album, page, callback) ->
-	models.Album.find({'name': album}).exec((err, docs) ->
+	models.Album.find({'name': album}).sort({'points':'descending'}).exec((err, docs) ->
 		if docs is not null and docs[1] is not null
 			breaks = []
 			b = docs[0].breaks
-			#This splice should be removed once we send albums directly to the client.
+			#This splice removes the top break, could be done with an if statement too
 			b.splice 0,1
 			if b[0]
 				i = 0

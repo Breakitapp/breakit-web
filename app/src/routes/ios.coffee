@@ -9,20 +9,21 @@ albums	= require '../models/albumModel'
 comments = require '../models/commentModel'
 fs			= require 'fs'
 
-#Main page for ios, response sends 10 breaks / page, ordered according to distance only.
+#Main page for ios, response sends 10 albums / page, ordered according to distance only.
+#The important thing for the client to pick is the albums name, and the topbreak. 
 exports.index = (req, res) ->
 	#Change page and location to numbers
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
-	#Get breaks sorted according to location
-	breaks.findNear lon, lat, page, (err, breaks) ->
+	#Get albums sorted according to location
+	albums.findNear lon, lat, page, (err, albums) ->
 		if err
 			throw err
 			res.send '404'
 		else
-			#Send the breaks as a JSON to client
-			res.send [breaks, page]
+			#Send the albums as a JSON to client
+			res.send [albums, page]
 
 
 #create a new break
