@@ -3,11 +3,11 @@ _ = require 'underscore'
 
 #TODO add location for album
 class Album
-	constructor: (@loc, @name, @breaks, @topBreak) ->
+	constructor: (@lon, @lat, @name, @breaks, @topBreak) ->
 
 	saveToDB : () ->
 		album = new models.Album
-			loc				:	@loc
+			loc				:	{lon: @lon, lat: @lat}
 			name			: @name
 			breaks		:	@breaks
 			topBreak	: @topBreak
@@ -74,7 +74,7 @@ addBreak = (b) ->
 		if album is null
 			
 			console.log 'ALBUM: Adding break ' + b.loc + ' and creating new album ' + b.location_name
-			jsalbum = new Album b.loc, b.location_name, [b], b
+			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b], b
 			jsalbum.saveToDB()
 			return
 		else
