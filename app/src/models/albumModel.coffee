@@ -1,6 +1,7 @@
 models = require './mongoModel'
 _ = require 'underscore'
 
+#TODO add location for album
 class Album
 	constructor: (@name, @breaks, @topBreak, callback) ->
 		callback @
@@ -24,43 +25,44 @@ createFromId = (id) ->
 			return newAlbum
 
 find = (name, callback) ->
-		
-	###models.Album.db.db.executeDbCommand {
-		geoNear: 'albums' 
-		near : loc
-		spherical : true
-		}, (err, docs) ->
-			if err
-				throw err
-			b = docs.documents[0].results
-			if b[0] and b[page*10]
-				i = 0
-				while b[page*10+i] and i < 10
-					object = b[page*10+i]
-					found_break = object.obj
-					found_break.dis = object.dis
-					breaks.push found_break
-					i++
-			#TODO handling of the last breaks modulus
-			callback null, breaks
-	return breaks###
 	models.Album.findOne name: name, (err, album) ->
 		if err
 			throw err
 		else
 			callback album
 			return album
-			
+
 list = (callback) ->
-
 	models.Album.find().exec (err, data) ->
-
 		if err
 			throw err
 		else
 			albums = (album for album in data)
 			callback albums
 
+#Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
+findNear = (longitude, latitude, page, callback) ->
+	albums = []
+	#This is the geonear mongoose function, that searches for locationbased nodes in db
+	models.Album.db.db.executeDbCommand {
+		geoNear: 'albums' 
+		near : loc
+		spherical : true
+		}, (err, docs) ->
+			if err
+				throw err
+			a = docs.documents[0].results
+			if a[0]
+				i = 0
+				while a[page*10+i] and i < 10
+					object = a[page*10+i]
+					found_album = object.obj
+					found_album.dis = object.dis
+					albums.push found_album
+					i++
+			callback null, breaks
+	return breaks
+	
 addBreak = (b) ->
 	find b.location_name,  (album) ->
 		if album is null
