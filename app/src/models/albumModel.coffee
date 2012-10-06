@@ -62,6 +62,7 @@ findNear = (longitude, latitude, page, callback) ->
 					found_album.breaks = null
 					albums.push found_album
 					i++
+				console.log albums
 				callback null, albums
 	return albums
 	
