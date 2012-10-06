@@ -13,6 +13,8 @@ fs			= require 'fs'
 #The important thing for the client to pick is the albums name, and the topbreak. 
 exports.index = (req, res) ->
 	#Change page and location to numbers
+	console.log 'User opens page'
+	console.log req.body
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat

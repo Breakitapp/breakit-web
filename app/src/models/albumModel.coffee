@@ -43,17 +43,19 @@ list = (callback) ->
 
 #Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
 findNear = (longitude, latitude, page, callback) ->
+	console.log 'Finding albums'
 	albums = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
 	models.Album.db.db.executeDbCommand {
 		geoNear: 'albums' 
-		near : {longitude, latitude}
+		near : [longitude, latitude]
 		spherical : true
 		}, (err, docs) ->
 			if err
 				throw err
 			a = docs.documents[0].results
 			if a[0]
+				console.log 
 				i = 0
 				while a[page*10+i] and i < 10
 					object = a[page*10+i]
@@ -62,8 +64,9 @@ findNear = (longitude, latitude, page, callback) ->
 					found_album.breaks = null
 					albums.push found_album
 					i++
+				console.log 'Found albums :'
 				console.log albums
-				callback null, albums
+			callback null, albums
 	return albums
 	
 addBreak = (b) ->
