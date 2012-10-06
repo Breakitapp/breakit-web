@@ -15,7 +15,7 @@ class Album
 		album.save (err) ->
 			if err
 				throw err
-			console.log 'ALBUM: created a new album ' + album.name + ' with topBreak ' + album.topBreak
+			console.log 'ALBUM: created a new album ' + album.name + ' with topBreak ' + album.topBreak + ' @ ' + album.loc
 
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
@@ -76,7 +76,7 @@ addBreak = (b) ->
 			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
 			jsalbum = new Album b.longitude, b.latitude, b.location_name, [b], b, (album) ->
 				album.saveToDB()
-				console.log "ALBUM: created a new album @ " + album.longitude + ' : ' + album.latitude
+				console.log "ALBUM: created a new album @ :" + album.location
 				return
 		else
 			album.breaks.push b
