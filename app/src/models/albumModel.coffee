@@ -63,7 +63,7 @@ findNear = (longitude, latitude, page, callback) ->
 					albums.push found_album
 					i++
 			callback null, albums
-	return breaks
+	return albums
 	
 addBreak = (b) ->
 	find b.location_name,  (album) ->
