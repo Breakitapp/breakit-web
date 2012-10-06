@@ -45,10 +45,8 @@ exports.post_break = (req, res) ->
 					res.send b
 					
 exports.post_comment = (req, res) ->
-	
 	console.log req.body
-	
-	newComment = new comments.Comment req.body.comment, req.body.user
+	newComment = new comments.Comment req.body.comment, req.body.user, req.body.date
 	breaks.comment newComment, req.body.breakId, (err, commentCount) ->
 		if err
 			res.send 'Commenting failed.'

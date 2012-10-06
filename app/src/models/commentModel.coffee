@@ -1,7 +1,7 @@
 models = require './mongoModel'
 
 class Comment
-	constructor: (@comment, @user) ->
+	constructor: (@comment, @user, @date) ->
 		
 	###
 	save: (callback) ->
