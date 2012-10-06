@@ -53,9 +53,10 @@ findNear = (longitude, latitude, page, callback) ->
 		}, (err, docs) ->
 			if err
 				throw err
+			console.log docs
 			a = docs.documents[0].results
 			if a[0]
-				console.log 
+				console.log a[0]
 				i = 0
 				while a[page*10+i] and i < 10
 					object = a[page*10+i]
