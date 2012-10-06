@@ -73,7 +73,7 @@ findNear = (longitude, latitude, page, callback) ->
 addBreak = (b) ->
 	find b.location_name,  (album) ->
 		if album is null
-			console.log 'ALBUM: Adding break and creating new album ' + b.location_name
+			console.log 'ALBUM: Adding break ' + b + ' and creating new album ' + b.location_name
 			jsalbum = new Album b.loc, b.location_name, [b], b, (album) ->
 				album.saveToDB()
 				console.log "ALBUM: created a new album @ :" + album.location

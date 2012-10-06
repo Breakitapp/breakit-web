@@ -21,7 +21,7 @@ class Break
 				console.log 'BREAK: Break save failed'
 				throw err
 			else
-				console.log 'BREAK: Break saved successfully.'
+				console.log 'BREAK: Break saved successfully @ ' + break_.loc + '.'
 				callback null, break_
 
 createBreak = (data, callback) ->
