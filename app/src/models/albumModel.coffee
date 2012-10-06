@@ -3,10 +3,7 @@ _ = require 'underscore'
 
 #TODO add location for album
 class Album
-	constructor: (@loc, @name, @breaks, @topBreak, callback) ->
-		console.log "SUPPLIES!"
-		console.log @
-		callback @
+	constructor: (@loc, @name, @breaks, @topBreak) ->
 
 	saveToDB : () ->
 		album = new models.Album
@@ -76,9 +73,9 @@ addBreak = (b) ->
 	find b.location_name,  (album) ->
 		if album is null
 			console.log 'ALBUM: Adding break ' + b + ' and creating new album ' + b.location_name
-			jsalbum = new Album b.loc, b.location_name, [b], b, (album) ->
-				album.saveToDB()
-				return
+			jsalbum = new Album b.loc, b.location_name, [b], b
+			jsalbum.saveToDB()
+			return
 		else
 			album.breaks.push b
 			if album.topBreak is null or album.topBreak.score < b.score
