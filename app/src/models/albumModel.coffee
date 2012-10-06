@@ -47,7 +47,7 @@ findNear = (longitude, latitude, page, callback) ->
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
 	models.Album.db.db.executeDbCommand {
 		geoNear: 'albums' 
-		near : loc
+		near : {longitude, latitude}
 		spherical : true
 		}, (err, docs) ->
 			if err
