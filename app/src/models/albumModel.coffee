@@ -127,3 +127,4 @@ root.remove = remove
 root.addBreak = addBreak
 root.createFromId = createFromId
 root.findBreak = findBreak
+root.findNear = findNear
