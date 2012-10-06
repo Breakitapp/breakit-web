@@ -4,6 +4,7 @@ _ = require 'underscore'
 #TODO add location for album
 class Album
 	constructor: (@loc, @name, @breaks, @topBreak, callback) ->
+		console.log "SUPPLIES!"
 		console.log @
 		callback @
 
