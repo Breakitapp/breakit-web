@@ -105,7 +105,7 @@ nextFeed = (array, best, page, userLocation) ->
 	best = _.first(closest, 10)
 
 findBreak = (album, page, callback) ->
-	models.Album.find({'name': album}).sort({'points':'descending'}).exec((err, docs) ->
+	models.Album.find({'_id': album}).sort({'points':'descending'}).exec((err, docs) ->
 		if docs is not null and docs[1] is not null
 			breaks = []
 			b = docs[0].breaks
