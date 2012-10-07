@@ -37,7 +37,7 @@ BetaSchema = new Schema
 	phone			:		{type: String, required: true}
 
 AlbumSchema = new Schema
-	name			:		{type: String, unique: true, index: true}
+	name			:		{type: String, index: true}
 	date			:		{type: Date, default: Date.now}
 	breaks		:		[Break]
 	topBreak	:		[Break]

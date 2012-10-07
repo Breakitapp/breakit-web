@@ -42,7 +42,6 @@ list = (callback) ->
 
 #Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
 findNear = (longitude, latitude, page, callback) ->
-	console.log 'Finding albums'
 	albums = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
 	models.Album.db.db.executeDbCommand {
@@ -52,10 +51,8 @@ findNear = (longitude, latitude, page, callback) ->
 		}, (err, docs) ->
 			if err
 				throw err
-			console.log docs
 			a = docs.documents[0].results
 			if a[0]
-				console.log a[0]
 				i = 0
 				while a[page*10+i] and i < 10
 					object = a[page*10+i]
@@ -64,15 +61,16 @@ findNear = (longitude, latitude, page, callback) ->
 					found_album.breaks = null
 					albums.push found_album
 					i++
-				console.log 'Found albums :'
-				console.log albums
 			callback null, albums
 	return albums
 	
 addBreak = (b) ->
-	find b.location_name,  (album) ->
+	radius = 0.5/6353
+	models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
+		console.log 'SUPPLIES MUTHAFUCKA!'
+		if err
+			throw err
 		if album is null
-			
 			console.log 'ALBUM: Adding break ' + b.loc + ' and creating new album ' + b.location_name
 			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b], b
 			jsalbum.saveToDB()
@@ -86,6 +84,7 @@ addBreak = (b) ->
 				console.log 'ALBUM: saving new break ' + b.headline + ' to ' + album.name
 				if err
 					throw err
+	)
 
 remove = (id) ->
 	#This need to iteratively remove all breaks too
