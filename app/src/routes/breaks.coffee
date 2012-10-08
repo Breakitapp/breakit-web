@@ -23,30 +23,13 @@ exports.infinite = (req, res) ->
 	breaks.findInfinite page, (err, docs) ->
 		res.send docs
 
-#Does someone have a plan for this function? (not me -E)
-###
-exports.create = (req, res) ->
-	breaks.create
-###
-
 #This is only for web interface	
 exports.webCreate = (req, res) ->
 	res.render 'newBreak', title : 'Create a new Break'
 	
 #This is only for web interface	
 exports.webSubmit = (req, res) ->
-	
-	console.log req.files
-	console.log req.files.image.path
-	
-	###
-	lon = (Number) req.body.longitude
-	lat = (Number) req.body.latitude
-	name = req.body.location_name
-	story = req.body.story
-	headline = req.body.headline
-	###
-		
+			
 	breaks.createBreak req.body, (err, break_) ->
 		albums.addBreak break_
 		

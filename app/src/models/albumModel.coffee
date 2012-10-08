@@ -3,25 +3,25 @@ _ = require 'underscore'
 
 #TODO add location for album
 class Album
-	constructor: (@lon, @lat, @name, @breaks, @topBreak) ->
+	constructor: (@lon, @lat, @name, @breaks) ->
 
 	saveToDB : () ->
 		album = new models.Album
 			loc				:	{lon: @lon, lat: @lat}
 			name			: @name
 			breaks		:	@breaks
-			topBreak	: @topBreak
+			#topBreak	: @topBreak
 		album.save (err) ->
 			if err
 				throw err
-			console.log 'ALBUM: created a new album ' + album.name + ' with topBreak ' + album.topBreak + ' @ ' + album.loc
+			console.log 'ALBUM: created a new album ' + album.name + ' @ ' + album.loc
 
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
 		if err
 			throw err
 		else
-			newAlbum = new Album album.name, album.location, album.breaks, album.topBreak
+			newAlbum = new Album album.name, album.location, album.breaks
 			return newAlbum
 
 find = (name, callback) ->
@@ -66,20 +66,34 @@ findNear = (longitude, latitude, page, callback) ->
 	
 addBreak = (b) ->
 	radius = 0.5/6353
-	models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
-		console.log 'SUPPLIES MUTHAFUCKA!'
+	
+	#always gives error -> RangeError: Maximum call stack size exceeded
+	#models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
+	
+	
+	models.Album.findOne(name: b.location_name).exec((err, album) -> 
+		console.log 'SUPPLIES MUTHAFUCKA'
+		
 		if err
+			console.log 'err'
 			throw err
-		if album is null
+		if album
+			console.log 'wasnt null'
+			album.breaks.push b
+		else
+			console.log 'was null'
 			console.log 'ALBUM: Adding break ' + b.loc + ' and creating new album ' + b.location_name
-			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b], b
+			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b]
 			jsalbum.saveToDB()
 			return
-		else
-			album.breaks.push b
+
+			
+			###
 			if album.topBreak is null or album.topBreak.score < b.score
 				console.log 'ALBUM: changing the topbreak'
 				album.topBreak = b
+			###	
+			
 			album.save (err) ->
 				console.log 'ALBUM: saving new break ' + b.headline + ' to ' + album.name
 				if err

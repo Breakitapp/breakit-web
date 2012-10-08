@@ -16,3 +16,6 @@ exports.submit = (req, res) ->
 		
 		album.saveToDB () ->
 		res.send 'Created a new album: ' + album.name
+		
+#exports.addbreak = (req, res) ->
+	
