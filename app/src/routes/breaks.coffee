@@ -13,9 +13,6 @@ exports.listall = (req, res) ->
 		if err
 			res.send 'No breaks found.'
 		else
-		
-			for b in breaks_
-				console.log b
 			res.render 'breakslist', title : 'All breaks', breaks: breaks_
 
 exports.infinite = (req, res) ->

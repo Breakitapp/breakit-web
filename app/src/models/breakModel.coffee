@@ -28,6 +28,22 @@ createBreak = (data, callback) ->
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
 	break_.save(data.user, callback)
 	
+addAlbum = (album, breakId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			console.log 'BREAK: failed to find break to be assigned an album. Id: ' + breakId
+			callback err, null
+		else
+			break_.album = album
+			break_.save (err) ->
+				if err
+					console.log 'BREAK: Break save failed after new album'
+					callback err
+				else
+					console.log 'BREAK: Album added successfully to break: ' + break_._id
+					callback null	
+	
+	
 comment = (comment, breakId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
@@ -82,8 +98,8 @@ findInfinite = (page, callback) ->
 	)
 	
 findById = (id, callback) ->
-	models.Break.findById(id).exec((err, breaks) ->
-		callback err, breaks
+	models.Break.findById(id).exec((err, break_) ->
+		callback err, break_
 	)
 	
 upvote = (breakId, callback) ->
@@ -120,6 +136,7 @@ root = exports ? window
 root.Break = Break
 root.comment = comment
 root.createBreak = createBreak
+root.addAlbum = addAlbum
 root.findAll = findAll
 root.findNear = findNear
 root.findInfinite = findInfinite

@@ -12,6 +12,7 @@ BreakSchema = new Schema
 	score					:			{type: Number, default: 1}
 	loc						:			{lon: Number, lat: Number}
 	location_name	:			{type: String}
+	album			:			{type: String, default: null}
 	story					:			{type: String, index: true}
 	date					:			{type: Date, default: Date.now}
 	tags					:			{type: String}
@@ -39,7 +40,7 @@ BetaSchema = new Schema
 AlbumSchema = new Schema
 	name			:		{type: String, index: true}
 	date			:		{type: Date, default: Date.now}
-	breaks		:		[Break]
+	breaks		:		[String]
 	#topBreak	:		[Break]
 	loc				:		{lon: Number, lat: Number}
 

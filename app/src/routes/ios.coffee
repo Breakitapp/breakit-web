@@ -72,6 +72,7 @@ exports.vote = (req, res) ->
 	else
 		res.send 'Invalid vote. Which needs to be "up" or "down"'
 
+#should res also contain the break object?
 exports.get_break = (req, res) ->
 	id = req.params.id
 	res.sendfile './app/res/images/' + id + '.jpeg'

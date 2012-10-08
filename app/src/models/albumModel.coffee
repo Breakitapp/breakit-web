@@ -1,11 +1,12 @@
 models = require './mongoModel'
+breakModel = require './breakModel'
 _ = require 'underscore'
 
 #TODO add location for album
 class Album
 	constructor: (@lon, @lat, @name, @breaks) ->
 
-	saveToDB : () ->
+	saveToDB : (callback) ->
 		album = new models.Album
 			loc				:	{lon: @lon, lat: @lat}
 			name			: @name
@@ -15,6 +16,7 @@ class Album
 			if err
 				throw err
 			console.log 'ALBUM: created a new album ' + album.name + ' @ ' + album.loc
+			callback album._id
 
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
@@ -71,7 +73,7 @@ addBreak = (b) ->
 	#models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
 	
 	
-	models.Album.findOne(name: b.location_name).exec((err, album) -> 
+	models.Album.findOne(name: b.location_name).exec (err, album) -> 
 		console.log 'SUPPLIES MUTHAFUCKA'
 		
 		if err
@@ -79,26 +81,38 @@ addBreak = (b) ->
 			throw err
 		if album
 			console.log 'wasnt null'
-			album.breaks.push b
+
+			album.breaks.push b._id
+			album.save (err) ->
+				if err
+					throw err
+			b.album = album._id
+			b.save (err) ->
+				if err
+					throw err
+			
 		else
 			console.log 'was null'
-			console.log 'ALBUM: Adding break ' + b.loc + ' and creating new album ' + b.location_name
-			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b]
-			jsalbum.saveToDB()
-			return
-
+			console.log 'ALBUM: Adding break ' + b.headline + ' and creating new album ' + b.location_name
+			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b._id]
+			jsalbum.saveToDB (albumId) ->
+				b.album = albumId		
+				b.save (err) ->
+					if err
+						throw err
 			
 			###
+			return
+			
 			if album.topBreak is null or album.topBreak.score < b.score
 				console.log 'ALBUM: changing the topbreak'
 				album.topBreak = b
-			###	
 			
 			album.save (err) ->
-				console.log 'ALBUM: saving new break ' + b.headline + ' to ' + album.name
+				console.log 'ALBUM: saving new break ' + b._id + ' to ' + album.name
 				if err
 					throw err
-	)
+				###
 
 remove = (id) ->
 	#This need to iteratively remove all breaks too
@@ -118,6 +132,8 @@ nextFeed = (array, best, page, userLocation) ->
 	sorted = _.sortBy(closest, topBreak)
 	best = _.first(closest, 10)
 
+#Should return sorted breaks
+#Not ready yet
 findBreak = (album, page, callback) ->
 	models.Album.find({'_id': album}).sort({'points':'descending'}).exec((err, docs) ->
 		if docs is not null and docs[1] is not null
