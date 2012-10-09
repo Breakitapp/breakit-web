@@ -9,6 +9,7 @@ exports.list = (req, res) ->
 
 #This is only for web interface	
 exports.listall = (req, res) ->
+	
 	breaks.findAll (err, breaks_) ->
 		if err
 			res.send 'No breaks found.'

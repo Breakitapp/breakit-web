@@ -9,7 +9,11 @@ BreakSchema = new Schema
 	#id						:			{type: Number, index: true, unique: true, required: true}
 	headline			:			{type: String}
 	user					:			{type: String}
+	
 	score					:			{type: Number, default: 1}
+	#maybe we should save upvotes and downvotes separately? -e
+	
+	points 				:				{type: Number}
 	loc						:			{lon: Number, lat: Number}
 	location_name	:			{type: String}
 	album			:			{type: String, default: null}

@@ -132,6 +132,30 @@ downvote = (breakId, callback) ->
 					console.log 'BREAK: Downvote successful: ' + break_._id
 					callback null, break_.score	
 
+#first draft of points calculation
+points = (breakId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			console.log 'BREAK: failed to find break for points calculation'
+			callback err, null
+		else
+			points = 0
+			
+			#these need to be same format first
+			epoch = new Date(1970, 1, 1) 
+			created = break_.date # assume this is in seconds now
+			
+			#elapsed = created - epoch
+			
+			#points = X * log(break_.score) + Y*elapsed
+			#tjsp
+			
+			console.log epoch
+			console.log now
+			
+			console.log 'BREAK: calculated points for break ' + breakId + ' successfully'
+			callback points
+
 root = exports ? window
 root.Break = Break
 root.comment = comment
@@ -143,3 +167,4 @@ root.findInfinite = findInfinite
 root.findById = findById
 root.upvote = upvote
 root.downvote = downvote
+root.points = points

@@ -113,6 +113,7 @@ addBreak = (b) ->
 				if err
 					throw err
 				###
+	
 
 remove = (id) ->
 	#This need to iteratively remove all breaks too
@@ -134,7 +135,7 @@ nextFeed = (array, best, page, userLocation) ->
 
 #Should return sorted breaks
 #Not ready yet
-findBreak = (album, page, callback) ->
+findBreaks = (album, page, callback) ->
 	models.Album.find({'_id': album}).sort({'points':'descending'}).exec((err, docs) ->
 		if docs is not null and docs[1] is not null
 			breaks = []
@@ -159,5 +160,5 @@ root.list = list
 root.remove = remove
 root.addBreak = addBreak
 root.createFromId = createFromId
-root.findBreak = findBreak
+root.findBreaks = findBreaks
 root.findNear = findNear
