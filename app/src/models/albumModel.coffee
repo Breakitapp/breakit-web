@@ -60,7 +60,6 @@ findNear = (longitude, latitude, page, callback) ->
 					object = a[page*10+i]
 					found_album = object.obj
 					found_album.dis = object.dis
-					found_album.breaks = null
 					albums.push found_album
 					i++
 			callback null, albums
