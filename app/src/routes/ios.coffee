@@ -76,11 +76,13 @@ exports.vote = (req, res) ->
 exports.get_break = (req, res) ->
 	id = req.params.id
 	
+	###
 	breaks.findById id, (err, b) ->
 		if err
 			res.send err
 		else
 			res.send b
+			###
 	
 	res.sendfile './app/res/images/' + id + '.jpeg'
 

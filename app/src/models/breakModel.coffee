@@ -26,7 +26,8 @@ class Break
 
 createBreak = (data, callback) ->
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
-	break_.save(data.user, callback)
+	break_.save data.user, (err, b) ->
+			callback err, b
 	
 addAlbum = (album, breakId, callback) ->
 	findById breakId, (err, break_) ->
