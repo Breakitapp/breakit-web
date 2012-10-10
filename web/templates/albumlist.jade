@@ -2,6 +2,6 @@ extend layout
 block contents
 	for album in albums
 		if album.breaks
-			p= "album name: " + album.name + ", lon: " + album.loc.lon + ", lat: " + album.loc.lat + ", break count: " + album.breaks.length + ", first break: " + album.breaks[0]
+			p= "album name: " + album.name + ", lon: " + album.loc.lon + ", lat: " + album.loc.lat + ", break count: " + album.breaks.length + ", first break: " + album.breaks[0] + ", top break: " + album.topBreak[0]._id
 		else
 			p= "album name: " + album.name + ", lon: " + album.loc.lon + ", lat: " + album.loc.lat

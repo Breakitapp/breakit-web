@@ -4,20 +4,21 @@ _ = require 'underscore'
 
 #TODO add location for album
 class Album
-	constructor: (@lon, @lat, @name, @breaks) ->
+	constructor: (@lon, @lat, @name, @breaks, @topBreak) ->
 
 	saveToDB : (callback) ->
 		album = new models.Album
 			loc				:	{lon: @lon, lat: @lat}
 			name			: @name
 			breaks		:	@breaks
-			#topBreak	: @topBreak
+			topBreak	: @topBreak
 		album.save (err) ->
 			if err
 				throw err
 			console.log 'ALBUM: created a new album ' + album.name + ' @ ' + album.loc
 			callback album._id
 
+###not needed?
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
 		if err
@@ -25,6 +26,7 @@ createFromId = (id) ->
 		else
 			newAlbum = new Album album.name, album.location, album.breaks
 			return newAlbum
+###
 
 find = (name, callback) ->
 	models.Album.findOne name: name, (err, album) ->
@@ -93,7 +95,7 @@ addBreak = (b) ->
 		else
 			console.log 'was null'
 			console.log 'ALBUM: Adding break ' + b.headline + ' and creating new album ' + b.location_name
-			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b._id]
+			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b._id], [b]
 			jsalbum.saveToDB (albumId) ->
 				b.album = albumId		
 				b.save (err) ->
@@ -158,6 +160,6 @@ root.find = find
 root.list = list
 root.remove = remove
 root.addBreak = addBreak
-root.createFromId = createFromId
+#root.createFromId = createFromId
 root.findBreaks = findBreaks
 root.findNear = findNear

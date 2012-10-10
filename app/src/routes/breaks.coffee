@@ -10,6 +10,15 @@ exports.list = (req, res) ->
 #This is only for web interface	
 exports.listall = (req, res) ->
 	
+	###
+	id = '50754eb7dd6f6c0000000001'
+	breaks.points id, (err, points) ->
+		if err
+			throw err
+		else
+			console.log points
+	###
+	
 	breaks.findAll (err, breaks_) ->
 		if err
 			res.send 'No breaks found.'

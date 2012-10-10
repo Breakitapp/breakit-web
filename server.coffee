@@ -82,8 +82,8 @@ server.post '/breaks/new', breaks.webSubmit
 server.get '/breaks/comment', breaks.comment
 server.post '/breaks/comment', breaks.postComment
 server.post '/breaks/vote', breaks.vote
-server.get '/breaks/:id', breaks.view
-server.post '/breaks/:id', breaks.create
+#server.get '/breaks/:id', breaks.view
+#server.post '/breaks/:id', breaks.create
 server.get '/breaks/:page', breaks.infinite
 
 #Albums

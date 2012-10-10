@@ -4,17 +4,22 @@ commentModel = require './commentModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
+		@points = 
 		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
 
-	save: (user = @user, callback) ->
+	saveToDB: (user = @user, callback) ->
 		@user = user
+		@points = 0
+				
 		break_ = new models.Break
 			loc						:		{lon: @longitude, lat: @latitude}
-			location_name	:		@location_name
+			location_name		:		@location_name
 			story					:		@story
 			headline			:		@headline
 			user					:		@user
-			score					:		1
+			score					:		0
+			points					:	@points
+			
 		that = @
 		break_.save (err) ->
 			if err 
@@ -23,12 +28,24 @@ class Break
 			else
 				console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
 				callback null, break_
+				
+	update: (callback) ->
+		@points = @points + @score * 1000000
+		break_.save (err) ->
+			if err 
+				console.log 'BREAK: Break save failed'
+				throw err
+			else
+				console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
+				callback null, break_
+		
 
 createBreak = (data, callback) ->
 	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
-	break_.save data.user, (err, b) ->
+	break_.saveToDB data.user, (err, b) ->
 			callback err, b
-	
+
+### probably useless
 addAlbum = (album, breakId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
@@ -42,7 +59,8 @@ addAlbum = (album, breakId, callback) ->
 					callback err
 				else
 					console.log 'BREAK: Album added successfully to break: ' + break_._id
-					callback null	
+					callback null
+###	
 	
 	
 comment = (comment, breakId, callback) ->
@@ -110,9 +128,9 @@ upvote = (breakId, callback) ->
 			callback err, null
 		else
 			break_.score++
-			break_.save (err) ->
+			break_.update (err) ->
 				if err
-					console.log 'BREAK: Break save failed after upvote'
+					console.log 'BREAK: Break update failed after upvote'
 					callback err, null
 				else
 					console.log 'BREAK: Upvote successful: ' + break_._id
@@ -125,15 +143,17 @@ downvote = (breakId, callback) ->
 			callback err, null
 		else
 			break_.score--
-			break_.save (err) ->
+			break_.update (err) ->
 				if err
-					console.log 'BREAK: Break save failed after downvote'
+					console.log 'BREAK: Break update failed after downvote'
 					callback err, null
 				else
 					console.log 'BREAK: Downvote successful: ' + break_._id
 					callback null, break_.score	
 
 #first draft of points calculation
+#only for testing
+###
 points = (breakId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
@@ -152,20 +172,21 @@ points = (breakId, callback) ->
 			#tjsp
 			
 			console.log epoch
-			console.log now
+			console.log created
 			
 			console.log 'BREAK: calculated points for break ' + breakId + ' successfully'
-			callback points
+			callback null, points
+			###
 
 root = exports ? window
 root.Break = Break
 root.comment = comment
 root.createBreak = createBreak
-root.addAlbum = addAlbum
+#root.addAlbum = addAlbum
 root.findAll = findAll
 root.findNear = findNear
 root.findInfinite = findInfinite
 root.findById = findById
 root.upvote = upvote
 root.downvote = downvote
-root.points = points
+#root.points = points

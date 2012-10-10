@@ -4,7 +4,6 @@ Schema = mongoose.Schema
 toLower = (v) ->
 	return v.toLowerCase()
 
-
 BreakSchema = new Schema
 	#id						:			{type: Number, index: true, unique: true, required: true}
 	headline			:			{type: String}
@@ -45,7 +44,7 @@ AlbumSchema = new Schema
 	name			:		{type: String, index: true}
 	date			:		{type: Date, default: Date.now}
 	breaks		:		[String]
-	#topBreak	:		[Break]
+	topBreak	:		[Break]
 	loc				:		{lon: Number, lat: Number}
 
 AlbumSchema.index {loc: '2d'}
