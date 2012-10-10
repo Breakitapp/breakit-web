@@ -10,15 +10,6 @@ exports.list = (req, res) ->
 #This is only for web interface	
 exports.listall = (req, res) ->
 	
-	###
-	id = '50754eb7dd6f6c0000000001'
-	breaks.points id, (err, points) ->
-		if err
-			throw err
-		else
-			console.log points
-	###
-	
 	breaks.findAll (err, breaks_) ->
 		if err
 			res.send 'No breaks found.'
@@ -73,20 +64,11 @@ exports.postComment = (req, res) ->
 
 #req needs to contain "which" field ('up' or 'down') and "breakId" field
 exports.vote = (req, res) ->
-	if req.body.which == 'up'
-		breaks.upvote req.body.breakId, (err, score) ->
-			if err
-				res.send 'Vote failed'
-			else
-				res.redirect('/breaks/all')
+	breaks.vote req.body.breakId, req.body.which, (err, score) ->
+		if err
+			res.send 'Vote failed'
+		else
+			res.redirect('/breaks/all')
 			
-	else if req.body.which == 'down'
-		breaks.downvote req.body.breakId, (err, score) ->
-			if err
-				res.send 'Vote failed'
-			else
-				res.redirect('/breaks/all')
-	else
-		res.send 'invalid vote'
 	
 	
