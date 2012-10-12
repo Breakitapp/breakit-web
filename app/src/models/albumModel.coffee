@@ -18,6 +18,16 @@ class Album
 			console.log 'ALBUM: created a new album ' + album.name + ' @ ' + album.loc
 			callback album._id
 
+	updateTop = (b) ->
+		if b._id != @topBreak._id
+			@breaks.push @topBreak._id
+			@breaks[0] = b._id
+		@topBreak = b
+		@save (err) ->
+			if err
+				throw err
+			console.log 'ALBUM: Topbreak updated successfully in album: ' + @_id
+
 ###not needed?
 createFromId = (id) ->
 	models.Album.findById id, (err, album) ->
@@ -28,13 +38,13 @@ createFromId = (id) ->
 			return newAlbum
 ###
 
-find = (name, callback) ->
-	models.Album.findOne name: name, (err, album) ->
-		if err
-			throw err
-		else
-			callback album
-			return album
+findByName = (name, callback) ->
+	models.Album.findOne name: name, (err, foundAlbum) ->
+		callback err, foundAlbum
+			
+findById = (id, callback) ->
+	models.Album.findById(id).exec (err, foundAlbum) ->
+		callback err, foundAlbum
 
 list = (callback) ->
 	models.Album.find().exec (err, data) ->
@@ -114,7 +124,6 @@ addBreak = (b) ->
 				if err
 					throw err
 				###
-	
 
 remove = (id) ->
 	#This need to iteratively remove all breaks too
@@ -156,7 +165,8 @@ findBreaks = (album, page, callback) ->
 
 root = exports ? window
 root.Album = Album
-root.find = find
+root.findByName = findByName
+root.findById = findById
 root.list = list
 root.remove = remove
 root.addBreak = addBreak

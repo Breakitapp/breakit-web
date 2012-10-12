@@ -21,7 +21,6 @@ class Break
 			user					:		@user
 			points					:	@points
 			
-		that = @
 		break_.save (err) ->
 			if err 
 				console.log 'BREAK: Break save failed'
@@ -140,6 +139,10 @@ vote = (breakId, direction, callback) ->
 					else
 						console.log 'BREAK: Vote successful: ' + break_._id
 						callback null, break_.score
+				
+				#albumModel.findById break_.album, (album) ->
+					#if topbreak or points more than topbreak
+						#album.updateTop b
 
 #first draft of points calculation
 #only for testing

@@ -5,7 +5,6 @@ toLower = (v) ->
 	return v.toLowerCase()
 
 BreakSchema = new Schema
-	#id						:			{type: Number, index: true, unique: true, required: true}
 	headline			:			{type: String}
 	user					:			{type: String}
 	upvotes					:			{type: Number, default: 0}
@@ -14,6 +13,8 @@ BreakSchema = new Schema
 	loc						:			{lon: Number, lat: Number}
 	location_name	:			{type: String}
 	album			:			{type: String, default: null}
+	user			:			{type: String, default: null}
+	top				:			{type: Boolean, default: false}
 	story					:			{type: String, index: true}
 	date					:			{type: Date, default: Date.now}
 	tags					:			{type: String}
@@ -26,11 +27,12 @@ UserSchema = new Schema
 	fName			:		{type: String, required: true}
 	lName			:		{type: String, required: true}
 	nName			:		{type: String, required: true, unique: true}
-	email			:		{type: String, set: toLower, required: true, unique: true}
+	email			:		{type: String, set: toLower, required: true, unique: true, index: true}
 	date			:		{type: Date, default: Date.now}
-	beta			:		{type: Boolean, default: false}
 	phone			:		{type: String, required: true}
-	breaks		:		[Break]
+	breaks		:		[String]
+	
+#UserSchema.index {email: 1}
 
 #This is only for receiving beta registrations
 BetaSchema = new Schema

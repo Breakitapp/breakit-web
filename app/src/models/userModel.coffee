@@ -5,21 +5,27 @@ class User
 				
 		@breaks = null
 		
-	save: (callback) ->
+	saveToDB: (callback) ->
 		user = new models.User
 			fName : @fName
 			lName : @lName
 			nName : @nName
 			email : @email
 			phone : @phone
+			
 		user.save (err) ->
 			if err
 				console.log err
 				callback err, null
 			else
 				console.log 'USER: Saved a new user: ' + user._id
-				callback null, user
-	
+				callback null, user._id
+
+createUser = (fn, ln, nn, em, ph, callback) ->
+	newUser = new User fn, ln, nn, em, ph
+	newUser.saveToDB (err, id) ->
+		callback err, id
+
 addBreak = (userId, break_, callback) ->
 	if typeof break_ is Break
 		
@@ -28,7 +34,7 @@ addBreak = (userId, break_, callback) ->
 				callback err, null
 			else
 				user.breaks.push break_
-				user.save (err, savedUser) ->
+				user.saveToDB (err, savedUser) ->
 					if err
 						console.log 'USER: User save failed after new break.'
 						callback err, null					
@@ -62,7 +68,7 @@ changeAttributes = (userId, newFName, newLName, newNName, newEmail, newPhone, ca
 			user.nName = newNName
 			user.email = newEmail
 			user.phone = newPhone
-			user.save (err, modifiedUser) ->
+			user.saveToDB (err, modifiedUser) ->
 				if err
 					console.log 'USER: User save failed after trying to modify fields.'
 					callback err, null
@@ -86,6 +92,7 @@ findById = (userId, callback) ->
 
 root = exports ? window
 root.User = User
+root.createUser = createUser
 root.addBreak = addBreak
 root.remove = remove
 root.changeAttributes = changeAttributes
