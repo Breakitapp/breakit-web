@@ -11,15 +11,16 @@ class Break
 		
 		#Assign initial points to the new break based on the creation datetime
 		epoch = new Date(1970, 1, 1)
-		@points = Date.now() - epoch
+		@startingPoints = Date.now() - epoch
 						
 		break_ = new models.Break
 			loc						:		{lon: @longitude, lat: @latitude}
 			location_name		:		@location_name
-			story					:		@story
+			story				:		@story
 			headline			:		@headline
-			user					:		@user
-			points					:	@points
+			user					:	@user
+			points					:	@startingPoints
+			startingPoints			:	@startingPoints
 			
 		break_.save (err) ->
 			if err 
@@ -59,6 +60,13 @@ comment = (comment, breakId, callback) ->
 			callback err, null
 		else
 			break_.comments.push comment
+			
+			#updating the top break of the album if this break is it
+			if break_.top
+				albumModel.updateTop break_.album, break_, (err) ->
+					if err
+						throw err
+					
 			break_.save (err) ->
 				if err
 					console.log 'BREAK: Break save failed after new comment'
@@ -123,15 +131,24 @@ vote = (breakId, direction, callback) ->
 				callback err, null
 			else
 			
-				#Voting adjusts the points of the breaks.
-				#We would want to make this logarithmic, which means we cannot just increment the points, but need to calculate them pretty much again based on the votes and creation time
+				#Voting increments the up/down votes of the breaks.
 				if direction is 'up'
 					break_.upvotes++
-					break_.points = break_.points + 1000000
 				if direction is 'down'
 					break_.downvotes++
-					break_.points = break_.points - 1000000
-
+					
+				#calculating new points
+				if (break_.upvotes - break_.downvotes) >= 0
+					break_.points = break_.startingPoints + 100000 * Math.log (break_.upvotes - break_.downvotes)
+				else
+					break_.points = break_.startingPoints - 100000 * Math.log (break_.downvotes - break_.upvotes)
+				
+				albumModel.findById break_.album, (err, a) ->
+					if break_.topbreak or (break_.points > a.topBreak[0].points)
+						albumModel.updateTop break_.album, break_, (err) ->
+							if err
+								throw err
+				
 				break_.save (err) ->
 					if err
 						console.log 'BREAK: Break save failed after vote'
@@ -140,9 +157,7 @@ vote = (breakId, direction, callback) ->
 						console.log 'BREAK: Vote successful: ' + break_._id
 						callback null, break_.score
 				
-				#albumModel.findById break_.album, (album) ->
-					#if topbreak or points more than topbreak
-						#album.updateTop b
+
 
 #first draft of points calculation
 #only for testing

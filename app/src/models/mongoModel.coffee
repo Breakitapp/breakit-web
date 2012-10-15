@@ -4,11 +4,16 @@ Schema = mongoose.Schema
 toLower = (v) ->
 	return v.toLowerCase()
 
+CommentSchema = new Schema
+	comment		:		{type: String}
+	date			:		{type: Date, default: Date.now}
+	user : {type: String}
+
 BreakSchema = new Schema
 	headline			:			{type: String}
-	user					:			{type: String}
 	upvotes					:			{type: Number, default: 0}
-	downvotes					:			{type: Number, default: 0}	
+	downvotes				:			{type: Number, default: 0}
+	startingPoints			:			{type: Number}
 	points 				:				{type: Number}
 	loc						:			{lon: Number, lat: Number}
 	location_name	:			{type: String}
@@ -49,15 +54,10 @@ AlbumSchema = new Schema
 
 AlbumSchema.index {loc: '2d'}
 
-CommentSchema = new Schema
-	comment		:		{type: String}
-	date			:		{type: Date, default: Date.now}
-	user : {type: String}
-
+Comment		= mongoose.model 'Comment', CommentSchema
 Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
 BetaUser = mongoose.model 'BetaUser', BetaSchema
-Comment		= mongoose.model 'Comment', CommentSchema
 Album			=	mongoose.model 'Album', AlbumSchema
 
 exports.User			= User

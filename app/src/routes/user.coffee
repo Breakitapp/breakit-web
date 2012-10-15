@@ -24,9 +24,7 @@ exports.submit = (req, res) ->
 
 ###
 	async.waterfall [
-		
-		#Counting id for the new user.
-		#It would be nicer to perform this in constructor, but this creates some complications
+
 		(callback) ->
 			models.User.count {}, (err, c) ->
 				id = c + 1

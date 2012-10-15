@@ -1,5 +1,6 @@
 models = require './mongoModel'
 breakModel = require './breakModel'
+async = require 'async'
 _ = require 'underscore'
 
 #TODO add location for album
@@ -15,18 +16,9 @@ class Album
 		album.save (err) ->
 			if err
 				throw err
-			console.log 'ALBUM: created a new album ' + album.name + ' @ ' + album.loc
-			callback album._id
-
-	updateTop = (b) ->
-		if b._id != @topBreak._id
-			@breaks.push @topBreak._id
-			@breaks[0] = b._id
-		@topBreak = b
-		@save (err) ->
-			if err
-				throw err
-			console.log 'ALBUM: Topbreak updated successfully in album: ' + @_id
+			else
+				console.log 'ALBUM: created a new album ' + album.name + ' @ ' + album.loc
+				callback album._id
 
 ###not needed?
 createFromId = (id) ->
@@ -88,42 +80,106 @@ addBreak = (b) ->
 		console.log 'SUPPLIES MUTHAFUCKA'
 		
 		if err
-			console.log 'err'
+			console.log err
 			throw err
 		if album
-			console.log 'wasnt null'
-
-			album.breaks.push b._id
-			album.save (err) ->
-				if err
-					throw err
-			b.album = album._id
-			b.save (err) ->
-				if err
-					throw err
+			async.waterfall [
+				(callback) ->
+					console.log '1st in WF'
+					
+					album.breaks.push b._id
+					album.save (err) ->
+						if err
+							throw err
+						else
+							needsUpdate = false
+							b.album = album._id
+					
+							if (album.topBreak[0].points < b.points)
+								b.top = true
+								needsUpdate = true
+					
+							b.save (err) ->
+								if err
+									throw err
+								else
+									callback null, needsUpdate
+									console.log needsUpdate
+									console.log 'ALBUM: saved new break ' + b._id + ' to ' + album.name
+				,
+				(needsUpdate) ->
+					console.log '2nd in WF'
+					
+					if needsUpdate
+						updateTop album._id, b, (err) ->
+							if err
+								throw err
+							else
+								console.log 'jee'
+			]
 			
 		else
-			console.log 'was null'
 			console.log 'ALBUM: Adding break ' + b.headline + ' and creating new album ' + b.location_name
 			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b._id], [b]
 			jsalbum.saveToDB (albumId) ->
-				b.album = albumId		
+				b.album = albumId
+				b.top = true		
 				b.save (err) ->
 					if err
 						throw err
+
+#Updates the top break for an album. Gets the new top break (can be same or different than the old top break). If the new top break is
+#different it replaces the old one and the old one's 'top' parameter is changed to 'false'. If the new top break is the just an updated
+#version of the old one, the top break field is simply updated.
+updateTop = (id, b, callback) ->
+	
+	#Finding the album in question
+	findById id, (err, a) ->	
+		if err
+			callback err
+		else
+			#Is the break the top break already?
+			# -> Yes
+			if b._id == a.topBreak[0]._id
+				console.log 'ALBUM: Updating old top break'
+				
+				a.topBreak = [b]
+				console.log 'ALBUM: The old topbreak updated successfully in album: ' + a._id + ' top break: ' + a.topBreak[0]._id
+				a.save (err) ->
+					if err
+						callback err
+					else
+						console.log 'saved'
+						callback null
+			# -> No
+			else
+				console.log 'ALBUM: Replacing the top break'
 			
-			###
-			return
+				#the 'top' parameter of the old top break is changed to 'false' here.
+				breakModel.findById a.topBreak[0]._id, (err, oldTop) ->
+					if err
+						throw err
+					else
+						oldTop.top = false
+						oldTop.save (err) ->
+							if err
+								callback err
+							else
+								#Switching to the new top break
+								
+								index = a.breaks.indexOf b._id
+								a.breaks.splice index, 1, a.topBreak[0]._id
+								a.breaks[0] = b._id
+								a.topBreak = [b]
+																
+								console.log 'ALBUM: New topbreak added successfully in album: ' + a._id + ' top break: ' + a.topBreak[0]._id
+								a.save (err) ->
+									if err
+										callback err
+									else
+										console.log 'saved'
+										callback null
 			
-			if album.topBreak is null or album.topBreak.score < b.score
-				console.log 'ALBUM: changing the topbreak'
-				album.topBreak = b
-			
-			album.save (err) ->
-				console.log 'ALBUM: saving new break ' + b._id + ' to ' + album.name
-				if err
-					throw err
-				###
 
 remove = (id) ->
 	#This need to iteratively remove all breaks too
@@ -165,11 +221,11 @@ findBreaks = (album, page, callback) ->
 
 root = exports ? window
 root.Album = Album
+root.updateTop = updateTop
 root.findByName = findByName
 root.findById = findById
 root.list = list
 root.remove = remove
 root.addBreak = addBreak
-#root.createFromId = createFromId
 root.findBreaks = findBreaks
 root.findNear = findNear
