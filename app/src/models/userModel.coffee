@@ -12,7 +12,10 @@ class User
 			nName : @nName
 			email : @email
 			phone : @phone
+		console.log 'new user created'+user
+		console.log 'saving user'
 		user.save (err) ->
+			console.log 'user saved'
 			if err
 				console.log err
 				callback err, null
@@ -78,6 +81,7 @@ list = (callback) ->
 			callback null
 		else
 			users = (user for user in data)
+			console.log 'USER: users -' + users
 			callback users
 		
 findById = (userId, callback) ->

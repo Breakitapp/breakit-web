@@ -16,7 +16,12 @@ exports.submit = (req, res) ->
 	em = req.body.em
 	ph = req.body.ph
 
+
+	console.log '1 phase'
 	newUser = new users.User fn, ln, nn, em, ph
+	console.log '2 phase'
+	console.log 'user created? ' +newUser
+	console.log 'saving'
 	newUser.save (err, user) ->
 		if err
 			res.send('Error creating new user')

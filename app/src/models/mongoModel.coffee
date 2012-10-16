@@ -28,8 +28,8 @@ BreakSchema.index {loc: '2d'}
 UserSchema = new Schema
 	fName			:		{type: String, required: true}
 	lName			:		{type: String, required: true}
-	nName			:		{type: String, required: true, unique: true}
-	email			:		{type: String, set: toLower, required: true, unique: true}
+	nName			:		{type: String, required: true}
+	email			:		{type: String, set: toLower, required: true, index: true}
 	date			:		{type: Date, default: Date.now}
 	beta			:		{type: Boolean, default: false}
 	phone			:		{type: String, required: true}
@@ -55,14 +55,24 @@ CommentSchema = new Schema
 	date			:		{type: Date, default: Date.now}
 	user : {type: String}
 
+FeedbackSchema = new Schema
+	user_id		:		{type: String}
+	date			:		{type: Date, default: Date.now}
+	comment		:		{type: String}
+		
+
+Feedback	= mongoose.model 'Feedback', FeedbackSchema
 Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
 BetaUser = mongoose.model 'BetaUser', BetaSchema
 Comment		= mongoose.model 'Comment', CommentSchema
 Album			=	mongoose.model 'Album', AlbumSchema
 
+
+
 exports.User			= User
 exports.BetaUser = BetaUser
 exports.Break			= Break
 exports.Comment		= Comment
 exports.Album			= Album
+exports.Feedback		= Feedback

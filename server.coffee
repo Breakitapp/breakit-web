@@ -9,6 +9,7 @@ site					= require './app/lib/routes/site'
 user					= require './app/lib/routes/user'
 breaks				= require './app/lib/routes/breaks'
 albums				= require './app/lib/routes/albums'
+feedback			= require './app/lib/routes/feedback'
 ios						= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
@@ -85,10 +86,21 @@ server.get '/breaks/:id', breaks.view
 server.post '/breaks/:id', breaks.create
 server.get '/breaks/:page', breaks.infinite
 
+
 #Albums
 server.all '/albums', albums.list
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
+
+#Feedback
+
+#Creating a feedback for test
+server.post '/feedback/', feedback.iosCreate
+server.get '/feedback/new', feedback.create
+server.post '/feedback/new', feedback.submit
+server.get '/feedback/list', feedback.list
+
+
 
 #Starting the server
 server.listen 3000
