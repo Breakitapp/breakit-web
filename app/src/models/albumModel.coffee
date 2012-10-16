@@ -95,7 +95,7 @@ addBreak = (b) ->
 							needsUpdate = false
 							b.album = album._id
 					
-							if (album.topBreak[0].points < b.points)
+							if (album.topBreak.points < b.points)
 								b.top = true
 								needsUpdate = true
 					
@@ -120,7 +120,7 @@ addBreak = (b) ->
 			
 		else
 			console.log 'ALBUM: Adding break ' + b.headline + ' and creating new album ' + b.location_name
-			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b._id], [b]
+			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b._id], b
 			jsalbum.saveToDB (albumId) ->
 				b.album = albumId
 				b.top = true		
@@ -140,11 +140,12 @@ updateTop = (id, b, callback) ->
 		else
 			#Is the break the top break already?
 			# -> Yes
-			if b._id == a.topBreak[0]._id
+			
+			if String(b._id) == String(a.topBreak._id)
 				console.log 'ALBUM: Updating old top break'
 				
-				a.topBreak = [b]
-				console.log 'ALBUM: The old topbreak updated successfully in album: ' + a._id + ' top break: ' + a.topBreak[0]._id
+				a.topBreak = b
+				console.log 'ALBUM: The old topbreak updated successfully in album: ' + a._id + ' top break: ' + a.topBreak._id
 				a.save (err) ->
 					if err
 						callback err
@@ -156,7 +157,7 @@ updateTop = (id, b, callback) ->
 				console.log 'ALBUM: Replacing the top break'
 			
 				#the 'top' parameter of the old top break is changed to 'false' here.
-				breakModel.findById a.topBreak[0]._id, (err, oldTop) ->
+				breakModel.findById a.topBreak._id, (err, oldTop) ->
 					if err
 						throw err
 					else
@@ -168,11 +169,12 @@ updateTop = (id, b, callback) ->
 								#Switching to the new top break
 								
 								index = a.breaks.indexOf b._id
-								a.breaks.splice index, 1, a.topBreak[0]._id
+								a.breaks.splice index, 1, a.topBreak._id
 								a.breaks[0] = b._id
-								a.topBreak = [b]
+								
+								a.topBreak = b
 																
-								console.log 'ALBUM: New topbreak added successfully in album: ' + a._id + ' top break: ' + a.topBreak[0]._id
+								console.log 'ALBUM: New topbreak added successfully in album: ' + a._id + ' top break: ' + a.topBreak._id + ', headline: ' + a.topBreak.headline
 								a.save (err) ->
 									if err
 										callback err

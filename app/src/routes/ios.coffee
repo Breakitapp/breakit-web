@@ -57,20 +57,11 @@ exports.post_comment = (req, res) ->
 #Simplified voting functionality
 #Takes a req that contains 2 fields: "breakId" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
-	if req.body.which == 'up'
-		breaks.upvote req.body.breakId, (err, score) ->
-			if err
-				res.send 'Vote failed'
-			else
-				res.send score
-	else if req.body.which == 'down'
-		breaks.downvote req.body.breakId, (err, score) ->
-			if err
-				res.send 'Vote failed'
-			else
-				res.send score
-	else
-		res.send 'Invalid vote. Which needs to be "up" or "down"'
+	breaks.vote req.body.breakId, req.body.which, (err, score) ->
+		if err
+			res.send 'Vote failed'
+		else
+			res.send score
 
 exports.get_picture = (req, res) ->
 	id = req.params.id

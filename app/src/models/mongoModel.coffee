@@ -11,15 +11,15 @@ CommentSchema = new Schema
 
 BreakSchema = new Schema
 	headline			:			{type: String}
-	upvotes					:			{type: Number, default: 0}
+	upvotes					:			{type: Number, default: 1}
 	downvotes				:			{type: Number, default: 0}
 	startingPoints			:			{type: Number}
 	points 				:				{type: Number}
 	loc						:			{lon: Number, lat: Number}
-	location_name	:			{type: String}
-	album			:			{type: String, default: null}
-	user			:			{type: String, default: null}
-	top				:			{type: Boolean, default: false}
+	location_name		:			{type: String}
+	album				:			{type: String, default: null}
+	user				:			{type: String, default: null}
+	top					:			{type: Boolean, default: false}
 	story					:			{type: String, index: true}
 	date					:			{type: Date, default: Date.now}
 	tags					:			{type: String}
@@ -35,7 +35,7 @@ UserSchema = new Schema
 	email			:		{type: String, set: toLower, required: true, unique: true, index: true}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
-	breaks		:		[String]
+	breaks		:		[Schema.ObjectId]
 	
 #UserSchema.index {email: 1}
 
@@ -48,8 +48,8 @@ BetaSchema = new Schema
 AlbumSchema = new Schema
 	name			:		{type: String, index: true}
 	date			:		{type: Date, default: Date.now}
-	breaks		:		[String]
-	topBreak	:		[Break]
+	breaks		:		[Schema.ObjectId]
+	topBreak	:		Schema.Types.Mixed
 	loc				:		{lon: Number, lat: Number}
 
 AlbumSchema.index {loc: '2d'}

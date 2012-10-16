@@ -2,6 +2,7 @@ models = require './mongoModel'
 albumModel = require './albumModel'
 commentModel = require './commentModel'
 
+
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
 		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
@@ -124,38 +125,49 @@ vote = (breakId, direction, callback) ->
 		err = new Error 'BREAK: invalid direction'
 		callback err, null
 	
+	#Vote is valid
 	else
+		#Finding the break
 		findById breakId, (err, break_) ->
 			if err
-				console.log 'BREAK: failed to find break to be upvoted'
+				console.log 'BREAK: failed to find break to be voted'
 				callback err, null
 			else
-			
-				#Voting increments the up/down votes of the breaks.
-				if direction is 'up'
-					break_.upvotes++
-				if direction is 'down'
-					break_.downvotes++
-					
-				#calculating new points
-				if (break_.upvotes - break_.downvotes) >= 0
-					break_.points = break_.startingPoints + 100000 * Math.log (break_.upvotes - break_.downvotes)
-				else
-					break_.points = break_.startingPoints - 100000 * Math.log (break_.downvotes - break_.upvotes)
-				
+				#Finding the album (for checking top break points later)
 				albumModel.findById break_.album, (err, a) ->
-					if break_.topbreak or (break_.points > a.topBreak[0].points)
-						albumModel.updateTop break_.album, break_, (err) ->
-							if err
-								throw err
-				
-				break_.save (err) ->
 					if err
-						console.log 'BREAK: Break save failed after vote'
+						console.log 'BREAK: failed to find album of the break to be voted'
 						callback err, null
 					else
-						console.log 'BREAK: Vote successful: ' + break_._id
-						callback null, break_.score
+			
+						#Voting increments the up/down votes of the breaks.
+						if direction is 'up'
+							break_.upvotes++
+						if direction is 'down'
+							break_.downvotes++
+				
+						#calculating new points
+						if (break_.upvotes - break_.downvotes) > 0
+							break_.points = break_.startingPoints + 1000000 * Math.log (break_.upvotes - break_.downvotes)
+						else if (break_.upvotes - break_.downvotes) == 0
+							break_.points = break_.startingPoints
+						else
+							break_.points = break_.startingPoints - 1000000 * Math.log (break_.downvotes - break_.upvotes)
+				
+						if break_.top or (break_.points > a.topBreak.points)
+							break_.top = true
+							albumModel.updateTop break_.album, break_, (err) ->
+								if err
+									throw err
+				
+						console.log break_.points
+						break_.save (err) ->
+							if err
+								console.log 'BREAK: Break save failed after vote'
+								callback err, null
+							else
+								console.log 'BREAK: Vote successful: ' + break_._id
+								callback null, break_.upvotes - break_.downvotes
 				
 
 
