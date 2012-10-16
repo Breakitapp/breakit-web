@@ -1,0 +1,10 @@
+extend layout
+block contents
+	form(name="input", action="/feedback/new", method="post")
+		label Feedback: 	
+		select(name = "select_user")
+			for user in users
+				option(value="user:"+user.fName) #{user.fName}
+		input(type="text", name="feedback")
+		br
+		input(type="submit", value="Submit")
