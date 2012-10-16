@@ -40,14 +40,16 @@ exports.post_break = (req, res) ->
 				if err
 					throw err
 					res.send err
-				breaks.findById break_._id, (err, b) ->
-					if err
-						throw err
-					res.send b
+				else
+					breaks.findById break_._id, (err, b) ->
+						if err
+							throw err
+						else
+							res.send b
 					
 exports.post_comment = (req, res) ->
 	console.log req.body
-	newComment = new comments.Comment req.body.comment, req.body.user, req.body.date
+	newComment = new comments.Comment req.body.comment, req.body.user
 	breaks.comment newComment, req.body.breakId, (err, commentCount) ->
 		if err
 			res.send 'Commenting failed.'
