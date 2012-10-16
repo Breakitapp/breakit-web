@@ -54,14 +54,24 @@ AlbumSchema = new Schema
 
 AlbumSchema.index {loc: '2d'}
 
+FeedbackSchema = new Schema
+	user_id		:		{type: String}
+	date			:		{type: Date, default: Date.now}
+	comment		:		{type: String}
+
+Feedback	= mongoose.model 'Feedback', FeedbackSchema
 Comment		= mongoose.model 'Comment', CommentSchema
 Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
 BetaUser = mongoose.model 'BetaUser', BetaSchema
 Album			=	mongoose.model 'Album', AlbumSchema
 
+
+
+
 exports.User			= User
 exports.BetaUser = BetaUser
 exports.Break			= Break
 exports.Comment		= Comment
 exports.Album			= Album
+exports.Feedback		= Feedback
