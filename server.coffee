@@ -95,7 +95,7 @@ server.post '/albums/new', albums.submit
 #Feedback
 
 #Creating a feedback for test
-server.post '/feedback', feedback.iosCreate
+server.post '/feedback', feedback.iosCreate #all routes used by iOS could be moved to /ios/smth under #iOS -E
 server.get '/feedback/new', feedback.create
 server.post '/feedback/new', feedback.submit
 server.get '/feedback/list', feedback.list
