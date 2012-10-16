@@ -91,6 +91,14 @@ server.all '/albums', albums.list
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
 
+#Feedback
+
+#Creating a feedback for test
+server.post '/feedback/', feedback.iosCreate
+server.get '/feedback/new', feedback.create
+server.post '/feedback/new', feedback.submit
+server.get '/feedback/list', feedback.list
+
 #Starting the server
 server.listen 3000
 console.log 'Breakit express server listening to port 3000 in dev mode'
