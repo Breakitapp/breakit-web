@@ -85,7 +85,7 @@ findAll = (callback) ->
 			return breaks_
 		)
 
-#finds an x amout of breaks in the vicinity 
+#finds an x amout of breaks in the vicinity. NOT USED?
 findNear = (longitude, latitude, page, callback) ->
 	breaks = []
 	models.Break.db.db.executeDbCommand {
@@ -107,6 +107,7 @@ findNear = (longitude, latitude, page, callback) ->
 			callback null, breaks
 	return breaks
 
+#NOT USED?
 findInfinite = (page, callback) ->
 	models.Break.find().skip(10*(page-1)).limit(10).exec((err, breaks) ->
 		breaks_ = (b for b in breaks)

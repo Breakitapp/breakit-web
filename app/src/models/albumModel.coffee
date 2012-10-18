@@ -9,8 +9,8 @@ class Album
 
 	saveToDB : (callback) ->
 		album = new models.Album
-			loc				:	{lon: @lon, lat: @lat}
-			name			: @name
+			loc			:	{lon: @lon, lat: @lat}
+			name		: @name
 			breaks		:	@breaks
 			topBreak	: @topBreak
 		album.save (err) ->
@@ -74,7 +74,6 @@ addBreak = (b) ->
 	
 	#always gives error -> RangeError: Maximum call stack size exceeded
 	#models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
-	
 	
 	models.Album.findOne(name: b.location_name).exec (err, album) -> 
 		console.log 'SUPPLIES MUTHAFUCKA'

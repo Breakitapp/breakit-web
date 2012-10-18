@@ -44,6 +44,16 @@ addBreak = (userId, break_, callback) ->
 						
 	else
 		throw 'USER: What you tried to add is not a break'
+
+#Find breaks by a single user (for the "my breaks" view)
+findBreaks = (userId, page, callback) ->
+	models.Break.find({'user' : userId}).skip(10*(page-1)).limit(10).exec(err, breaks) ->
+		if err
+			callback err, null
+		else
+			breaks_ = (b for b in breaks)
+			callback null, breaks_
+			return breaks_
 			
 remove = (userId, callback) ->
 	findById userId, (err, user) ->

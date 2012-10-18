@@ -15,6 +15,7 @@ BreakSchema = new Schema
 	downvotes				:			{type: Number, default: 0}
 	startingPoints			:			{type: Number}
 	points 				:				{type: Number}
+	views				:				{type: Number, default: 0}
 	loc						:			{lon: Number, lat: Number}
 	location_name		:			{type: String}
 	album				:			{type: String, default: null}
@@ -23,7 +24,7 @@ BreakSchema = new Schema
 	story					:			{type: String, index: true}
 	date					:			{type: Date, default: Date.now}
 	tags					:			{type: String}
-	publish				:			{type: Boolean, default: false}
+	publish				:			{type: Boolean, default: true}
 	comments			:			[Comment]
 
 BreakSchema.index {loc: '2d'}
