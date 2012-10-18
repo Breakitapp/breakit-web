@@ -63,6 +63,7 @@ exports.vote = (req, res) ->
 		if err
 			res.send 'Vote failed'
 		else
+			console.log 'res: ' + score
 			res.send score
 
 exports.get_picture = (req, res) ->

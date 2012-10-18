@@ -167,7 +167,7 @@ vote = (breakId, direction, callback) ->
 								callback err, null
 							else
 								console.log 'BREAK: Vote successful: ' + break_._id
-								callback null, break_.upvotes - break_.downvotes
+								callback null, (break_.upvotes - break_.downvotes)
 				
 
 
