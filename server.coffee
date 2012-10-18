@@ -60,12 +60,14 @@ server.post '/ios/:user/:break', ios.post_break
 server.get '/ios/picture/:id', ios.get_picture
 server.get '/ios/info/:id', ios.get_break
 server.get '/ios/:album/:page', ios.get_breaks_from_album
+server.post '/ios/feedback', ios.feedbackCreate
 
 #WEB (only for testing through the web interface)
 
 #Signup
 server.get '/signup', site.signup
 server.post '/signup', site.signup_post
+server.get '/signup/send', site.send
 
 #Users
 server.all '/users', user.list
@@ -95,7 +97,6 @@ server.post '/albums/new', albums.submit
 #Feedback
 
 #Creating a feedback for test
-server.post '/feedback', feedback.iosCreate #all routes used by iOS could be moved to /ios/smth under #iOS -E
 server.get '/feedback/new', feedback.create
 server.post '/feedback/new', feedback.submit
 server.get '/feedback/list', feedback.list
