@@ -6,24 +6,14 @@ exports.create = (req, res) ->
 	users = userModel.list (u)->
 		res.render 'feedback', title : 'Feedback test form', users: u
 	
-exports.iosCreate = (req, res) ->
-	console.log 'HANDLING A REQUEST FROM IOS: ' + req.body
-	feedback.createFeedback req.body, (err) ->
-		if err
-			console.log err
-			res.send 'Error saving feedback'
-		else
-			console.log 'SUBMITTED'
-			res.send 'SUCCESS'
-
 exports.submit = (req, res) ->
-	feedback.createFeedback req.body, (err) ->
+
+	feedback.createWebFeedback req.body, (err) ->
 		if err
 			console.log err
 			res.send 'Error saving feedback'
 		else
-			console.log 'SUBMITTED'
-			res.send 'New Feedback SUBMITTED'
+			res.send 'New Feedback SUBMITTED (ios)'
 
 exports.list = (req, res) ->
 	feedback.list (feedbacklist) ->

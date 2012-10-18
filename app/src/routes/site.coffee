@@ -49,3 +49,31 @@ exports.signup_post = (req, res) ->
 			
 	res.render('signup_confirm');
 
+exports.send = (req, res) ->
+	console.log 'in send'
+	models.BetaUser.find().exec (err, data) ->
+		if err
+			console.log 'USER: Failed to find any users.'
+			callback null
+		else
+			betausers = (user for user in data)
+			console.log 'betausers' +betausers
+		if betausers == null
+			res.send('No users found.')
+		else
+			content = '<h1> Marko testaa betalistaa' + betausers
+#TODO: PARSE CONTENT TO A MORE USABLE FORM
+#TODO: CHANGE EMAIL TO eg. SKRUDES
+#TODO: IMPLEMENT SECURITY AGAINST FLOODING
+
+			transport = mailer.createTransport 'SES', {
+				AWSAccessKeyID : 'AKIAJD3WZOFBSHHZCIYQ'
+				AWSSecretKey : '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'
+			}
+
+			mailOptions = 
+				from : 'Breakit Info <admin@breakitapp.com>'
+				to: 'marko.oksanen@aceconsulting.fi'
+				subject:  'Beta tester list'
+				generateTextFromHTML: true
+				html: content

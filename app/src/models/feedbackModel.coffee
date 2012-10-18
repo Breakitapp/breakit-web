@@ -19,11 +19,21 @@ class Feedback
 
 #EXPORT ALL THE FUNCTIONS HERE:
 
-createIosFeedback = (reqBody, callback) ->
-	console 'String from ios: '+ reqBody
-	#Parse the string from ios
-
+#used by ios
 createFeedback = (reqBody, callback) ->
+	console.log 'String from ios: '+ reqBody.feedback
+	splitFeedback = reqBody.feedback.split("#")
+	console.log 'splitFeedback: ' + splitFeedback
+	console.log 'splitFeedback 1: ' + splitFeedback[0]
+	console.log 'splitFeedback 2: ' + splitFeedback[1]
+	
+	# FEEBACKS SHOULD BE GOT FROM IOS IN FORM "USER#FEEDBACK"
+	fb_new = new Feedback(splitFeedback[0], splitFeedback[1])
+	fb_new.save (err) ->
+		callback err
+
+#used by web interface for testing
+createWebFeedback = (reqBody, callback) ->
 	console.log 'req.body.feedback' + reqBody.feedback
 	console.log 'req.body.select_user' + reqBody.select_user
 	
@@ -43,5 +53,6 @@ list = (callback) ->
 
 root = exports ? window
 root.Feedback = Feedback
+root.createWebFeedback = createWebFeedback
 root.createFeedback = createFeedback
 root.list = list

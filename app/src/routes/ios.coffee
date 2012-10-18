@@ -7,6 +7,7 @@
 breaks	= require '../models/breakModel'
 albums	= require '../models/albumModel'
 comments = require '../models/commentModel'
+feedback = require '../models/feedbackModel'
 fs			= require 'fs'
 
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
@@ -86,3 +87,13 @@ exports.get_breaks_from_album = (req, res) ->
 		if err
 			throw err
 		res.send docs
+
+exports.feedbackCreate = (req, res) ->
+	console.log 'HANDLING A REQUEST FROM IOS: ' + req.body
+	feedback.createIosFeedback req.body, (err) ->
+		if err
+			console.log err
+			res.send 'Error saving feedback'
+		else
+			console.log 'SUBMITTED'
+			res.send 'SUCCESS'
