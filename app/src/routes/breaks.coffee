@@ -4,7 +4,7 @@ comments = require '../models/commentModel'
 fs			= require 'fs'
 
 exports.list = (req, res) ->
-	breaks.findNear 100, 65, 65, (err, docs) ->
+	breaks.findNear 100, 65, 0, (err, docs) ->
 		res.send docs
 
 #This is only for web interface	
@@ -31,10 +31,11 @@ exports.easyWebCreate = (req, res) ->
 
 exports.easyWebSubmit = (req, res) ->
 	#PARSE request
-	console.log 'req body:'+req.body
-	console.log 'req body location:'+req.body.location
+	parsed = req.body.location.split '#'
+	headline = 'Marko chilling in' + parsed[3]
+	story = 'WOOHOOO :) :) Having SUPER DUPER TIME in'+ parsed[3]
 
-	breaks.easyCreateBreak req.body.location, (err, break_) ->
+	breaks.createBreak parsed[1], parsed[2], parsed[3], story, headline, (err, break_) ->
 		console.log 'created a break'+break_
 		albums.addBreak break_
 		

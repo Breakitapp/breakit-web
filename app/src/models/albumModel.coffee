@@ -39,20 +39,12 @@ findById = (id, callback) ->
 		callback err, foundAlbum
 
 list = (callback) ->
-	console.log 'in list'
-	findNear 24.83223594527063, 60.1802242005334, 0, (nullvalue, albums) ->
-		console.log 'hello there'+albums
-		console.log 'hello there nullv'+nullvalue
-		callback albums
-###
-list = (callback) ->
 	models.Album.find().exec (err, data) ->
 		if err
 			throw err
 		else
 			albums = (album for album in data)
 			callback albums
-###
 
 #Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
 findNear = (longitude, latitude, page, callback) ->
@@ -78,6 +70,32 @@ findNear = (longitude, latitude, page, callback) ->
 					i++
 			callback null, albums
 	return albums
+
+#Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
+findNear2 = (longitude, latitude, page, callback) ->
+	albums = []
+	#This is the geonear mongoose function, that searches for locationbased nodes in db
+	models.Album.db.db.executeDbCommand {
+		geoNear: 'albums' 
+		near : [longitude, latitude]
+		spherical : true
+		}, (err, docs) ->
+			if err
+				throw err
+			a = docs.documents[0].results
+			console.log 'a:' + a
+			console.log 'a[0]:' + a[0]
+			if a[0]
+				i = 0
+				while a[page*10+i] and i < 10
+					object = a[page*10+i]
+					found_album = object.obj
+					found_album.dis = object.dis
+					albums.push found_album
+					i++
+			callback null, albums
+	return albums
+
 	
 addBreak = (b) ->
 	radius = 0.5/6353
@@ -240,3 +258,4 @@ root.remove = remove
 root.addBreak = addBreak
 root.findBreaks = findBreaks
 root.findNear = findNear
+root.findNear2 = findNear2

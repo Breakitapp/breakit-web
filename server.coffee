@@ -91,6 +91,8 @@ server.get '/breaks/:page', breaks.infinite
 
 #Albums
 server.all '/albums', albums.list
+server.get '/albums/near/:page', albums.listNear
+server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
 

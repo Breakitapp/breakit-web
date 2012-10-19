@@ -38,21 +38,6 @@ createBreak = (longitude, latitude, location_name, story, headline, callback) ->
 	break_.saveToDB break_.user, (err, b) ->
 			callback err, b
 
-easyCreateBreak = (locationString, callback) ->
-	console.log 'location: '+locationString
-	
-	parsed = locationString.split '#'
-	console.log 'parsed 0: '+parsed[0]
-	console.log 'parsed 1: '+parsed[1]
-	console.log 'parsed 2: '+parsed[2]
-
-	headline = 'Marko chilling in' + parsed[3]
-	story = 'WOOHOOO :) :) Having SUPER DUPER TIME in'+ parsed[3]
-
-	break_ = new Break parsed[1], parsed[2], parsed[3], story, headline
-	break_.saveToDB break_.user, (err, b) ->
-			callback err, b
-
 ### probably useless
 addAlbum = (album, breakId, callback) ->
 	findById breakId, (err, break_) ->
@@ -245,7 +230,6 @@ root = exports ? window
 root.Break = Break
 root.comment = comment
 root.createBreak = createBreak
-root.easyCreateBreak = easyCreateBreak
 root.findAll = findAll
 root.findNear = findNear
 root.findInfinite = findInfinite
