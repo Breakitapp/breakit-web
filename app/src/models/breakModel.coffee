@@ -37,24 +37,6 @@ createBreak = (longitude, latitude, location_name, story, headline, callback) ->
 	break_ = new Break longitude, latitude, location_name, story, headline
 	break_.saveToDB break_.user, (err, b) ->
 			callback err, b
-
-### probably useless
-addAlbum = (album, breakId, callback) ->
-	findById breakId, (err, break_) ->
-		if err
-			console.log 'BREAK: failed to find break to be assigned an album. Id: ' + breakId
-			callback err, null
-		else
-			break_.album = album
-			break_.save (err) ->
-				if err
-					console.log 'BREAK: Break save failed after new album'
-					callback err
-				else
-					console.log 'BREAK: Album added successfully to break: ' + break_._id
-					callback null
-###	
-	
 	
 comment = (comment, breakId, callback) ->
 	findById breakId, (err, break_) ->
@@ -77,24 +59,36 @@ comment = (comment, breakId, callback) ->
 				else
 					console.log 'BREAK: New comment added successfully to break: ' + break_._id
 					callback null, break_.comments.length
-
+					
+#Saves the userId that has shared a break in facebook
 fbShare = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
 			console.log 'BREAK: failed to find break to be shared in Facebook. Id: ' + breakId
-			callback err, null
+			callback err
 		else
 			break_.fbShares.push userId
-			callback null, break_.fbShares.length
+			break_.save (err) ->
+				if err
+					callback err
+				else
+					console.log 'Saved a Break after a new Facebook share was added.'
+					callback null
 
+#Saves the userId that has tweeted a break
 tweet = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
 			console.log 'BREAK: failed to find break to be tweeted. Id: ' + breakId
-			callback err, null
+			callback err
 		else
 			break_.tweets.push userId
-			callback null, break_.tweets.length
+			break_.save (err) ->
+				if err
+					callback err
+				else
+					console.log 'Saved a Break after a new Tweet was added.'
+					callback null
 
 #find all the breaks
 findAll = (callback) ->
@@ -188,43 +182,8 @@ vote = (breakId, direction, callback) ->
 								callback err, null
 							else
 								console.log 'BREAK: Vote successful: ' + break_._id
-								callback null, break_.upvotes, break_.downvotes
+								callback null, break_
 				
-
-
-#first draft of points calculation
-#only for testing
-###
-points = (breakId, callback) ->
-	findById breakId, (err, break_) ->
-		if err
-			console.log 'BREAK: failed to find break for points calculation'
-			callback err, null
-		else
-			points = 0
-			
-			#these need to be same format first
-			epoch = new Date(1970, 1, 1) 
-			created = break_.date # assume this is in seconds now
-			now = Date.now()
-			
-			diff = created - epoch
-			diff2 = now - epoch
-			
-			#elapsed = created - epoch
-			
-			#points = X * log(break_.score) + Y*elapsed
-			#tjsp
-			
-			console.log epoch
-			console.log created
-			console.log now
-			console.log diff
-			console.log diff2
-			
-			console.log 'BREAK: calculated points for break ' + breakId + ' successfully'
-			callback null, points
-			###
 
 root = exports ? window
 root.Break = Break
@@ -235,4 +194,3 @@ root.findNear = findNear
 root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
-#root.points = points

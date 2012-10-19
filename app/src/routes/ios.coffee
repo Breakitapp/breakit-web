@@ -60,12 +60,12 @@ exports.post_comment = (req, res) ->
 #Simplified voting functionality
 #Takes a req that contains 2 fields: "breakId" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
-	breaks.vote req.body.breakId, req.body.which, (err, upvotes, downvotes) ->
+	breaks.vote req.body.breakId, req.body.which, (err, break_) ->
 		if err
+			console.log err
 			res.send 'Vote failed'
 		else
-			console.log 'res: ' + 100*(upvotes) / (upvotes + downvotes)
-			res.send 100*(upvotes) / (upvotes + downvotes)
+			res.send break_
 
 exports.get_picture = (req, res) ->
 	id = req.params.id
@@ -75,10 +75,27 @@ exports.get_picture = (req, res) ->
 exports.get_break = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
 		if err
-			res.send err
+			console.log err
+			res.send 'Could not find the break'
 		else
 			res.send b
 
+exports.tweet = (req, res) ->
+	breaks.tweet req.body.breakId, req.body.userId, (err) ->
+		if err
+			console.log err
+			res.send 'Saving the tweet to server failed'	
+		else
+			res.send 'Saved the tweet successfully to server'
+	
+	
+exports.fbShare = (req, res) ->
+	breaks.fbShare req.body.breakId, req.body.userId, (err) ->
+		if err
+			console.log err
+			res.send 'Saving the Facebook share to server failed'	
+		else
+			res.send 'Saved the Facebook share successfully to server'
 
 exports.get_breaks_from_album = (req, res) ->
 	console.log 'GETTING ALBUM PAGE ' + req.body
