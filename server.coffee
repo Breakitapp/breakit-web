@@ -56,11 +56,14 @@ server.all '/break', site.break_tmp
 server.post '/ios', ios.index
 server.post '/ios/comment', ios.post_comment
 server.post '/ios/vote', ios.vote
-server.post '/ios/:user/:break', ios.post_break
+server.post '/ios/feedback', ios.feedbackCreate
+server.post '/ios/tweet', ios.tweet
+server.post '/ios/fb', ios.fbShares
 server.get '/ios/picture/:id', ios.get_picture
 server.get '/ios/info/:id', ios.get_break
+server.post '/ios/:user/:break', ios.post_break
 server.get '/ios/:album/:page', ios.get_breaks_from_album
-server.post '/ios/feedback', ios.feedbackCreate
+
 
 #WEB (only for testing through the web interface)
 
