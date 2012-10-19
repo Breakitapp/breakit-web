@@ -54,6 +54,10 @@ AlbumSchema = new Schema
 	breaks		:		[Schema.ObjectId]
 	topBreak	:		Schema.Types.Mixed
 	loc				:		{lon: Number, lat: Number}
+	
+	#For other sorting options:
+	#currentBreak (the most recently added)
+	#highestBreak (the one with most upvotes - downvotes)
 
 AlbumSchema.index {loc: '2d'}
 
