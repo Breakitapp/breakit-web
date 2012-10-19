@@ -57,7 +57,8 @@ comment = (comment, breakId, callback) ->
 				else
 					console.log 'BREAK: New comment added successfully to break: ' + break_._id
 					callback null, break_.comments.length
-#SAVING
+					
+#Saves the userId that has shared a break in facebook
 fbShare = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
@@ -65,8 +66,14 @@ fbShare = (breakId, userId, callback) ->
 			callback err
 		else
 			break_.fbShares.push userId
-			callback null
+			break_.save (err) ->
+				if err
+					callback err
+				else
+					console.log 'Saved a Break after a new Facebook share was added.'
+					callback null
 
+#Saves the userId that has tweeted a break
 tweet = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
@@ -74,7 +81,12 @@ tweet = (breakId, userId, callback) ->
 			callback err
 		else
 			break_.tweets.push userId
-			callback null
+			break_.save (err) ->
+				if err
+					callback err
+				else
+					console.log 'Saved a Break after a new Tweet was added.'
+					callback null
 
 #find all the breaks
 findAll = (callback) ->
