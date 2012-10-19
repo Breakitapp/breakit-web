@@ -24,7 +24,33 @@ exports.infinite = (req, res) ->
 #This is only for web interface	
 exports.webCreate = (req, res) ->
 	res.render 'newBreak', title : 'Create a new Break'
-	
+
+#This is only for web interface		
+exports.easyWebCreate = (req, res) ->
+	res.render 'easyNewBreak', title : 'Create a new Break'
+
+exports.easyWebSubmit = (req, res) ->
+	#PARSE request
+	console.log 'req body:'+req.body
+	console.log 'req body location:'+req.body.location
+
+	breaks.easyCreateBreak req.body.location, (err, break_) ->
+		console.log 'created a break'+break_
+		albums.addBreak break_
+		
+		target_path ='./app/res/images/' + break_._id + '.jpeg'
+		fs.readFile './test/images/P1030402.JPG', (err, data) ->
+			if err
+				console.log err
+				res.send 'Error reading image'
+			else
+				fs.writeFile target_path, data, (err) ->
+					if err
+						console.log err
+						res.send 'Error saving image'
+					else
+						res.send 'New break saved successfully'
+
 #This is only for web interface	
 exports.webSubmit = (req, res) ->
 			

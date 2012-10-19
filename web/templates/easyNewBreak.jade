@@ -1,0 +1,13 @@
+extend layout
+block contents
+	form(name="input", action="/breaks/enew", method="post", enctype="multipart/form-data")
+		label CHOOSE LOCATION: 
+		select(name = "location")
+			option(value='location#24.83223594527063#60.1802242005334#Breakit HQ') Breakit HQ
+			option(value='location#24.67801124000000#60.2069040000000#ESPOO') ESPOO
+			option(value='location#22.96433700000000#59.8274340000000#HANKO') HANKO
+			option(value='location#23.76504400000000#61.4985810000000#Kruunuhaka') Kruunuhaka
+			option(value='location#24.95688900000000#60.1732390000000#Hietaniemi') Hietaniemi
+			option(value='location#24.90376000000000#60.1632480000000#Lauttasaaren silta') Lauttasaaren silta
+			option(value='location#24.92847900000000#60.1892870000000#Eläintarhan puisto') Eläintarhan puisto
+		input(type="submit", value="Submit")
