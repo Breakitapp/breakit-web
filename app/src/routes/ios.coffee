@@ -60,12 +60,12 @@ exports.post_comment = (req, res) ->
 #Simplified voting functionality
 #Takes a req that contains 2 fields: "breakId" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
-	breaks.vote req.body.breakId, req.body.which, (err, score) ->
+	breaks.vote req.body.breakId, req.body.which, (err, upvotes, downvotes) ->
 		if err
 			res.send 'Vote failed'
 		else
-			console.log 'res: ' + score
-			res.send score
+			console.log 'res: ' + 100*(upvotes) / (upvotes + downvotes)
+			res.send 100*(upvotes) / (upvotes + downvotes)
 
 exports.get_picture = (req, res) ->
 	id = req.params.id
