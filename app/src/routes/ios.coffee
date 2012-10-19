@@ -29,7 +29,7 @@ exports.index = (req, res) ->
 
 #create a new break
 exports.post_break = (req, res) ->
-	breaks.createBreak req.body, (err, break_) ->
+	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline,  (err, break_) ->
 		albums.addBreak break_
 		tmp_path = req.files.image.path
 		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
@@ -60,11 +60,12 @@ exports.post_comment = (req, res) ->
 #Simplified voting functionality
 #Takes a req that contains 2 fields: "breakId" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
-	breaks.vote req.body.breakId, req.body.which, (err, score) ->
+	breaks.vote req.body.breakId, req.body.which, (err, upvotes, downvotes) ->
 		if err
 			res.send 'Vote failed'
 		else
-			res.send score
+			console.log 'res: ' + 100*(upvotes) / (upvotes + downvotes)
+			res.send 100*(upvotes) / (upvotes + downvotes)
 
 exports.get_picture = (req, res) ->
 	id = req.params.id
