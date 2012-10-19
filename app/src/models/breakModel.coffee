@@ -31,9 +31,9 @@ class Break
 				console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
 				callback null, break_
 
-createBreak = (data, callback) ->
-	break_ = new Break data.longitude, data.latitude, data.location_name, data.story, data.headline
-	break_.saveToDB data.user, (err, b) ->
+createBreak = (longitude, latitude, location_name, story, headline, callback) ->
+	break_ = new Break longitude, latitude, location_name, story, headline
+	break_.saveToDB break_.user, (err, b) ->
 			callback err, b
 
 ### probably useless
@@ -75,7 +75,25 @@ comment = (comment, breakId, callback) ->
 				else
 					console.log 'BREAK: New comment added successfully to break: ' + break_._id
 					callback null, break_.comments.length
-	
+
+fbShare = (breakId, userId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			console.log 'BREAK: failed to find break to be shared in Facebook. Id: ' + breakId
+			callback err, null
+		else
+			break_.fbShares.push userId
+			callback null, break_.fbShares.length
+
+tweet = (breakId, userId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			console.log 'BREAK: failed to find break to be tweeted. Id: ' + breakId
+			callback err, null
+		else
+			break_.tweets.push userId
+			callback null, break_.tweets.length
+
 #find all the breaks
 findAll = (callback) ->
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->

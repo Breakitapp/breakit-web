@@ -28,7 +28,7 @@ exports.webCreate = (req, res) ->
 #This is only for web interface	
 exports.webSubmit = (req, res) ->
 			
-	breaks.createBreak req.body, (err, break_) ->
+	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline,  (err, break_) ->
 		albums.addBreak break_
 		
 		target_path ='./app/res/images/' + break_._id + '.jpeg'

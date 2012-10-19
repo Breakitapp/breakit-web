@@ -26,6 +26,8 @@ BreakSchema = new Schema
 	tags					:			{type: String}
 	publish				:			{type: Boolean, default: true}
 	comments			:			[Comment]
+	fbShares			:			[Schema.ObjectId]
+	tweets				:			[Schema.ObjectId]
 
 BreakSchema.index {loc: '2d'}
 
