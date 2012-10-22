@@ -21,10 +21,6 @@ exports.infinite = (req, res) ->
 	breaks.findInfinite page, (err, docs) ->
 		res.send docs
 
-#This is only for web interface	
-exports.webCreate = (req, res) ->
-	res.render 'newBreak', title : 'Create a new Break'
-
 #This is only for web interface		
 exports.easyWebCreate = (req, res) ->
 	res.render 'easyNewBreak', title : 'Create a new Break'
@@ -53,7 +49,13 @@ exports.easyWebSubmit = (req, res) ->
 						res.send 'New break saved successfully'
 
 #This is only for web interface	
+exports.webCreate = (req, res) ->
+	res.render 'newBreak', title : 'Create a new Break'
+
+#This is only for web interface	
 exports.webSubmit = (req, res) ->
+	
+	console.log 'cookie: ' + req.cookie
 			
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline,  (err, break_) ->
 		albums.addBreak break_
@@ -97,5 +99,8 @@ exports.vote = (req, res) ->
 		else
 			res.redirect('/breaks/all')
 			
+exports.cookieGet = (req, res) ->
+	res.render 'cookieTest', title : 'Cookie stuff'
 	
+exports.cookiePost = (req, res) ->
 	

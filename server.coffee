@@ -5,12 +5,12 @@
 ###
 
 express				= require 'express'
-site					= require './app/lib/routes/site'
-user					= require './app/lib/routes/user'
+site				= require './app/lib/routes/site'
+user				= require './app/lib/routes/user'
 breaks				= require './app/lib/routes/breaks'
 albums				= require './app/lib/routes/albums'
 feedback			= require './app/lib/routes/feedback'
-ios						= require './app/lib/routes/ios'
+ios					= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
@@ -99,7 +99,9 @@ server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
 
-#Feedback
+#Testing
+server.get '/cookietest', breaks.cookieGet
+server.post '/cookietest', breaks.cookiePost
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create
