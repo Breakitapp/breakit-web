@@ -32,10 +32,10 @@ BreakSchema = new Schema
 BreakSchema.index {loc: '2d'}
 
 UserSchema = new Schema
-	fName			:		{type: String, required: true}
-	lName			:		{type: String, required: true}
-	nName			:		{type: String, required: true, unique: true}
-	email			:		{type: String, set: toLower, required: true, unique: true, index: true}
+	fName			:		{type: String}
+	lName			:		{type: String}
+	nName			:		{type: String, required: true}
+	email			:		{type: String, set: toLower, unique: true, index: true}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
 	breaks		:		[Schema.ObjectId]
@@ -72,8 +72,6 @@ Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
 BetaUser = mongoose.model 'BetaUser', BetaSchema
 Album			=	mongoose.model 'Album', AlbumSchema
-
-
 
 
 exports.User			= User

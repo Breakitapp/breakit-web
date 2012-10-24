@@ -28,7 +28,7 @@ exports.index = (req, res) ->
 			res.send [albums, page]
 
 #Creates a new user and responds with the userId
-exports.newuser = (req, res) ->
+exports.new_user = (req, res) ->
 	
 	users.createUser 'anonymous', 'iPhone', (err, user) ->
 		if err
@@ -107,14 +107,14 @@ exports.fbShare = (req, res) ->
 		else
 			res.send 'Saved the Facebook share successfully to server'
 
-exports.get_breaks_from_album = (req, res) ->
-	console.log 'GETTING ALBUM PAGE ' + req.body
-	album = req.params.album
-	page = req.params.page
-	albums.findBreak album, page, (err, docs) ->
+exports.browse_album = (req, res) ->
+	console.log 'Getting page ' + req.body.page + ' in album ' + req.body.album
+	album = req.body.album
+	page = req.body.page
+	albums.getBreak album, page, (err, break_) ->
 		if err
 			throw err
-		res.send docs
+		res.send break_
 
 exports.feedbackCreate = (req, res) ->
 	console.log 'HANDLING A REQUEST FROM IOS: ' + req.body

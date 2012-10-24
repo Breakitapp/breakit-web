@@ -219,7 +219,7 @@ remove = (id) ->
 			console.log 'ALBUM: removed the album correctly' 
 
 # get the next page content according to location and points
-nextFeed = (array, best, page, userLocation) ->
+getFeed = (array, best, page, userLocation) ->
 	_.without(best)
 	range = 50+50*page
 	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
@@ -229,21 +229,17 @@ nextFeed = (array, best, page, userLocation) ->
 	best = _.first(closest, 10)
 
 #Should return sorted breaks
-#Not ready yet
-findBreaks = (album, page, callback) ->
-	models.Album.find({'_id': album}).sort({'points':'descending'}).exec((err, docs) ->
+getBreak = (album, page, callback) ->
+	models.Break.find({'album': album}).sort({'points':'descending'}).exec((err, docs) ->
 		if docs is not null and docs[1] is not null
-			breaks = []
+
 			b = docs[0].breaks
-			#This splice removes the top break, could be done with an if statement too
-			b.splice 0,1
-			if b[0]
-				i = 0
-				while b[page*10+i] and i < 10
-					found_break = b[page*10+i]
-					breaks.push found_break
-					i++
-				callback err, breaks
+			
+			if page >= b.length
+				page = page % b.length
+			
+			if b[page]
+				callback err, b[page]
 		else
 			callback err, docs
 	)
