@@ -64,8 +64,10 @@ server.get '/ios/info/:id', ios.get_break
 server.post '/ios/:user/:break', ios.post_break
 server.get '/ios/:album/:page', ios.get_breaks_from_album
 
+#WEB
 
-#WEB (only for testing through the web interface)
+#Public break interface
+server.get '/p/:id', site.public
 
 #Signup
 server.get '/signup', site.signup

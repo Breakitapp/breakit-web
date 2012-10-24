@@ -6,12 +6,20 @@
 
 models = require '../models/mongoModel'
 mailer = require 'nodemailer'
+breaks = require '../models/breakModel'
 
 exports.index = (req, res) ->
 	res.render 'index', title: 'Breakit web-app, build with node, coffeescript and backbone'
 
 exports.break_tmp = (req, res) ->
 	res.render 'tmp/break', title: 'Break-template'
+	
+exports.public = (req, res) ->
+	breaks.findById req.params.id, (err, break_) ->
+		if err
+			res.send '404'
+		else
+			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
 	
 exports.signup = (req, res) ->
 	res.render 'signup'
