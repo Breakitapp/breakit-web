@@ -7,6 +7,7 @@
 breaks	= require '../models/breakModel'
 albums	= require '../models/albumModel'
 comments = require '../models/commentModel'
+users = require '../models/userModel'
 feedback = require '../models/feedbackModel'
 fs			= require 'fs'
 
@@ -26,6 +27,15 @@ exports.index = (req, res) ->
 			#Send the albums as a JSON to client
 			res.send [albums, page]
 
+#Creates a new user and responds with the userId
+exports.newuser = (req, res) ->
+	
+	users.createUser 'anonymous', 'iPhone', (err, user) ->
+		if err
+			console.log err
+			res.send err
+		else
+			res.send user._id
 
 #create a new break
 exports.post_break = (req, res) ->

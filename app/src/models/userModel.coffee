@@ -1,16 +1,13 @@
 models = require './mongoModel'
 
 class User
-	constructor: (@fName, @lName, @nName, @email, @phone) ->
+	constructor: (@nName, @phone) ->
 				
 		@breaks = null
 		
 	saveToDB: (callback) ->
 		user = new models.User
-			fName : @fName
-			lName : @lName
 			nName : @nName
-			email : @email
 			phone : @phone
 			
 		user.save (err) ->
@@ -21,8 +18,8 @@ class User
 				console.log 'USER: Saved a new user: ' + user._id
 				callback null, user._id
 
-createUser = (fn, ln, nn, em, ph, callback) ->
-	newUser = new User fn, ln, nn, em, ph
+createUser = (nn, ph, callback) ->
+	newUser = new User nn, ph
 	newUser.saveToDB (err, id) ->
 		callback err, id
 
