@@ -1,0 +1,88 @@
+!!! 5
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/public/css/style6.css')
+		link(href="public/css/jScrollPane.css")(rel="stylesheet)(type="text/css")
+		meta(name='viewport', content='width=device-width,initial-scale=1')
+			script(type="text/javascript")(src="/public/js/mousewheel.js")
+			script(type="text/javascript")(src="/public/js/jScrollPane.js")
+		block scripts
+			script(type='text/javascript', src='/public/js/libs/underscore-min.js')
+			script(type='text/javascript', src='/public/js/libs/backbone-min.js')
+			script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js")
+	body
+		header
+			#header
+				h1 BREAK
+				span IT
+		#container
+			#floatLeft
+				#headCont
+					h3 #{b.headline}
+					script(type="text/javascript")
+						console.log(b.headline);
+				img(src="/ios/picture/"+b._id)(alt="break")
+				#bottomCont
+					h3 #{b.user} 
+					p #{b.story}
+			#leftCont
+				#adress
+					p #{b.location_name}
+				iframe(frameborder="0")(scrolling="no")(marginheight="0")(marginwidth="0")(src="https://maps.google.fi/maps?f=q&amp;source=s_q&amp;hl=sv&amp;geocode=&amp;q="+b.loc.lat+","+b.loc.lon+"&amp;aq=&amp;sll="+b.loc.lon+","+b.loc.lat+"&amp;sspn=0.00602,0.021136&amp;ie=UTF8&amp;t=m&amp;ll=60.170208,24.842834&amp;spn=0.012808,0.034418&amp;z=14&amp;output=embed")
+				br
+				#firstComment
+					h4 date
+					h3 #{b.user}
+					p #{b.story}
+				#comments.scroll-pane
+						for comment in b.comments
+							<h4> #{comment.date} </h4><h3> #{comment.user} </h3><p> #{comment.comment} </p>
+				#writeComment
+					textarea write your comment here...
+			#rightCont
+				ul
+					li#fbook
+						a(href="#")
+							img(src="/public/images/1pager/f_logo_gray.png")
+							p 
+					li#twitter
+						a(href="#")
+							img(src="/public/images/1pager/twitter_gray.png")
+							tweet
+					li#comments_img
+						img(src="/public/images/1pager/comments.png")
+						p #{b.comments.length}
+			#push
+			#footer
+
+
+	script(type="text/javascript")
+		$(document).ready(function(e) {
+			$("li").mouseover(function() {
+				if(this.id === "fbook"){
+					$(this).find("img")[0].src = '../public/images/1pager/f_logo_blue.png';
+				}
+				else if(this.id === "twitter"){
+					$(this).find("img")[0].src='../public/images/1pager/twitter_blue.png';
+				}
+				if(this.id === "comments_img" || this.id === "twitter" ||this.id === "fbook"){
+					$(this).css("background-color","rgba(255,255,255,0.2)");
+				}
+			});
+			$("li").mouseout(function() {
+				if(this.id === "fbook"){
+					$(this).find("img")[0].src = '../public/images/1pager/f_logo_gray.png';
+				}
+				else if(this.id === "twitter"){
+					$(this).find("img")[0].src='../public/images/1pager/twitter_gray.png';
+				}
+				if(this.id === "comments_img" || this.id === "twitter" ||this.id === "fbook"){
+					$(this).css("background-color","rgba(255,255,255,0)");
+				}
+			});
+			$(function()
+			{
+				$('.scroll-pane').jScrollPane();
+			});
+		});
