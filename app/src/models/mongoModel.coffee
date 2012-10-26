@@ -11,19 +11,19 @@ CommentSchema = new Schema
 
 BreakSchema = new Schema
 	headline			:			{type: String}
-	upvotes					:			{type: Number, default: 1}
-	downvotes				:			{type: Number, default: 0}
-	startingPoints			:			{type: Number}
-	points 				:				{type: Number}
-	views				:				{type: Number, default: 0}
-	loc						:			{lon: Number, lat: Number}
+	upvotes				:			[Schema.ObjectId]
+	downvotes			:			[Schema.ObjectId]
+	startingPoints		:			{type: Number}
+	points 				:			{type: Number}
+	views				:			{type: Number, default: 0}
+	loc					:			{lon: Number, lat: Number}
 	location_name		:			{type: String}
 	album				:			{type: String, default: null}
 	user				:			{type: String, default: null}
 	top					:			{type: Boolean, default: false}
-	story					:			{type: String, index: true}
-	date					:			{type: Date, default: Date.now}
-	tags					:			{type: String}
+	story				:			{type: String, index: true}
+	date				:			{type: Date, default: Date.now}
+	tags				:			{type: String}
 	publish				:			{type: Boolean, default: true}
 	comments			:			[Comment]
 	fbShares			:			[Schema.ObjectId]

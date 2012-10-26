@@ -85,7 +85,6 @@ server.post '/users/delete/:id', user.remove
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
 server.all '/breaks', breaks.list
-server.get '/breaks/all', breaks.listall 
 server.get '/breaks/new', breaks.webCreate
 server.post '/breaks/new', breaks.webSubmit
 server.get '/breaks/enew', breaks.easyWebCreate

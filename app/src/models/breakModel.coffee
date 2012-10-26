@@ -3,8 +3,6 @@ albumModel = require './albumModel'
 commentModel = require './commentModel'
 userModel = require './userModel'
 
-
-
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
 		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
@@ -18,12 +16,14 @@ class Break
 						
 		break_ = new models.Break
 			loc						:		{lon: @longitude, lat: @latitude}
-			location_name		:		@location_name
-			story				:		@story
-			headline			:		@headline
-			user					:	@user
-			points					:	@startingPoints
-			startingPoints			:	@startingPoints
+			location_name			:		@location_name
+			story					:		@story
+			headline				:		@headline
+			user					:		@user
+			points					:		@startingPoints
+			startingPoints			:		@startingPoints
+			
+		break_.upvotes.push @user
 			
 		break_.save (err) ->
 			if err 
@@ -100,6 +100,8 @@ findAll = (callback) ->
 		)
 
 #finds an x amout of breaks in the vicinity. NOT USED?
+
+###
 findNear = (longitude, latitude, page, callback) ->
 	breaks = []
 	models.Break.db.db.executeDbCommand {
@@ -120,21 +122,22 @@ findNear = (longitude, latitude, page, callback) ->
 					i++
 			callback null, breaks
 	return breaks
+###
 
-#NOT USED?
 findInfinite = (page, callback) ->
 	models.Break.find().skip(10*(page-1)).limit(10).exec((err, breaks) ->
 		breaks_ = (b for b in breaks)
 		callback null, breaks_
 		return breaks_
 	)
+
 	
 findById = (id, callback) ->
 	models.Break.findById(id).exec((err, break_) ->
 		callback err, break_
 	)
 
-vote = (breakId, direction, callback) ->
+vote = (breakId, userId, direction, callback) ->
 	
 	if (direction isnt 'up') and (direction isnt 'down')
 		err = new Error 'BREAK: invalid direction'
@@ -157,17 +160,17 @@ vote = (breakId, direction, callback) ->
 			
 						#Voting increments the up/down votes of the breaks.
 						if direction is 'up'
-							break_.upvotes++
+							break_.upvotes.push userId
 						if direction is 'down'
-							break_.downvotes++
+							break_.downvotes.push userId
 				
 						#calculating new points
-						if (break_.upvotes - break_.downvotes) > 0
-							break_.points = break_.startingPoints + 1000000 * Math.log (break_.upvotes - break_.downvotes)
-						else if (break_.upvotes - break_.downvotes) == 0
+						if (break_.upvotes.length - break_.downvotes.length) > 0
+							break_.points = break_.startingPoints + 1000000 * Math.log (break_.upvotes.length - break_.downvotes.length)
+						else if (break_.upvotes.length - break_.downvotes.length) == 0
 							break_.points = break_.startingPoints
 						else
-							break_.points = break_.startingPoints - 1000000 * Math.log (break_.downvotes - break_.upvotes)
+							break_.points = break_.startingPoints - 1000000 * Math.log (break_.downvotes.length - break_.upvotes.length)
 				
 						if break_.top or (break_.points > a.topBreak.points)
 							break_.top = true
@@ -190,7 +193,7 @@ root.Break = Break
 root.comment = comment
 root.createBreak = createBreak
 root.findAll = findAll
-root.findNear = findNear
+#root.findNear = findNear
 root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote

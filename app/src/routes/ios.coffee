@@ -33,7 +33,7 @@ exports.new_user = (req, res) ->
 	users.createUser 'anonymous', 'iPhone', (err, user) ->
 		if err
 			console.log err
-			res.send err
+			res.send 'User creation failed'
 		else
 			res.send user._id
 
@@ -68,9 +68,9 @@ exports.post_comment = (req, res) ->
 			res.send newComment
 
 #Simplified voting functionality
-#Takes a req that contains 2 fields: "breakId" and "which" ('up' or 'down')
+#Takes a req that contains 3 fields: "breakId", "userId"" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
-	breaks.vote req.body.breakId, req.body.which, (err, break_) ->
+	breaks.vote req.body.breakId, req.body.userId, req.body.which, (err, break_) ->
 		if err
 			console.log err
 			res.send 'Vote failed'
@@ -107,14 +107,16 @@ exports.fbShare = (req, res) ->
 		else
 			res.send 'Saved the Facebook share successfully to server'
 
+
 exports.browse_album = (req, res) ->
-	console.log 'Getting page ' + req.body.page + ' in album ' + req.body.album
-	album = req.body.album
+	console.log 'Getting page ' + req.body.page + ' in album ' + req.params.album
+	album = req.params.album
 	page = req.body.page
 	albums.getBreak album, page, (err, break_) ->
 		if err
 			throw err
 		res.send break_
+
 
 exports.feedbackCreate = (req, res) ->
 	console.log 'HANDLING A REQUEST FROM IOS: ' + req.body

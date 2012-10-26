@@ -3,12 +3,8 @@ albums = require '../models/albumModel'
 comments = require '../models/commentModel'
 fs			= require 'fs'
 
-exports.list = (req, res) ->
-	breaks.findNear 100, 65, 0, (err, docs) ->
-		res.send docs
-
 #This is only for web interface	
-exports.listall = (req, res) ->
+exports.list = (req, res) ->
 	
 	breaks.findAll (err, breaks_) ->
 		if err
@@ -93,8 +89,9 @@ exports.postComment = (req, res) ->
 
 #req needs to contain "which" field ('up' or 'down') and "breakId" field
 exports.vote = (req, res) ->
-	breaks.vote req.body.breakId, req.body.which, (err, score) ->
+	breaks.vote req.body.breakId, req.body.userId, req.body.which, (err, score) ->
 		if err
+			console.log err
 			res.send 'Vote failed'
 		else
 			res.redirect('/breaks/all')

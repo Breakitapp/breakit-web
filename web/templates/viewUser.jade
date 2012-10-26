@@ -1,7 +1,7 @@
 extend layout
 block contents
 
-	p View / modify user: #{user.id}
+	p View / modify user: #{user._id}
 	
 	form(name="input", action="/users/#{user.id}", method="post")
 		label First name:
