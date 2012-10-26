@@ -76,8 +76,7 @@ exports.comment = (req, res) ->
 
 #This is only for web interface		
 exports.postComment = (req, res) ->
-	console.log req.body
-	
+
 	newComment = new comments.Comment req.body.comment, req.body.user
 	
 	console.log 'new comment: ' + newComment.comment
@@ -86,6 +85,26 @@ exports.postComment = (req, res) ->
 			res.send 'Commenting failed.'
 		else
 			res.send 'Commenting successful. Count: ' + commentCount
+
+exports.postComment_1page = (req, res) ->
+
+	
+	newComment = new comments.Comment req.body.comment, req.body.user
+	
+	console.log 'new comment: ' + newComment.comment
+	breaks.comment newComment, req.body.breakId, (err, commentCount) ->
+		if err
+			res.send 'Commenting failed.'
+		else
+			breaks.findById req.body.breakId, (err, break_) ->
+				if err
+					res.send '404'
+				else
+					#console.log 'break: ' +break_
+					res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
+			
+			#res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
+
 
 #req needs to contain "which" field ('up' or 'down') and "breakId" field
 exports.vote = (req, res) ->

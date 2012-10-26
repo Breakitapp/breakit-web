@@ -19,6 +19,7 @@ exports.public = (req, res) ->
 		if err
 			res.send '404'
 		else
+			#console.log 'break: ' +break_
 			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
 	
 exports.signup = (req, res) ->
