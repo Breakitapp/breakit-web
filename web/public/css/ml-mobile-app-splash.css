@@ -1,0 +1,299 @@
+/*
+
+Mobile App Splash Page Template by MediaLoot
+URL: http://medialoot.com/item/mobile-app-splash-page-template
+
+Designer: Tony Thomas
+
+*/
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background: url(/public/images/signup/photo-bg-1.jpg) no-repeat center top;
+	margin: 0;padding: 0;
+}
+
+.photo-1 {background: url(/public/images/signup/photo-bg-1.jpg) no-repeat center top;}
+.photo-2 {background: url(/public/images/signup/photo-bg-2.jpg) no-repeat center top;}
+.photo-3 {background: url(/public/images/signup/photo-bg-3.jpg) no-repeat center top;}
+.photo-4 {background: url(/public/images/signup/photo-bg-4.jpg) no-repeat center top;}
+
+.banner {
+	height: 550px;
+	width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.clear {
+	clear: both;
+}
+
+.banner h1 {
+	width: 620px;
+	font-family: 'LeagueGothicRegular';
+	font-size: 84px;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: -2px;
+	line-height: 1;
+	text-shadow: 0 1px 3px rgba(0,0,0,0.50);
+	margin: 80px 0 0 0;
+	position: absolute;
+	left: 0; bottom:300px;
+}
+.banner h2 {
+	width: 515px;
+	font-family: 'LeagueGothicRegular';
+	font-size: 46px;
+	color: black;
+	color: rgba(0,0,0,0.75);
+	text-transform: uppercase;
+	letter-spacing: -1px;
+	line-height: 1;
+	text-shadow: 0px 1px 3px rgba(255,255,255,1);
+	position: relative;
+	top: 280px; 
+	left: 20px;
+	background:rgba(255,255,255,0.5);
+	border-top-left-radius:10px;
+	border-top-right-radius:10px;
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-topright:10px;
+	-webkit-border-top-right-radius:10px;
+	-webkit-border-top-left-radius:10px;
+	padding-top:10px;
+	padding-left:30px;
+	-webkit-box-shadow:  0px -10px 15px 0px rgba(25, 25, 25, 0.2);    
+	box-shadow:  0px -10px 15px 0px rgba(25, 25, 25, 0.2);
+	
+}
+.banner form{
+	position:relative;
+	top:242px;
+	left:20px;
+	background:rgba(255,255,255,0.5);
+	border-bottom-left-radius:10px;
+	border-bottom-right-radius:10px;
+	-moz-border-radius-bottomleft:10px;
+	-moz-border-radius-bottomright:10px;
+	-webkit-border-bottom-right-radius:10px;
+	-webkit-border-bottom-left-radius:10px;
+	width:515px;
+	padding-top:10px;
+	padding-bottom:10px;
+	-webkit-box-shadow:  0px 10px 15px 0px rgba(25, 25, 25, 0.2);        
+	box-shadow:  0px 10px 15px 0px rgba(25, 25, 25, 0.2);
+	padding-left:30px;
+}
+
+form input, form label, form select{
+	font-family: 'LeagueGothicRegular';
+	display:inline-block;
+	font-size:30px;
+}
+form label{
+	color: black;
+	color: rgba(0,0,0,0.75);
+	text-shadow: 0 1px 3px rgba(255,255,255,0.25);
+}
+form input, form select{
+	border:rgba(51,51,51,1) 2px groove;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	color:rgba(51,51,51,1);
+}
+form input:focus, form select:focus{
+	outline:none;
+}
+form select{
+	width:120px;
+}
+form select, form input:last-child{
+	cursor:pointer;
+}
+form input:first-of-type{
+	width:421px;
+}
+form input:last-child{
+	width:200px;
+}
+a.download-btn {
+	text-indent: -4999px;
+	display: block;
+	width: 224px;
+	height: 74px;
+	float: left;
+	margin: 0 20px 0 0;
+	position: absolute;
+	border:rgba(0,0,0,0.5) 1px solid;
+}
+a.appstore {
+	background: url(/public/images/signup/download-app-store.png) no-repeat;
+	top: 530px; left: 0;
+}
+a.android {
+	background: url(/public/images/signup/download-android.png) no-repeat;
+	top: 530px; left: 300px;
+}
+/*
+a.share-btn {
+	text-indent: -4999px;
+	display: block;
+	width: 60px;
+	height: 60px;
+	float: left;
+	margin: 0 20px 0 0;
+	position: absolute;
+	border:rgba(153,153,153,1) 2px groove;
+	border-radius:10px;
+}
+a.facebook {
+	background:url(../images/f_logo_gray.png) no-repeat;
+	top: 480px; left: 20px;
+}
+
+a.twitter{
+	background:url(../images/twitter_gray.png) no-repeat;
+	top: 480px; left: 100px;
+}
+*/
+.iphone-5 {
+	width: 268px;
+	height: 586px;
+	display: block;
+	float: right;
+	position: absolute;
+	top: 0px; right: 50px;
+	background: url(/public/images/signup/iphone-5.png);
+}
+
+.iphone-5 img {
+	margin: 81px 0 0 20px;
+	width:225px;
+}
+
+.galaxy-s3 {
+	width: 287px;
+	height: 583px;
+	display: block;
+	float: right;
+	position: absolute;
+	top: 20px; right: 50px;
+	background: url(/public/images/signup/galaxy-s3.png);
+}
+
+.galaxy-s3 img {
+	margin: 52px 0 0 19px;
+}
+
+.page-content {
+	background: #f5f5f5 url(/public/images/signup/background.png) repeat;
+	min-height: 600px;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #eee;
+}
+
+h3 {
+	text-align: center;
+	color: #3e444a;
+	font-family: 'LeagueGothicRegular';
+	font-size: 62px;
+	text-transform: uppercase;
+	margin: 60px 0 0 0;
+	letter-spacing: -1px;
+	text-shadow: 0 1px 0 #fff;
+}
+
+p {
+	text-align: center;
+	color: #858585;
+	font-size: 20px;
+	font-weight: lighter;
+	margin: 10px 0 0 0;
+	text-shadow: 0 1px 0 #fff;
+	letter-spacing: 1px;
+}
+
+.hr {
+	width: 960px;
+	height: 11px;
+	background: url(/public/images/signup/hr.png) no-repeat;
+	display: block;
+	margin: 40px auto;
+}
+
+ul.steps {
+	list-style: none;
+	width: 960px;
+	margin: 0 auto;
+}
+
+ul.steps li {
+	float: left;
+	width: 300px;
+	margin: 0 10px;
+}
+
+ul.steps li.step-1 {
+	background: url(/public/images/signup/step-1.png) no-repeat center top;
+}
+ul.steps li.step-2 {
+	background: url(/public/images/signup/step-2.png) no-repeat center top;
+}
+ul.steps li.step-3 {
+	background: url(/public/images/signup/step-3.png) no-repeat center top;
+}
+
+.steps h4 {
+	font-size: 22px;
+	color: #353434;
+	text-align: center;
+	margin: 135px 0 15px 0;
+}
+
+.steps p {
+	font-size: 14px;
+	color: #a6adb6;
+	margin: 0;
+	letter-spacing: 0px;
+}
+.steps .step-2 p{
+	padding-top:27px;
+}
+.steps .step-3 p{
+	padding-bottom:5px;
+}
+.footer {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.footer .logo {
+	width: 160px;
+	height: 45px;
+	background:url(/public/images/signup/breakit.png) no-repeat;
+	text-indent: -4999px;
+	float: left;
+	margin: 30px 0 20px 0;
+}
+
+.footer .tagline {
+	float: left;
+	margin: 45px 0 0 20px;
+	color: #858585;
+	font-size: 16px;
+	font-weight: lighter;
+	letter-spacing: 1px;
+}
+
+.copyright {
+	clear: both;
+	border-top: 1px solid #eee;
+	padding: 20px 0 40px 0;
+	color: #858585;
+	font-size: 12px;
+	font-weight: lighter;
+	letter-spacing: 1px;
+}
