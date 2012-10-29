@@ -1,0 +1,76 @@
+!!! 5
+html
+	head
+		title Breakit beta-signup
+		link(rel="stylesheet",href="/public/css/ml-mobile-app-splash.css",type="text/css",media="screen")
+		link(rel="stylesheet",href="/public/fonts/stylesheet.css",type="text/css",media="screen")
+		link(rel='icon', type='image/ico', href='public/images/logos/breakit.ico')
+		meta(name="title", content="You’ll discover things going on around you that you’ve never heard about before, you’ll see things you’d normally miss. Breakit helps you to stay on top of your surroundings.")
+		script(type='text/javascript')
+			var _gaq = _gaq || [];
+			
+			_gaq.push(['_setAccount', 'UA-34204739-1']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+	body.photo-1
+		.banner
+			h1 Share and see what's happening nearby,
+				br
+				right now.
+			h2 Sign up and be there first to know
+			form(action="/signup",method="post",name="signup")
+				label Email :
+				input(type="email",id="email",value="Enter your email")
+				br
+				label Select your phone :
+				select(name="phone")
+					option(value="iPhone") iPhone
+					option(value="Android") Android
+					option(value="wm") Windows
+				input(type="submit",value="GO",id="submit")
+			.iphone-5
+				img(src="/public/images/signup/breakitPhone.png",e="e")
+		.page-content
+			h3 Never miss out again, Breakit helps you to stay on top of things
+			p That's right. Breakit is seriously that awesome.
+			.hr
+			ul.steps
+				li.step-1
+					h4 See something worh sharing?
+					p See something that you want to share to more than just your friends?
+				li.step-2
+					h4 Breakit!
+					p Snap a photo, add a headline & short story and press Breakit.
+				li.step-3
+					h4 Get instant reach for your story
+					p Congratulations, you've now Breaked the story and it's out there for the world to see, starting with people nearby. You'll get instant feedback of how people react to your story
+		.footer
+			.logo YourApp
+			.tagline Showing people what's happening since 2012
+				a.twitter-share-button(href="https://twitter.com/share") Tweet
+					script!
+						function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+		.copyright Copyright notice &copy; Breakit 2012. All Rights Reserved.
+
+		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
+		script(type="text/javascript")
+			$(document).ready(function(e) {
+				$(function(){
+					if(navigator.appVersion.toLowerCase().indexOf("mac") !=-1){
+						if(navigator.userAgent.toLowerCase().indexOf('firefox') !=-1){
+							$(".banner h1").css("font-weight","100");
+							$(".banner h2").css("font-weight","100");
+							$("h3").css("font-weight","100");
+						}
+					}
+					if(navigator.userAgent.toLowerCase().indexOf("chrome") !=-1){
+						$("form select").css("background","white url(images/arrow.png) no-repeat right");
+						$("form select").css("-webkit-appearance","none");
+					}
+				});
+			});
