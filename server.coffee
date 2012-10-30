@@ -101,6 +101,7 @@ server.get '/albums/near/:page', albums.listNear
 server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
+server.get '/albums/:album/:id', albums.feed
 
 ###
 #Testing

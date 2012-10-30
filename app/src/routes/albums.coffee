@@ -24,5 +24,12 @@ exports.submit = (req, res) ->
 		album.saveToDB () ->
 		res.send 'Created a new album: ' + album.name
 		
+exports.feed = (req, res) ->
+	albums.getBreak req.params.album, req.params.page, (err, break_) ->
+		if err
+			throw err
+		else
+			res.render 'albumFeed', title : 'Feed', break_: break_
+		
 #exports.addbreak = (req, res) ->
 	

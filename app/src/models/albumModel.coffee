@@ -232,19 +232,23 @@ getFeed = (array, best, page, userLocation) ->
 
 #Should return sorted breaks
 getBreak = (album, page, callback) ->
-	models.Break.find({'album': album}).sort({'points':'descending'}).exec((err, docs) ->
-		if docs is not null and docs[0] is not null
-
-			b = docs[0]
+	
+	#models.Break.find({album: album}).sort({'points':'descending'}).exec((err, docs) ->
+	
+	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, docs) ->
+		if docs isnt null
 			
-			if page >= b.length
-				page = page % b.length
+			console.log docs[0]
+			console.log docs.length
 			
-			if b[page]
-				callback err, b[page]
+			if page >= docs.length
+				page = page % docs.length
+			
+			if docs[page]
+				callback err, docs[page]
 		else
+			console.log 'is null'
 			callback err, docs
-	)
 
 root = exports ? window
 root.Album = Album
