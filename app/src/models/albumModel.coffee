@@ -72,6 +72,7 @@ findNear = (longitude, latitude, page, callback) ->
 			callback null, albums
 	return albums
 
+###
 #Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
 findNear2 = (longitude, latitude, page, callback) ->
 	albums = []
@@ -96,7 +97,7 @@ findNear2 = (longitude, latitude, page, callback) ->
 					i++
 			callback null, albums
 	return albums
-
+###
 	
 addBreak = (b) ->
 	radius = 0.5/6353
@@ -232,9 +233,9 @@ getFeed = (array, best, page, userLocation) ->
 #Should return sorted breaks
 getBreak = (album, page, callback) ->
 	models.Break.find({'album': album}).sort({'points':'descending'}).exec((err, docs) ->
-		if docs is not null and docs[1] is not null
+		if docs is not null and docs[0] is not null
 
-			b = docs[0].breaks
+			b = docs[0]
 			
 			if page >= b.length
 				page = page % b.length
@@ -256,4 +257,3 @@ root.addBreak = addBreak
 root.getFeed = getFeed
 root.getBreak = getBreak
 root.findNear = findNear
-root.findNear2 = findNear2
