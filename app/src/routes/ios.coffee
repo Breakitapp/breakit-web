@@ -102,6 +102,9 @@ exports.tweet = (req, res) ->
 	
 	
 exports.fbShare = (req, res) ->
+	
+	console.log 'New FB share by user: ' + req.body.userId
+	
 	breaks.fbShare req.body.breakId, req.body.userId, (err) ->
 		if err
 			console.log err

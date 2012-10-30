@@ -1,5 +1,0 @@
-extends layout
-block contents
-	for breaks in data
-		p=breaks.name
-		img(src='../#{breaks.name}')
