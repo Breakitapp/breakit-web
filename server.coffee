@@ -59,7 +59,7 @@ server.post '/ios/comment', ios.post_comment
 server.post '/ios/vote', ios.vote
 server.post '/ios/feedback', ios.feedbackCreate
 server.post '/ios/tweet', ios.tweet
-server.post '/ios/fb', ios.fbShares
+server.post '/ios/fb', ios.fbShare
 server.get '/ios/picture/:id', ios.get_picture
 server.get '/ios/info/:id', ios.get_break
 server.post '/ios/:user/:break', ios.post_break #change to /ios/newbreak
