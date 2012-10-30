@@ -10,7 +10,7 @@ exports.listNear = (req, res) ->
 	if(!page)
 		page = 0
 	albums.findNear2 24.83223594527063, 60.1802242005334, page, (nullvalue, albums) ->
-		res.render 'albumlist', title : 'Breakit albumlist', albums: albums
+		res.render 'albumlist_near', title : 'Breakit albumlist', albums: albums
 	
 exports.create = (req, res) ->
 	res.render 'newAlbum', title : 'Create a new album'

@@ -26,8 +26,8 @@ exports.easyWebSubmit = (req, res) ->
 	parsed = req.body.location.split '#'
 	headline = 'Marko chilling in' + parsed[3]
 	story = 'WOOHOOO :) :) Having SUPER DUPER TIME in'+ parsed[3]
-
-	breaks.createBreak parsed[1], parsed[2], parsed[3], story, headline, (err, break_) ->
+#lon,lat,loc_name,story, headline, user, callback
+	breaks.createBreak parsed[2], parsed[1], parsed[3], story, headline, 'marko3345', (err, break_) ->
 		console.log 'created a break'+break_
 		albums.addBreak break_
 		
