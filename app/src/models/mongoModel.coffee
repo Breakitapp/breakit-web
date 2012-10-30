@@ -35,7 +35,7 @@ UserSchema = new Schema
 	fName			:		{type: String}
 	lName			:		{type: String}
 	nName			:		{type: String, required: true}
-	email			:		{type: String, set: toLower, unique: true, index: true}
+	email			:		{type: String, set: toLower, index: true}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
 	breaks			:		[Schema.ObjectId]
