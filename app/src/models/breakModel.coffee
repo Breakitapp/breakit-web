@@ -4,11 +4,10 @@ commentModel = require './commentModel'
 userModel = require './userModel'
 
 class Break
-	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user = 'anonymous') ->
+	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user) ->
 		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
 
-	saveToDB: (user = @user, callback) ->
-		@user = user
+	saveToDB: (callback) ->
 		
 		#Assign initial points to the new break based on the creation datetime
 		epoch = new Date(1970, 1, 1)
@@ -33,10 +32,10 @@ class Break
 				console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
 				callback null, break_
 
-createBreak = (longitude, latitude, location_name, story, headline, callback) ->
-	break_ = new Break longitude, latitude, location_name, story, headline
-	break_.saveToDB break_.user, (err, b) ->
-			callback err, b
+createBreak = (longitude, latitude, location_name, story, headline, userId, callback) ->
+	break_ = new Break longitude, latitude, location_name, story, headline, userId
+	break_.saveToDB (err, b) ->
+		callback err, b
 	
 comment = (comment, breakId, callback) ->
 	findById breakId, (err, break_) ->

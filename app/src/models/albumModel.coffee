@@ -58,8 +58,9 @@ findNear = (longitude, latitude, page, callback) ->
 			if err
 				throw err
 			a = docs.documents[0].results
-			console.log 'a:' + a
-			console.log 'a[0]:' + a[0]
+			
+			#console.log 'a:' + a
+			#console.log 'a[0]:' + a[0]
 			if a[0]
 				i = 0
 				while a[page*10+i] and i < 10

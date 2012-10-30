@@ -42,7 +42,7 @@ exports.new_user = (req, res) ->
 
 #create a new break
 exports.post_break = (req, res) ->
-	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline,  (err, break_) ->
+	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		albums.addBreak break_
 		tmp_path = req.files.image.path
 		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
@@ -62,8 +62,7 @@ exports.post_break = (req, res) ->
 							res.send b
 					
 exports.post_comment = (req, res) ->
-	console.log req.body
-	newComment = new comments.Comment req.body.comment, req.body.user
+	newComment = new comments.Comment req.body.comment, req.body.userId
 	breaks.comment newComment, req.body.breakId, (err, commentCount) ->
 		if err
 			res.send 'Commenting failed.'

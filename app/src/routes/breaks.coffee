@@ -50,10 +50,8 @@ exports.webCreate = (req, res) ->
 
 #This is only for web interface	
 exports.webSubmit = (req, res) ->
-	
-	console.log 'cookie: ' + req.cookie
-			
-	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline,  (err, break_) ->
+				
+	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		albums.addBreak break_
 		
 		target_path ='./app/res/images/' + break_._id + '.jpeg'
@@ -77,7 +75,7 @@ exports.comment = (req, res) ->
 #This is only for web interface		
 exports.postComment = (req, res) ->
 
-	newComment = new comments.Comment req.body.comment, req.body.user
+	newComment = new comments.Comment req.body.comment, req.body.userId
 	
 	console.log 'new comment: ' + newComment.comment
 	breaks.comment newComment, req.body.breakId, (err, commentCount) ->
