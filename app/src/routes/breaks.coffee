@@ -113,10 +113,6 @@ exports.vote = (req, res) ->
 			console.log err
 			res.send 'Vote failed'
 		else
-			res.redirect('/breaks/all')
-			
-exports.cookieGet = (req, res) ->
-	res.render 'cookieTest', title : 'Cookie stuff'
-	
-exports.cookiePost = (req, res) ->
+			res.redirect('/breaks/')
+
 	

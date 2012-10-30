@@ -11,8 +11,8 @@ CommentSchema = new Schema
 
 BreakSchema = new Schema
 	headline			:			{type: String}
-	upvotes				:			[Schema.ObjectId]
-	downvotes			:			[Schema.ObjectId]
+	upvotes				:			[String]
+	downvotes			:			[String]
 	startingPoints		:			{type: Number}
 	points 				:			{type: Number}
 	views				:			{type: Number, default: 0}
@@ -38,7 +38,7 @@ UserSchema = new Schema
 	email			:		{type: String, set: toLower, unique: true, index: true}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
-	breaks		:		[Schema.ObjectId]
+	breaks			:		[Schema.ObjectId]
 	
 #UserSchema.index {email: 1}
 

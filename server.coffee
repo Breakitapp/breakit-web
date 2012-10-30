@@ -102,9 +102,11 @@ server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
 
+###
 #Testing
 server.get '/cookietest', breaks.cookieGet
 server.post '/cookietest', breaks.cookiePost
+###
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create

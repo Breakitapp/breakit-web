@@ -30,11 +30,14 @@ exports.index = (req, res) ->
 #Creates a new user and responds with the userId
 exports.new_user = (req, res) ->
 	
+	console.log 'New user requested.'
+	
 	users.createUser 'anonymous', 'iPhone', (err, user) ->
 		if err
 			console.log err
 			res.send 'User creation failed'
 		else
+			console.log 'New userId ' + user._id + ' sent to the client.'
 			res.send user._id
 
 #create a new break
