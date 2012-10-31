@@ -115,13 +115,12 @@ exports.fbShare = (req, res) ->
 
 exports.browse_album = (req, res) ->
 	console.log 'Getting page ' + req.body.page + ' in album ' + req.params.album
-	album = req.params.album
+	album = req.body.albumId
 	page = req.body.page
 	albums.getBreak album, page, (err, break_) ->
 		if err
 			throw err
 		res.send break_
-
 
 exports.feedbackCreate = (req, res) ->
 	console.log 'HANDLING A REQUEST FROM IOS: ' + req.body

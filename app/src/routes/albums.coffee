@@ -29,6 +29,7 @@ exports.feed = (req, res) ->
 		if err
 			throw err
 		else
+			console.log break_
 			res.render 'albumFeed', title : 'Feed', break_: break_
 		
 #exports.addbreak = (req, res) ->

@@ -63,7 +63,7 @@ server.post '/ios/fb', ios.fbShare
 server.get '/ios/picture/:id', ios.get_picture
 server.get '/ios/info/:id', ios.get_break
 server.post '/ios/:user/:break', ios.post_break #change to /ios/newbreak
-server.get '/ios/browse_album/:album/', ios.browse_album
+server.get '/ios/browse_album/', ios.browse_album
 
 #WEB
  
@@ -101,7 +101,7 @@ server.get '/albums/near/:page', albums.listNear
 server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
-server.get '/albums/:album/:id', albums.feed
+server.get '/albums/:album/:page', albums.feed
 
 ###
 #Testing
