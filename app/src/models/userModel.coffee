@@ -62,27 +62,43 @@ remove = (userId, callback) ->
 			user.remove (err) ->
 				callback err
 			
-changeAttributes = (userId, newFName, newLName, newNName, newEmail, newPhone, callback) ->
-				
+changeAttributes = (userId, fieldsToBeChanged, callback) ->
 	findById userId, (err, user) ->
 		if err
 			console.log 'Could not find user to be modified.'
 			callback err
 		else
 			console.log 'Found user to be modified: ' + user.id
-			user.fName = newFName
-			user.lName = newLName
-			user.nName = newNName
-			user.email = newEmail
-			user.phone = newPhone
-			user.saveToDB (err, modifiedUser) ->
+			for field in fieldsToBeChanged
+				console.log 'field: ' + field
+				if field.fname
+					user.fName = field.fname
+					console.log 'changing fname'
+				if field.lname
+					user.lName = field.lname
+					console.log 'changing lname'
+				if field.nname
+					console.log 'nname1: '+user.nName
+					user.nName = field.nname
+					console.log 'changing nname'
+					console.log 'nname2: '+user.nName
+					console.log 'changed nname'
+				if field.email
+					user.email = field.email
+					console.log 'changing email'
+				if field.phone
+					user.phone = field.phone
+					console.log 'changing phone'
+
+			user.save (err) ->
 				if err
 					console.log 'USER: User save failed after trying to modify fields.'
 					callback err, null
 				else
 					console.log 'USER: User modified successfully.'
-					callback null, modifiedUser
-					
+					console.log 'USER nname: '+user.nName
+					callback null, user
+
 list = (callback) ->
 	models.User.find().exec (err, data) ->
 
@@ -96,6 +112,7 @@ list = (callback) ->
 findById = (userId, callback) ->
 	models.User.findById(userId).exec (err, foundUser) ->
 		callback err, foundUser
+  
 
 root = exports ? window
 root.User = User
