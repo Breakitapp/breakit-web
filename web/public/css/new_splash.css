@@ -19,7 +19,7 @@ body {
 .photo-4 {background: url(/public/images/signup/photo-bg-4.jpg) no-repeat center top;}
 
 .banner {
-        height: 550px;
+        height: 500px;
         width: 960px;
         margin: 0 auto;
         position: relative;
@@ -30,31 +30,30 @@ body {
 }
 
 .banner h1 {
-        width: 620px;
+        width: 578px;
         font-family: 'LeagueGothicRegular';
         font-size: 84px;
         color: #fff;
         text-transform: uppercase;
-        letter-spacing: -2px;
+        letter-spacing: 2px;
         line-height: 1;
         text-shadow: 0 1px 3px rgba(0,0,0,0.50);
         margin: 80px 0 0 0;
         position: absolute;
-        left: 0; bottom:300px;
+        left: 0; bottom:246px;
 }
 .banner h2 {
-        width: 515px;
+        width: 530px;
         font-family: 'LeagueGothicRegular';
         font-size: 46px;
         color: black;
         color: rgba(0,0,0,0.75);
         text-transform: uppercase;
-        letter-spacing: -1px;
+        letter-spacing: 1px;
         line-height: 1;
         text-shadow: 0px 1px 3px rgba(255,255,255,1);
         position: relative;
         top: 280px; 
-        left: 20px;
         background:rgba(255,255,255,0.5);
         border-top-left-radius:10px;
         border-top-right-radius:10px;
@@ -63,7 +62,7 @@ body {
         -webkit-border-top-right-radius:10px;
         -webkit-border-top-left-radius:10px;
         padding-top:10px;
-        padding-left:30px;
+        padding-left:48px;
         -webkit-box-shadow:  0px -10px 15px 0px rgba(25, 25, 25, 0.2);    
         box-shadow:  0px -10px 15px 0px rgba(25, 25, 25, 0.2);
         
@@ -71,7 +70,6 @@ body {
 .banner form{
         position:relative;
         top:242px;
-        left:20px;
         background:rgba(255,255,255,0.5);
         border-bottom-left-radius:10px;
         border-bottom-right-radius:10px;
@@ -79,12 +77,12 @@ body {
         -moz-border-radius-bottomright:10px;
         -webkit-border-bottom-right-radius:10px;
         -webkit-border-bottom-left-radius:10px;
-        width:515px;
+        width:530px;
         padding-top:10px;
         padding-bottom:10px;
         -webkit-box-shadow:  0px 10px 15px 0px rgba(25, 25, 25, 0.2);        
         box-shadow:  0px 10px 15px 0px rgba(25, 25, 25, 0.2);
-        padding-left:30px;
+        padding-left:48px;
 }
 
 form input, form label, form select{
@@ -92,6 +90,11 @@ form input, form label, form select{
         display:inline-block;
         font-size:30px;
 }
+
+form input {
+	margin-left: 5px;
+}
+
 form label{
         color: black;
         color: rgba(0,0,0,0.75);
@@ -102,7 +105,8 @@ form input, form select{
         border-radius:10px;
         -moz-border-radius:10px;
         -webkit-border-radius:10px;
-        color:rgba(51,51,51,1);
+        color:#4F5052;
+        margin-left: 5px;
 }
 form input:focus, form select:focus{
         outline:none;
@@ -114,10 +118,10 @@ form select, form input:last-child{
         cursor:pointer;
 }
 form input:first-of-type{
-        width:421px;
+        width:420px;
 }
 form input:last-child{
-        width:200px;
+        width:196px;
 }
 a.download-btn {
         text-indent: -4999px;
@@ -189,8 +193,9 @@ a.twitter{
 }
 
 .page-content {
+	padding-top: 100px;
         background: #f5f5f5 url(/public/images/signup/background.png) repeat;
-        min-height: 600px;
+        min-height: 300px;
         border-top: 1px solid #fff;
         border-bottom: 1px solid #eee;
 }
@@ -255,7 +260,7 @@ ul.steps li.step-3 {
 
 .steps p {
         font-size: 14px;
-        color: #a6adb6;
+        color: #4F5052;
         margin: 0;
         letter-spacing: 0px;
 }
