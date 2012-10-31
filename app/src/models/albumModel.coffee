@@ -59,9 +59,7 @@ findNear = (longitude, latitude, page, callback) ->
 				throw err
 			else
 				a = docs.documents[0].results
-			
-				console.log a
-			
+						
 				if a[0]
 					i = 0
 					while a[page*10+i] and i < 10
@@ -232,26 +230,17 @@ getFeed = (longitude, latitude, page, shown_albums, callback) ->
 	models.Album.db.db.executeDbCommand {
 		geoNear: 'albums' 
 		near : [longitude, latitude]
+		num : range
 		spherical : true
 		}, (err, docs) ->
 			if err
 				throw err
 			else
 				a = docs.documents[0].results
-
-				if a[0]
-					i = 0
-					while a[page*10+i] and i < 10
-						object = a[page*10+i]
-						found_album = object.obj
-						found_album.dis = object.dis
-					albums.push found_album
-					i++
 			
-					closest = _.first(albums, range)
-					notShown = _.without(closest, shown_albums)
-					best = _.first(closest, 10)
-					callback null, best
+				#notShown = _.without(a, shown_albums)
+				best = _.first(a, 10)
+				callback null, best
 			
 	return albums
 			
