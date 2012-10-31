@@ -54,7 +54,7 @@ server.all '/break', site.break_tmp
 
 #iOS
 server.post '/ios', ios.index
-server.get '/ios/new_user', ios.new_user
+server.post '/ios/new_user', ios.new_user
 server.post '/ios/comment', ios.post_comment
 server.post '/ios/vote', ios.vote
 server.post '/ios/feedback', ios.feedbackCreate
@@ -64,6 +64,9 @@ server.get '/ios/picture/:id', ios.get_picture
 server.get '/ios/info/:id', ios.get_break
 server.post '/ios/:user/:break', ios.post_break #change to /ios/newbreak
 server.get '/ios/browse_album/:albumId/:page', ios.browse_album
+server.post '/ios/change_nick', ios.changeNickname
+
+
 
 #WEB
  
