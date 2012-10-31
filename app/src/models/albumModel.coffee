@@ -259,13 +259,10 @@ getBreak = (album, page, callback) ->
 		
 	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, docs) ->
 		if docs isnt null
-			
+						
 			while page < 0
-				page = page + docs.legth
-				console.log page
-			
-			console.log page
-			
+				page = page + docs.length
+						
 			if page >= docs.length
 				page = page % docs.length
 						
