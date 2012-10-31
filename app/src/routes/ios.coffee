@@ -32,13 +32,13 @@ exports.new_user = (req, res) ->
 	
 	console.log 'New user requested.'
 	
-	users.createUser 'anonymous', 'iPhone', (err, userId) ->
+	users.createUser req.body.nickname, 'iPhone', (err, user) ->
 		if err
 			console.log err
 			res.send 'User creation failed'
 		else
 			console.log 'New userId ' + userId + ' sent to the client.'
-			res.send userId
+			res.send user
 
 #create a new break
 exports.post_break = (req, res) ->

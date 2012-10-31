@@ -16,12 +16,12 @@ class User
 				callback err, null
 			else
 				console.log 'USER: Saved a new user: ' + user._id
-				callback null, user._id
+				callback null, user
 
 createUser = (nn, ph, callback) ->
 	newUser = new User nn, ph
-	newUser.saveToDB (err, id) ->
-		callback err, id
+	newUser.saveToDB (err, user) ->
+		callback err, user
 
 addBreak = (userId, break_, callback) ->
 	if typeof break_ is Break

@@ -221,15 +221,11 @@ remove = (id) ->
 			console.log 'ALBUM: removed the album correctly' 
 
 # get the next page content according to location and points
-getFeed = (array, page, shown_albums, longitude, latitude) ->
-	_.without(best)
-	range = 50+50*page
+getFeed = (longitude, latitude, page, shown_albums, callback) ->
+	
 	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
-	closest = _.first(array, range)
-	# sort by points
-	sorted = _.sortBy(closest, topBreak)
-	best = _.first(closest, 10)
-
+	range = 50+50*page
+	
 	albums = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
 	models.Album.db.db.executeDbCommand {
@@ -239,21 +235,25 @@ getFeed = (array, page, shown_albums, longitude, latitude) ->
 		}, (err, docs) ->
 			if err
 				throw err
-			a = docs.documents[0].results
-			
-			#console.log 'a:' + a
-			#console.log 'a[0]:' + a[0]
-			if a[0]
-				i = 0
-				while a[page*10+i] and i < 10
-					object = a[page*10+i]
-					found_album = object.obj
-					found_album.dis = object.dis
+			else
+				a = docs.documents[0].results
+
+				if a[0]
+					i = 0
+					while a[page*10+i] and i < 10
+						object = a[page*10+i]
+						found_album = object.obj
+						found_album.dis = object.dis
 					albums.push found_album
 					i++
-			callback null, albums
+			
+					closest = _.first(albums, range)
+					notShown = _.without(closest, shown_albums)
+					best = _.first(closest, 10)
+					callback null, best
+			
 	return albums
-
+			
 #Should return sorted breaks
 getBreak = (album, page, callback) ->
 		

@@ -21,7 +21,7 @@ BreakSchema = new Schema
 	album				:			{type: String, default: null}
 	user				:			{type: String, default: null}
 	top					:			{type: Boolean, default: false}
-	story				:			{type: String, index: true}
+	story				:			{type: String}
 	date				:			{type: Date, default: Date.now}
 	tags				:			{type: String}
 	publish				:			{type: Boolean, default: true}
