@@ -57,19 +57,20 @@ findNear = (longitude, latitude, page, callback) ->
 		}, (err, docs) ->
 			if err
 				throw err
-			a = docs.documents[0].results
+			else
+				a = docs.documents[0].results
 			
-			#console.log 'a:' + a
-			#console.log 'a[0]:' + a[0]
-			if a[0]
-				i = 0
-				while a[page*10+i] and i < 10
-					object = a[page*10+i]
-					found_album = object.obj
-					found_album.dis = object.dis
-					albums.push found_album
-					i++
-			callback null, albums
+				console.log a
+			
+				if a[0]
+					i = 0
+					while a[page*10+i] and i < 10
+						object = a[page*10+i]
+						found_album = object.obj
+						found_album.dis = object.dis
+						albums.push found_album
+						i++
+				callback null, albums
 	return albums
 
 ###
