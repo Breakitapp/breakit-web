@@ -37,7 +37,7 @@ exports.new_user = (req, res) ->
 			console.log err
 			res.send 'User creation failed'
 		else
-			console.log 'New userId ' + userId + ' sent to the client.'
+			console.log 'New user ' + user._id + ' sent to the client.'
 			res.send user
 
 #create a new break
