@@ -262,6 +262,8 @@ getBreak = (album, page, callback) ->
 						
 			while page < 0
 				page = page + docs.length
+			
+			console.log page
 						
 			if page >= docs.length
 				page = page % docs.length
