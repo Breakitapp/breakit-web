@@ -262,6 +262,7 @@ getBreak = (album, page, callback) ->
 			
 			while page < 0
 				page = page + docs.legth
+				console.log page
 			
 			console.log page
 			
