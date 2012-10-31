@@ -131,3 +131,30 @@ exports.feedbackCreate = (req, res) ->
 		else
 			console.log 'SUBMITTED'
 			res.send 'SUCCESS'
+
+exports.changeNickname = (req, res) ->
+	console.log 'in change Nickname'
+
+#TO BE IMPLEMENTED GETTING THE new_nickname FROM ios request
+	new_nickname = req.body.new_nickname
+	new_nickname = "marko"
+	nicknames = '{"fields":[{"nname":"'+new_nickname+'"}]}'
+	arr = JSON.parse(nicknames);
+#TO BE IMPLEMENTED GETTING THE userId FROM ios request
+	userId = req.body.userid
+	userId = "50911d3a1f2b125409000001"
+
+	users.changeAttributes userId, arr.fields, (err, user)->
+		if err 
+			res.send 'ERROR IN CHANGING NICKNAME'
+		else
+			res.send user.nName
+
+     # get the nickname from the request
+
+#		res.send 'changing the nickname'
+
+     # do db operations to change the nickname in the db
+     # if success return the new nickname to the client
+    
+
