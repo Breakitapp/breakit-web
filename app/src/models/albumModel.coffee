@@ -258,13 +258,11 @@ getFeed = (array, page, shown_albums, longitude, latitude) ->
 getBreak = (album, page, callback) ->
 		
 	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, docs) ->
-		if docs isnt null
+		if docs isnt null	
 						
 			while page < 0
-				page = page + docs.length
-			
-			console.log page
-						
+				page = Number(page) + Number(docs.length)
+									
 			if page >= docs.length
 				page = page % docs.length
 						
