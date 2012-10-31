@@ -20,6 +20,9 @@ exports.index = (req, res) ->
 	lat		= parseFloat req.body.lat
 	#Get albums sorted according to location
 	albums.findNear lon, lat, page, (err, albums) ->
+		
+		console.log 'got:' + lon + ' ' + lat + ' ' + page
+		
 		if err
 			throw err
 			res.send '404'
@@ -32,13 +35,13 @@ exports.new_user = (req, res) ->
 	
 	console.log 'New user requested.'
 	
-	users.createUser 'anonymous', 'iPhone', (err, userId) ->
+	users.createUser req.body.nickname, 'iPhone', (err, user) ->
 		if err
 			console.log err
 			res.send 'User creation failed'
 		else
-			console.log 'New userId ' + userId + ' sent to the client.'
-			res.send userId
+			console.log 'New user ' + user._id + ' sent to the client.'
+			res.send user
 
 #create a new break
 exports.post_break = (req, res) ->
