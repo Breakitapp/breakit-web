@@ -118,7 +118,9 @@ exports.browse_album = (req, res) ->
 	albums.getBreak req.params.albumId, req.params.page, (err, break_) ->
 		if err
 			throw err
-		res.send break_
+		else
+			console.log 'Sending new break info for break: ' + break_._id
+			res.send break_
 
 exports.feedbackCreate = (req, res) ->
 	console.log 'HANDLING A REQUEST FROM IOS: ' + req.body
