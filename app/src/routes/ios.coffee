@@ -18,8 +18,10 @@ exports.index = (req, res) ->
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
+	shownAlbums = null
+	
 	#Get albums sorted according to location
-	albums.findNear lon, lat, page, (err, albums) ->		
+	albums.getFeed lon, lat, page, shownAlbum, (err, albums) ->		
 		if err
 			throw err
 			res.send '404'

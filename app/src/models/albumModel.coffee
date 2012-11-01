@@ -64,9 +64,9 @@ findNear = (longitude, latitude, page, callback) ->
 					i = 0
 					while a[page*10+i] and i < 10
 						object = a[page*10+i]
-						found_album = object.obj
-						found_album.dis = object.dis
-						albums.push found_album
+						foundAlbum = object.obj
+						foundAlbum.dis = object.dis
+						albums.push foundAlbum
 						i++
 				callback null, albums
 	return albums
@@ -90,9 +90,9 @@ findNear2 = (longitude, latitude, page, callback) ->
 				i = 0
 				while a[page*10+i] and i < 10
 					object = a[page*10+i]
-					found_album = object.obj
-					found_album.dis = object.dis
-					albums.push found_album
+					foundAlbum = object.obj
+					foundAlbum.dis = object.dis
+					albums.push foundAlbum
 					i++
 			callback null, albums
 	return albums
@@ -241,24 +241,27 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 				if a[0]
 					i = 0
 					while i < a.length
-						found_album = a[i].obj
-						found_album.dis = a[i].dis
+						foundAlbum = a[i].obj
+						foundAlbum.dis = a[i].dis
 						
 						#Now the shown albums are excluded from results
 						alreadyShown = false
 						
 						if shownAlbums
+							console.log 'inside shown'
 							j = 0
 							while j < shownAlbums.length
-								if String(shownAlbums[j]._id) is String(a[i]._id)
+								
+								#foundAlbumconsole.log 'comp: ' + shownAlbums[j]._id + ' ' + foundAlbum[i]._id
+								
+								if String(shownAlbums[j]._id) is String(foundAlbum._id)
+									console.log 'alrdy shown'
 									alreadyShown = true
-									continue
+									break
 								j++
-						if alreadyShown
-							continue
-						else
+						if not alreadyShown
 							#This album hasn't been shown before
-							albums.push found_album
+							albums.push foundAlbum
 						i++
 					
 					console.log 'nr of albums: ' + albums.length
