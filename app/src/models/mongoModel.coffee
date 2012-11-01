@@ -19,7 +19,8 @@ BreakSchema = new Schema
 	loc					:			{lon: Number, lat: Number}
 	location_name		:			{type: String}
 	album				:			{type: String, default: null}
-	user				:			{type: String, default: null}
+	user				:			{type: String}
+	usernick			:			{type: String}			
 	top					:			{type: Boolean, default: false}
 	story				:			{type: String}
 	date				:			{type: Date, default: Date.now}

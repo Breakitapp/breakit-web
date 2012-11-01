@@ -12,25 +12,32 @@ class Break
 		#Assign initial points to the new break based on the creation datetime
 		epoch = new Date(1970, 1, 1)
 		@startingPoints = Date.now() - epoch
-						
-		break_ = new models.Break
-			loc						:		{lon: @longitude, lat: @latitude}
-			location_name			:		@location_name
-			story					:		@story
-			headline				:		@headline
-			user					:		@user
-			points					:		@startingPoints
-			startingPoints			:		@startingPoints
-			
-		break_.upvotes.push @user
-			
-		break_.save (err) ->
-			if err 
-				console.log 'BREAK: Break save failed'
+		
+		userModel.findById @user, (err, author) ->
+			if err
 				throw err
 			else
-				console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
-				callback null, break_
+				
+		
+				break_ = new models.Break
+					loc						:		{lon: @longitude, lat: @latitude}
+					location_name			:		@location_name
+					story					:		@story
+					headline				:		@headline
+					user					:		@user
+					usernick				:		author.nName
+					points					:		@startingPoints
+					startingPoints			:		@startingPoints
+			
+				break_.upvotes.push @user
+			
+				break_.save (err) ->
+					if err 
+						console.log 'BREAK: Break save failed'
+						throw err
+					else
+					console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
+					callback null, break_
 
 createBreak = (longitude, latitude, location_name, story, headline, userId, callback) ->
 	break_ = new Break longitude, latitude, location_name, story, headline, userId

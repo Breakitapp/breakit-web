@@ -227,6 +227,7 @@ getFeed = (longitude, latitude, page, shown_albums, callback) ->
 	
 	albums = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
+	#First it searches for 'range' amount of albums.
 	models.Album.db.db.executeDbCommand {
 		geoNear: 'albums' 
 		near : [longitude, latitude]
@@ -237,9 +238,28 @@ getFeed = (longitude, latitude, page, shown_albums, callback) ->
 				throw err
 			else
 				a = docs.documents[0].results
-			
-				#notShown = _.without(a, shown_albums)
-				best = _.first(a, 10)
+				if a[0]
+					i = 0
+					while i < a.length
+						found_album = a[i].obj
+						found_album.dis = a[i].dis
+						
+						#console.log found_album
+						
+						albums.push found_album
+						i++
+				console.log 'shown'
+				console.log shown_albums
+				console.log 'albums'
+				console.log albums
+				notShown = _.difference(albums, shown_albums)
+				
+				#Now the shown albums are removed from the array
+				
+				#Then the array is sorted based on topbreak points
+				
+				#And last the first X albums are sent to the client
+				best = _.first(notShown, 10)
 				callback null, best
 			
 	return albums
