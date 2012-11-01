@@ -35,9 +35,11 @@ exports.login = (req, res) ->
 		if err
 			throw err
 		else if user is null
-			res.send 'User noes not exist.'
+			console.log 'Handled an erroneus login.'
+			res.send 0
 		else
-			res.send 'Login successful.'
+			console.log 'Login successful.'
+			res.send 1
 
 #Creates a new user and responds with the userId
 exports.new_user = (req, res) ->
