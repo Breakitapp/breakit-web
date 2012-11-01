@@ -220,7 +220,7 @@ remove = (id) ->
 			console.log 'ALBUM: removed the album correctly' 
 
 # get the next page content according to location and points
-getFeed = (longitude, latitude, page, shown_albums, callback) ->
+getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 	
 	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
 	range = 50+50*page
@@ -244,23 +244,32 @@ getFeed = (longitude, latitude, page, shown_albums, callback) ->
 						found_album = a[i].obj
 						found_album.dis = a[i].dis
 						
-						#console.log found_album
+						#Now the shown albums are excluded from results
+						alreadyShown = false
 						
-						albums.push found_album
+						if shownAlbums
+							j = 0
+							while j < shownAlbums.length
+								if String(shownAlbums[j]._id) is String(a[i]._id)
+									alreadyShown = true
+									continue
+								j++
+						if alreadyShown
+							continue
+						else
+							#This album hasn't been shown before
+							albums.push found_album
 						i++
-				console.log 'shown'
-				console.log shown_albums
-				console.log 'albums'
-				console.log albums
-				notShown = _.difference(albums, shown_albums)
+					
+					console.log 'nr of albums: ' + albums.length
+					
+					#Then the array is sorted based on topbreak points
+					_.sortBy albums, (album) ->
+						return album.topBreak.points
 				
-				#Now the shown albums are removed from the array
-				
-				#Then the array is sorted based on topbreak points
-				
-				#And last the first X albums are sent to the client
-				best = _.first(notShown, 10)
-				callback null, best
+					#And last the first X albums are sent to the client
+					best = _.first(notShown, 10)
+					callback null, best
 			
 	return albums
 			
