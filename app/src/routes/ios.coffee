@@ -34,13 +34,13 @@ exports.login = (req, res) ->
 	users.findById req.body.userId, (err, user) ->
 		if err
 			console.log err
-			res.send 0
+			res.send 'error'
 		else if user is null
 			console.log 'Handled an erroneus login.'
-			res.send 0
+			res.send 'error'
 		else
 			console.log 'Login successful.'
-			res.send 1
+			res.send 'confirmed'
 
 #Creates a new user and responds with the userId
 exports.new_user = (req, res) ->
