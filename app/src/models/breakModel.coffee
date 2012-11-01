@@ -135,7 +135,6 @@ findInfinite = (page, callback) ->
 		callback null, breaks_
 		return breaks_
 	)
-
 	
 findById = (id, callback) ->
 	models.Break.findById(id).exec((err, break_) ->
@@ -192,6 +191,20 @@ vote = (breakId, userId, direction, callback) ->
 								console.log 'BREAK: Vote successful: ' + break_._id
 								callback null, break_
 				
+del = (breakId, userId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			callback err
+		else
+			if String(break_.user) is String(userId)
+				#delete break
+				#delete from album breaks
+				#delete from topbreaks (fix also topbreaks)
+				callback null
+			else
+				callback err
+				
+#modify break?
 
 root = exports ? window
 root.Break = Break
@@ -203,3 +216,4 @@ root.tweet = tweet
 root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
+root.del = del

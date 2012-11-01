@@ -42,8 +42,5 @@ exports.feed = (req, res) ->
 		if err
 			throw err
 		else
-			albums.getFeed Number(req.body.lon), Number(req.body.lat), Number(req.body.page), albs, (err, albs2) ->
-				if err
-					throw err
-				else
-					res.redirect '/albums/feed'
+			#console.log albs
+			res.redirect '/albums/feed'

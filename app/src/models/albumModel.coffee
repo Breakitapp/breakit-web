@@ -57,10 +57,9 @@ findNear = (longitude, latitude, page, callback) ->
 		}, (err, docs) ->
 			if err
 				throw err
-			else
-				a = docs.documents[0].results
-						
-				if a[0]
+			else		
+				if docs.documents[0].results
+					a = docs.documents[0].results
 					i = 0
 					while a[page*10+i] and i < 10
 						object = a[page*10+i]
@@ -237,8 +236,8 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 			if err
 				throw err
 			else
-				a = docs.documents[0].results
-				if a[0]
+				if docs.documents[0].results
+					a = docs.documents[0].results
 					i = 0
 					while i < a.length
 						foundAlbum = a[i].obj
@@ -267,11 +266,11 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 					console.log 'nr of albums: ' + albums.length
 					
 					#Then the array is sorted based on topbreak points
-					_.sortBy albums, (album) ->
-						return album.topBreak.points
-				
+					sorted = _.sortBy albums, (album) ->
+						return Number(-album.topBreak.points)
+
 					#And last the first X albums are sent to the client
-					best = _.first(albums, 10)
+					best = _.first(sorted, 10)
 					callback null, best
 			
 	return albums
