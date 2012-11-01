@@ -27,10 +27,22 @@ exports.index = (req, res) ->
 			#Send the albums as a JSON to client
 			res.send [albums, page]
 
+
+exports.login = (req, res) ->
+	console.log 'Login received from user: ' + req.body.userId
+	
+	users.findById req.body.userId, (err, user) ->
+		if err
+			throw err
+		else if user is null
+			res.send 'User noes not exist.'
+		else
+			res.send 'Login successful.'
+
 #Creates a new user and responds with the userId
 exports.new_user = (req, res) ->
 	
-	console.log 'New user requested.'
+	console.log 'New user requested. Nickname: ' + req.body.nickname
 	
 	users.createUser req.body.nickname, 'iPhone', (err, user) ->
 		if err

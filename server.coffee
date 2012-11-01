@@ -54,6 +54,7 @@ server.all '/break', site.break_tmp
 
 #iOS
 server.post '/ios', ios.index
+server.post '/ios/login', ios.login
 server.post '/ios/new_user', ios.new_user
 server.post '/ios/comment', ios.post_comment
 server.post '/ios/vote', ios.vote
