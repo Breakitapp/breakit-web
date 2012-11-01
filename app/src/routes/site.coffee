@@ -23,7 +23,7 @@ exports.public = (req, res) ->
 			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
 	
 exports.signup = (req, res) ->
-	res.render 'signup'
+	res.render 'signup_new'
 	
 exports.signup_post = (req, res) ->
 	email = req.body.email
