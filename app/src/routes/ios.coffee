@@ -33,7 +33,8 @@ exports.login = (req, res) ->
 	
 	users.findById req.body.userId, (err, user) ->
 		if err
-			throw err
+			console.log err
+			res.send 0
 		else if user is null
 			console.log 'Handled an erroneus login.'
 			res.send 0

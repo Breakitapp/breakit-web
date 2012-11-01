@@ -268,7 +268,7 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 						return album.topBreak.points
 				
 					#And last the first X albums are sent to the client
-					best = _.first(notShown, 10)
+					best = _.first(albums, 10)
 					callback null, best
 			
 	return albums
