@@ -62,12 +62,16 @@ exports.post_break = (req, res) ->
 							res.send b
 					
 exports.post_comment = (req, res) ->
-	newComment = new comments.Comment req.body.comment, req.body.userId
-	breaks.comment newComment, req.body.breakId, (err, commentCount) ->
+	users.findById req.body.userId, (err, author) ->
 		if err
-			res.send 'Commenting failed.'
+			throw err
 		else
-			res.send newComment
+			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
+			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
+				if err
+					res.send 'Commenting failed.'
+				else
+					res.send newComment
 
 #Simplified voting functionality
 #Takes a req that contains 3 fields: "breakId", "userId"" and "which" ('up' or 'down')

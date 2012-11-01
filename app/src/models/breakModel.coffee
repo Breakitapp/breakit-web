@@ -13,24 +13,23 @@ class Break
 		epoch = new Date(1970, 1, 1)
 		@startingPoints = Date.now() - epoch
 		
+		break_ = new models.Break
+			loc						:		{lon: @longitude, lat: @latitude}
+			location_name			:		@location_name
+			story					:		@story
+			headline				:		@headline
+			user					:		@user
+			points					:		@startingPoints
+			startingPoints			:		@startingPoints
+			
+		break_.upvotes.push @user
+		
 		userModel.findById @user, (err, author) ->
 			if err
 				throw err
 			else
-				
+				break_.usernick = author.nName
 		
-				break_ = new models.Break
-					loc						:		{lon: @longitude, lat: @latitude}
-					location_name			:		@location_name
-					story					:		@story
-					headline				:		@headline
-					user					:		@user
-					usernick				:		author.nName
-					points					:		@startingPoints
-					startingPoints			:		@startingPoints
-			
-				break_.upvotes.push @user
-			
 				break_.save (err) ->
 					if err 
 						console.log 'BREAK: Break save failed'

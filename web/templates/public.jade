@@ -23,7 +23,7 @@ html
 					h3 #{b.headline}
 				img(src="/ios/picture/"+b._id)(alt="break")
 				#bottomCont
-					h3 #{b.user} 
+					h3 #{b.usernick} 
 					p #{b.story}
 			#leftCont
 				#adress
@@ -37,7 +37,7 @@ html
 					newDate = Date.now() - storydate
 					hours = newDate/(1000*60*60)
 					h4 #{Math.round(hours)}h ago
-					h3 #{b.user}
+					h3 #{b.usernick}
 					p #{b.story}
 				#comments.scroll-pane
 						for comment in b.comments
@@ -49,13 +49,13 @@ html
 							if hours > 24
 								days = hours/24
 								hours = hours%24
-								<h4> #{days} #{Math.round(hours)}h ago</h4><h3> #{comment.user} </h3><p> #{comment.comment} </p>
+								<h4> #{days} #{Math.round(hours)}h ago</h4><h3> #{comment.usernick} </h3><p> #{comment.comment} </p>
 							else
-								<h4> #{Math.round(hours)}h ago</h4><h3> #{comment.user} </h3><p> #{comment.comment} </p>
+								<h4> #{Math.round(hours)}h ago</h4><h3> #{comment.usernick} </h3><p> #{comment.comment} </p>
 				#writeComment
 					form(name="post_comment", action="/breaks/1pcomment", method="post")
 						textarea(name = "comment") write your comment here...
-						input(id="hidden_input", name = "user", value=b.user) 
+						input(id="hidden_input", name = "userId", value=b.user) 
 						input(id="hidden_input2", name = "breakId", value=b._id) 
 						input(type="submit")(value="send")
 			#rightCont
