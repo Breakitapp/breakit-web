@@ -21,7 +21,7 @@ exports.index = (req, res) ->
 	shownAlbums = null
 	
 	#Get albums sorted according to location
-	albums.getFeed lon, lat, page, shownAlbum, (err, albums) ->		
+	albums.getFeed lon, lat, page, shownAlbums, (err, albums) ->		
 		if err
 			throw err
 			res.send '404'
