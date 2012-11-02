@@ -291,6 +291,23 @@ getBreak = (album, page, callback) ->
 			console.log 'is null'
 			callback err, null
 
+getAlbumBreaks = (album, page, callback) ->
+		
+	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, breaksInAlbum) ->
+		foundBreaks = []
+		if breaksInAlbum isnt null	
+			console.log 'inside if'
+			console.log 'breaksInAlbum: ' + breaksInAlbum
+			i = page*20
+			while(i < (page+1)*27 and breaksInAlbum[i])
+				foundBreaks.push breaksInAlbum[i]
+				console.log 'pushing: '+ breaksInAlbum[i]
+				i++
+			callback err, foundBreaks
+		else
+			console.log 'is null'
+			callback err, null
+
 root = exports ? window
 root.Album = Album
 root.updateTop = updateTop
@@ -301,4 +318,5 @@ root.remove = remove
 root.addBreak = addBreak
 root.getFeed = getFeed
 root.getBreak = getBreak
+root.getAlbumBreaks = getAlbumBreaks
 root.findNear = findNear
