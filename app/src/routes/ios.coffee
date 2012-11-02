@@ -21,7 +21,7 @@ exports.index = (req, res) ->
 	
 	console.log page
 	console.log req.body.shownAlbums
-	if shownAlbums
+	if req.body.shownAlbums
 		console.log req.body.shownAlbums[0]
 	
 	#Get albums sorted according to location
