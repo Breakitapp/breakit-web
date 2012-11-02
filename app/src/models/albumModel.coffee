@@ -251,7 +251,7 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 								
 								#foundAlbumconsole.log 'comp: ' + shownAlbums[j]._id + ' ' + foundAlbum[i]._id
 								
-								if String(shownAlbums[j]._id) is String(foundAlbum._id)
+								if String(shownAlbums[j]) is String(foundAlbum._id)
 									console.log 'alrdy shown'
 									alreadyShown = true
 									break
