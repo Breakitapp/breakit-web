@@ -19,6 +19,9 @@ exports.index = (req, res) ->
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
 	
+	console.log page
+	console.log req.body.shownAlbums
+	
 	#Get albums sorted according to location
 	albums.getFeed lon, lat, page, req.body.shownAlbums, (err, albums) ->		
 		if err
