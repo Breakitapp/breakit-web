@@ -21,13 +21,13 @@ exports.index = (req, res) ->
 	
 	console.log page
 	console.log req.body.shownAlbums
-	if req.body.shownAlbums
-		console.log req.body.shownAlbums[0]
-		console.log req.body.shownAlbums[1]
-		console.log req.body.shownAlbums.length
+	if req.body.shownAlbums		
+		a = req.body.shownAlbums.split ','
+		console.log a
+		
 	
 	#Get albums sorted according to location
-	albums.getFeed lon, lat, page, req.body.shownAlbums, (err, albums) ->		
+	albums.getFeed lon, lat, page, a, (err, albums) ->		
 		if err
 			throw err
 			res.send '404'
