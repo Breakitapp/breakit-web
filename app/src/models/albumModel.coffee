@@ -103,9 +103,7 @@ addBreak = (b) ->
 	#always gives error -> RangeError: Maximum call stack size exceeded
 	#models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
 	
-	models.Album.findOne(name: b.location_name).exec (err, album) -> 
-		console.log 'SUPPLIES MUTHAFUCKA'
-		
+	models.Album.findOne(name: b.location_name).exec (err, album) -> 		
 		if err
 			console.log err
 			throw err
