@@ -170,11 +170,11 @@ vote = (breakId, userId, direction, callback) ->
 				
 						#calculating new points
 						if (break_.upvotes.length - break_.downvotes.length) > 0
-							break_.points = break_.startingPoints + 1000000 * Math.log (break_.upvotes.length - break_.downvotes.length)
+							break_.points = break_.startingPoints + 500000 * Math.log (break_.upvotes.length - break_.downvotes.length)
 						else if (break_.upvotes.length - break_.downvotes.length) == 0
 							break_.points = break_.startingPoints
 						else
-							break_.points = break_.startingPoints - 1000000 * Math.log (break_.downvotes.length - break_.upvotes.length)
+							break_.points = break_.startingPoints - 500000 * Math.log (break_.downvotes.length - break_.upvotes.length)
 				
 						if break_.top or (break_.points > a.topBreak.points)
 							break_.top = true
