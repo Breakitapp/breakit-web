@@ -23,6 +23,7 @@ exports.index = (req, res) ->
 	console.log req.body.shownAlbums
 	if req.body.shownAlbums
 		console.log req.body.shownAlbums[0]
+		console.log req.body.shownAlbums[1]
 	
 	#Get albums sorted according to location
 	albums.getFeed lon, lat, page, req.body.shownAlbums, (err, albums) ->		
