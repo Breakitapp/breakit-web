@@ -247,8 +247,8 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 						if shownAlbums
 							console.log 'inside shown'
 							
-							console.log shownAlbums
-							console.log shownAlbums[0]
+							#console.log shownAlbums
+							#console.log shownAlbums[0]
 							
 							j = 0
 							while j < shownAlbums.length
