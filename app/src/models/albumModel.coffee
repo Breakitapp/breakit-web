@@ -57,16 +57,15 @@ findNear = (longitude, latitude, page, callback) ->
 		}, (err, docs) ->
 			if err
 				throw err
-			else
-				a = docs.documents[0].results
-						
-				if a[0]
+			else		
+				if docs.documents[0].results
+					a = docs.documents[0].results
 					i = 0
 					while a[page*10+i] and i < 10
 						object = a[page*10+i]
-						found_album = object.obj
-						found_album.dis = object.dis
-						albums.push found_album
+						foundAlbum = object.obj
+						foundAlbum.dis = object.dis
+						albums.push foundAlbum
 						i++
 				callback null, albums
 	return albums
@@ -90,9 +89,9 @@ findNear2 = (longitude, latitude, page, callback) ->
 				i = 0
 				while a[page*10+i] and i < 10
 					object = a[page*10+i]
-					found_album = object.obj
-					found_album.dis = object.dis
-					albums.push found_album
+					foundAlbum = object.obj
+					foundAlbum.dis = object.dis
+					albums.push foundAlbum
 					i++
 			callback null, albums
 	return albums
@@ -220,13 +219,14 @@ remove = (id) ->
 			console.log 'ALBUM: removed the album correctly' 
 
 # get the next page content according to location and points
-getFeed = (longitude, latitude, page, shown_albums, callback) ->
+getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 	
 	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
 	range = 50+50*page
 	
 	albums = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
+	#First it searches for 'range' amount of albums.
 	models.Album.db.db.executeDbCommand {
 		geoNear: 'albums' 
 		near : [longitude, latitude]
@@ -236,11 +236,42 @@ getFeed = (longitude, latitude, page, shown_albums, callback) ->
 			if err
 				throw err
 			else
-				a = docs.documents[0].results
-			
-				#notShown = _.without(a, shown_albums)
-				best = _.first(a, 10)
-				callback null, best
+				if docs.documents[0].results
+					a = docs.documents[0].results
+					i = 0
+					while i < a.length
+						foundAlbum = a[i].obj
+						foundAlbum.dis = a[i].dis
+						
+						#Now the shown albums are excluded from results
+						alreadyShown = false
+						
+						if shownAlbums
+							console.log 'inside shown'
+							j = 0
+							while j < shownAlbums.length
+								
+								#foundAlbumconsole.log 'comp: ' + shownAlbums[j]._id + ' ' + foundAlbum[i]._id
+								
+								if String(shownAlbums[j]._id) is String(foundAlbum._id)
+									console.log 'alrdy shown'
+									alreadyShown = true
+									break
+								j++
+						if not alreadyShown
+							#This album hasn't been shown before
+							albums.push foundAlbum
+						i++
+					
+					console.log 'nr of albums: ' + albums.length
+					
+					#Then the array is sorted based on topbreak points
+					sorted = _.sortBy albums, (album) ->
+						return Number(-album.topBreak.points)
+
+					#And last the first X albums are sent to the client
+					best = _.first(sorted, 10)
+					callback null, best
 			
 	return albums
 			

@@ -18,8 +18,10 @@ exports.index = (req, res) ->
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
+	shownAlbums = null
+	
 	#Get albums sorted according to location
-	albums.findNear lon, lat, page, (err, albums) ->		
+	albums.getFeed lon, lat, page, shownAlbum, (err, albums) ->		
 		if err
 			throw err
 			res.send '404'
@@ -27,10 +29,25 @@ exports.index = (req, res) ->
 			#Send the albums as a JSON to client
 			res.send [albums, page]
 
+
+exports.login = (req, res) ->
+	console.log 'Login received from user: ' + req.body.userId
+	
+	users.findById req.body.userId, (err, user) ->
+		if err
+			console.log err
+			res.send 'error'
+		else if user is null
+			console.log 'Handled an erroneus login.'
+			res.send 'error'
+		else
+			console.log 'Login successful.'
+			res.send 'confirmed'
+
 #Creates a new user and responds with the userId
 exports.new_user = (req, res) ->
 	
-	console.log 'New user requested.'
+	console.log 'New user requested. Nickname: ' + req.body.nickname
 	
 	users.createUser req.body.nickname, 'iPhone', (err, user) ->
 		if err
@@ -62,12 +79,16 @@ exports.post_break = (req, res) ->
 							res.send b
 					
 exports.post_comment = (req, res) ->
-	newComment = new comments.Comment req.body.comment, req.body.userId
-	breaks.comment newComment, req.body.breakId, (err, commentCount) ->
+	users.findById req.body.userId, (err, author) ->
 		if err
-			res.send 'Commenting failed.'
+			throw err
 		else
-			res.send newComment
+			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
+			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
+				if err
+					res.send 'Commenting failed.'
+				else
+					res.send newComment
 
 #Simplified voting functionality
 #Takes a req that contains 3 fields: "breakId", "userId"" and "which" ('up' or 'down')

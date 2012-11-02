@@ -16,11 +16,11 @@ exports.submit = (req, res) ->
 	em = req.body.em
 	ph = req.body.ph
 
-	users.createUser nn, ph, (err, id) ->
+	users.createUser nn, ph, (err, user) ->
 		if err
 			res.send('Error creating new user')
 		else
-			res.redirect('/users/' + id)
+			res.redirect('/users/' + user._id)
 
 ###
 	async.waterfall [

@@ -12,7 +12,7 @@ class Break
 		#Assign initial points to the new break based on the creation datetime
 		epoch = new Date(1970, 1, 1)
 		@startingPoints = Date.now() - epoch
-						
+		
 		break_ = new models.Break
 			loc						:		{lon: @longitude, lat: @latitude}
 			location_name			:		@location_name
@@ -23,14 +23,20 @@ class Break
 			startingPoints			:		@startingPoints
 			
 		break_.upvotes.push @user
-			
-		break_.save (err) ->
-			if err 
-				console.log 'BREAK: Break save failed'
+		
+		userModel.findById @user, (err, author) ->
+			if err
 				throw err
 			else
-				console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
-				callback null, break_
+				break_.usernick = author.nName
+		
+				break_.save (err) ->
+					if err 
+						console.log 'BREAK: Break save failed'
+						throw err
+					else
+					console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
+					callback null, break_
 
 createBreak = (longitude, latitude, location_name, story, headline, userId, callback) ->
 	break_ = new Break longitude, latitude, location_name, story, headline, userId
@@ -129,7 +135,6 @@ findInfinite = (page, callback) ->
 		callback null, breaks_
 		return breaks_
 	)
-
 	
 findById = (id, callback) ->
 	models.Break.findById(id).exec((err, break_) ->
@@ -186,6 +191,20 @@ vote = (breakId, userId, direction, callback) ->
 								console.log 'BREAK: Vote successful: ' + break_._id
 								callback null, break_
 				
+del = (breakId, userId, callback) ->
+	findById breakId, (err, break_) ->
+		if err
+			callback err
+		else
+			if String(break_.user) is String(userId)
+				#delete break
+				#delete from album breaks
+				#delete from topbreaks (fix also topbreaks)
+				callback null
+			else
+				callback err
+				
+#modify break?
 
 root = exports ? window
 root.Break = Break
@@ -197,3 +216,4 @@ root.tweet = tweet
 root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
+root.del = del

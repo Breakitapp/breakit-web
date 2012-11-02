@@ -5,9 +5,10 @@ toLower = (v) ->
 	return v.toLowerCase()
 
 CommentSchema = new Schema
-	comment		:		{type: String}
-	date			:		{type: Date, default: Date.now}
-	user : {type: String}
+	comment				:		{type: String}
+	date				:		{type: Date, default: Date.now}
+	user 				: 		{type: String}
+	usernick 			: 		{type: String}
 
 BreakSchema = new Schema
 	headline			:			{type: String}
@@ -19,7 +20,8 @@ BreakSchema = new Schema
 	loc					:			{lon: Number, lat: Number}
 	location_name		:			{type: String}
 	album				:			{type: String, default: null}
-	user				:			{type: String, default: null}
+	user				:			{type: String}
+	usernick			:			{type: String}			
 	top					:			{type: Boolean, default: false}
 	story				:			{type: String}
 	date				:			{type: Date, default: Date.now}

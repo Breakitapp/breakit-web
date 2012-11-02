@@ -23,14 +23,24 @@ exports.submit = (req, res) ->
 		
 		album.saveToDB () ->
 		res.send 'Created a new album: ' + album.name
-		
-exports.feed = (req, res) ->
+
+###
+exports.getBreak = (req, res) ->
 	albums.getBreak req.params.album, req.params.page, (err, break_) ->
 		if err
 			throw err
 		else
 			console.log break_
 			res.render 'albumFeed', title : 'Feed', break_: break_
-		
-#exports.addbreak = (req, res) ->
-	
+###
+			
+exports.specifyFeed = (req, res) ->
+	res.render 'specifyFeed', title : 'Specify the information for album feed'
+
+exports.feed = (req, res) ->
+	albums.getFeed Number(req.body.lon), Number(req.body.lat), Number(req.body.page), null, (err, albs) ->
+		if err
+			throw err
+		else
+			#console.log albs
+			res.redirect '/albums/feed'

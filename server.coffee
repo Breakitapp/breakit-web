@@ -54,6 +54,7 @@ server.all '/break', site.break_tmp
 
 #iOS
 server.post '/ios', ios.index
+server.post '/ios/login', ios.login
 server.post '/ios/new_user', ios.new_user
 server.post '/ios/comment', ios.post_comment
 server.post '/ios/vote', ios.vote
@@ -66,8 +67,6 @@ server.post '/ios/:user/:break', ios.post_break #change to /ios/newbreak
 server.get '/ios/browse_album/:albumId/:page', ios.browse_album
 server.post '/ios/change_nick', ios.changeNickname
 server.get '/ios/test', ios.getAlbumBreaks
-
-
 
 #WEB
  
@@ -105,7 +104,9 @@ server.get '/albums/near/:page', albums.listNear
 server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
-server.get '/albums/:album/:page', albums.feed
+#server.get '/albums/:album/:page', albums.getBreak
+server.get '/albums/feed', albums.specifyFeed
+server.post '/albums/feed', albums.feed
 
 ###
 #Testing
