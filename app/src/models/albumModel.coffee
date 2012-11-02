@@ -250,6 +250,7 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 							while j < shownAlbums.length
 								
 								#foundAlbumconsole.log 'comp: ' + shownAlbums[j]._id + ' ' + foundAlbum[i]._id
+								console.log shownAlbums[j]
 								
 								if String(shownAlbums[j]) is String(foundAlbum._id)
 									console.log 'alrdy shown'
