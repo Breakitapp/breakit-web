@@ -19,10 +19,8 @@ exports.index = (req, res) ->
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
 	
-	console.log page
-	console.log req.body.shownAlbums
 	if req.body.shownAlbums
-		tempstr = req.body.shownAlbums.substring(1, req.body.shownAlbums.length - 2)
+		tempstr = req.body.shownAlbums.substring(1, req.body.shownAlbums.length - 1)
 		arr = tempstr.split ','
 		console.log arr
 		
