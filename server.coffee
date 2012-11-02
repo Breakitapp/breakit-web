@@ -65,6 +65,7 @@ server.get '/ios/info/:id', ios.get_break
 server.post '/ios/:user/:break', ios.post_break #change to /ios/newbreak
 server.get '/ios/browse_album/:albumId/:page', ios.browse_album
 server.post '/ios/change_nick', ios.changeNickname
+server.get '/ios/test', ios.getAlbumBreaks
 
 
 

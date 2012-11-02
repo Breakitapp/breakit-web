@@ -9,7 +9,7 @@ exports.listNear = (req, res) ->
 	console.log 'page: '+page
 	if(!page)
 		page = 0
-	albums.findNear2 24.83223594527063, 60.1802242005334, page, (nullvalue, albums) ->
+	albums.findNear 24.83223594527063, 60.1802242005334, page, (nullvalue, albums) ->
 		res.render 'albumlist_near', title : 'Breakit albumlist', albums: albums
 	
 exports.create = (req, res) ->
