@@ -103,9 +103,7 @@ addBreak = (b) ->
 	#always gives error -> RangeError: Maximum call stack size exceeded
 	#models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
 	
-	models.Album.findOne(name: b.location_name).exec (err, album) -> 
-		console.log 'SUPPLIES MUTHAFUCKA'
-		
+	models.Album.findOne(name: b.location_name).exec (err, album) -> 		
 		if err
 			console.log err
 			throw err
@@ -247,14 +245,11 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 						alreadyShown = false
 						
 						if shownAlbums
-							console.log 'inside shown'
+				
 							j = 0
 							while j < shownAlbums.length
 								
-								#foundAlbumconsole.log 'comp: ' + shownAlbums[j]._id + ' ' + foundAlbum[i]._id
-								
-								if String(shownAlbums[j]._id) is String(foundAlbum._id)
-									console.log 'alrdy shown'
+								if String(shownAlbums[j]) is String(foundAlbum._id)
 									alreadyShown = true
 									break
 								j++
