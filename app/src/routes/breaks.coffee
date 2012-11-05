@@ -6,7 +6,6 @@ fs			= require 'fs'
 
 #This is only for web interface	
 exports.list = (req, res) ->
-	
 	breaks.findAll (err, breaks_) ->
 		if err
 			res.send 'No breaks found.'

@@ -43,8 +43,8 @@ addBreak = (userId, break_, callback) ->
 		throw 'USER: What you tried to add is not a break'
 
 #Find breaks by a single user (for the "my breaks" view)
-findBreaks = (userId, page, callback) ->
-	models.Break.find({'user' : userId}).skip(10*(page-1)).limit(10).exec(err, breaks) ->
+getBreaks = (userId, page, callback) ->
+	models.Break.find({'user' : userId}).sort({date: 'descending'}).skip(10*page).limit(10).exec(err, breaks) ->
 		if err
 			callback err, null
 		else
@@ -129,3 +129,4 @@ root.remove = remove
 root.changeAttributes = changeAttributes
 root.list = list
 root.findById = findById
+root.getBreaks = getBreaks

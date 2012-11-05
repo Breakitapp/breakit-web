@@ -270,7 +270,7 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 			
 	return albums
 			
-#Should return sorted breaks
+#Returns the next break in an album according to points
 getBreak = (album, page, callback) ->
 		
 	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, docs) ->
@@ -288,8 +288,8 @@ getBreak = (album, page, callback) ->
 			console.log 'is null'
 			callback err, null
 
-getAlbumBreaks = (album, page, callback) ->
-		
+#Returns 287 (3*9) breaks for the album-specific view
+getAlbumBreaks = (album, page, callback) ->		
 	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, breaksInAlbum) ->
 		foundBreaks = []
 		if breaksInAlbum isnt null	

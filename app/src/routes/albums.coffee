@@ -34,13 +34,4 @@ exports.getBreak = (req, res) ->
 			res.render 'albumFeed', title : 'Feed', break_: break_
 ###
 			
-exports.specifyFeed = (req, res) ->
-	res.render 'specifyFeed', title : 'Specify the information for album feed'
 
-exports.feed = (req, res) ->
-	albums.getFeed Number(req.body.lon), Number(req.body.lat), Number(req.body.page), null, (err, albs) ->
-		if err
-			throw err
-		else
-			#console.log albs
-			res.redirect '/albums/feed'

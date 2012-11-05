@@ -104,25 +104,18 @@ server.get '/albums/near/:page', albums.listNear
 server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
-#server.get '/albums/:album/:page', albums.getBreak
-server.get '/albums/feed', albums.specifyFeed
-server.post '/albums/feed', albums.feed
-
-###
-#Testing
-server.get '/cookietest', breaks.cookieGet
-server.post '/cookietest', breaks.cookiePost
-###
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create
 server.post '/feedback/new', feedback.submit
 server.get '/feedback/list', feedback.list
 
-#TEST FORMS TO TEST THE CODE
+#Testing
 server.get '/test', test.index
 server.get '/test/sendForm', test.sendForm
 server.post '/test/sendForm', test.submitForm
+server.get '/test/userfeed', test.specifyFeed
+server.post '/test/userfeed', test.feed
 
 #Starting the server
 server.listen 3000

@@ -26,9 +26,8 @@ exports.signup = (req, res) ->
 	res.render 'signup_new'
 	
 exports.signup_post = (req, res) ->
-	email = req.body.email
 	user = new models.BetaUser
-		email		:		email
+		email		:		req.body.email
 		phone		:		req.body.phone
 
 	user.save (err) ->
