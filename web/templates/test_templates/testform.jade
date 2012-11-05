@@ -1,0 +1,10 @@
+extend ../layout
+block contents
+	form(name="input", action="/ios/change_nick", method="post")
+		label fieldToBeChanged: 
+		input(type="text", name="lname")
+		br
+		label userId: 
+		input(type="text", name="userId")
+		br
+		input(type="submit", value="Submit")

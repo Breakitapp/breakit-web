@@ -10,6 +10,7 @@ user				= require './app/lib/routes/user'
 breaks				= require './app/lib/routes/breaks'
 albums				= require './app/lib/routes/albums'
 feedback			= require './app/lib/routes/feedback'
+test			= require './app/lib/routes/test'
 ios					= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
@@ -65,11 +66,10 @@ server.get '/ios/picture/:id', ios.get_picture
 server.get '/ios/info/:id', ios.get_break
 server.post '/ios/:user/:break', ios.post_break #change to /ios/newbreak
 server.get '/ios/browse_album/:albumId/:page', ios.browse_album
-server.post '/ios/change_nick', ios.changeNickname
+server.post '/ios/change_nick', ios.changeUserAttributes
 server.get '/ios/test', ios.getAlbumBreaks
 
 #WEB
- 
 #Public break interface
 server.get '/p/:id', site.public
 
@@ -118,6 +118,11 @@ server.post '/cookietest', breaks.cookiePost
 server.get '/feedback/new', feedback.create
 server.post '/feedback/new', feedback.submit
 server.get '/feedback/list', feedback.list
+
+#TEST FORMS TO TEST THE CODE
+server.get '/test', test.index
+server.get '/test/sendForm', test.sendForm
+server.post '/test/sendForm', test.submitForm
 
 #Starting the server
 server.listen 3000

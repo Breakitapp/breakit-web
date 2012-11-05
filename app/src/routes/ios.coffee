@@ -10,6 +10,7 @@ comments = require '../models/commentModel'
 users = require '../models/userModel'
 feedback = require '../models/feedbackModel'
 fs			= require 'fs'
+qs = require('querystring')
 
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
 #The important thing for the client to pick is the albums name, and the topbreak. 
@@ -30,7 +31,7 @@ exports.index = (req, res) ->
 			res.send [albums, page]
 
 
-exports.login = (req, res) ->
+exports.login = (req, res) 	->
 	console.log 'Login received from user: ' + req.body.userId
 	
 	users.findById req.body.userId, (err, user) ->
@@ -153,23 +154,13 @@ exports.feedbackCreate = (req, res) ->
 			console.log 'SUBMITTED'
 			res.send 'SUCCESS'
 
-exports.changeNickname = (req, res) ->
-	console.log 'in change Nickname'
-
-#TO BE IMPLEMENTED GETTING THE new_nickname FROM ios request
-	new_nickname = req.body.new_nickname
-	new_nickname = "marko"
-	nicknames = '{"fields":[{"nname":"'+new_nickname+'"}]}'
-	arr = JSON.parse(nicknames);
-#TO BE IMPLEMENTED GETTING THE userId FROM ios request
-	userId = req.body.userid
-	userId = "50911d3a1f2b125409000001"
-
-	users.changeAttributes userId, arr.fields, (err, user)->
+exports.changeUserAttributes = (req, res) ->
+# needs a json object from the client with userid and a key value pair where key = user's field to be changed and value = new value
+	users.changeAttributes req.body, (err, user)->
 		if err 
 			res.send 'ERROR IN CHANGING NICKNAME'
 		else
-			res.send user.nName
+			res.send 'Modified user: '+ user
 
      # get the nickname from the request
 
