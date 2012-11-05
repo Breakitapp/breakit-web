@@ -40,7 +40,7 @@ UserSchema = new Schema
 	email			:		{type: String, set: toLower, index: true}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
-	breaks			:		[Schema.ObjectId]
+	#breaks			:		[Schema.ObjectId]
 	
 #UserSchema.index {email: 1}
 
