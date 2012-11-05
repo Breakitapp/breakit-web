@@ -20,9 +20,10 @@ exports.specifyFeed = (req, res) ->
 	res.render 'specifyFeed', title : 'Specify the information for album feed'
 
 exports.feed = (req, res) ->
-	users.getBreaks req.body.userId, null, (err, breaks) ->
+	users.getBreaks req.body.userId, req.body.page, (err, breaks) ->
 		if err
 			throw err
 		else
 			console.log breaks
+			console.log breaks.length
 			res.redirect '/test/userfeed'

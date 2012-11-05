@@ -23,7 +23,7 @@ exports.public = (req, res) ->
 			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
 	
 exports.signup = (req, res) ->
-	res.render 'signup_new'
+	res.render 'signup' #change to signup_new when new template has been tested
 	
 exports.signup_post = (req, res) ->
 	user = new models.BetaUser
@@ -32,30 +32,31 @@ exports.signup_post = (req, res) ->
 
 	user.save (err) ->
 		if err 
-			throw err
-		console.log 'new beta user: '
-		console.log(user)
+			res.send 'Your email address has been already registered.'
+		else
+			console.log 'new beta user: '
+			console.log(user)
 
-	transport = mailer.createTransport 'SES', {
-		AWSAccessKeyID : 'AKIAJD3WZOFBSHHZCIYQ'
-		AWSSecretKey : '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'
-	}
+			transport = mailer.createTransport 'SES', {
+				AWSAccessKeyID : 'AKIAJD3WZOFBSHHZCIYQ'
+				AWSSecretKey : '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'
+			}
 
-	mailOptions = 
-		from : 'Breakit Info <info@breakitapp.com>'
-		to: email
-		subject:  'Thank you for registering for Breakit beta'
-		generateTextFromHTML: true
-		html: '<h1>Welcome to test the Breakit beta</h1> <p>We’re thrilled to have you on board!<br>  We’ll notify you as soon as Breakit is ready for testing. All the feedback that you could possibly come up with at this stage, and later, will be much appreciated. We are not building this service for us personally, it´s being built for you guys out there so do pitch in your ideas for development!<br><br> In the meantime keep updated by checking out our FB page <a href="http://www.facebook.com/breakitstories">Breakit</a> and follow us on Twitter #Breakitapp!<br><br> Soon you’ll be able to both share and see things that are happening around you.<br><br> Cheers, <br><br>Breakit team Jolle, Mikko, Marko, Eerik, Binit, and Seb'
+			mailOptions = 
+				from : 'Breakit Info <info@breakitapp.com>'
+				to: req.body.email
+				subject:  'Thank you for registering for Breakit beta'
+				generateTextFromHTML: true
+				html: '<h1>Welcome to test the Breakit beta</h1> <p>We’re thrilled to have you on board!<br>  We’ll notify you as soon as Breakit is ready for testing. All the feedback that you could possibly come up with at this stage, and later, will be much appreciated. We are not building this service for us personally, it´s being built for you guys out there so do pitch in your ideas for development!<br><br> In the meantime keep updated by checking out our FB page <a href="http://www.facebook.com/breakitstories">Breakit</a> and follow us on Twitter #Breakitapp!<br><br> Soon you’ll be able to both share and see things that are happening around you.<br><br> Cheers, <br><br>Breakit team Jolle, Mikko, Marko, Eerik, Binit, and Seb'
 
 	
-	transport.sendMail mailOptions, (err, response) ->
-		if err
-			console.log err
-		else
-			console.log "Message sent: " + response.message
+			transport.sendMail mailOptions, (err, response) ->
+				if err
+					console.log err
+				else
+					console.log "Message sent: " + response.message
 			
-	res.render('signup_confirm');
+				res.render('signup_confirm');
 
 exports.send = (req, res) ->
 	console.log 'in send'

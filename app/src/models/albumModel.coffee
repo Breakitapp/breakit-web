@@ -47,6 +47,7 @@ list = (callback) ->
 			callback albums
 
 #Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
+#Is this used anymore? no?
 findNear = (longitude, latitude, page, callback) ->
 	albums = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
@@ -288,14 +289,15 @@ getBreak = (album, page, callback) ->
 			console.log 'is null'
 			callback err, null
 
+###
 #Returns 287 (3*9) breaks for the album-specific view
-getAlbumBreaks = (album, page, callback) ->		
+getAlbumBreaks = (albumId, page, callback) ->		
 	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, breaksInAlbum) ->
 		foundBreaks = []
 		if breaksInAlbum isnt null	
 			console.log 'inside if'
 			console.log 'breaksInAlbum: ' + breaksInAlbum
-			i = page*20
+			i = page*27
 			while(i < (page+1)*27 and breaksInAlbum[i])
 				foundBreaks.push breaksInAlbum[i]
 				console.log 'pushing: '+ breaksInAlbum[i]
@@ -304,6 +306,17 @@ getAlbumBreaks = (album, page, callback) ->
 		else
 			console.log 'is null'
 			callback err, null
+###
+
+#Returns 287 (3*9) breaks for the album-specific view
+getAlbumBreaks = (albumId, page, callback) ->
+	models.Break.find({'album' : albumId}).sort({points: 'descending'}).skip(27*page).limit(27).exec (err, breaks) ->
+		if err
+			callback err, null
+		else
+			breaks_ = (b for b in breaks)
+			callback null, breaks_
+			return breaks_
 
 root = exports ? window
 root.Album = Album
