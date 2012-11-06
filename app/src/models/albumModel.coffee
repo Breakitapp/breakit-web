@@ -113,7 +113,7 @@ addBreak = (b) ->
 				(callback) ->
 					console.log '1st in WF'
 					
-					album.breaks.push b._id
+					#album.breaks.push b._id
 					album.save (err) ->
 						if err
 							throw err
@@ -141,7 +141,7 @@ addBreak = (b) ->
 							if err
 								throw err
 							else
-								console.log 'jee'
+								console.log 'Top break updated for album: ' + album._id
 			]
 			
 		else
@@ -194,9 +194,9 @@ updateTop = (id, b, callback) ->
 							else
 								#Switching to the new top break
 								
-								index = a.breaks.indexOf b._id
-								a.breaks.splice index, 1, a.topBreak._id
-								a.breaks[0] = b._id
+								#index = a.breaks.indexOf b._id
+								#a.breaks.splice index, 1, a.topBreak._id
+								#a.breaks[0] = b._id
 								
 								a.topBreak = b
 																
