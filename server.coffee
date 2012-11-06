@@ -57,17 +57,18 @@ server.all '/break', site.break_tmp
 server.post '/ios', ios.index
 server.post '/ios/login', ios.login
 server.post '/ios/new_user', ios.new_user
+server.post '/ios/new_break', ios.post_break
 server.post '/ios/comment', ios.post_comment
 server.post '/ios/vote', ios.vote
 server.post '/ios/feedback', ios.feedbackCreate
 server.post '/ios/tweet', ios.tweet
 server.post '/ios/fb', ios.fbShare
+server.post '/ios/change_nick', ios.changeUserAttributes
 server.get '/ios/picture/:id', ios.get_picture
 server.get '/ios/info/:id', ios.get_break
-server.post '/ios/:user/:break', ios.post_break #change to /ios/newbreak
 server.get '/ios/browse_album/:albumId/:page', ios.browse_album
-server.post '/ios/change_nick', ios.changeUserAttributes
-server.get '/ios/test', ios.getAlbumBreaks
+server.get '/ios/whole_album/:albumId/:page', ios.getAlbumBreaks
+server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
 
 #WEB
 #Public break interface
@@ -96,7 +97,7 @@ server.get '/breaks/comment', breaks.comment
 server.post '/breaks/comment', breaks.postComment
 server.post '/breaks/1pcomment', breaks.postComment_1page
 server.post '/breaks/vote', breaks.vote
-server.get '/breaks/:page', breaks.infinite
+server.get '/breaks/:page', breaks.infinite #old
 
 #Albums
 server.all '/albums', albums.list

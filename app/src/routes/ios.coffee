@@ -160,28 +160,24 @@ exports.feedbackCreate = (req, res) ->
 			res.send 'SUCCESS'
 
 exports.changeUserAttributes = (req, res) ->
-# needs a json object from the client with userid and a key value pair where key = user's field to be changed and value = new value
+# needs a json object from the client with userid and a key value pair where key = user's field to be changed and value = new value	
 	users.changeAttributes req.body, (err, user)->
 		if err 
-			res.send 'ERROR IN CHANGING NICKNAME'
+			res.send 'error'
 		else
-			res.send 'Modified user: '+ user
+			res.send user
 
-     # get the nickname from the request
-
-#		res.send 'changing the nickname'
-
-     # do db operations to change the nickname in the db
-     # if success return the new nickname to the client
 
 exports.getAlbumBreaks = (req, res) ->
-	albumId = req.body.albumId
-#dummy albumid
-#dummy page
-	albumId = '508fd53496c69b4c0d000002'
-	page = 0
-	albums.getAlbumBreaks albumId, page, (err, foundBreaks)->
+	albums.getAlbumBreaks req.body.albumId, req.body.page, (err, foundBreaks)->
 		if err
-			res.send 'returns error'
+			res.send 'error'
 		else
-			res.send 'returns: '+foundBreaks
+			res.send [foundBreaks, req.body.page]
+
+exports.getMyBreaks = (req, res) ->
+	users.getBreaks req.body.userId, req.body.page, (err, foundBreaks)->
+		if err
+			res.send 'error'
+		else
+			res.send [foundBreaks, req.body.page]

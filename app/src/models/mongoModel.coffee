@@ -53,8 +53,8 @@ BetaSchema = new Schema
 AlbumSchema = new Schema
 	name			:		{type: String, index: true}
 	date			:		{type: Date, default: Date.now}
-	breaks		:		[Schema.ObjectId]
-	topBreak	:		Schema.Types.Mixed
+	#breaks			:		[Schema.ObjectId]
+	topBreak		:		Schema.Types.Mixed
 	loc				:		{lon: Number, lat: Number}
 	
 	#For other sorting options:
