@@ -21,7 +21,10 @@ exports.public = (req, res) ->
 		else
 			#console.log 'break: ' +break_
 			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-	
+
+exports.onepage = (req, res) ->
+      res.render 'onepage'
+
 exports.signup = (req, res) ->
 	res.render 'signup' #change to signup_new when new template has been tested
 	

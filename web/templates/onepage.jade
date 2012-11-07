@@ -1,0 +1,87 @@
+!!! 5
+html
+	head
+		link(rel='stylesheet', href='/public/css/onepager.css');
+		link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
+		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js")
+		script
+			$(document).ready(function(e) {
+				$("li").mouseover(function() {
+					if($(this).hasClass("fbook")){
+						$(this).find("img")[0].src = '/public/images/1pager/f_logo_blue.png';
+					}
+					else if($(this).hasClass("twitter")){
+						$(this).find("img")[0].src='/public/images/1pager/twitter_blue.png';
+					}
+					else if($(this).hasClass("comments_count")){
+						$(this).find("p").css("color","navy");
+					}
+				});
+				$("li").mouseout(function() {
+					if($(this).hasClass("fbook")){
+						$(this).find("img")[0].src='/public/images/1pager/f_logo_gray.png';
+					}
+					else if($(this).hasClass("twitter")){
+						$(this).find("img")[0].src='/public/images/1pager/twitter_gray.png';
+					}
+					else if($(this).hasClass("comments_count")){
+						$(this).find("p").css("color","white");
+					}
+				});
+			});
+	body
+		header.boxShadow
+			#header.centrify
+				img.left(src="/public/images/1pager/breakit.png")
+				h1 BREAK
+					span IT
+		#wrapper.centrify.fullRadius.fullBorder.insetShadow
+			#borderDiv.outsetShadow
+				#topContainer
+					h1 The Great rolloff with a ball
+				#middleContainer
+					#leftContainer.left
+						img(src="/public/images/1pager/testBreak.jpg")
+					#rightContainer.right
+						iframe.fullBorder(width="380", height="280", frameborder="0", scrolling="no", marginheight="0", marginwidth="0", src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll=60,60&amp;t=m&amp;z=9&amp;output=embed")
+						#commentField.fullBorder
+							p.left Mr.X:
+								span Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra ultricies nibh et posuere. Quisque lobortis scelerisque aliquam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque est neque, venenatis a facilisis id, laoreet eu ipsum. Quisque sed.
+							h4.right 1h
+							hr.centrify
+							p.left Mr.X
+								span This is the second comment
+							h4.right 1h
+							hr.centrify
+							p.left Mr.X
+								span This is the third comment
+							h4.right 1h
+							hr.centrify
+							p.left Mr.X
+								span This is the fourth comment
+							h4.right 1h
+							hr.centrify
+				#bottomContainer
+					#bottomLeft.left
+						ul.left
+							li.fbook
+								a(href="http://www.facebook.com/breakitstories")
+									img(src="/public/images/1pager/f_logo_gray.png")
+								p &nbsp
+							li.twitter
+								a(href="https://twitter.com/Breakitapp")
+									img(src="/public/images/1pager/twitter_gray.png")
+								p &nbsp
+							li.comments_count
+								img(src="/public/images/1pager/comments.png")
+								p 3
+							li
+								img(src="/public/images/1pager/profile.png")
+						p.right Mr.X:
+							span 	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra ultricies nibh et posuere. Quisque lobortis scelerisque aliquam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque est neque, venenatis a facilisis id, laoreet eu ipsum. Quisque sed.
+					#bottomRight.right
+						form
+							textarea.left.fullBorder.smallRadius.insetShadow Write comment here
+							input.right(type="submit", value="send")
+		#push
+		#footer.boxShadow

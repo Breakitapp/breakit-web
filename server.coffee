@@ -72,6 +72,7 @@ server.get '/ios/test', ios.getAlbumBreaks
 #WEB
 #Public break interface
 server.get '/p/:id', site.public
+server.get '/onep', site.onepage
 
 #Signup
 server.get '/signup', site.signup
