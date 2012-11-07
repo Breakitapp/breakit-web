@@ -96,7 +96,6 @@ exports.post_comment = (req, res) ->
 				else
 					res.send newComment
 
-#Simplified voting functionality
 #Takes a req that contains 3 fields: "breakId", "userId"" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
 	breaks.vote req.body.breakId, req.body.userId, req.body.which, (err, break_) ->
@@ -111,6 +110,7 @@ exports.get_picture = (req, res) ->
 	
 	res.sendfile './app/res/images/' + id + '.jpeg'
 
+#not needed anymore?
 exports.get_break = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
 		if err
@@ -173,7 +173,7 @@ exports.getAlbumBreaks = (req, res) ->
 		if err
 			res.send 'error'
 		else
-			res.send [foundBreaks, req.body.page]
+			res.send [foundBreaks, req.params.page]
 
 exports.getMyBreaks = (req, res) ->
 	
@@ -181,4 +181,4 @@ exports.getMyBreaks = (req, res) ->
 		if err
 			res.send 'error'
 		else
-			res.send [foundBreaks, req.body.page]
+			res.send [foundBreaks, req.params.page]
