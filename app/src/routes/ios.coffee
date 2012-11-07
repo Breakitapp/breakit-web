@@ -96,7 +96,6 @@ exports.post_comment = (req, res) ->
 				else
 					res.send newComment
 
-#Simplified voting functionality
 #Takes a req that contains 3 fields: "breakId", "userId"" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
 	breaks.vote req.body.breakId, req.body.userId, req.body.which, (err, break_) ->
@@ -111,6 +110,7 @@ exports.get_picture = (req, res) ->
 	
 	res.sendfile './app/res/images/' + id + '.jpeg'
 
+#not needed anymore?
 exports.get_break = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
 		if err
@@ -135,7 +135,7 @@ exports.fbShare = (req, res) ->
 	breaks.fbShare req.body.breakId, req.body.userId, (err) ->
 		if err
 			console.log err
-			res.send 'Saving the Facebook share to server failed'	
+			res.send 'Saving the Facebook share to server failed'
 		else
 			res.send 'Saved the Facebook share successfully to server'
 
@@ -160,28 +160,25 @@ exports.feedbackCreate = (req, res) ->
 			res.send 'SUCCESS'
 
 exports.changeUserAttributes = (req, res) ->
-# needs a json object from the client with userid and a key value pair where key = user's field to be changed and value = new value
+# needs a json object from the client with userid and a key value pair where key = user's field to be changed and value = new value	
 	users.changeAttributes req.body, (err, user)->
 		if err 
-			res.send 'ERROR IN CHANGING NICKNAME'
+			res.send 'error'
 		else
-			res.send 'Modified user: '+ user
+			res.send user
 
-     # get the nickname from the request
-
-#		res.send 'changing the nickname'
-
-     # do db operations to change the nickname in the db
-     # if success return the new nickname to the client
 
 exports.getAlbumBreaks = (req, res) ->
-	albumId = req.body.albumId
-#dummy albumid
-#dummy page
-	albumId = '508fd53496c69b4c0d000002'
-	page = 0
-	albums.getAlbumBreaks albumId, page, (err, foundBreaks)->
+	albums.getAlbumBreaks req.params.albumId, req.params.page, (err, foundBreaks)->
 		if err
-			res.send 'returns error'
+			res.send 'error'
 		else
-			res.send 'returns: '+foundBreaks
+			res.send [foundBreaks, req.params.page]
+
+exports.getMyBreaks = (req, res) ->
+	
+	users.getBreaks req.params.userId, req.params.page, (err, foundBreaks)->
+		if err
+			res.send 'error'
+		else
+			res.send [foundBreaks, req.params.page]
