@@ -135,7 +135,7 @@ exports.fbShare = (req, res) ->
 	breaks.fbShare req.body.breakId, req.body.userId, (err) ->
 		if err
 			console.log err
-			res.send 'Saving the Facebook share to server failed'	
+			res.send 'Saving the Facebook share to server failed'
 		else
 			res.send 'Saved the Facebook share successfully to server'
 
@@ -169,14 +169,15 @@ exports.changeUserAttributes = (req, res) ->
 
 
 exports.getAlbumBreaks = (req, res) ->
-	albums.getAlbumBreaks req.body.albumId, req.body.page, (err, foundBreaks)->
+	albums.getAlbumBreaks req.params.albumId, req.params.page, (err, foundBreaks)->
 		if err
 			res.send 'error'
 		else
 			res.send [foundBreaks, req.body.page]
 
 exports.getMyBreaks = (req, res) ->
-	users.getBreaks req.body.userId, req.body.page, (err, foundBreaks)->
+	
+	users.getBreaks req.params.userId, req.params.page, (err, foundBreaks)->
 		if err
 			res.send 'error'
 		else
