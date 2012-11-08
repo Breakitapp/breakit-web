@@ -1,0 +1,213 @@
+﻿@charset "utf-8";
+/* CSS Document */
+*{
+    padding:0;
+    margin:0;
+    font-family: 'Lato', sans-serif;
+    font-weight:400;
+}
+html, body{
+	height:100%;
+}
+body{
+    background-image:url(/public/images/1pager/bg.png);
+    background-size:cover;
+}
+p{
+	font-size:14px;
+}
+h4{
+	font-size:14px;
+	color:rgba(173,172,172,1);
+}
+hr{
+	width:95%;
+}
+ul{
+	list-style:none;
+	width:200px;
+}
+li{
+	width:60px;
+	display:inline-block;
+	cursor:pointer;
+}
+ul li p{
+	position:relative;
+	bottom:40px;
+	left:15px;
+	color:white;
+	width:10px !important;
+}
+ul li:last-child{
+	width:20px;
+	position:relative;
+	bottom:52px;
+}
+textarea{
+	height:46px;
+	resize:none;
+	width:322px;
+}
+textarea:focus{
+	outline:none;
+}
+form{
+	width:380px;
+}
+header{
+    background:rgba(255,255,255,1);
+    height:40px;
+    margin-bottom:20px;
+    clear:both;
+}
+header img{
+    padding-top:5px;
+    padding-right:20px;
+    height:30px;
+}
+#header h1, #header h1 span{
+	font-weight:100;
+}
+#header h1 span{
+	color:#D11414;
+}
+
+#wrapper,#header{
+	width:1055px;
+}
+#wrapper{
+	background:rgba(239,239,239,1);
+	margin-bottom:50px;
+}
+#wrapper, #borderDiv{
+	height:780px;
+}
+
+#topContainer{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+#topContainer h1{
+	font-size:40px;
+}
+
+#rightContainer{
+	margin-right:20px;
+}
+#commentField{
+	min-height:321px;
+	max-height:321px;
+	min-width:380px;
+	max-width:380px;
+	background:rgba(234,234,234,1);
+	overflow:auto;
+}
+#bottomRight{
+	margin-right:20px;
+}
+#push{
+	height:4em;
+	clear:both;
+}
+#footer{
+	width: 100%;
+	background-color: #FFF;
+	min-height: 4em;
+	margin-top: -4em;
+	z-index: 10;
+	position: absolute;
+	clear: both;
+	visibility: visible;
+}
+#commentField p, #bottomContainer p{
+	font-weight:bold;
+	margin-top:5px;
+	margin-bottom:5px;
+	width:355px;
+	text-align:justify;
+	padding-left:5px;
+}
+#bottomContainer #bottomLeft p{
+	margin-top:-3px;
+	width:412px;
+}
+#bottomLeft, #bottomRight{
+	margin-top:10px;
+}
+
+#topContainer, #bottomContainer, #middleContainer{
+	margin-left:20px;
+}
+.centrify{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.left{
+	float:left;
+}
+.fullRadius{
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.right{
+	float:right;
+}
+.fullBorder{
+	border:rgba(213,213,213,1) solid 2px;
+}
+.smallRadius{
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.insetShadow{
+	-webkit-box-shadow: inset 0px 0px 30px 1px rgba(0, 0, 0, 0.1);    
+	box-shadow: inset 0px 0px 30px 1px rgba(0, 0, 0, 0.1);
+}
+.outsetShadow{
+	-webkit-box-shadow:  0px 0px 10px 0px rgba(0, 0, 0, 0.05);    
+	box-shadow:  0px 0px 10px 0px rgba(0, 0, 0, 0.05);
+}
+.boxShadow{
+	-webkit-box-shadow:  0px 0px 10px 0px rgba(0, 0, 0, 0.25);        
+	box-shadow:  0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+}
+form input{
+	width:50px;
+	height:50px;
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius-bottomright:6px;
+	-webkit-border-bottom-right-radius:6px;
+	border-bottom-right-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+	position:relative;
+	right:6px;
+}
+form input:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}
+form input:active {
+	position:relative;
+	top:1px;
+}
