@@ -197,9 +197,16 @@ del = (breakId, userId, callback) ->
 			callback err
 		else
 			if String(break_.user) is String(userId)
+				#if top delete from topbreaks (fix also topbreaks)
+				if break_.top
+					albumModel.findById break_.album (err, album) ->
+						if err
+							callback err
+						else
+							
+						
+				
 				#delete break
-				#delete from album breaks
-				#delete from topbreaks (fix also topbreaks)
 				callback null
 			else
 				callback err
