@@ -639,7 +639,7 @@ $.fn.jScrollPaneRemove = function()
 }
 
 $.fn.jScrollPane.defaults = {
-	scrollbarWidth : 10,
+	scrollbarWidth : 5,
 	scrollbarMargin : 5,
 	wheelSpeed : 18,
 	showArrows : false,

@@ -7,8 +7,8 @@ html
 		link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js")
 		script(type='text/javascript', src='http://www.datejs.com/build/date.js')
-		script(type="text/javascript")(src="/public/js/mousewheel.js")
-		script(type="text/javascript")(src="/public/js/jScrollPane.js")
+		script(type="text/javascript", src="/public/js/mousewheel.js")
+		script(type="text/javascript", src="/public/js/jScrollPane.js")
 	body
 		header.boxShadow
 			#header.centrify
@@ -31,9 +31,9 @@ html
 							storydate = Date.parse(storydate)
 							newDate = Date.now() - storydate
 							hours = newDate/(1000*60*60)
-							p.left #{b.usernick}: 
-								span #{b.story}
 							h4.right #{Math.round(hours)}h ago
+							p #{b.usernick}: 
+								span #{b.story}
 							hr.centrify
 							for comment in b.comments
 								fdate = b.comments[0].date
@@ -44,9 +44,9 @@ html
 								if hours > 24
 									days = hours/24
 									hours = hours%24
-									<p class="left">Anonymous: <span>#{comment.comment}</span></p><h4 class="right">#{days} #{Math.round(hours)}h ago</h4><hr class="centrify">
+									<h4 class="right">#{days} #{Math.round(hours)}h ago</h4><p class="left">Anonymous: <span>#{comment.comment}</span></p><hr class="centrify">
 								else
-									<p class="left">Anonymous: <span>#{comment.comment}</span></p><h4 class="right">#{Math.round(hours)}h ago</h4><hr class="centrify">
+									<h4 class="right">#{Math.round(hours)}h ago</h4><p>Anonymous: <span>#{comment.comment}</span></p><hr class="centrify">
 										
 				#bottomContainer
 					#bottomLeft.left
@@ -99,5 +99,8 @@ html
 			});
 			$("textarea").focus(function() {
 				$(this).val('');
+			});
+			$(function(){
+				$('.scroll-pane').jScrollPane();
 			});
 		});
