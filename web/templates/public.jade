@@ -23,7 +23,7 @@ html
 					#leftContainer.left
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
-						iframe.fullBorderRidge(width="380", height="280", frameborder="0", scrolling="no", marginheight="0", marginwidth="0", src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll="+b.loc.lon+","+b.loc.lat+"&amp;t=m&amp;z=9&amp;output=embed")
+						iframe.fullBorderRidge(width="380", height="280", frameborder="0", scrolling="no", marginheight="0", marginwidth="0", src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=9&amp;output=embed")
 						#commentField.fullBorderGroove.scroll-pane
 						
 							storydate = b.date
@@ -36,17 +36,29 @@ html
 								span #{b.story}
 							hr.centrify
 							for comment in b.comments
-								fdate = b.comments[0].date
+								fdate = comment.date
 								fdate = fdate.toString().substring(0,fdate.toString().length-20)
 								fdate = Date.parse(fdate)
 								newDate = Date.now() - fdate
 								hours = newDate/(1000*60*60)
 								if hours > 24
-									days = hours/24
-									hours = hours%24
-									<h4 class="right">#{days} #{Math.round(hours)}h ago</h4><p class="left">Anonymous: <span>#{comment.comment}</span></p><hr class="centrify">
+									days = Math.round(hours/24)
+									if days > 30
+										months = Math.round(days/30)
+										h4.right #{months}M ago
+										p.left Anonymous: 
+											span #{comment.comment}
+										hr.centrify
+									else
+										h4.right #{Math.round(days)}d ago
+										p.left Anonymous: 
+											span #{comment.comment}
+										hr.centrify
 								else
-									<h4 class="right">#{Math.round(hours)}h ago</h4><p>Anonymous: <span>#{comment.comment}</span></p><hr class="centrify">
+									h4.right #{Math.round(hours)}h ago
+									p Anonymous: 
+										span #{comment.comment}
+									hr.centrify
 										
 				#bottomContainer
 					#bottomLeft.left

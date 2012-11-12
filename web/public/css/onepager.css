@@ -51,9 +51,6 @@ textarea{
 	resize:none;
 	width:330px;
 }
-textarea:focus{
-	outline:none;
-}
 form{
 	width:380px;
 }
@@ -121,6 +118,9 @@ header img{
 	position: absolute;
 	clear: both;
 	visibility: visible;
+}
+*:focus{
+	outline:none;
 }
 #commentField p, #bottomContainer p{
 	font-weight:bold;
