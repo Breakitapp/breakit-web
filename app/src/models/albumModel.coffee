@@ -99,7 +99,7 @@ findNear2 = (longitude, latitude, page, callback) ->
 ###
 	
 addBreak = (b) ->
-	radius = 0.5/6353
+	#radius = 0.5/6353
 	
 	#always gives error -> RangeError: Maximum call stack size exceeded
 	#models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 

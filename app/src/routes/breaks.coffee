@@ -122,4 +122,11 @@ exports.vote = (req, res) ->
 		else
 			res.redirect('/breaks/')
 
+exports.delete = (req, res) ->
+	breaks.del req.body.breakId, req.body.userId, (err) ->
+		if err
+			console.log err
+			res.send 'Deleting failed.'
+		else
+			res.redirect('/breaks/')
 	
