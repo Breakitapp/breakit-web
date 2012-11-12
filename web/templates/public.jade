@@ -31,7 +31,15 @@ html
 							storydate = Date.parse(storydate)
 							newDate = Date.now() - storydate
 							hours = newDate/(1000*60*60)
-							h4.right #{Math.round(hours)}h ago
+							if hours > 24
+									days = Math.round(hours/24)
+									if days > 30
+										months = Math.round(days/30)
+										h4.right #{months}M ago
+									else
+										h4.right #{Math.round(days)}d ago
+								else
+									h4.right #{Math.round(hours)}h ago
 							p #{b.usernick}: 
 								span #{b.story}
 							hr.centrify
@@ -46,20 +54,13 @@ html
 									if days > 30
 										months = Math.round(days/30)
 										h4.right #{months}M ago
-										p.left Anonymous: 
-											span #{comment.comment}
-										hr.centrify
 									else
 										h4.right #{Math.round(days)}d ago
-										p.left Anonymous: 
-											span #{comment.comment}
-										hr.centrify
 								else
 									h4.right #{Math.round(hours)}h ago
-									p Anonymous: 
-										span #{comment.comment}
-									hr.centrify
-										
+								p #{comment.usernick}: 
+									span #{comment.comment}
+								hr.centrify
 				#bottomContainer
 					#bottomLeft.left
 						img.left(src="/public/images/1pager/profile.png")
@@ -80,7 +81,7 @@ html
 					#bottomRight.right
 						form(name="post_comment", action="/breaks/1pcomment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
-							input.hideInput(name = "userId", value=b.user) 
+							input.hideInput(name = "userId", value="50a0e4db1f63ba4d72000020") 
 							input.hideInput(name = "breakId", value=b._id)
 							input.right(type="submit", value="send")
 		#push
