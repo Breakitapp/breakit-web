@@ -7,6 +7,7 @@
 models = require '../models/mongoModel'
 mailer = require 'nodemailer'
 breaks = require '../models/breakModel'
+users = require '../models/userModel'
 
 exports.index = (req, res) ->
 	res.render 'index', title: 'Breakit web-app, build with node, coffeescript and backbone'
@@ -29,6 +30,26 @@ exports.onepage= (req, res) ->
 		else
 			#console.log 'break: ' +break_
 			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_
+
+exports.webComment = (req, res) ->
+
+	users.findById req.body.userId, (err, author) ->
+		if err
+			throw err
+		else
+			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
+
+			console.log 'new comment from web interface: ' + newComment.comment
+			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
+				if err
+					res.send 'Commenting failed.'
+				else
+					breaks.findById req.body.breakId, (err, break_) ->
+						if err
+							res.send '404'
+						else
+							#console.log 'break: ' +break_
+							res.redirect '/onep/' + req.body.breakId
 
 exports.signup = (req, res) ->
 	res.render 'signup' #change to signup_new when new template has been tested
