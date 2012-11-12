@@ -44,9 +44,9 @@ html
 								if hours > 24
 									days = hours/24
 									hours = hours%24
-									<h4 class="right">#{days} #{Math.round(hours)}h ago</h4><p class="left">Anonymous: <span>#{comment.comment}</span></p><hr class="centrify">
+									<h4 class="right">#{days} #{Math.round(hours)}h ago</h4><p class="left">#{b.usernick}: <span>#{comment.comment}</span></p><hr class="centrify">
 								else
-									<h4 class="right">#{Math.round(hours)}h ago</h4><p>Anonymous: <span>#{comment.comment}</span></p><hr class="centrify">
+									<h4 class="right">#{Math.round(hours)}h ago</h4><p>#{b.usernick}: <span>#{comment.comment}</span></p><hr class="centrify">
 										
 				#bottomContainer
 					#bottomLeft.left
@@ -68,7 +68,7 @@ html
 					#bottomRight.right
 						form(name="post_comment", action="/breaks/1pcomment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
-							input.hideInput(name = "userId", value=b.user) 
+							input.hideInput(name = "userId", value="509240cea8ddf7df3f000001") 
 							input.hideInput(name = "breakId", value=b._id)
 							input.right(type="submit", value="send")
 		#push
