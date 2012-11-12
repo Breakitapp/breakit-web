@@ -96,7 +96,7 @@ server.get '/breaks/enew', breaks.easyWebCreate
 server.post '/breaks/enew', breaks.easyWebSubmit
 server.get '/breaks/comment', breaks.comment
 server.post '/breaks/comment', breaks.postComment
-server.post '/breaks/1pcomment', breaks.postComment_1page
+#server.post '/breaks/1pcomment', breaks.postComment_1page
 server.post '/breaks/vote', breaks.vote
 server.get '/breaks/:page', breaks.infinite #old
 

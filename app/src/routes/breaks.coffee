@@ -89,6 +89,7 @@ exports.postComment = (req, res) ->
 				else
 					res.send 'Commenting successful. Count: ' + commentCount
 
+###
 exports.postComment_1page = (req, res) ->
 
 	users.findById req.body.userId, (err, author) ->
@@ -110,7 +111,7 @@ exports.postComment_1page = (req, res) ->
 							res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
 			
 			#res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-
+###
 
 #req needs to contain "which" field ('up' or 'down') and "breakId" field
 exports.vote = (req, res) ->
