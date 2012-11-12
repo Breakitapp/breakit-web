@@ -8,6 +8,8 @@ models = require '../models/mongoModel'
 mailer = require 'nodemailer'
 breaks = require '../models/breakModel'
 users = require '../models/userModel'
+comments = require '../models/commentModel'
+albums = require '../models/albumModel'
 
 exports.index = (req, res) ->
 	res.render 'index', title: 'Breakit web-app, build with node, coffeescript and backbone'
