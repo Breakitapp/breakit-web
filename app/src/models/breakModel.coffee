@@ -197,19 +197,38 @@ del = (breakId, userId, callback) ->
 			callback err
 		else
 			if String(break_.user) is String(userId)
-				#if top delete from topbreaks (fix also topbreaks)
+				#check if the break is a top break. if so, give the album a new topbreak (or remove the album).
 				if break_.top
-					albumModel.findById break_.album (err, album) ->
+					albumModel.findById break_.album, (err, album) ->
 						if err
 							callback err
 						else
-							
+							albumModel.getBreak album._id, 1, (err, newTop) ->
+								
+								#Check if the album only contains 1 break
+								if String(newTop._id) is String(break_.id)
+									album.remove (err) ->
+										if err
+											callback err
+										else
+											break_.remove (err) ->
+												callback err
+								else
+									album.topBreak = newTop
+									album.save (err) ->
+										if err
+											callback err
+										else
+											break_.remove (err) ->
+												callback err		
+				else	
+					break_.remove (err) ->
+						callback err
 						
+				#delete (or rename) the image file. how?
 				
-				#delete break
-				callback null
 			else
-				callback err
+				callback 'Invalid user or user not authorized to delete this break.'
 				
 #modify break?
 

@@ -23,7 +23,7 @@ html
 					#leftContainer.left
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
-						iframe.fullBorderRidge(width="380", height="280", frameborder="0", scrolling="no", marginheight="0", marginwidth="0", src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll="+b.loc.lon+","+b.loc.lat+"&amp;t=m&amp;z=9&amp;output=embed")
+						iframe.fullBorderRidge(width="380", height="280", frameborder="0", scrolling="no", marginheight="0", marginwidth="0", src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=9&amp;output=embed")
 						#commentField.fullBorderGroove.scroll-pane
 						
 							storydate = b.date
@@ -66,7 +66,7 @@ html
 								img(src="/public/images/1pager/comments.png")
 								p #{b.comments.length}
 					#bottomRight.right
-						form(name="post_comment", action="/onep/comment", method="post")
+						form(name="post_comment", action="/p/comment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
 							input.hideInput(name = "userId", value="50a0e4db1f63ba4d72000020") 
 							input.hideInput(name = "breakId", value=b._id)

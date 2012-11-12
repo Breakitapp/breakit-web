@@ -18,7 +18,7 @@ BreakSchema = new Schema
 	points 				:			{type: Number}
 	views				:			{type: Number, default: 0}
 	loc					:			{lon: Number, lat: Number}
-	location_name		:			{type: String}
+	location_name		:			{type: String} #is this needed?
 	album				:			{type: String, default: null}
 	user				:			{type: String}
 	usernick			:			{type: String}			

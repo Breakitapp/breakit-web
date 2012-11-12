@@ -26,4 +26,8 @@ html
 					input(type="hidden", name="breakId", value=break_._id)
 					input(type="text", name="userId")
 					input(type="submit", value="fb share")
+				form(name="input4", action="/breaks/delete", method="post")
+					input(type="hidden", name="breakId", value=break_._id)
+					input(type="text", name="userId")
+					input(type="submit", value="delete")
 		block footerscripts

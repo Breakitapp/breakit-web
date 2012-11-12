@@ -16,7 +16,8 @@ exports.index = (req, res) ->
 
 exports.break_tmp = (req, res) ->
 	res.render 'tmp/break', title: 'Break-template'
-	
+
+###
 exports.public = (req, res) ->
 	breaks.findById req.params.id, (err, break_) ->
 		if err
@@ -24,8 +25,9 @@ exports.public = (req, res) ->
 		else
 			#console.log 'break: ' +break_
 			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
+###
 
-exports.onepage= (req, res) ->
+exports.public= (req, res) ->
 	breaks.findById req.params.id, (err, break_) ->
 		if err
 			res.send '404'
@@ -46,7 +48,7 @@ exports.webComment = (req, res) ->
 				if err
 					res.send 'Commenting failed.'
 				else
-					res.redirect '/onep/' + req.body.breakId
+					res.redirect '/p/' + req.body.breakId
 
 exports.signup = (req, res) ->
 	res.render 'signup' #change to signup_new when new template has been tested
