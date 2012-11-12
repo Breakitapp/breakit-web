@@ -73,8 +73,7 @@ server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
 #WEB
 #Public break interface
 server.get '/p/:id', site.public
-server.get '/onep/:id', site.onepage
-server.post '/onep/comment', site.webComment
+server.post '/p/comment', site.webComment
 
 #Signup
 server.get '/signup', site.signup
