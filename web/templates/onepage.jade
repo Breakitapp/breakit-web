@@ -23,7 +23,7 @@ html
 					#leftContainer.left
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
-						iframe.fullBorderRidge(width="380", height="280", frameborder="0", scrolling="no", marginheight="0", marginwidth="0", src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=9&amp;output=embed")
+						iframe.fullBorderRidge.bottomMargin(width="380", height="280", frameborder="0", scrolling="no",src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=9&amp;output=embed")
 						#commentField.fullBorderGroove.scroll-pane
 						
 							storydate = b.date
@@ -31,22 +31,36 @@ html
 							storydate = Date.parse(storydate)
 							newDate = Date.now() - storydate
 							hours = newDate/(1000*60*60)
-							h4.right #{Math.round(hours)}h ago
+							if hours > 24
+									days = Math.round(hours/24)
+									if days > 30
+										months = Math.round(days/30)
+										h4.right #{months}M ago
+									else
+										h4.right #{Math.round(days)}d ago
+								else
+									h4.right #{Math.round(hours)}h ago
 							p #{b.usernick}: 
 								span #{b.story}
 							hr.centrify
 							for comment in b.comments
-								fdate = b.comments[0].date
+								fdate = comment.date
 								fdate = fdate.toString().substring(0,fdate.toString().length-20)
 								fdate = Date.parse(fdate)
 								newDate = Date.now() - fdate
 								hours = newDate/(1000*60*60)
 								if hours > 24
-									days = hours/24
-									hours = hours%24
-									<h4 class="right">#{days} #{Math.round(hours)}h ago</h4><p class="left">#{comment.usernick}: <span>#{comment.comment}</span></p><hr class="centrify">
+									days = Math.round(hours/24)
+									if days > 30
+										months = Math.round(days/30)
+										h4.right #{months}M ago
+									else
+										h4.right #{Math.round(days)}d ago
 								else
-									<h4 class="right">#{Math.round(hours)}h ago</h4><p>#{comment.usernick}: <span>#{comment.comment}</span></p><hr class="centrify">
+									h4.right #{Math.round(hours)}h ago
+								p #{comment.usernick}: 
+									span #{comment.comment}
+								hr.centrify
 										
 				#bottomContainer
 					#bottomLeft.left
@@ -83,7 +97,7 @@ html
 					$(this).find("img")[0].src='/public/images/1pager/twitter_blue.png';
 				}
 				else if($(this).hasClass("comments_count")){
-					$(this).find("p").css("color","navy");
+					$(this).find("p").css("color","#2A30E8");
 				}
 			});
 			$("li").mouseout(function() {

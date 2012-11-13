@@ -19,6 +19,12 @@ body{
 p{
 	font-size:14px;
 }
+a{
+	border:none;
+}
+a img{
+	border:0px;
+}
 h4{
 	font-size:11px;
 	color:rgba(173,172,172,1);
@@ -32,19 +38,23 @@ hr{
 }
 ul{
 	list-style:none;
-	width:180px;
+	width:170px;
 }
 li{
 	width:60px;
 	display:inline-block;
 	cursor:pointer;
 }
+ul li:last-child{
+	width:50px;
+}
 ul li p{
 	position:relative;
-	bottom:40px;
-	left:15px;
+	bottom:43px;
+	left:13px;
 	color:white;
 	width:10px !important;
+	font-size:16px;
 }
 textarea{
 	height:46px;
@@ -64,6 +74,9 @@ header img{
     padding-top:5px;
     padding-right:20px;
     height:30px;
+}
+iframe{
+	margin-bottom:10px;
 }
 #header h1, #header h1 span{
 	font-weight:100;
@@ -96,8 +109,8 @@ header img{
 	margin-right:20px;
 }
 #commentField{
-	height:321px;
-	width:380px;
+	height:316px;
+	width:385px;
 	background:rgba(234,234,234,1);
 	overflow:auto;
 }
@@ -133,7 +146,7 @@ header img{
 	margin-left:10px;
 }
 #bottomContainer #bottomLeft p{
-	width:400px;
+	width:407px;
 	margin-right:10px;
 }
 #bottomLeft, #bottomRight{
