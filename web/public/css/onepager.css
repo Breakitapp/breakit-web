@@ -25,6 +25,7 @@ a{
 a img{
 	border:0px;
 }
+
 h4{
 	font-size:11px;
 	color:rgba(173,172,172,1);
@@ -93,7 +94,7 @@ iframe{
 	margin-bottom:50px;
 }
 #wrapper, #borderDiv{
-	height:780px;
+	height:795px;
 }
 
 #topContainer{
