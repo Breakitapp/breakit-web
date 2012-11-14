@@ -1,0 +1,44 @@
+!!! 5
+html
+	head
+		title= title
+		meta(name='viewport', content='width=device-width,initial-scale=1')
+		block scripts
+			link(rel='stylesheet', href='/public/css/mediaInt.css')
+			link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
+			script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
+			script(type='text/javascript', src='../public/js/libs/underscore-min.js')
+			script(type='text/javascript', src='../public/js/libs/backbone-min.js')
+	body
+		header.boxShadow
+			#header.centrify
+				img.left(src="/public/images/1pager/breakit.png")
+				h1 BREAK
+					span IT
+		#sort.centrify
+			form.searchform
+				input.searchfield(type="text",name="searchValue",value="search")
+				input.searchbutton(type="button",name="submitSsearch", value="Go")
+			form
+				input.buttonBg(type="button",name="live",value="Live")
+				input.buttonBg(type="button",name="commented",value="Most commented")
+				input.buttonBg(type="button",name="viewed",value="Most viewed")
+				input.buttonBg(type="button",name="ranking",value="Ranking")
+				input.buttonBg(type="button",name="pics",value="My pics")
+		#wrapper.centrify
+			p.sortByTag SORT BY
+			form
+				input.sortByTag(type="button",name="time",value="Time")
+				input.sortByTag(type="button",name="place",value="Place")
+				input.sortByTag(type="button",name="tags",value="Tags")
+				input.sortByTag(type="button",name="ranking",value="Ranking")
+			ul
+				for b in breaks
+					li.smallRadius.fullBorderGroove
+						p #{b.headline}
+						a(href="/p/" + b._id)
+							img(src="/ios/picture/" + b._id, alt=b.headline)
+						score = b.upvotes.length - b.downvotes.length
+						p= "views: " + b.views + " comments: " + b.comments.length + " votes: " + score
+		#push
+		#footer
