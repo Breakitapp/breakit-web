@@ -98,8 +98,7 @@ server.get '/breaks/comment', breaks.comment
 server.post '/breaks/comment', breaks.postComment
 #server.post '/breaks/1pcomment', breaks.postComment_1page
 server.post '/breaks/vote', breaks.vote
-server.post '/breaks/delete', breaks.delete
-#server.get '/breaks/:page', breaks.infinite #old
+server.get '/breaks/:page', breaks.infinite #old
 
 #Albums
 server.all '/albums', albums.list
