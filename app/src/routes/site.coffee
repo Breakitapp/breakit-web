@@ -11,8 +11,11 @@ users = require '../models/userModel'
 comments = require '../models/commentModel'
 albums = require '../models/albumModel'
 
+
+###
 exports.index = (req, res) ->
 	res.redirect '/signup'
+###
 
 exports.break_tmp = (req, res) ->
 	res.render 'tmp/break', title: 'Break-template'
