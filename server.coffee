@@ -10,7 +10,7 @@ user				= require './app/lib/routes/user'
 breaks				= require './app/lib/routes/breaks'
 albums				= require './app/lib/routes/albums'
 feedback			= require './app/lib/routes/feedback'
-test			= require './app/lib/routes/test'
+test				= require './app/lib/routes/test'
 ios					= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
@@ -100,6 +100,10 @@ server.post '/breaks/comment', breaks.postComment
 server.post '/breaks/vote', breaks.vote
 server.post '/breaks/delete', breaks.delete
 #server.get '/breaks/:page', breaks.infinite #old
+
+#MEDIA INTERFACE
+server.all '/media', breaks.mediaInterface
+server.post '/media/search', breaks.searchMedia
 
 #Albums
 server.all '/albums', albums.list

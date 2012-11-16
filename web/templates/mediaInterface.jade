@@ -16,9 +16,9 @@ html
 				h1 BREAK
 					span IT
 		#sort.centrify
-			form.searchform
-				input.searchfield(type="text",name="searchValue",value="search")
-				input.searchbutton(type="button",name="submitSsearch", value="Go")
+			form.searchform(method="post", action="/media/search", name="searchMedia")
+				input.searchfield(type="text",value="search", name="searchValue")
+				input.searchbutton(type="submit", value="Go")
 			form
 				input.buttonBg(type="button",name="live",value="Live")
 				input.buttonBg(type="button",name="commented",value="Most commented")
