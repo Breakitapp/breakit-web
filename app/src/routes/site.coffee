@@ -11,8 +11,11 @@ users = require '../models/userModel'
 comments = require '../models/commentModel'
 albums = require '../models/albumModel'
 
+
+###
 exports.index = (req, res) ->
-	res.render 'index', title: 'Breakit web-app, build with node, coffeescript and backbone'
+	res.redirect '/signup'
+###
 
 exports.break_tmp = (req, res) ->
 	res.render 'tmp/break', title: 'Break-template'
@@ -84,7 +87,7 @@ exports.signup_post = (req, res) ->
 				else
 					console.log "Message sent: " + response.message
 			
-				res.render('signup_confirm');
+				res.render('signup_confirm')
 
 exports.send = (req, res) ->
 	console.log 'in send'
@@ -109,8 +112,10 @@ exports.send = (req, res) ->
 			}
 
 			mailOptions = 
-				from : 'Breakit Info <admin@breakitapp.com>'
+				from : 'Breakit Info <info@breakitapp.com>'
 				to: 'marko.oksanen@aceconsulting.fi'
 				subject:  'Beta tester list'
 				generateTextFromHTML: true
 				html: content
+			console.log 'mail sent'
+			res.send('SUCCESS')

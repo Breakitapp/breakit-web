@@ -50,8 +50,8 @@ server.configure "production", ->
 
 
 #General
-server.all '/', site.index
-server.all '/break', site.break_tmp
+server.all '/', site.signup
+server.all '/break', site.break_tmp #to be removed?
 
 #iOS
 server.post '/ios', ios.index
@@ -98,8 +98,7 @@ server.get '/breaks/comment', breaks.comment
 server.post '/breaks/comment', breaks.postComment
 #server.post '/breaks/1pcomment', breaks.postComment_1page
 server.post '/breaks/vote', breaks.vote
-server.post '/breaks/delete', breaks.delete
-#server.get '/breaks/:page', breaks.infinite #old
+server.get '/breaks/:page', breaks.infinite #old
 
 #MEDIA INTERFACE
 server.all '/media', breaks.mediaInterface
@@ -125,6 +124,7 @@ server.get '/test/userfeed', test.specifyFeed
 server.post '/test/userfeed', test.feed
 
 #Starting the server
-server.listen 3000
-console.log 'Breakit express server listening to port 3000 in dev mode'
+server.listen 3000 #80 on real server
+consol.log 'Server running...'
+#console.log 'Breakit express server listening to port 3000 in dev mode'
 #console.log 'Express server listening on port %d in %s mode', server.address().port, server.settings.env
