@@ -25,7 +25,7 @@ exports.searchMedia= (req, res) ->
 		if err
 			res.send 'No breaks found.'
 		else
-			res.redirect '/media'
+			res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
 
 exports.infinite = (req, res) ->
 	page = req.params.page

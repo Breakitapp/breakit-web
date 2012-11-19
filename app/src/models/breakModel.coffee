@@ -110,19 +110,17 @@ searchBreaks = (x, callback) ->
 		console.log x
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
-			breaks_ = (b for b in breaks)
-			callback null, breaks_, x
-			headline = b.headline.toString().toLowerCase()
-			console.log 'b ' + headline
-			console.log typeof headline
-			console.log 'index ' + headline.indexOf(x.toLowerCase())
-			x = x.toLowerCase()
-			if headline.indexOf(x) != -1
-				console.log 'break trough'
-				return breaks_
-			else
-				console.log 'mayday mayday!'
-				return err
+			breaks_ = breaks
+			breaksArr = []
+			callback null, breaks_
+			for b in breaks_
+				headline = b.headline.toString().toLowerCase()
+				x = x.toLowerCase()
+				if headline.indexOf(x) != -1
+					console.log headline
+					breaksArr.push b
+			console.log breaksArr
+			return breaksArr
 		)
 
 #finds an x amout of breaks in the vicinity. NOT USED?
