@@ -102,11 +102,11 @@ exports.send = (req, res) ->
 		if betausers == null
 			res.send('No users found.')
 		else
-			content = '<h1> Betatester list:<br/>' + betausers
+			content = '<h1> Betatester list </h1>:<br/><br/>' 
 			i = 0
 			for user in betausers
 				i++
-				content += 'Betatester ' + i + '<br /> email: ' + user.email + '<br /> phone: ' + user.phone + '<br /> date: ' + user.date
+				content += '<br /><h2>Betatester ' + i + '</h2><br /> <p>email: ' + user.email + '<br /> phone: ' + user.phone + '<br /> date: ' + user.date+'</p>'
 #TODO: PARSE CONTENT TO A MORE USABLE FORM
 #TODO: CHANGE EMAIL TO eg. SKRUDES
 #TODO: IMPLEMENT SECURITY AGAINST FLOODING
@@ -118,7 +118,7 @@ exports.send = (req, res) ->
 
 			mailOptions = 
 				from : 'Breakit Info <info@breakitapp.com>'
-				to: 'Marko Oksanen <marko.oksanen@aalto.fi>'
+				to: 'Marko Oksanen <marko@breakitapp.com>'
 				subject:  'Beta tester list'
 				generateTextFromHTML: true
 				html: content
