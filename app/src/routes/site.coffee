@@ -114,7 +114,7 @@ exports.send = (req, res) ->
 
 			mailOptions = 
 				from : 'Breakit Info <info@breakitapp.com>'
-				to: 'Marko Oksanen <marko@breakitapp.com>'
+				to: 'Marko Oksanen <marko.oksanen@aalto.fi>'
 				subject:  'Beta tester list'
 				generateTextFromHTML: true
 				html: content
