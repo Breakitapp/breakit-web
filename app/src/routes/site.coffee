@@ -66,6 +66,7 @@ exports.signup_post = (req, res) ->
 			res.send 'Your email address has been already registered.'
 		else
 			console.log 'new beta user: '
+			console.log 'email : ' + req.body.email
 			console.log(user)
 
 			transport = mailer.createTransport 'SES', {
@@ -107,13 +108,13 @@ exports.send = (req, res) ->
 #TODO: IMPLEMENT SECURITY AGAINST FLOODING
 
 			transport = mailer.createTransport 'SES', {
-				AWSAccessKeyID : 'AKIAJD3WZOFBSHHZCIYQ'
-				AWSSecretKey : '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'
+				AWSAccessKeyID : 'AKIAIKWD2FS7UIATHYSQ'
+				AWSSecretKey : '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'
 			}
 
 			mailOptions = 
 				from : 'Breakit Info <info@breakitapp.com>'
-				to: 'marko.oksanen@aceconsulting.fi'
+				to: 'Marko Oksanen <marko@breakitapp.com>'
 				subject:  'Beta tester list'
 				generateTextFromHTML: true
 				html: content
