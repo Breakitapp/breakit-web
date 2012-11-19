@@ -118,5 +118,11 @@ exports.send = (req, res) ->
 				subject:  'Beta tester list'
 				generateTextFromHTML: true
 				html: content
-			console.log 'mail sent'
-			res.send('SUCCESS')
+			transport.sendMail mailOptions, (err, response) ->
+				if err
+					console.log err
+					res.send('ERROR')
+				else
+					console.log "Message sent: " + response.message
+					console.log 'mail sent'
+					res.send('SUCCESS')
