@@ -102,7 +102,11 @@ exports.send = (req, res) ->
 		if betausers == null
 			res.send('No users found.')
 		else
-			content = '<h1> Marko testaa betalistaa' + betausers
+			content = '<h1> Betatester list:<br/>' + betausers
+			i = 0
+			for user in betausers
+				i++
+				content += 'Betatester ' + i + '<br /> email: ' + user.email + '<br /> phone: ' + user.phone + '<br /> date: ' + user.date
 #TODO: PARSE CONTENT TO A MORE USABLE FORM
 #TODO: CHANGE EMAIL TO eg. SKRUDES
 #TODO: IMPLEMENT SECURITY AGAINST FLOODING
