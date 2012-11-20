@@ -54,7 +54,7 @@ exports.webComment = (req, res) ->
 					res.redirect '/p/' + req.body.breakId
 
 exports.signup = (req, res) ->
-	res.render 'signup' #change to signup_new when new template has been tested
+	res.render 'signup_new' #change to signup_new when new template has been tested
 	
 exports.signup_post = (req, res) ->
 	user = new models.BetaUser
