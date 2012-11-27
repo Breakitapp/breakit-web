@@ -22,17 +22,10 @@ html
 			p.big 
 				|Share and see what's happening nearby, <br />
 				|right now.
-			p.small Sign up and be the first to know
-			form(action="/signup",method="post",name="signup")
-				label Email:
-				input(type="email",id="email",name="email",placeholder="Enter your email")
-				br
-				label Select your phone:
-				select(name="phone")
-					option(value="iPhone") iPhone
-					option(value="Android") Android
-					option(value="wm") Windows
-				input(type="submit",value="GO",id="submit")
+			p.small_confirm 
+				|Thank you for signing up!<br />
+				|We will inform you when Breakit<br />
+				|is available for download
 			.iphone-5
 				img(src="/public/images/signup/breakitPhone.png",e="e")
 		.page-content
