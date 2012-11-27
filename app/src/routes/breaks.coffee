@@ -13,12 +13,21 @@ exports.list = (req, res) ->
 			res.render 'breakslist', title : 'All breaks', breaks: breaks_
 			
 exports.mediaInterface= (req, res) ->
-	breaks.findAll (err, breaks_) ->
-		if err
-			res.send 'No breaks found.'
-		else
-			res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
-
+	console.log req.body.searchValue
+	if req.body.searchValue == undefined || req.body.searchValue == 'search'
+		breaks.findAll (err, breaks_) ->
+			if err
+				res.send 'No breaks found.'
+			else
+				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+	else
+		x = req.body.searchValue
+		breaks.searchBreaks x, (err, breaks_) ->
+			if err
+				res.send 'No breaks found.'
+			else
+				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+###
 exports.searchMedia= (req, res) ->
 	x = req.body.searchValue
 	breaks.searchBreaks x, (err, breaks_) ->
@@ -26,7 +35,7 @@ exports.searchMedia= (req, res) ->
 			res.send 'No breaks found.'
 		else
 			res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
-
+###
 exports.infinite = (req, res) ->
 	page = req.params.page
 	breaks.findInfinite page, (err, docs) ->

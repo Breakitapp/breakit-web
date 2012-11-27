@@ -103,7 +103,7 @@ server.post '/breaks/delete', breaks.delete
 
 #MEDIA INTERFACE
 server.all '/media', breaks.mediaInterface
-server.post '/media/search', breaks.searchMedia
+#server.post '/media/search', breaks.searchMedia
 
 #Albums
 server.all '/albums', albums.list
