@@ -52,7 +52,30 @@ exports.webComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					res.redirect '/p/' + req.body.breakId
+#Onepager vs2
+exports.pvs2 = (req, res) ->
+	breaks.findById req.params.id, (err, break_) ->
+		if err
+			res.send '404'
+		else
+			#console.log 'break: ' +break_
+			res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_
+			
+#Commenting for Onepager vs2
+exports.onePComment = (req, res) ->
+	users.findById req.body.userId, (err, author) ->
+		if err
+			throw err
+		else
+			newComment = new comments.Comment req.body.comment, author._id, author.nName
 
+			console.log 'New comment from web interface: ' + newComment.comment + ', author(anonymous): ' + author.nName
+			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
+				if err
+					res.send 'Commenting failed.'
+				else
+					res.redirect '/onepager/' + req.body.breakId
+			
 exports.signup = (req, res) ->
 	res.render 'signup_new' #change to signup_new when new template has been tested
 	

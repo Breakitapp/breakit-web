@@ -39,6 +39,7 @@ li{
 	margin-right:10px;
 	margin-bottom:10px;
 	background:rgba(220,220,220,1);
+	float:left;
 }
 li:hover{
 	background:rgb(255,255,255);
@@ -62,7 +63,7 @@ header img{
 	color:#D11414;
 }
 #wrapper, #header{
-	width:1055px;
+	width:940px;
 }
 #wrapper ul,#sort{
 	text-align:center;

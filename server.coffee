@@ -74,6 +74,9 @@ server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
 #Public break interface
 server.get '/p/:id', site.public
 server.post '/p/comment', site.webComment
+#Onepager vs2 under editing
+server.get '/onepager/:id', site.pvs2
+server.post '/onepager/comment', site.onePComment
 
 #Signup
 server.get '/signup', site.signup

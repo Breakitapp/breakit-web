@@ -19,24 +19,28 @@ html
 			form.searchform(method="post", action="/media", name="mediaInterface")
 				input.searchfield(type="text",value="search", name="searchValue")
 				input.searchbutton(type="submit", value="Go")
-			form
-				input.buttonBg(type="button",name="live",value="Live")
-				input.buttonBg(type="button",name="commented",value="Most commented")
-				input.buttonBg(type="button",name="viewed",value="Most viewed")
-				input.buttonBg(type="button",name="ranking",value="Ranking")
-				input.buttonBg(type="button",name="pics",value="My pics")
+			form(method="post", action="/media", name="mediaInterface")
+				input.buttonBg(type="submit",name="live",value="Live")
+				input.buttonBg(type="submit",name="commented",value="Most commented")
+				input.buttonBg(type="submit",name="viewed",value="Most viewed")
+				input.buttonBg(type="submit",name="ranking",value="Ranking")
+				//
+					input.buttonBg(type="submit",name="pics",value="My pics")
 		#wrapper.centrify
-			p.sortByTag SORT BY
-			form
-				input.sortByTag(type="button",name="time",value="Time")
-				input.sortByTag(type="button",name="place",value="Place")
-				input.sortByTag(type="button",name="tags",value="Tags")
-				input.sortByTag(type="button",name="ranking",value="Ranking")
+			br
+			br
+			//
+				p.sortByTag SORT BY
+				form
+					input.sortByTag(type="button",name="time",value="Time")
+					input.sortByTag(type="button",name="place",value="Place")
+					input.sortByTag(type="button",name="tags",value="Tags")
+					input.sortByTag(type="button",name="ranking",value="Ranking")
 			ul
 				for b in breaks
 					li.smallRadius.fullBorderGroove
 						p #{b.headline}
-						a(href="/p/" + b._id)
+						a(href="/onepager/" + b._id)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						score = b.upvotes.length - b.downvotes.length
 						p= "views: " + b.views + " comments: " + b.comments.length + " votes: " + score

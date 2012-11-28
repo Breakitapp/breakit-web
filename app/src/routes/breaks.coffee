@@ -13,13 +13,36 @@ exports.list = (req, res) ->
 			res.render 'breakslist', title : 'All breaks', breaks: breaks_
 			
 exports.mediaInterface= (req, res) ->
-	console.log req.body.searchValue
+	console.log req.body.live
 	if req.body.searchValue == undefined || req.body.searchValue == 'search'
-		breaks.findAll (err, breaks_) ->
-			if err
-				res.send 'No breaks found.'
-			else
-				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+		if req.body.commented != undefined
+			breaks.sortByComments (err, breaks_) ->
+				console.log 'sort by comments'
+				if err
+					res.send 'No breaks found.'
+				else
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+		else if req.body.viewed != undefined
+			breaks.sortByViews (err, breaks_) ->
+				console.log 'sort by views'
+				if err
+					res.send 'No breaks found.'
+				else
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+		else if req.body.ranking != undefined
+			breaks.sortByVotes (err, breaks_) ->
+				console.log 'sort by votes'
+				if err
+					res.send 'No breaks found.'
+				else
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+		else
+			breaks.findAll (err, breaks_) ->
+				if err
+					res.send 'No breaks found.'
+				else
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+
 	else
 		x = req.body.searchValue
 		breaks.searchBreaks x, (err, breaks_) ->

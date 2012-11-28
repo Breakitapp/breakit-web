@@ -112,16 +112,50 @@ searchBreaks = (x, callback) ->
 			#Errorhandling goes here //if err throw err
 			breaks_ = breaks
 			breaksArr = []
-			callback null, breaks_
 			for b in breaks_
 				headline = b.headline.toString().toLowerCase()
 				x = x.toLowerCase()
 				if headline.indexOf(x) != -1
-					console.log headline
 					breaksArr.push b
-			console.log breaksArr
+			callback null, breaksArr
 			return breaksArr
 		)
+		
+		
+
+sortByComments = (callback) ->
+	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
+		breaks_ = breaks
+		breaksArr = []
+		breaksArrSorted = []
+		for b in breaks
+			breaksArr.push b
+		for b in breaksArr
+			countLoops = 0
+			wantedBreakPos = 0
+			x = 0
+			for getNextBreak in breaksArr
+				if x < getNextBreak.comments.length
+					x = getNextBreak.comments.length
+					wantedBreakPos = countLoops
+				countLoops += 1
+			breaksArrSorted.push breaksArr[wantedBreakPos]
+			breaksArr.splice(wantedBreakPos, 1)
+		callback null, breaksArrSorted
+		return breaksArrSorted
+	)
+sortByViews = (callback) ->
+	models.Break.find().sort({'views': 'descending'}).exec((err, breaks)->
+		breaks_ = (b for b in breaks)
+		callback null, breaks_
+		return breaks_
+	)
+sortByVotes = (callback) ->
+	models.Break.find().sort({'votes': 'descending'}).exec((err, breaks)->
+		breaks_ = (b for b in breaks)
+		callback null, breaks_
+		return breaks_
+	)
 
 #finds an x amout of breaks in the vicinity. NOT USED?
 
@@ -257,6 +291,9 @@ root.comment = comment
 root.createBreak = createBreak
 root.findAll = findAll
 root.searchBreaks = searchBreaks
+root.sortByComments = sortByComments
+root.sortByViews = sortByViews
+root.sortByVotes = sortByVotes
 root.fbShare = fbShare
 root.tweet = tweet
 root.findInfinite = findInfinite
