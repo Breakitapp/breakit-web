@@ -160,15 +160,13 @@ sortByVotes = (callback) ->
 		for b in breaksArr
 			countLoops = 0
 			wantedBreakPos = 0
-			x = 0
+			x = -10000
 			for getNextBreak in breaksArr
 				score = getNextBreak.upvotes.length - getNextBreak.downvotes.length
 				if x < score
 					x = score
 					wantedBreakPos = countLoops
-				else if x == 0 and score < 0
-					x = score
-					wantedBreakPos = countLoops
+
 				countLoops += 1
 			breaksArrSorted.push breaksArr[wantedBreakPos]
 			breaksArr.splice(wantedBreakPos, 1)
