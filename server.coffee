@@ -15,15 +15,18 @@ ios					= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
+#blog			= require './app/lib/routes/blog'
 #Dummydata insert
 #dummy					= require './app/lib/models/dummyModel'
 
 server = module.exports = express()
+#poet				= (require 'poet') server
 
 #Configuration
 server.configure ->
 	publicDir = __dirname + '/web'
 	viewsDir  = __dirname + '/web/templates'
+
 	#Set the views folder
 	server.set 'views', viewsDir
 	#Set the view engine and options
@@ -34,20 +37,39 @@ server.configure ->
 	server.use express.methodOverride()
 	#CSS templating
 	server.use(stylus.middleware src: publicDir)
+	#POET blog
+#	server.use(poet.middleware src: viewsDir)
 	server.use express.static publicDir
 	server.use server.router
 
-db = mongoose.connect(settings.mongo_auth.db)
-
+poet.set
+  posts: './_posts/',
+  postsPerPage: 5,
+  metaFormat: 'json'
+### BLOG UNDER CONSTRUCTION 
+poet
+  .createPostRoute()
+  .createPageRoute()
+  .createTagRoute()
+  .createCategoryRoute()
+  .init()
+###
 server.configure "development", ->
 	server.use express.errorHandler(
 		dumpExceptions: true
 		showStack: true
 	)
+	console.log 'RUNNING ON DEV SERVER'
+	db = mongoose.connect(settings.mongo_dev.db)
 
 server.configure "production", ->
 	server.use express.errorHandler()
+	console.log 'RUNNING ON PRODUCTION SERVER'
+	db = mongoose.connect(settings.mongo_prod.db)
 
+server.configure "local", ->
+	console.log 'RUNNING ON LOCAL SERVER'
+	db = mongoose.connect(settings.mongo_local.db)
 
 #General
 server.all '/', site.signup
@@ -85,18 +107,12 @@ server.get '/signup/send', site.send
 
 #Users
 server.all '/users', user.list
-server.get '/users/new', user.create
-server.post '/users/new', user.submit
 server.get '/users/:id', user.view
 server.post '/users/:id', user.update
 server.post '/users/delete/:id', user.remove
 
 #Breaks (had to use breaks instead of break, since break is a reserved word)
 server.all '/breaks', breaks.list
-server.get '/breaks/new', breaks.webCreate
-server.post '/breaks/new', breaks.webSubmit
-server.get '/breaks/enew', breaks.easyWebCreate
-server.post '/breaks/enew', breaks.easyWebSubmit
 server.get '/breaks/comment', breaks.comment
 server.post '/breaks/comment', breaks.postComment
 #server.post '/breaks/1pcomment', breaks.postComment_1page
@@ -115,17 +131,30 @@ server.get '/albums/near', albums.listNear
 server.get '/albums/new', albums.create
 server.post '/albums/new', albums.submit
 
-#Creating a feedback for test
-server.get '/feedback/new', feedback.create
-server.post '/feedback/new', feedback.submit
-server.get '/feedback/list', feedback.list
 
-#Testing
+# BLOG
+#server.get '/blog', blog.index
+
+#TESTING FUNCTIONS (to be disabled in production)
 server.get '/test', test.index
 server.get '/test/sendForm', test.sendForm
 server.post '/test/sendForm', test.submitForm
 server.get '/test/userfeed', test.specifyFeed
 server.post '/test/userfeed', test.feed
+server.get '/breaks/new', breaks.webCreate
+server.post '/breaks/new', breaks.webSubmit
+server.get '/breaks/enew', breaks.easyWebCreate
+server.post '/breaks/enew', breaks.easyWebSubmit
+
+#Creating a feedback for test
+server.get '/feedback/new', feedback.create
+server.post '/feedback/new', feedback.submit
+server.get '/feedback/list', feedback.list
+
+#USERS
+server.get '/users/new', user.create
+server.post '/users/new', user.submit
+
 
 #Starting the server
 server.listen 3000

@@ -6,9 +6,17 @@ mongod:
 run:
 	nodemon server.js
 
-#Compile all and run
-run-c:
-	make compile-coffee && make run
+#Compile all and run (LOCAL)
+run-l:
+	make compile-coffee && NODE_ENV=local make run
+
+#Compile all and run in prod environment
+run-p:
+	make compile-coffee && NODE_ENV=production forever server.js
+
+#Compile all and run in dev environment
+run-d:
+	make compile-coffee && NODE_ENV=development make run
 
 # Compile all coffee to js
 compile-coffee:
