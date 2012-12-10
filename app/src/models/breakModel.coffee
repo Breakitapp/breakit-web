@@ -211,6 +211,17 @@ findById = (id, callback) ->
 		callback err, break_
 	)
 
+#find break and add one to view
+findAndModify = (id, callback) ->
+	#models.Break.findById(id).exec((err, break_) ->
+	query ={'_id':id}
+	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
+		if err
+			console.log 'something went wrong'
+		callback err, break_
+	)
+
+
 vote = (breakId, userId, direction, callback) ->
 	
 	if (direction isnt 'up') and (direction isnt 'down')
@@ -317,3 +328,4 @@ root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
 root.del = del
+root.findAndModify = findAndModify

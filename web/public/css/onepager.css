@@ -109,6 +109,10 @@ iframe{
 #rightContainer{
 	margin-right:20px;
 }
+#leftContainer img{
+	height:612px;
+	width:612px;
+}
 #commentField{
 	height:316px;
 	width:385px;

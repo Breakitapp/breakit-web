@@ -54,12 +54,24 @@ exports.webComment = (req, res) ->
 					res.redirect '/p/' + req.body.breakId
 #Onepager vs2
 exports.pvs2 = (req, res) ->
-	breaks.findById req.params.id, (err, break_) ->
-		if err
-			res.send '404'
-		else
-			#console.log 'break: ' +break_
-			res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_
+	if req.headers.cookie isnt null
+		lastBreak = req.headers.cookie
+	console.log 'id: ' + req.params.id
+	console.log 'lastBreak: ' + lastBreak
+	if lastBreak is 'breakit='+req.params.id
+		breaks.findById req.params.id, (err, break_) ->
+			if err
+				res.send '404'
+			else
+				#console.log 'break: ' +break_
+				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_
+	else
+		breaks.findAndModify req.params.id, (err, break_) ->
+			if err
+				res.send '404'
+			else
+				#console.log 'break: ' +break_
+				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_
 			
 #Commenting for Onepager vs2
 exports.onePComment = (req, res) ->
@@ -153,3 +165,4 @@ exports.send = (req, res) ->
 					console.log "Message sent: " + response.message
 					console.log 'mail sent'
 					res.send('SUCCESS')
+					
