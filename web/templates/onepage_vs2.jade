@@ -9,6 +9,7 @@ html
 		script(type='text/javascript', src='http://www.datejs.com/build/date.js')
 		script(type="text/javascript", src="/public/js/mousewheel.js")
 		script(type="text/javascript", src="/public/js/jScrollPane.js")
+		script(type="text/javascript", src="/public/js/jqueryCookies.js")
 	body
 		header.boxShadow
 			#header.centrify
@@ -18,8 +19,8 @@ html
 		#wrapper.centrify.fullRadius.fullBorder.insetShadow
 			#borderDiv.outsetShadow
 				#topContainer
-					a(href="/media") Media
-					h1 #{b.headline}
+					h1.left #{b.headline}
+					a.button.right(href="/media") Media
 				#middleContainer
 					#leftContainer.left
 						img(src="/ios/picture/"+b._id, alt="break")
@@ -77,6 +78,9 @@ html
 								a(href="https://twitter.com/Breakitapp")
 									img(src="/public/images/1pager/twitter_gray.png")
 								p &nbsp
+							li.viewAmount
+								img(src="/public/images/1pager/viewsIcon.fw.png")
+								p #{b.views}
 							li.comments_count
 								img(src="/public/images/1pager/comments.png")
 								p #{b.comments.length}
@@ -86,6 +90,8 @@ html
 							input.hideInput(name = "userId", value="509b933292083a3c07000002") 
 							input.hideInput(name = "breakId", value=b._id)
 							input.right(type="submit", value="send")
+			form(name="refreshForm")
+				input(type="hidden", name="visited", value="")
 		#push
 		#footer.boxShadow
 	script
@@ -98,7 +104,10 @@ html
 					$(this).find("img")[0].src='/public/images/1pager/twitter_blue.png';
 				}
 				else if($(this).hasClass("comments_count")){
-					$(this).find("p").css("color","#2A30E8");
+					$(this).find("p").css("color","#5B5B5B");
+				}
+				else if($(this).hasClass("viewAmount")){
+					$(this).find("p").css("color","#5B5B5B");
 				}
 			});
 			$("li").mouseout(function() {
@@ -111,6 +120,9 @@ html
 				else if($(this).hasClass("comments_count")){
 					$(this).find("p").css("color","white");
 				}
+				else if($(this).hasClass("viewAmount")){
+					$(this).find("p").css("color","#A1A1A1");
+				}
 			});
 			$("textarea").focus(function() {
 				$(this).val('');
@@ -118,4 +130,14 @@ html
 			$(function(){
 				$('.scroll-pane').jScrollPane();
 			});
+			$(function(){
+				if($.cookie('breakit') === null) {
+					$.cookie('breakit', '#{b.id}' , {expires:1});
+				}
+				else if($.cookie('breakit') != "#{b.id}"){
+					$.cookie("breakit", null);
+					$.cookie('breakit', '#{b.id}' , {expires:1});
+				}
+			});
 		});
+		

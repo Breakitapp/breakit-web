@@ -68,6 +68,7 @@ FeedbackSchema = new Schema
 	date			:		{type: Date, default: Date.now}
 	comment		:		{type: String}
 
+
 Feedback	= mongoose.model 'Feedback', FeedbackSchema
 Comment		= mongoose.model 'Comment', CommentSchema
 Break			= mongoose.model 'Break', BreakSchema

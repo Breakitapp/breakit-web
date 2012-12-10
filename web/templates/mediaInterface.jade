@@ -17,7 +17,7 @@ html
 					span IT
 		#sort.centrify
 			form.searchform(method="post", action="/media", name="mediaInterface")
-				input.searchfield(type="text",value="search", name="searchValue")
+				input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
 				input.searchbutton(type="submit", value="Go")
 			form(method="post", action="/media", name="mediaInterface")
 				input.buttonBg(type="submit",name="live",value="Live")
@@ -39,10 +39,12 @@ html
 			ul
 				for b in breaks
 					li.smallRadius.fullBorderGroove
-						p #{b.headline}
+						p.smallRadius.fullBorderRidge #{b.headline}
 						a(href="/onepager/" + b._id)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						score = b.upvotes.length - b.downvotes.length
-						p= "views: " + b.views + " comments: " + b.comments.length + " votes: " + score
+						p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
+						p.smallRadius.fullBorderGroove= "Votes: " + score
+						p.smallRadius.fullBorderGroove= "Views: " + b.views
 		#push
 		#footer

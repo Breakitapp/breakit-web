@@ -1,10 +1,10 @@
 @charset "utf-8";
 /* CSS Document */
 *{
-    padding:0;
-    margin:0;
-    font-family: 'Lato', sans-serif;
-    font-weight:400;
+	padding:0;
+	margin:0;
+	font-family: 'Lato', sans-serif;
+	font-weight:400;
 	-webkit-text-size-adjust: auto;
 	text-size-adjust:auto;
 	-moz-text-size-adjust:auto;
@@ -65,8 +65,17 @@ header img{
 #wrapper, #header{
 	width:940px;
 }
+
+#wrapper p{
+	background:#D1D1D1;
+	padding-left:2px;
+	margin-bottom:4px;
+}
 #wrapper ul,#sort{
 	text-align:center;
+}
+#wrapper p{
+	text-align:left;
 }
 #sort{
 	width:1200px;
