@@ -42,11 +42,12 @@ server.configure ->
 	server.use express.static publicDir
 	server.use server.router
 
+###BLOG UNDER CONSTRUCTION 
+
 poet.set
   posts: './_posts/',
   postsPerPage: 5,
   metaFormat: 'json'
-### BLOG UNDER CONSTRUCTION 
 poet
   .createPostRoute()
   .createPageRoute()
