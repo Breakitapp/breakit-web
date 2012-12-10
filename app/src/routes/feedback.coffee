@@ -3,21 +3,23 @@ userModel = require '../models/userModel'
 
 
 exports.create = (req, res) ->
-	users = userModel.list (u)->
-		res.render 'feedback', title : 'Feedback test form', users: u
+	if(req.ip isnt '54.247.69.189')
+		users = userModel.list (u)->
+			res.render 'feedback', title : 'Feedback test form', users: u
 	
 exports.submit = (req, res) ->
-
-	feedback.createWebFeedback req.body, (err) ->
-		if err
-			console.log err
-			res.send 'Error saving feedback'
-		else
-			res.send 'New Feedback SUBMITTED (ios)'
+	if(req.ip isnt '54.247.69.189')
+		feedback.createWebFeedback req.body, (err) ->
+			if err
+				console.log err
+				res.send 'Error saving feedback'
+			else
+				res.send 'New Feedback SUBMITTED'
 
 exports.list = (req, res) ->
-	feedback.list (feedbacklist) ->
-		if feedbacklist == null
-			res.send('No feedback found.')
-		else
-			res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
+	if(req.ip isnt '54.247.69.189')
+		feedback.list (feedbacklist) ->
+			if feedbacklist == null
+				res.send('No feedback found.')
+			else
+				res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
