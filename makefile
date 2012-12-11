@@ -16,7 +16,7 @@ run-p:
 
 #Compile all and run in dev environment
 run-d:
-	make compile-coffee && NODE_ENV=development make run
+	make compile-coffee && NODE_ENV=development forever server.js
 
 # Compile all coffee to js
 compile-coffee:
