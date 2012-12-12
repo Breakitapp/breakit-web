@@ -54,7 +54,7 @@ exports.webComment = (req, res) ->
 					res.redirect '/p/' + req.body.breakId
 #Onepager vs2
 exports.pvs2 = (req, res) ->
-	if req.headers.cookie isnt null
+	if req.headers.cookie['breakit'] isnt null
 		lastBreak = req.headers.cookie
 	console.log 'id: ' + req.params.id
 	console.log 'lastBreak: ' + lastBreak
