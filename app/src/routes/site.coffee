@@ -54,11 +54,21 @@ exports.webComment = (req, res) ->
 					res.redirect '/p/' + req.body.breakId
 #Onepager vs2
 exports.pvs2 = (req, res) ->
-	if req.headers.cookie['breakit'] isnt null
-		lastBreak = req.headers.cookie
+	cookieName = ''
+	cookieValue = ''
+	cookies = {}
+	req.headers.cookie && req.headers.cookie.split(';').forEach (cookie) ->
+		parts = cookie.split '='
+		checkCookie = cookies[parts[0].trim()] = (parts[0] || '').trim()
+		console.log checkCookie
+		if checkCookie is 'breakit'
+			cookieName = cookies[parts[0].trim()] = (parts[0] || '').trim()
+			cookieValue = cookies[parts[0].trim()] = (parts[1] || '').trim()
+			console.log 'cookie ' + cookieName + ' with value ' + cookieValue + ' is now set!'
+	console.log 'name: ' + cookieName
+	console.log 'value: ' + cookieValue
 	console.log 'id: ' + req.params.id
-	console.log 'lastBreak: ' + lastBreak
-	if lastBreak is 'breakit='+req.params.id
+	if cookieName is 'breakit' and cookieValue is req.params.id
 		breaks.findById req.params.id, (err, break_) ->
 			if err
 				res.send '404'
