@@ -158,6 +158,16 @@ server.post '/albums/new', albums.submit
 
 
 #Starting the server
-server.listen 3000
-console.log 'Breakit express server listening to port 3000 in dev mode'
+server.configure "local", ->
+	server.listen 3000
+	console.log 'Breakit express server listening to port 3000 in dev mode'
+
+server.configure "development", ->
+	server.listen 80
+	console.log 'Breakit express server listening to port 80 in dev mode'
+
+server.configure "development", ->
+	server.listen 80
+	console.log 'Breakit express server listening to port 80 in dev mode'
+
 #console.log 'Express server listening on port %d in %s mode', server.address().port, server.settings.env
