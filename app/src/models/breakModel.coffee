@@ -2,6 +2,7 @@ models = require './mongoModel'
 albumModel = require './albumModel'
 commentModel = require './commentModel'
 userModel = require './userModel'
+notificationsModel = require './notificationsModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user) ->
@@ -50,7 +51,18 @@ comment = (comment, breakId, callback) ->
 			callback err, null
 		else
 			break_.comments.push comment
-			
+			notificationsModel.createNotification comment.usernick, break_.userId, comment.comment, breakId, (err)->
+				console.log 'DATA:'
+				console.log 'DATA usernick: '+comment.usernick
+				console.log 'DATA break owner id: '+break_.user
+				console.log 'DATA comment: '+comment.comment
+				console.log 'DATA: breakid'+ breakId
+				if err
+					console.log 'in callback err'
+					callback err, null
+				else
+					console.log 'in callback success'
+					
 			#updating the top break of the album if this break is it
 			if break_.top
 				albumModel.updateTop break_.album, break_, (err) ->

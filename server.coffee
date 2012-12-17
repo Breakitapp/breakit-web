@@ -92,6 +92,7 @@ server.get '/ios/info/:id', ios.get_break
 server.get '/ios/browse_album/:albumId/:page', ios.browse_album
 server.get '/ios/whole_album/:albumId/:page', ios.getAlbumBreaks
 server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
+server.get '/ios/mynotifications/:userId', ios.getMyNotifications
 
 #WEB
 #Public break interface
