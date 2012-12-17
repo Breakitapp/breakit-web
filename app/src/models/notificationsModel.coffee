@@ -20,12 +20,13 @@ class Notification
 				callback null, notification_
 				
 createNotification = (from, to, comment, breakId, callback) ->
+			console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', id: '+breakId
 			new_notification = new Notification(from, to, comment, breakId)
 			new_notification.save (err)->
 				callback err
 				
 getNotifications = (userId, callback) ->
-	models.Notification.find({'user_id_to' : userId}).sort({'date': 'descending'}).exec (err, notifications) ->
+	models.Notification.find({'user_id_to' : userId}).sort({'date': 'ascending'}).exec (err, notifications) ->
 		if err
 			callback err, null
 		else
