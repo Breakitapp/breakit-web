@@ -7,6 +7,7 @@
 breaks	= require '../models/breakModel'
 albums	= require '../models/albumModel'
 comments = require '../models/commentModel'
+notifications = require '../models/notificationsModel'
 users = require '../models/userModel'
 feedback = require '../models/feedbackModel'
 fs			= require 'fs'
@@ -182,3 +183,13 @@ exports.getMyBreaks = (req, res) ->
 			res.send 'error'
 		else
 			res.send [foundBreaks, req.params.page]
+			
+
+exports.getMyNotifications = (req, res) ->
+	
+	notifications.getNotifications req.params.userId, (err, foundNotifications)->
+		if err
+			res.send 'error'
+		else
+			console.log 'found notifications: ' + foundNotifications
+			res.send 'test'
