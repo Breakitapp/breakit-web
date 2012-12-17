@@ -191,5 +191,9 @@ exports.getMyNotifications = (req, res) ->
 		if err
 			res.send 'error'
 		else
-			console.log 'found notifications: ' + foundNotifications
-			res.send 'test'
+			list = []
+			i = 0
+			for notification in foundNotifications
+				list[i] = 'User: '+notification.user_id_from + '   -   '+notification.comment+'   -   '+notification.user_id_to+'<br />'
+				i++
+			res.send 'FOUND: '+list
