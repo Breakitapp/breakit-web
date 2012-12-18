@@ -157,6 +157,8 @@ addBreak = (b) ->
 #Updates the top break for an album. Gets the new top break (can be same or different than the old top break). If the new top break is
 #different it replaces the old one and the old one's 'top' parameter is changed to 'false'. If the new top break is the just an updated
 #version of the old one, the top break field is simply updated.
+
+#No longer needed?
 updateTop = (id, b, callback) ->
 	
 	#Finding the album in question
@@ -210,7 +212,7 @@ updateTop = (id, b, callback) ->
 			
 
 remove = (id) ->
-	#This need to iteratively remove all breaks too
+	#This need to iteratively remove all breaks too? Or atleast remove the album field from them.
 	models.Album.findByIdAndRemove id, (err) ->
 		if err
 			throw err
@@ -218,6 +220,7 @@ remove = (id) ->
 			console.log 'ALBUM: removed the album correctly' 
 
 # get the next page content according to location and points
+#No longer used
 getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 	
 	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location

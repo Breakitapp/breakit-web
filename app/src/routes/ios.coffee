@@ -65,8 +65,14 @@ exports.new_user = (req, res) ->
 
 #create a new break
 exports.post_break = (req, res) ->
-	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
-		albums.addBreak break_
+	
+	#
+	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
+		
+		#Only if the break should be in an album...
+		if break_.placeId != null
+			albums.addBreak break_
+		
 		tmp_path = req.files.image.path
 		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
 		target_path ='./app/res/images/' + break_._id + '.jpeg'

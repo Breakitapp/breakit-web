@@ -4,7 +4,7 @@ commentModel = require './commentModel'
 userModel = require './userModel'
 
 class Break
-	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user) ->
+	constructor: (@longitude, @latitude, @location_name, @placeId, @story, @headline, @user) ->
 		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
 
 	saveToDB: (callback) ->
@@ -16,6 +16,7 @@ class Break
 		break_ = new models.Break
 			loc						:		{lon: @longitude, lat: @latitude}
 			location_name			:		@location_name
+			placeId 				:		@placeId
 			story					:		@story
 			headline				:		@headline
 			user					:		@user
@@ -38,8 +39,9 @@ class Break
 					console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
 					callback null, break_
 
-createBreak = (longitude, latitude, location_name, story, headline, userId, callback) ->
-	break_ = new Break longitude, latitude, location_name, story, headline, userId
+createBreak = (longitude, latitude, location_name, placeId, story, headline, userId, callback) ->
+	
+	break_ = new Break longitude, latitude, location_name, placeId, story, headline, userId
 	break_.saveToDB (err, b) ->
 		callback err, b
 	
@@ -103,9 +105,80 @@ findAll = (callback) ->
 			callback null, breaks_
 			return breaks_
 		)
+		
+#Similar to AlbumModel getFeed and will replace it in the next iteration.
+getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 	
+	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
+	range = 500+100*page
+	#Would like to have a more dynamic way to take the distance into account here... -E
+	
+	albums = []
+	#This is the geonear mongoose function, that searches for locationbased nodes in db
+	#First it searches for 'range' amount of breaks.
+	models.Break.db.db.executeDbCommand {
+		geoNear: 'breaks'
+		near : [longitude, latitude]
+		num : range
+		spherical : true
+		}, (err, docs) ->
+			if err
+				throw err
+			else
+				if docs.documents[0].results
+					b = docs.documents[0].results
+					i = 0
+					while i < b.length
+						foundBreak = b[i].obj
+						foundBreak.dis = b[i].dis
+						
+						#Now the shown breaks are excluded from results
+						alreadyShown = false
+						
+						if shownAlbums
+				
+							j = 0
+							while j < shownBreaks.length
+								
+								#Checking if the break has been shown already
+								#Checking if the album has been shown already...? -> Client needs to add the album id in the shown list.
+								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album)
+									alreadyShown = true
+									break
+								j++
+						if not alreadyShown
+							
+							#This code ensures that only the best break of an album is included
+							if foundBreak.album != null
+								k = 0
+								while k < breaks.length
+									if String(foundBreak.album) is String(breaks[k].album)
+										if foundBreak.points > breaks[k].points
+											breaks[k] = foundBreak
+										else
+											break
+								
+							#This break hasn't been shown before
+							else
+								breaks.push foundBreak
+						i++
+					
+					console.log 'nr of breaks: ' + breaks.length
+					
+					#Then the array is sorted based on points
+					sorted = _.sortBy breaks, (break_) ->
+						
+						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
+						return Number(-(break_.points - break_.dis*20000000000))
 
+					#And last the first X breaks are sent to the client
+					best = _.first(sorted, 50)
+					callback null, best
+			
+	return breaks
+	
 #search from breaks
+#Should just look for the headline in the initial query.
 searchBreaks = (x, callback) ->
 		console.log x
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
@@ -122,7 +195,7 @@ searchBreaks = (x, callback) ->
 		)
 		
 		
-
+#Why sort by date? Multiple arrays of the same stuff...
 sortByComments = (callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
 		breaks_ = breaks
