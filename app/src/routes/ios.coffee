@@ -193,7 +193,8 @@ exports.getMyNotifications = (req, res) ->
 		else
 			list = []
 			i = 0
+			res.send foundNotifications
+
 			for notification in foundNotifications
-				list[i] = 'User: '+notification.user_id_from + '   -   '+notification.comment+'   -   '+notification.user_id_to+'<br />'
+				list[i] = 'User: '+notification.user_id_from + 'commented: "'+notification.comment+'" on your break'+notification.user_id_to+'<br />'
 				i++
-			res.send 'FOUND: '+list
