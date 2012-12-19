@@ -51,7 +51,8 @@ comment = (comment, breakId, callback) ->
 			callback err, null
 		else
 			break_.comments.push comment
-			notificationsModel.createNotification comment.usernick, break_.user, comment.comment, breakId, (err)->
+			console.log 'breakId: '+breakId
+			notificationsModel.createNotification comment.usernick, break_.user, comment.comment, 'test'+breakId, (err)->
 				console.log 'DATA usernick: '+comment.usernick
 				console.log 'DATA break owner id: '+break_.user
 				console.log 'DATA comment: '+comment.comment
