@@ -79,9 +79,11 @@ exports.pvs2 = (req, res) ->
 					#Change this to your own LOCAL user
 					onepagerUser = '5097ae8bae4d4a8805000001'
 					console.log 'in IF'
-				if(req.ip is '54.247.69.189')
+				if(req.headers.host is '54.247.69.189')
+					# PROD SERVER ANON USER
 					onepagerUser = '50a0e4db1f63ba4d72000020'
-				if(req.ip is '86.50.133.231')
+				if(req.headers.host is '46.137.122.206')
+					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
