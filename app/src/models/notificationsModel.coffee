@@ -1,10 +1,11 @@
 models = require './mongoModel'
 
 class Notification
-	constructor: (@user_id_from, @user_id_to, @comment, @breakId, @date) ->
+	constructor: (@user_id_from, @user_id_to, @comment, @breakId) ->
 	save: (callback) ->
 		console.log 'in notifications constructor'
-		notification_ = new models.Notification
+		@date = new Date()
+		notification_ = new models.Notification			
 			user_id_from : @user_id_from
 			user_id_to : @user_id_to
 			comment : @comment
