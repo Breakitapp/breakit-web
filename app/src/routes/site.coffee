@@ -75,12 +75,12 @@ exports.pvs2 = (req, res) ->
 			else
 				#console.log 'break: ' +break_
 				console.log 'ip: '+ req.ip
-				if(req.ip isnt '46.137.122.206' or '54.247.69.189')
+				if(req.ip isnt '86.50.133.231' or '54.247.69.189')
 					#Change this to your own LOCAL user
 					onepagerUser = '5097ae8bae4d4a8805000001'
 				if(req.ip is '54.247.69.189')
 					onepagerUser = '50a0e4db1f63ba4d72000020'
-				if(req.ip is '46.137.122.206')
+				if(req.ip is '86.50.133.231')
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
@@ -93,12 +93,12 @@ exports.pvs2 = (req, res) ->
 				#console.log 'break: ' +break_
 				
 				console.log 'ip: '+ req.ip
-				if(req.ip isnt '46.137.122.206' or '54.247.69.189')
+				if(req.ip isnt '86.50.133.231' or '54.247.69.189') 
 					#Change this to your own LOCAL user
 					onepagerUser = '5097ae8bae4d4a8805000001'
 				if(req.ip is '54.247.69.189')
 					onepagerUser = '50a0e4db1f63ba4d72000020'
-				if(req.ip is '46.137.122.206')
+				if(req.ip is '86.50.133.231')
 					onepagerUser = '50a369413268496061000002'
 					
 				console.log 'user: '+ onepagerUser
