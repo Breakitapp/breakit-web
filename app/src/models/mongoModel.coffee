@@ -72,7 +72,7 @@ NotificationSchema = new Schema
 	user_id_from		:		{type: String}
 	user_id_to		:		{type: String}
 	comment		:		{type: String}
-	breakId		:		{type: String}
+	testing		:		{type: String}
 	date			:		{type: Date, default: Date.now}
 
 
