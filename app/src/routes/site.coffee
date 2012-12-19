@@ -74,13 +74,14 @@ exports.pvs2 = (req, res) ->
 				res.send '404'
 			else
 				#console.log 'break: ' +break_
+				console.log 'ip: '+ req.ip
+				if(req.ip isnt '46.137.122.206' or '54.247.69.189')
+					#Change this to your own LOCAL user
+					onepagerUser = '5097ae8bae4d4a8805000001'
 				if(req.ip is '54.247.69.189')
 					onepagerUser = '50a0e4db1f63ba4d72000020'
 				if(req.ip is '46.137.122.206')
 					onepagerUser = '50a369413268496061000002'
-				if(req.ip isnt '46.137.122.206' or '54.247.69.189')
-					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
@@ -91,13 +92,15 @@ exports.pvs2 = (req, res) ->
 			else
 				#console.log 'break: ' +break_
 				
+				console.log 'ip: '+ req.ip
+				if(req.ip isnt '46.137.122.206' or '54.247.69.189')
+					#Change this to your own LOCAL user
+					onepagerUser = '5097ae8bae4d4a8805000001'
 				if(req.ip is '54.247.69.189')
 					onepagerUser = '50a0e4db1f63ba4d72000020'
 				if(req.ip is '46.137.122.206')
 					onepagerUser = '50a369413268496061000002'
-				if(req.ip isnt '46.137.122.206' or '54.247.69.189')
-					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
+					
 				console.log 'user: '+ onepagerUser
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 			
