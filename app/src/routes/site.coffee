@@ -101,16 +101,16 @@ exports.pvs2 = (req, res) ->
 				res.send '404'
 			else
 				#console.log 'break: ' +break_
-				
-				console.log 'ip: '+ req.ip
-				if(req.ip isnt '86.50.133.231' or '54.247.69.189') 
+				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					onepagerUser = '5097ae8bae4d4a8805000001'
-				if(req.ip is '54.247.69.189')
+					console.log 'in IF'
+				if(req.headers.host is '54.247.69.189')
+					# PROD SERVER ANON USER
 					onepagerUser = '50a0e4db1f63ba4d72000020'
-				if(req.ip is '86.50.133.231')
+				if(req.headers.host is '46.137.122.206')
+					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
-					
 				console.log 'user: '+ onepagerUser
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 			
