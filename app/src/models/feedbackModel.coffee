@@ -4,6 +4,7 @@ class Feedback
 	constructor: (@user_id, @comment, @date) ->
 	save: (callback) ->
 		console.log 'hello'
+		@date = new Date()
 		feedback_ = new models.Feedback
 			user_id : @user_id
 			comment : @comment
