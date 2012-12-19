@@ -82,6 +82,7 @@ exports.pvs2 = (req, res) ->
 					#Change this to your own LOCAL user
 					onepagerUser = '5097ae8bae4d4a8805000001'
 				console.log 'user: '+ onepagerUser
+				console.log 'user is: '+ onepagerUser
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 	else
 		breaks.findAndModify req.params.id, (err, break_) ->
