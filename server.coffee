@@ -75,7 +75,25 @@ server.configure "local", ->
 #General
 server.all '/', site.signup
 server.all '/break', site.break_tmp
+#TESTING FUNCTIONS (to be disabled in production)
+server.get '/test', test.index
+server.get '/test/sendForm', test.sendForm
+server.post '/test/sendForm', test.submitForm
+server.get '/test/userfeed', test.specifyFeed
+server.post '/test/userfeed', test.feed
+server.get '/breaks/new', breaks.webCreate
+server.post '/breaks/new', breaks.webSubmit
+server.get '/breaks/enew', breaks.easyWebCreate
+server.post '/breaks/enew', breaks.easyWebSubmit
 
+#Creating a feedback for test
+server.get '/feedback/new', feedback.create
+server.post '/feedback/new', feedback.submit
+server.get '/feedback/list', feedback.list
+
+#USERS
+server.get '/users/new', user.create
+server.post '/users/new', user.submit
 #iOS
 server.post '/ios', ios.index
 server.post '/ios/login', ios.login
@@ -137,28 +155,20 @@ server.post '/albums/new', albums.submit
 # BLOG
 #server.get '/blog', blog.index
 
-#TESTING FUNCTIONS (to be disabled in production)
-server.get '/test', test.index
-server.get '/test/sendForm', test.sendForm
-server.post '/test/sendForm', test.submitForm
-server.get '/test/userfeed', test.specifyFeed
-server.post '/test/userfeed', test.feed
-server.get '/breaks/new', breaks.webCreate
-server.post '/breaks/new', breaks.webSubmit
-server.get '/breaks/enew', breaks.easyWebCreate
-server.post '/breaks/enew', breaks.easyWebSubmit
 
-#Creating a feedback for test
-server.get '/feedback/new', feedback.create
-server.post '/feedback/new', feedback.submit
-server.get '/feedback/list', feedback.list
-
-#USERS
-server.get '/users/new', user.create
-server.post '/users/new', user.submit
 
 
 #Starting the server
-server.listen 3000
-console.log 'Breakit express server listening to port 3000 in dev mode'
+server.configure "local", ->
+	server.listen 3000
+	console.log 'Breakit express server listening to port 3000 in dev mode'
+
+server.configure "development", ->
+	server.listen 80
+	console.log 'Breakit express server listening to port 80 in dev mode'
+
+server.configure "production", ->
+	server.listen 80
+	console.log 'Breakit express server listening to port 80 in dev mode'
+
 #console.log 'Express server listening on port %d in %s mode', server.address().port, server.settings.env

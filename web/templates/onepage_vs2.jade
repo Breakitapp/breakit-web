@@ -87,9 +87,9 @@ html
 					#bottomRight.right
 						form(name="post_comment", action="/onepager/comment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
-							input.hideInput(name = "userId", value="50a369413268496061000002") 
+							input.hideInput(name = "userId", value="50a0e4db1f63ba4d72000020") 
 							input.hideInput(name = "breakId", value=b._id)
-							input.right(type="submit", value="send")
+							input.right(type="button", onClick="submitForm()", value="send")
 		#push
 		#footer.boxShadow
 	script
@@ -123,7 +123,14 @@ html
 				}
 			});
 			$("textarea").focus(function() {
-				$(this).val('');
+				if($(this).val() == 'Write comment here'){
+					$(this).val('');
+				}
+			});
+			$("textarea").focusout(function() {
+				if($(this).val() == ''){
+					$(this).val('Write comment here');
+				}
 			});
 			$(function(){
 				$('.scroll-pane').jScrollPane();
@@ -138,4 +145,12 @@ html
 				}
 			});
 		});
+		function submitForm(){
+			if($("textarea").val() == '' || $("textarea").val() == 'Write comment here'){
+				alert("You have to type in a comment");
+			}
+			else{
+				$("form[name=post_comment]").submit();
+			}
+		}
 		

@@ -3,7 +3,7 @@ users = require '../models/userModel'
 models = require '../models/mongoModel'
 
 exports.create = (req, res) ->
-	
+	console.log 'I was at create'
 	res.render 'newUser', title : 'Create new Breakit user'
 	
 exports.submit = (req, res) ->
@@ -17,6 +17,7 @@ exports.submit = (req, res) ->
 	ph = req.body.ph
 
 	users.createUser nn, ph, (err, user) ->
+		console.log 'I was at createUser'
 		if err
 			res.send('Error creating new user')
 		else
@@ -44,7 +45,7 @@ exports.submit = (req, res) ->
 ###
 	
 exports.view = (req,res) ->
-		
+	console.log 'I was at frikking view'
 	users.findById req.params.id, (err, targetUser) ->
 		if err
 			res.send('Did not find user.')
