@@ -75,15 +75,23 @@ exports.pvs2 = (req, res) ->
 			else
 				#console.log 'break: ' +break_
 				console.log 'ip: '+ req.ip
-				if(req.ip isnt '86.50.133.231' or '54.247.69.189')
+				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					onepagerUser = '5097ae8bae4d4a8805000001'
+					console.log 'in IF'
 				if(req.ip is '54.247.69.189')
 					onepagerUser = '50a0e4db1f63ba4d72000020'
 				if(req.ip is '86.50.133.231')
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
+				console.log 'REQUEST HOST: '+req.headers.host
+
+				#for(head in req.headers)
+					#console.log 'head'+head
+				
+				
+				
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 	else
 		breaks.findAndModify req.params.id, (err, break_) ->
