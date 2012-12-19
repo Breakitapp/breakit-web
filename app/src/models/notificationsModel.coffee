@@ -1,7 +1,7 @@
 models = require './mongoModel'
 
 class Notification
-	constructor: (@user_id_from, @user_id_to, @comment, @breakid, @date) ->
+	constructor: (@user_id_from, @user_id_to, @comment, @breakId, @date) ->
 	save: (callback) ->
 		console.log 'in notifications constructor'
 		notification_ = new models.Notification
@@ -20,7 +20,7 @@ class Notification
 				callback null, notification_
 				
 createNotification = (from, to, comment, breakId, callback) ->
-			console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', id: '+breakId
+			console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId
 			new_notification = new Notification(from, to, comment, breakId)
 			new_notification.save (err)->
 				callback err
