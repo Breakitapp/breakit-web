@@ -36,7 +36,17 @@ exports.public= (req, res) ->
 			res.send '404'
 		else
 			#console.log 'break: ' +break_
-			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_
+				if(req.headers.host is 'localhost:3000')
+					#Change this to your own LOCAL user
+					onepagerUser = '5097ae8bae4d4a8805000001'
+					console.log 'in IF'
+				if(req.headers.host is '54.247.69.189')
+					# PROD SERVER ANON USER
+					onepagerUser = '50a0e4db1f63ba4d72000020'
+				if(req.headers.host is '46.137.122.206')
+					# DEV SERVER ANON USER
+					onepagerUser = '50a369413268496061000002'
+			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u:onepagerUser
 
 exports.webComment = (req, res) ->
 
