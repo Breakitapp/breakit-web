@@ -50,19 +50,27 @@ comment = (comment, breakId, callback) ->
 			console.log 'BREAK: failed to find break to be commented. Id: ' + breakId
 			callback err, null
 		else
+			for breakComment in break_.comments
+					console.log 'in for'
+					if breakComment.user isnt break_.user
+						type = 'NO_OWNER'
+						notificationsModel.createNotification comment.usernick, breakComment.user, comment.comment, breakId, type, (err)->
+							if err
+								console.log 'in callback err'
+								callback err, null
+							else
+								console.log 'in callback success'
 			break_.comments.push comment
 			console.log 'breakId: '+breakId
-			notificationsModel.createNotification comment.usernick, break_.user, comment.comment, breakId, (err)->
-				console.log 'DATA usernick: '+comment.usernick
-				console.log 'DATA break owner id: '+break_.user
-				console.log 'DATA comment: '+comment.comment
-				console.log 'DATA: breakid'+ breakId
-				if err
-					console.log 'in callback err'
-					callback err, null
-				else
-					console.log 'in callback success'
-					
+			if comment.user isnt break_.user
+				type = 'OWNER'
+				notificationsModel.createNotification comment.usernick, break_.user, comment.comment, breakId, type, (err)->
+					if err
+						console.log 'in callback err'
+						callback err, null
+					else
+						console.log 'in callback success'
+				
 			#updating the top break of the album if this break is it
 			if break_.top
 				albumModel.updateTop break_.album, break_, (err) ->
@@ -114,6 +122,7 @@ findAll = (callback) ->
 			breaks_ = (b for b in breaks)
 			console.log 'breaks_[0]:'+breaks_[0]
 			console.log 'breaks[0]:'+breaks[0]
+			#MARKO: These breaks_ and breaks seem to be same. Look into this when refactoring
 			callback null, breaks_
 			return breaks_
 		)

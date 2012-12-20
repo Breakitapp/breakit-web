@@ -73,8 +73,9 @@ NotificationSchema = new Schema
 	user_id_to		:		{type: String}
 	comment		:		{type: String}
 	breakId		:		{type: String}
-	date			:		{type: Date, default: Date.now}
-
+	date			:		{type: Date, default: Date.now}	
+	isaNewComment			:		{type: Boolean, default: true}
+	type			:		{type: String}
 
 Feedback	= mongoose.model 'Feedback', FeedbackSchema
 Notification	= mongoose.model 'Notification', NotificationSchema
