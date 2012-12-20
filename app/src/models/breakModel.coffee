@@ -50,9 +50,12 @@ comment = (comment, breakId, callback) ->
 			console.log 'BREAK: failed to find break to be commented. Id: ' + breakId
 			callback err, null
 		else
+			sentUsers = []
 			for breakComment in break_.comments
-					console.log 'in for'
-					if breakComment.user isnt break_.user
+				console.log 'in for'
+				if breakComment.user isnt comment.user 
+					if breakComment.user not in sentUsers
+						sentUsers.push breakComment.user
 						type = 'NO_OWNER'
 						notificationsModel.createNotification comment.usernick, breakComment.user, comment.comment, breakId, type, (err)->
 							if err
