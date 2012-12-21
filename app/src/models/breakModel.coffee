@@ -170,6 +170,9 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 						alreadyShown = false
 						
 						if shownBreaks
+							
+							console.log 'shownbreaks exist'
+							
 							j = 0
 							while j < shownBreaks.length
 								
@@ -181,8 +184,13 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								j++
 						if not alreadyShown
 							
+							console.log 'not shown'
+							
 							#This code ensures that only the best break of an album is included
 							if foundBreak.album != null
+								
+								console.log 'breaks album not null'
+								
 								k = 0
 								while k < breaks.length
 									if String(foundBreak.album) is String(breaks[k].album)
