@@ -18,8 +18,9 @@ BreakSchema = new Schema
 	points 				:			{type: Number}
 	views				:			{type: Number, default: 0}
 	loc					:			{lon: Number, lat: Number}
-	location_name		:			{type: String} #is this needed?
-	album				:			{type: String, default: null}
+	placeName			:			{type: String} #This is for the address or name of foursquare place
+	placeId				:			{type: String, default: null} #This is only for the ID of a foursquare album
+	album				:			{type: String, default: null} #This is only for the Breakit album id in case of a foursquare album
 	user				:			{type: String}
 	usernick			:			{type: String}			
 	top					:			{type: Boolean, default: false}
@@ -40,7 +41,6 @@ UserSchema = new Schema
 	email			:		{type: String, set: toLower, index: true}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
-	#breaks			:		[Schema.ObjectId]
 	
 #UserSchema.index {email: 1}
 
@@ -51,21 +51,17 @@ BetaSchema = new Schema
 	phone			:		{type: String, required: true}
 
 AlbumSchema = new Schema
-	name			:		{type: String, index: true}
+	placeId			:		{type: String, index: true}
+	name			:		{type: String}
 	date			:		{type: Date, default: Date.now}
-	#breaks			:		[Schema.ObjectId]
-	topBreak		:		Schema.Types.Mixed
+	#topBreak		:		Schema.Types.Mixed
 	loc				:		{lon: Number, lat: Number}
-	
-	#For other sorting options:
-	#currentBreak (the most recently added)
-	#highestBreak (the one with most upvotes - downvotes)
 
 AlbumSchema.index {loc: '2d'}
 
 FeedbackSchema = new Schema
 	user_id		:		{type: String}
-	date			:		{type: Date, default: Date.now}
+	date		:		{type: Date, default: Date.now}
 	comment		:		{type: String}
 
 NotificationSchema = new Schema

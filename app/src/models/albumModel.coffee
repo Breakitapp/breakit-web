@@ -5,14 +5,13 @@ _ = require 'underscore'
 
 #TODO add location for album
 class Album
-	constructor: (@lon, @lat, @name, @breaks, @topBreak) ->
+	constructor: (@lon, @lat, @placeId, @name) ->
 
 	saveToDB : (callback) ->
 		album = new models.Album
 			loc			:	{lon: @lon, lat: @lat}
-			name		: @name
-			breaks		:	@breaks
-			topBreak	: @topBreak
+			placeId		: 	@placeId
+			name		:	@name
 		album.save (err) ->
 			if err
 				throw err
@@ -20,18 +19,12 @@ class Album
 				console.log 'ALBUM: created a new album ' + album.name + ' @ ' + album.loc
 				callback album._id
 
-###not needed?
-createFromId = (id) ->
-	models.Album.findById id, (err, album) ->
-		if err
-			throw err
-		else
-			newAlbum = new Album album.name, album.location, album.breaks
-			return newAlbum
-###
-
 findByName = (name, callback) ->
 	models.Album.findOne name: name, (err, foundAlbum) ->
+		callback err, foundAlbum
+		
+findByPlace = (place, callback) ->
+	models.Album.findOne placeId: place, (err, foundAlbum) ->
 		callback err, foundAlbum
 			
 findById = (id, callback) ->
@@ -48,6 +41,7 @@ list = (callback) ->
 
 #Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
 #Is this used anymore? no?
+###
 findNear = (longitude, latitude, page, callback) ->
 	albums = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
@@ -70,6 +64,7 @@ findNear = (longitude, latitude, page, callback) ->
 						i++
 				callback null, albums
 	return albums
+###
 
 ###
 #Finds albums relative to location and returns max 10 albums. Takes in location from the request in Album routes
@@ -104,11 +99,20 @@ addBreak = (b) ->
 	#always gives error -> RangeError: Maximum call stack size exceeded
 	#models.Album.find({'loc' : {'$within' : {'$center' : [b.loc, radius]}}}).where('name').equals(b.location_name).exec((err, album) -> 
 	
-	models.Album.findOne(name: b.location_name).exec (err, album) -> 		
+	models.Album.findOne(placeId: b.placeId).exec (err, album) -> 		
 		if err
 			console.log err
 			throw err
 		if album
+			b.album = album._id
+			
+			b.save (err) ->
+				if err
+					throw err
+				else
+					console.log 'ALBUM: saved new break ' + b._id + ' to ' + album.name
+					
+			###
 			async.waterfall [
 				(callback) ->
 					console.log '1st in WF'
@@ -143,13 +147,14 @@ addBreak = (b) ->
 							else
 								console.log 'Top break updated for album: ' + album._id
 			]
+			###
 			
 		else
-			console.log 'ALBUM: Adding break ' + b.headline + ' and creating new album ' + b.location_name
-			jsalbum = new Album b.loc.lon, b.loc.lat, b.location_name, [b._id], b
-			jsalbum.saveToDB (albumId) ->
+			console.log 'ALBUM: Adding break ' + b.headline + ' and creating new album ' + b.placeName
+			newAlbum = new Album b.loc.lon, b.loc.lat, b.placeId, b.placeName
+			newAlbum.saveToDB (albumId) ->
 				b.album = albumId
-				b.top = true		
+				#b.top = true		
 				b.save (err) ->
 					if err
 						throw err
@@ -157,6 +162,9 @@ addBreak = (b) ->
 #Updates the top break for an album. Gets the new top break (can be same or different than the old top break). If the new top break is
 #different it replaces the old one and the old one's 'top' parameter is changed to 'false'. If the new top break is the just an updated
 #version of the old one, the top break field is simply updated.
+
+#No longer needed?
+###
 updateTop = (id, b, callback) ->
 	
 	#Finding the album in question
@@ -207,17 +215,11 @@ updateTop = (id, b, callback) ->
 									else
 										console.log 'saved'
 										callback null
-			
-
-remove = (id) ->
-	#This need to iteratively remove all breaks too
-	models.Album.findByIdAndRemove id, (err) ->
-		if err
-			throw err
-		else
-			console.log 'ALBUM: removed the album correctly' 
+###
 
 # get the next page content according to location and points
+#No longer used
+###
 getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 	
 	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
@@ -270,11 +272,12 @@ getFeed = (longitude, latitude, page, shownAlbums, callback) ->
 					callback null, best
 			
 	return albums
-			
+###
+
 #Returns the next break in an album according to points
-getBreak = (album, page, callback) ->
+getBreak = (albumId, page, callback) ->
 		
-	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, docs) ->
+	models.Break.find({album: albumId}).sort({points: 'descending'}).exec (err, docs) ->
 		if docs isnt null	
 						
 			while page < 0
@@ -289,25 +292,6 @@ getBreak = (album, page, callback) ->
 			console.log 'is null'
 			callback err, null
 
-###
-#Returns 287 (3*9) breaks for the album-specific view
-getAlbumBreaks = (albumId, page, callback) ->		
-	models.Break.find({album: album}).sort({points: 'descending'}).exec (err, breaksInAlbum) ->
-		foundBreaks = []
-		if breaksInAlbum isnt null	
-			console.log 'inside if'
-			console.log 'breaksInAlbum: ' + breaksInAlbum
-			i = page*27
-			while(i < (page+1)*27 and breaksInAlbum[i])
-				foundBreaks.push breaksInAlbum[i]
-				console.log 'pushing: '+ breaksInAlbum[i]
-				i++
-			callback err, foundBreaks
-		else
-			console.log 'is null'
-			callback err, null
-###
-
 #Returns 287 (3*9) breaks for the album-specific view
 getAlbumBreaks = (albumId, page, callback) ->
 	models.Break.find({'album' : albumId}).sort({points: 'descending'}).skip(27*page).limit(27).exec (err, breaks) ->
@@ -317,16 +301,25 @@ getAlbumBreaks = (albumId, page, callback) ->
 			breaks_ = (b for b in breaks)
 			callback null, breaks_
 			return breaks_
+			
+remove = (id) ->
+	#This need to iteratively remove all breaks too? Or atleast remove the album field from them.
+	models.Album.findByIdAndRemove id, (err) ->
+		if err
+			throw err
+		else
+			console.log 'ALBUM: removed the album correctly'
 
 root = exports ? window
 root.Album = Album
-root.updateTop = updateTop
+#root.updateTop = updateTop
 root.findByName = findByName
+root.findByPlace = findByPlace
 root.findById = findById
 root.list = list
 root.remove = remove
 root.addBreak = addBreak
-root.getFeed = getFeed
+#root.getFeed = getFeed
 root.getBreak = getBreak
 root.getAlbumBreaks = getAlbumBreaks
-root.findNear = findNear
+#root.findNear = findNear

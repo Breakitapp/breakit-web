@@ -21,20 +21,20 @@ exports.index = (req, res) ->
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
 	
-	if req.body.shownAlbums
-		tempstr = req.body.shownAlbums.substring(1, req.body.shownAlbums.length - 1)
-		arr = tempstr.split ','
+	if req.body.shownBreaks
+		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1) #change to client "shownBreaks"
+		shown = tempstr.split ','
 		console.log arr
 		
 	
 	#Get albums sorted according to location
-	albums.getFeed lon, lat, page, arr, (err, albums) ->		
+	breaks.getFeed lon, lat, page, shown, (err, breaks) ->
 		if err
 			throw err
 			res.send '404'
 		else
 			#Send the albums as a JSON to client
-			res.send [albums, page]
+			res.send [breaks, page]
 
 
 exports.login = (req, res) 	->
@@ -66,8 +66,14 @@ exports.new_user = (req, res) ->
 
 #create a new break
 exports.post_break = (req, res) ->
-	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
-		albums.addBreak break_
+	
+	#
+	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
+		
+		#Only if the break should be in an album...
+		if break_.placeId != null
+			albums.addBreak break_
+		
 		tmp_path = req.files.image.path
 		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
 		target_path ='./app/res/images/' + break_._id + '.jpeg'
