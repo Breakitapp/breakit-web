@@ -71,20 +71,33 @@ server.configure "production", ->
 server.configure "local", ->
 	console.log 'RUNNING ON LOCAL SERVER'
 	db = mongoose.connect(settings.mongo_local.db)
-
 #General
 server.all '/', site.signup
 server.all '/break', site.break_tmp
-#TESTING FUNCTIONS (to be disabled in production)
-server.get '/test', test.index
-server.get '/test/sendForm', test.sendForm
-server.post '/test/sendForm', test.submitForm
-server.get '/test/userfeed', test.specifyFeed
-server.post '/test/userfeed', test.feed
-server.get '/breaks/new', breaks.webCreate
-server.post '/breaks/new', breaks.webSubmit
-server.get '/breaks/enew', breaks.easyWebCreate
-server.post '/breaks/enew', breaks.easyWebSubmit
+
+server.configure "local", ->
+	#TESTING FUNCTIONS (to be disabled in production)
+	server.get '/test', test.index
+	server.get '/test/sendForm', test.sendForm
+	server.post '/test/sendForm', test.submitForm
+	server.get '/test/userfeed', test.specifyFeed
+	server.post '/test/userfeed', test.feed
+	server.get '/breaks/new', breaks.webCreate
+	server.post '/breaks/new', breaks.webSubmit
+	server.get '/breaks/enew', breaks.easyWebCreate
+	server.post '/breaks/enew', breaks.easyWebSubmit
+
+server.configure "development", ->
+	server.get '/test', test.index
+	server.get '/test/sendForm', test.sendForm
+	server.post '/test/sendForm', test.submitForm
+	server.get '/test/userfeed', test.specifyFeed
+	server.post '/test/userfeed', test.feed
+	server.get '/breaks/new', breaks.webCreate
+	server.post '/breaks/new', breaks.webSubmit
+	server.get '/breaks/enew', breaks.easyWebCreate
+	server.post '/breaks/enew', breaks.easyWebSubmit
+
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create
@@ -110,6 +123,7 @@ server.get '/ios/info/:id', ios.get_break
 server.get '/ios/browse_album/:albumId/:page', ios.browse_album
 server.get '/ios/whole_album/:albumId/:page', ios.getAlbumBreaks
 server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
+server.get '/ios/mynotifications/:userId', ios.getMyNotifications
 
 #WEB
 #Public break interface

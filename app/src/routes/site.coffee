@@ -36,7 +36,17 @@ exports.public= (req, res) ->
 			res.send '404'
 		else
 			#console.log 'break: ' +break_
-			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_
+				if(req.headers.host is 'localhost:3000')
+					#Change this to your own LOCAL user
+					onepagerUser = '5097ae8bae4d4a8805000001'
+					console.log 'in IF'
+				if(req.headers.host is '54.247.69.189')
+					# PROD SERVER ANON USER
+					onepagerUser = '50a0e4db1f63ba4d72000020'
+				if(req.headers.host is '46.137.122.206')
+					# DEV SERVER ANON USER
+					onepagerUser = '50a369413268496061000002'
+			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u:onepagerUser
 
 exports.webComment = (req, res) ->
 
@@ -67,21 +77,52 @@ exports.pvs2 = (req, res) ->
 			console.log 'cookie ' + cookieName + ' with value ' + cookieValue + ' is now set!'
 	console.log 'name: ' + cookieName
 	console.log 'value: ' + cookieValue
-	console.log 'id: ' + req.params.id
+	console.log 'id: ' + req.params.id 
 	if cookieName is 'breakit' and cookieValue is req.params.id
 		breaks.findById req.params.id, (err, break_) ->
 			if err
 				res.send '404'
 			else
 				#console.log 'break: ' +break_
-				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_
+				console.log 'ip: '+ req.ip
+				if(req.headers.host is 'localhost:3000')
+					#Change this to your own LOCAL user
+					onepagerUser = '5097ae8bae4d4a8805000001'
+					console.log 'in IF'
+				if(req.headers.host is '54.247.69.189')
+					# PROD SERVER ANON USER
+					onepagerUser = '50a0e4db1f63ba4d72000020'
+				if(req.headers.host is '46.137.122.206')
+					# DEV SERVER ANON USER
+					onepagerUser = '50a369413268496061000002'
+				console.log 'user: '+ onepagerUser
+				console.log 'user is: '+ onepagerUser
+				console.log 'REQUEST HOST: '+req.headers.host
+
+				#for(head in req.headers)
+					#console.log 'head'+head
+				
+				
+				
+				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 	else
 		breaks.findAndModify req.params.id, (err, break_) ->
 			if err
 				res.send '404'
 			else
 				#console.log 'break: ' +break_
-				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_
+				if(req.headers.host is 'localhost:3000')
+					#Change this to your own LOCAL user
+					onepagerUser = '5097ae8bae4d4a8805000001'
+					console.log 'in IF'
+				if(req.headers.host is '54.247.69.189')
+					# PROD SERVER ANON USER
+					onepagerUser = '50a0e4db1f63ba4d72000020'
+				if(req.headers.host is '46.137.122.206')
+					# DEV SERVER ANON USER
+					onepagerUser = '50a369413268496061000002'
+				console.log 'user: '+ onepagerUser
+				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 			
 #Commenting for Onepager vs2
 exports.onePComment = (req, res) ->

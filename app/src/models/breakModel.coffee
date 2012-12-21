@@ -2,6 +2,7 @@ models = require './mongoModel'
 albumModel = require './albumModel'
 commentModel = require './commentModel'
 userModel = require './userModel'
+notificationsModel = require './notificationsModel'
 
 class Break
 	constructor: (@longitude, @latitude, @location_name, @placeId, @story, @headline, @user) ->
@@ -51,8 +52,30 @@ comment = (comment, breakId, callback) ->
 			console.log 'BREAK: failed to find break to be commented. Id: ' + breakId
 			callback err, null
 		else
+			sentUsers = []
+			for breakComment in break_.comments
+				console.log 'in for'
+				if breakComment.user isnt comment.user 
+					if breakComment.user not in sentUsers
+						sentUsers.push breakComment.user
+						type = 'NO_OWNER'
+						notificationsModel.createNotification comment.usernick, breakComment.user, comment.comment, breakId, type, (err)->
+							if err
+								console.log 'in callback err'
+								callback err, null
+							else
+								console.log 'in callback success'
 			break_.comments.push comment
-			
+			console.log 'breakId: '+breakId
+			if comment.user isnt break_.user
+				type = 'OWNER'
+				notificationsModel.createNotification comment.usernick, break_.user, comment.comment, breakId, type, (err)->
+					if err
+						console.log 'in callback err'
+						callback err, null
+					else
+						console.log 'in callback success'
+				
 			#updating the top break of the album if this break is it
 			if break_.top
 				albumModel.updateTop break_.album, break_, (err) ->
@@ -102,6 +125,9 @@ findAll = (callback) ->
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
 			breaks_ = (b for b in breaks)
+			console.log 'breaks_[0]:'+breaks_[0]
+			console.log 'breaks[0]:'+breaks[0]
+			#MARKO: These breaks_ and breaks seem to be same. Look into this when refactoring
 			callback null, breaks_
 			return breaks_
 		)

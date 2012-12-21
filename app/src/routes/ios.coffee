@@ -7,6 +7,7 @@
 breaks	= require '../models/breakModel'
 albums	= require '../models/albumModel'
 comments = require '../models/commentModel'
+notifications = require '../models/notificationsModel'
 users = require '../models/userModel'
 feedback = require '../models/feedbackModel'
 fs			= require 'fs'
@@ -188,3 +189,18 @@ exports.getMyBreaks = (req, res) ->
 			res.send 'error'
 		else
 			res.send [foundBreaks, req.params.page]
+			
+
+exports.getMyNotifications = (req, res) ->
+	
+	notifications.getNotifications req.params.userId, (err, foundNotifications)->
+		if err
+			res.send 'error'
+		else
+			list = []
+			i = 0
+			res.send foundNotifications
+
+			for notification in foundNotifications
+				list[i] = 'User: '+notification.user_id_from + 'commented: "'+notification.comment+'" on your break'+notification.user_id_to+'<br />'
+				i++
