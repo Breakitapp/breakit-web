@@ -18,7 +18,7 @@ BreakSchema = new Schema
 	points 				:			{type: Number}
 	views				:			{type: Number, default: 0}
 	loc					:			{lon: Number, lat: Number}
-	location_name		:			{type: String} #This is for the address or name of foursquare place
+	placeName			:			{type: String} #This is for the address or name of foursquare place
 	placeId				:			{type: String, default: null} #This is only for the ID of a foursquare album
 	album				:			{type: String, default: null} #This is only for the Breakit album id in case of a foursquare album
 	user				:			{type: String}
@@ -52,6 +52,7 @@ BetaSchema = new Schema
 
 AlbumSchema = new Schema
 	placeId			:		{type: String, index: true}
+	name			:		{type: String}
 	date			:		{type: Date, default: Date.now}
 	#topBreak		:		Schema.Types.Mixed
 	loc				:		{lon: Number, lat: Number}

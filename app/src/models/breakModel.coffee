@@ -5,8 +5,8 @@ userModel = require './userModel'
 notificationsModel = require './notificationsModel'
 
 class Break
-	constructor: (@longitude, @latitude, @location_name, @placeId, @story, @headline, @user) ->
-		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
+	constructor: (@longitude, @latitude, @placeName, @placeId, @story, @headline, @user) ->
+		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @placeName
 
 	saveToDB: (callback) ->
 		
@@ -16,7 +16,7 @@ class Break
 		
 		break_ = new models.Break
 			loc						:		{lon: @longitude, lat: @latitude}
-			location_name			:		@location_name
+			placeName				:		@placeName
 			placeId 				:		@placeId
 			story					:		@story
 			headline				:		@headline
@@ -40,9 +40,9 @@ class Break
 					console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
 					callback null, break_
 
-createBreak = (longitude, latitude, location_name, placeId, story, headline, userId, callback) ->
+createBreak = (longitude, latitude, placeName, placeId, story, headline, userId, callback) ->
 	
-	break_ = new Break longitude, latitude, location_name, placeId, story, headline, userId
+	break_ = new Break longitude, latitude, placeName, placeId, story, headline, userId
 	break_.saveToDB (err, b) ->
 		callback err, b
 	
@@ -161,14 +161,13 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 						#Now the shown breaks are excluded from results
 						alreadyShown = false
 						
-						if shownAlbums
-				
+						if shownBreaks
 							j = 0
 							while j < shownBreaks.length
 								
 								#Checking if the break has been shown already
 								#Checking if the album has been shown already...? -> Client needs to add the album id in the shown list.
-								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album)
+								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
 									alreadyShown = true
 									break
 								j++
@@ -356,11 +355,13 @@ vote = (breakId, userId, direction, callback) ->
 						else
 							break_.points = break_.startingPoints - 500000 * Math.log (break_.downvotes.length - break_.upvotes.length)
 				
+						###
 						if break_.top or (break_.points > a.topBreak.points)
 							break_.top = true
 							albumModel.updateTop break_.album, break_, (err) ->
 								if err
 									throw err
+						###
 				
 						console.log break_.points
 						break_.save (err) ->
@@ -370,7 +371,8 @@ vote = (breakId, userId, direction, callback) ->
 							else
 								console.log 'BREAK: Vote successful: ' + break_._id
 								callback null, break_
-				
+
+#Needs to be updated
 del = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
@@ -416,6 +418,7 @@ root = exports ? window
 root.Break = Break
 root.comment = comment
 root.createBreak = createBreak
+root.getFeed = getFeed
 root.findAll = findAll
 root.searchBreaks = searchBreaks
 root.sortByComments = sortByComments
