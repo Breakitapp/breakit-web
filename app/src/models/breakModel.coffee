@@ -139,7 +139,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 	range = 500+100*page
 	#Would like to have a more dynamic way to take the distance into account here... -E
 	
-	albums = []
+	breaks = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
 	#First it searches for 'range' amount of breaks.
 	models.Break.db.db.executeDbCommand {
