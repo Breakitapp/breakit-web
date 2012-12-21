@@ -150,12 +150,18 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 		num : range
 		spherical : true
 		}, (err, docs) ->
+			
+			console.log 'inside dbcommand'
+			
 			if err
 				throw err
 			else
 				if docs.documents[0].results
 					b = docs.documents[0].results
 					i = 0
+					
+					console.log 'b.length ' + b.length
+					
 					while i < b.length
 						foundBreak = b[i].obj
 						foundBreak.dis = b[i].dis
