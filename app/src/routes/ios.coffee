@@ -20,12 +20,13 @@ exports.index = (req, res) ->
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
-	
+		
 	if req.body.shownBreaks
 		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1) #change to client "shownBreaks"
 		shown = tempstr.split ','
 		console.log arr
 		
+	console.log shown
 	
 	#Get albums sorted according to location
 	breaks.getFeed lon, lat, page, shown, (err, breaks) ->
