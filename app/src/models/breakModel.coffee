@@ -191,13 +191,20 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								
 								console.log 'breaks album not null'
 								
+								
+								albumAdded = false
 								k = 0
 								while k < breaks.length
 									if String(foundBreak.album) is String(breaks[k].album)
+										albumAdded = true
 										if foundBreak.points > breaks[k].points
 											breaks[k] = foundBreak
 										else
 											break
+									k++
+								
+								if not albumAdded
+									breaks.push foundBreak
 								
 							#This break hasn't been shown before
 							else
