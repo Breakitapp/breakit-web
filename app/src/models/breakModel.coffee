@@ -3,6 +3,8 @@ albumModel = require './albumModel'
 commentModel = require './commentModel'
 userModel = require './userModel'
 notificationsModel = require './notificationsModel'
+_ = require 'underscore'
+
 
 class Break
 	constructor: (@longitude, @latitude, @placeName, @placeId, @story, @headline, @user) ->
