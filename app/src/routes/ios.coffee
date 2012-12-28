@@ -17,7 +17,8 @@ qs = require('querystring')
 #The important thing for the client to pick is the albums name, and the topbreak. 
 exports.index = (req, res) ->
 	
-	console.log 'request: '+req
+	console.log 'new request object: '+req
+	console.log 'request shownBreaks: '+req.shownBreaks
 	#Change page and location to numbers
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
@@ -26,8 +27,8 @@ exports.index = (req, res) ->
 	
 	if req.body.shownBreaks
 		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1) #change to client "shownBreaks"
+		console.log tempstr
 		shown = tempstr.split ','
-		console.log arr
 		
 	console.log shown
 	
