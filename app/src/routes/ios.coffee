@@ -26,7 +26,7 @@ exports.index = (req, res) ->
 	shown 	= null
 	
 	if req.body.shownBreaks
-		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1) #change to client "shownBreaks"
+		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1)
 		console.log tempstr
 		shown = tempstr.split ','
 		
@@ -184,6 +184,9 @@ exports.changeUserAttributes = (req, res) ->
 
 
 exports.getAlbumBreaks = (req, res) ->
+	
+	console.log 'Getting Album Breaks: ' + req.params.albumId + ', page: ' + req.params.page
+	
 	albums.getAlbumBreaks req.params.albumId, req.params.page, (err, foundBreaks)->
 		if err
 			res.send 'error'

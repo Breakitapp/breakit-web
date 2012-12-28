@@ -333,7 +333,7 @@ findById = (id, callback) ->
 	)
 
 #find break and add one to view
-findAndModify = (id, callback) ->
+addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
@@ -395,13 +395,16 @@ vote = (breakId, userId, direction, callback) ->
 								console.log 'BREAK: Vote successful: ' + break_._id
 								callback null, break_
 
-#Needs to be updated
 del = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
 			callback err
 		else
 			if String(break_.user) is String(userId)
+				break_.remove (err) ->
+					callback err
+				
+				###
 				#check if the break is a top break. if so, give the album a new topbreak (or remove the album).
 				if break_.top
 					albumModel.findById break_.album, (err, album) ->
@@ -425,10 +428,9 @@ del = (breakId, userId, callback) ->
 											callback err
 										else
 											break_.remove (err) ->
-												callback err		
-				else	
-					break_.remove (err) ->
-						callback err
+												callback err
+				###
+
 						
 				#delete (or rename) the image file. how?
 				
@@ -453,4 +455,4 @@ root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
 root.del = del
-root.findAndModify = findAndModify
+root.addView = addView
