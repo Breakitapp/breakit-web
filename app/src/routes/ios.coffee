@@ -72,6 +72,8 @@ exports.new_user = (req, res) ->
 #create a new break
 exports.post_break = (req, res) ->
 	
+	console.log req.body.placeId
+	console.log req.body.placeName
 	#
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		
