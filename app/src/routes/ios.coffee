@@ -16,6 +16,8 @@ qs = require('querystring')
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
 #The important thing for the client to pick is the albums name, and the topbreak. 
 exports.index = (req, res) ->
+	
+	console.log 'request: '+req
 	#Change page and location to numbers
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
