@@ -106,7 +106,7 @@ exports.pvs2 = (req, res) ->
 				
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 	else
-		breaks.findAndModify req.params.id, (err, break_) ->
+		breaks.addView req.params.id, (err, break_) ->
 			if err
 				res.send '404'
 			else
