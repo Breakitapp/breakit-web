@@ -78,7 +78,8 @@ exports.post_break = (req, res) ->
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		
 		#Only if the break should be in an album...
-		if break_.placeId != null
+		if break_.placeId != undefined
+			console.log 'Adding a new break to an album.'
 			albums.addBreak break_
 		
 		tmp_path = req.files.image.path
