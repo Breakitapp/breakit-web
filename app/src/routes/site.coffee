@@ -63,6 +63,7 @@ exports.webComment = (req, res) ->
 				else
 					res.redirect '/p/' + req.body.breakId
 #Onepager vs2
+
 exports.pvs2 = (req, res) ->
 	cookieName = ''
 	cookieValue = ''
@@ -137,7 +138,7 @@ exports.onePComment = (req, res) ->
 				if err
 					res.send 'Commenting failed.'
 				else
-					res.redirect '/onepager/' + req.body.breakId
+					res.redirect '/p/' + req.body.breakId
 			
 exports.signup = (req, res) ->
 	res.render 'signup_new' #change to signup_new when new template has been tested

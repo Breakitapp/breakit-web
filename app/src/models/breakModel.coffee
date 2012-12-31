@@ -131,6 +131,17 @@ findAll = (callback) ->
 		)
 	
 
+findThreeRows = (callback) ->
+		models.Break.find().sort({'date': 'descending'}).limit(12).exec((err, breaks) ->
+			#Errorhandling goes here //if err throw err
+			breaks_ = (b for b in breaks)
+			models.Break.count().exec((err, count) ->
+				console.log 'total amount of breaks:' + count
+			)
+			callback null, breaks_
+			return breaks_
+		)
+
 #search from breaks
 searchBreaks = (x, callback) ->
 		console.log x
@@ -142,7 +153,8 @@ searchBreaks = (x, callback) ->
 				headline = b.headline.toString().toLowerCase()
 				x = x.toLowerCase()
 				if headline.indexOf(x) != -1
-					breaksArr.push b
+					if breaksArr.length < 12
+						breaksArr.push b
 			callback null, breaksArr
 			return breaksArr
 		)
@@ -150,7 +162,7 @@ searchBreaks = (x, callback) ->
 		
 
 sortByComments = (callback) ->
-	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
+	models.Break.find().sort({'date': 'desc'}).limit(12).exec((err, breaks)->
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
@@ -171,13 +183,13 @@ sortByComments = (callback) ->
 		return breaksArrSorted
 	)
 sortByViews = (callback) ->
-	models.Break.find().sort({'views': 'descending'}).exec((err, breaks)->
+	models.Break.find().sort({'views': 'descending'}).limit(12).exec((err, breaks)->
 		breaks_ = (b for b in breaks)
 		callback null, breaks_
 		return breaks_
 	)
 sortByVotes = (callback) ->
-	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
+	models.Break.find().sort({'date': 'descending'}).limit(12).exec((err, breaks)->
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
@@ -355,3 +367,4 @@ root.findById = findById
 root.vote = vote
 root.del = del
 root.findAndModify = findAndModify
+root.findThreeRows = findThreeRows

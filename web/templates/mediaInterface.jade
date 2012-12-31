@@ -40,7 +40,7 @@ html
 				for b in breaks
 					li.smallRadius.fullBorderGroove
 						p.smallRadius.fullBorderRidge #{b.headline}
-						a(href="/onepager/" + b._id)
+						a(href="/p/" + b._id)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						score = b.upvotes.length - b.downvotes.length
 						p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
@@ -48,3 +48,22 @@ html
 						p.smallRadius.fullBorderGroove= "Views: " + b.views
 		#push
 		#footer
+	script
+		$(document).ready(function(){
+			function isScrolledIntoView(elem) {
+				var docViewTop = $(window).scrollTop();
+				var docViewBottom = docViewTop + $(window).height();
+				var elemTop = $(elem).offset().top;
+				var elemBottom = elemTop + $(elem).height();
+				return (elemTop <= docViewBottom);
+			}
+
+			//var myelement = $('.pricebox'); // the element to act on if viewable
+			$(window).scroll(function() {
+				if(isScrolledIntoView(myelement)) {
+					alert('page down');
+				}
+				else {
+				}
+			});
+		});​

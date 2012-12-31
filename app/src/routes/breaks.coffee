@@ -38,7 +38,7 @@ exports.mediaInterface= (req, res) ->
 				else
 					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
 		else
-			breaks.findAll (err, breaks_) ->
+			breaks.findThreeRows (err, breaks_) ->
 				if err
 					res.send 'No breaks found.'
 				else
