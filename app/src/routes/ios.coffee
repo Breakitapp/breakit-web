@@ -24,6 +24,8 @@ exports.index = (req, res) ->
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
 	shown 	= null
+
+	console.log 'lon: '+lon
 	
 	if req.body.shownBreaks
 		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1) #change to client "shownBreaks"
