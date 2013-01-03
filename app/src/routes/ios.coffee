@@ -98,6 +98,15 @@ exports.post_break = (req, res) ->
 							throw err
 						else
 							res.send b
+
+exports.delete_break = (req, res) ->
+	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
+	
+	breaks.del req.body.breakId, req.body.userId, (err) ->
+		if err
+			res.send 'Break deleted successfully.'
+		else
+			res.send 'Break delete failed.'
 					
 exports.post_comment = (req, res) ->
 	users.findById req.body.userId, (err, author) ->

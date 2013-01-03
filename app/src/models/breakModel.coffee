@@ -402,6 +402,7 @@ del = (breakId, userId, callback) ->
 		else
 			if String(break_.user) is String(userId)
 				break_.remove (err) ->
+					console.log 'Break deleted: ' + breakId
 					callback err
 				
 				###
@@ -436,8 +437,6 @@ del = (breakId, userId, callback) ->
 				
 			else
 				callback 'Invalid user or user not authorized to delete this break.'
-				
-#modify break?
 
 root = exports ? window
 root.Break = Break
