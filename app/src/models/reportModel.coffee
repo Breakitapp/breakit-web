@@ -18,3 +18,7 @@ createReport = (breakId, userId, callback) ->
 	report = new Report breakId, userId
 	report.saveToDB (err) ->
 		callback err
+		
+root = exports ? window
+root.Report = Report
+root.createReport = createReport
