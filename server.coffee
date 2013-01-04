@@ -113,7 +113,7 @@ server.post '/ios/login', ios.login
 server.post '/ios/new_user', ios.new_user
 server.post '/ios/new_break', ios.post_break
 server.post '/ios/delete_break', ios.delete_break
-server.post '/ios/report_break'
+server.post '/ios/report_break', ios.report_break
 server.post '/ios/comment', ios.post_comment
 server.post '/ios/vote', ios.vote
 server.post '/ios/feedback', ios.feedbackCreate
