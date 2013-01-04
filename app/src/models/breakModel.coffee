@@ -131,15 +131,13 @@ findAll = (callback) ->
 		)
 	
 
-findThreeRows = (callback) ->
-		models.Break.find().sort({'date': 'descending'}).limit(12).exec((err, breaks) ->
+findThreeRows = (pageNumber, callback) ->
+		models.Break.find().sort({'date': 'descending'}).skip(pageNumber*4).limit(4).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
 			breaks_ = (b for b in breaks)
 			models.Break.count().exec((err, count) ->
-				console.log 'total amount of breaks:' + count
+				callback null, breaks_, count
 			)
-			callback null, breaks_
-			return breaks_
 		)
 
 #search from breaks
@@ -153,7 +151,7 @@ searchBreaks = (x, callback) ->
 				headline = b.headline.toString().toLowerCase()
 				x = x.toLowerCase()
 				if headline.indexOf(x) != -1
-					if breaksArr.length < 12
+					if breaksArr.length < 4
 						breaksArr.push b
 			callback null, breaksArr
 			return breaksArr
@@ -162,7 +160,7 @@ searchBreaks = (x, callback) ->
 		
 
 sortByComments = (callback) ->
-	models.Break.find().sort({'date': 'desc'}).limit(12).exec((err, breaks)->
+	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
@@ -179,20 +177,26 @@ sortByComments = (callback) ->
 				countLoops += 1
 			breaksArrSorted.push breaksArr[wantedBreakPos]
 			breaksArr.splice(wantedBreakPos, 1)
+			if breaksArrSorted.length is 4
+				break
 		callback null, breaksArrSorted
 		return breaksArrSorted
 	)
-sortByViews = (callback) ->
-	models.Break.find().sort({'views': 'descending'}).limit(12).exec((err, breaks)->
+sortByViews = (pageNumber, callback) ->
+	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*4).limit(4).exec((err, breaks)->
 		breaks_ = (b for b in breaks)
-		callback null, breaks_
-		return breaks_
+		models.Break.count().exec((err, count) ->
+			callback null, breaks_, count
+		)
 	)
-sortByVotes = (callback) ->
-	models.Break.find().sort({'date': 'descending'}).limit(12).exec((err, breaks)->
+sortByVotes = (pageNumber, callback) ->
+	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
+		positionLimits = pageNumber+1 *4
+		breaksPerPage = pageNumber+1
+		checkPage = 0
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
@@ -206,10 +210,17 @@ sortByVotes = (callback) ->
 					wantedBreakPos = countLoops
 
 				countLoops += 1
-			breaksArrSorted.push breaksArr[wantedBreakPos]
-			breaksArr.splice(wantedBreakPos, 1)
-		callback null, breaksArrSorted
-		return breaksArrSorted
+			if breaksArrSorted.length < 4
+				if checkPage <= positionLimits && checkPage >= breaksPerPage
+					breaksArrSorted.push breaksArr[wantedBreakPos]
+					breaksArr.splice(wantedBreakPos, 1)
+				else
+					checkPage += 1
+			else
+				break
+		models.Break.count().exec((err, count) ->
+			callback null, breaksArrSorted, count
+		)
 	)
 
 #finds an x amout of breaks in the vicinity. NOT USED?

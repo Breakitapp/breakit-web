@@ -6,6 +6,7 @@ html
 		block scripts
 			link(rel='stylesheet', href='/public/css/mediaInt.css')
 			link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
+			script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js")
 			script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
 			script(type='text/javascript', src='../public/js/libs/underscore-min.js')
 			script(type='text/javascript', src='../public/js/libs/backbone-min.js')
@@ -46,24 +47,15 @@ html
 						p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
 						p.smallRadius.fullBorderGroove= "Votes: " + score
 						p.smallRadius.fullBorderGroove= "Views: " + b.views
+		form.page(id="pages", method="post", action="/media")
 		#push
 		#footer
-	script
-		$(document).ready(function(){
-			function isScrolledIntoView(elem) {
-				var docViewTop = $(window).scrollTop();
-				var docViewBottom = docViewTop + $(window).height();
-				var elemTop = $(elem).offset().top;
-				var elemBottom = elemTop + $(elem).height();
-				return (elemTop <= docViewBottom);
-			}
-
-			//var myelement = $('.pricebox'); // the element to act on if viewable
-			$(window).scroll(function() {
-				if(isScrolledIntoView(myelement)) {
-					alert('page down');
-				}
-				else {
+		script
+			$(document).ready(function(){
+				count = #{count}
+				for(i = 0; i < count/4; i++){
+					j=i +1
+					$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
+					
 				}
 			});
-		});​

@@ -14,7 +14,11 @@ exports.list = (req, res) ->
 				res.render 'breakslist', title : 'All breaks', breaks: breaks_
 			
 exports.mediaInterface= (req, res) ->
-	console.log req.body.live
+	if pageNumber != undefined
+		pageNumber = req.body.pageNumber-1
+	else
+		pageNumber = 0
+	console.log pageNumber
 	if req.body.searchValue == undefined || req.body.searchValue == 'search'
 		if req.body.commented != undefined
 			breaks.sortByComments (err, breaks_) ->
@@ -24,25 +28,27 @@ exports.mediaInterface= (req, res) ->
 				else
 					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
 		else if req.body.viewed != undefined
-			breaks.sortByViews (err, breaks_) ->
+			console.log 'views: ' + pageNumber
+			breaks.sortByViews pageNumber, (err, breaks_, count) ->
 				console.log 'sort by views'
 				if err
 					res.send 'No breaks found.'
 				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count
 		else if req.body.ranking != undefined
-			breaks.sortByVotes (err, breaks_) ->
+			breaks.sortByVotes pageNumber, (err, breaks_, count) ->
 				console.log 'sort by votes'
 				if err
 					res.send 'No breaks found.'
 				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count
 		else
-			breaks.findThreeRows (err, breaks_) ->
+			breaks.findThreeRows pageNumber, (err, breaks_, count) ->
 				if err
 					res.send 'No breaks found.'
 				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+					console.log 'count is: ' + count
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count: count
 
 	else
 		x = req.body.searchValue

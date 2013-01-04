@@ -38,7 +38,8 @@ exports.public= (req, res) ->
 			#console.log 'break: ' +break_
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
+					#onepagerUser = '5097ae8bae4d4a8805000001'
+					onepagerUser = '50c9f32b6684c6ac05000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
@@ -88,7 +89,8 @@ exports.pvs2 = (req, res) ->
 				console.log 'ip: '+ req.ip
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
+					#onepagerUser = '5097ae8bae4d4a8805000001'
+					onepagerUser = '50c9f32b6684c6ac05000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
@@ -114,7 +116,8 @@ exports.pvs2 = (req, res) ->
 				#console.log 'break: ' +break_
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
+					#onepagerUser = '5097ae8bae4d4a8805000001'
+					onepagerUser = '50c9f32b6684c6ac05000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
