@@ -437,6 +437,7 @@ del = (breakId, userId, callback) ->
 				
 			else
 				callback 'Invalid user or user not authorized to delete this break.'
+			
 
 root = exports ? window
 root.Break = Break
@@ -455,3 +456,4 @@ root.findById = findById
 root.vote = vote
 root.del = del
 root.addView = addView
+root.report = report

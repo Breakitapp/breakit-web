@@ -10,6 +10,7 @@ comments = require '../models/commentModel'
 notifications = require '../models/notificationsModel'
 users = require '../models/userModel'
 feedback = require '../models/feedbackModel'
+report = require '../models/reportModel'
 fs			= require 'fs'
 qs = require('querystring')
 
@@ -109,6 +110,15 @@ exports.delete_break = (req, res) ->
 			res.send 'Break deleted successfully.'
 		else
 			res.send 'Break delete failed.'
+			
+exports.report_break = (req, res) ->
+	console.log 'Reported an inappropriate Break: ' + req.body.breakId + ' by user: ' + req.body.userId
+
+	report.createReport req.body.breakId, req.body.userId, (err) ->
+		if err
+			res.send 'Break reported successfully.'
+		else
+			res.send 'Break reporting failed.'
 					
 exports.post_comment = (req, res) ->
 	users.findById req.body.userId, (err, author) ->

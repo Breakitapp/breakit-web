@@ -73,6 +73,11 @@ NotificationSchema = new Schema
 	isaNewComment			:		{type: Boolean, default: true}
 	type			:		{type: String}
 
+ReportSchema = new Schema
+	breakId : {type: String}
+	userId : {type: String}
+	date : {type: Date, default: Date.now}
+
 Feedback	= mongoose.model 'Feedback', FeedbackSchema
 Notification	= mongoose.model 'Notification', NotificationSchema
 Comment		= mongoose.model 'Comment', CommentSchema
@@ -80,7 +85,7 @@ Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
 BetaUser = mongoose.model 'BetaUser', BetaSchema
 Album			=	mongoose.model 'Album', AlbumSchema
-
+Report = mongoose.model 'Report', ReportSchema
 
 exports.User			= User
 exports.BetaUser = BetaUser
@@ -89,3 +94,4 @@ exports.Comment		= Comment
 exports.Album			= Album
 exports.Feedback		= Feedback
 exports.Notification		= Notification
+exports.Report = Report
