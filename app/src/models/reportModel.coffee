@@ -11,7 +11,10 @@ class Report
 			userId 				:		@userId
 		
 		report.save (err) ->
-			callback err
+			if err
+				throw err
+			else
+				callback null
 
 createReport = (breakId, userId, callback) ->
 	
