@@ -456,4 +456,3 @@ root.findById = findById
 root.vote = vote
 root.del = del
 root.addView = addView
-root.report = report
