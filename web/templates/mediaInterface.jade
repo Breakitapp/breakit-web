@@ -48,6 +48,7 @@ html
 						p.smallRadius.fullBorderGroove= "Votes: " + score
 						p.smallRadius.fullBorderGroove= "Views: " + b.views
 		form.page(id="pages", method="post", action="/media")
+			
 		#push
 		#footer
 		script
@@ -56,6 +57,5 @@ html
 				for(i = 0; i < count/4; i++){
 					j=i +1
 					$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
-					
 				}
 			});

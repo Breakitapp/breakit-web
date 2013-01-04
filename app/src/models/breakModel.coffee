@@ -159,11 +159,15 @@ searchBreaks = (x, callback) ->
 		
 		
 
-sortByComments = (callback) ->
+sortByComments = (pageNumber, callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
+		positionLimits = pageNumber+1 *4
+		breaksPerPage = pageNumber+1
+		checkPage = 0
+		b
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
@@ -175,12 +179,16 @@ sortByComments = (callback) ->
 					x = getNextBreak.comments.length
 					wantedBreakPos = countLoops
 				countLoops += 1
-			breaksArrSorted.push breaksArr[wantedBreakPos]
-			breaksArr.splice(wantedBreakPos, 1)
+			if checkPage <= positionLimits && checkPage >= breaksPerPage
+				breaksArrSorted.push breaksArr[wantedBreakPos]
+				breaksArr.splice(wantedBreakPos, 1)
+			else
+				checkPage += 1
 			if breaksArrSorted.length is 4
 				break
-		callback null, breaksArrSorted
-		return breaksArrSorted
+		models.Break.count().exec((err, count) ->
+			callback null, breaksArrSorted, count
+		)
 	)
 sortByViews = (pageNumber, callback) ->
 	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*4).limit(4).exec((err, breaks)->
@@ -208,15 +216,13 @@ sortByVotes = (pageNumber, callback) ->
 				if x < score
 					x = score
 					wantedBreakPos = countLoops
-
 				countLoops += 1
-			if breaksArrSorted.length < 4
-				if checkPage <= positionLimits && checkPage >= breaksPerPage
-					breaksArrSorted.push breaksArr[wantedBreakPos]
-					breaksArr.splice(wantedBreakPos, 1)
-				else
-					checkPage += 1
+			if checkPage <= positionLimits && checkPage >= breaksPerPage
+				breaksArrSorted.push breaksArr[wantedBreakPos]
+				breaksArr.splice(wantedBreakPos, 1)
 			else
+				checkPage += 1
+			if breaksArrSorted.length is 4
 				break
 		models.Break.count().exec((err, count) ->
 			callback null, breaksArrSorted, count

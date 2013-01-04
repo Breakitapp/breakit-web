@@ -14,19 +14,17 @@ exports.list = (req, res) ->
 				res.render 'breakslist', title : 'All breaks', breaks: breaks_
 			
 exports.mediaInterface= (req, res) ->
-	if pageNumber != undefined
-		pageNumber = req.body.pageNumber-1
-	else
+	pageNumber = req.body.pageNumber-1
+	if pageNumber == undefined
 		pageNumber = 0
-	console.log pageNumber
 	if req.body.searchValue == undefined || req.body.searchValue == 'search'
 		if req.body.commented != undefined
-			breaks.sortByComments (err, breaks_) ->
+			breaks.sortByComments pageNumber, (err, breaks_, count) ->
 				console.log 'sort by comments'
 				if err
 					res.send 'No breaks found.'
 				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count
 		else if req.body.viewed != undefined
 			console.log 'views: ' + pageNumber
 			breaks.sortByViews pageNumber, (err, breaks_, count) ->
