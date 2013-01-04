@@ -105,18 +105,18 @@ exports.delete_break = (req, res) ->
 	
 	breaks.del req.body.breakId, req.body.userId, (err) ->
 		if err
-			res.send 'Break deleted successfully.'
+			res.send 'Break delete failed.' 
 		else
-			res.send 'Break delete failed.'
+			res.send 'Break deleted successfully.'
 			
 exports.report_break = (req, res) ->
 	console.log 'Reported an inappropriate Break: ' + req.body.breakId + ' by user: ' + req.body.userId
 
 	report.createReport req.body.breakId, req.body.userId, (err) ->
 		if err
-			res.send 'Break reported successfully.'
-		else
 			res.send 'Break reporting failed.'
+		else
+			res.send 'Break reported successfully.'
 					
 exports.post_comment = (req, res) ->
 	users.findById req.body.userId, (err, author) ->
