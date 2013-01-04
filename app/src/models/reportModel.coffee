@@ -7,8 +7,8 @@ class Report
 	saveToDB: (callback) ->
 				
 		report = new models.Report
-			placeName				:		@placeName
-			placeId 				:		@placeId
+			breakiId				:		@breakId
+			userId 				:		@userId
 		
 			report.save (err) ->
 				callback err
