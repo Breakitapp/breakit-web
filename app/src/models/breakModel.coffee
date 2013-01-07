@@ -132,7 +132,8 @@ findAll = (callback) ->
 	
 
 findThreeRows = (pageNumber,sortPage, callback) ->
-		models.Break.find().sort({'date': 'descending'}).skip(pageNumber*4).limit(4).exec((err, breaks) ->
+		breaksPerPage = 4
+		models.Break.find().sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
 			console.log 'sortPage: ' + sortPage
 			breaks_ = (b for b in breaks)
 			models.Break.count().exec((err, count) ->
@@ -142,6 +143,7 @@ findThreeRows = (pageNumber,sortPage, callback) ->
 
 #search from breaks
 searchBreaks = (x, callback) ->
+		breaksPerPage = 4
 		console.log x
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
@@ -151,7 +153,7 @@ searchBreaks = (x, callback) ->
 				headline = b.headline.toString().toLowerCase()
 				x = x.toLowerCase()
 				if headline.indexOf(x) != -1
-					if breaksArr.length < 4
+					if breaksArr.length < breaksPerPage
 						breaksArr.push b
 			callback null, breaksArr
 			return breaksArr
@@ -165,9 +167,10 @@ sortByComments = (pageNumber,sortPage, callback) ->
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
-		positionLimits = pageNumber+1 *4
-		breaksPerPage = pageNumber+1
-		checkPage = 0
+		breaksPerPage = 4
+		checkIfSkip = 0
+		breaksToSkip = pageNumber*breaksPerPage
+		console.log 'breaks to skip: ' + breaksToSkip
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
@@ -179,21 +182,21 @@ sortByComments = (pageNumber,sortPage, callback) ->
 					x = getNextBreak.comments.length
 					wantedBreakPos = countLoops
 				countLoops += 1
-			if checkPage <= positionLimits && checkPage >= breaksPerPage
+			if checkIfSkip >= breaksToSkip
 				breaksArrSorted.push breaksArr[wantedBreakPos]
-				breaksArr.splice(wantedBreakPos, 1)
+				if breaksArrSorted.length is breaksPerPage
+					break
 			else
-				checkPage += 1
-			if breaksArrSorted.length is 4
-				break
-		console.log 'just before count function'
+				checkIfSkip += 1
+			breaksArr.splice(wantedBreakPos, 1)
 		models.Break.count().exec((err, count) ->
 				callback null, breaksArrSorted, count, sortPage
 			)
 		)
 
 sortByViews = (pageNumber,sortPage, callback) ->
-	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*4).limit(4).exec((err, breaks)->
+	breaksPerPage = 4
+	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks)->
 		breaks_ = (b for b in breaks)
 		models.Break.count().exec((err, count) ->
 			callback null, breaks_, count, sortPage
@@ -201,31 +204,36 @@ sortByViews = (pageNumber,sortPage, callback) ->
 	)
 sortByVotes = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
+		breaksPerPage = 4
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
-		positionLimits = pageNumber+1 *4
-		breaksPerPage = pageNumber+1
-		checkPage = 0
+		positionLimits = pageNumber+1 *breaksPerPage
+		breaksToSkip = pageNumber*breaksPerPage
+		checkIfSkip = 0
+		console.log 'breaks to skip: ' + breaksToSkip
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
 			countLoops = 0
 			wantedBreakPos = 0
-			x = -10000
+			x = -10000000
 			for getNextBreak in breaksArr
 				score = getNextBreak.upvotes.length - getNextBreak.downvotes.length
+				console.log 'x is: ' + x + ' score is: ' + score
 				if x < score
 					x = score
 					wantedBreakPos = countLoops
 				countLoops += 1
-			if checkPage <= positionLimits && checkPage >= breaksPerPage
+			if checkIfSkip >= breaksToSkip
+				console.log 'chosen score: ' + x
+				console.log '****'
 				breaksArrSorted.push breaksArr[wantedBreakPos]
-				breaksArr.splice(wantedBreakPos, 1)
+				if breaksArrSorted.length is breaksPerPage
+					break
 			else
-				checkPage += 1
-			if breaksArrSorted.length is 4
-				break
+				checkIfSkip += 1
+			breaksArr.splice(wantedBreakPos, 1)
 		models.Break.count().exec((err, count) ->
 			callback null, breaksArrSorted, count, sortPage
 		)
