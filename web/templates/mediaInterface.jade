@@ -21,10 +21,10 @@ html
 				input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
 				input.searchbutton(type="submit", value="Go")
 			form(method="post", action="/media", name="mediaInterface")
-				input.buttonBg(type="submit",name="live",value="Live")
-				input.buttonBg(type="submit",name="commented",value="Most commented")
-				input.buttonBg(type="submit",name="viewed",value="Most viewed")
-				input.buttonBg(type="submit",name="ranking",value="Ranking")
+				input.buttonBg(type="submit",name="sortPage",value="byDate")
+				input.buttonBg(type="submit",name="sortPage",value="commented")
+				input.buttonBg(type="submit",name="sortPage",value="viewed")
+				input.buttonBg(type="submit",name="sortPage",value="ranking")
 				//
 					input.buttonBg(type="submit",name="pics",value="My pics")
 		#wrapper.centrify
@@ -48,7 +48,6 @@ html
 						p.smallRadius.fullBorderGroove= "Votes: " + score
 						p.smallRadius.fullBorderGroove= "Views: " + b.views
 		form.page(id="pages", method="post", action="/media")
-			
 		#push
 		#footer
 		script
@@ -58,4 +57,5 @@ html
 					j=i +1
 					$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
 				}
+				$('#pages').append('<input type="text" name=currentSortPage value=#{sortPageValue}>');
 			});

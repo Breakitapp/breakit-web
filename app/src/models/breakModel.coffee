@@ -131,12 +131,12 @@ findAll = (callback) ->
 		)
 	
 
-findThreeRows = (pageNumber, callback) ->
+findThreeRows = (pageNumber,sortPage, callback) ->
 		models.Break.find().sort({'date': 'descending'}).skip(pageNumber*4).limit(4).exec((err, breaks) ->
-			#Errorhandling goes here //if err throw err
+			console.log 'sortPage: ' + sortPage
 			breaks_ = (b for b in breaks)
 			models.Break.count().exec((err, count) ->
-				callback null, breaks_, count
+				callback null, breaks_, count, sortPage
 			)
 		)
 
@@ -159,15 +159,15 @@ searchBreaks = (x, callback) ->
 		
 		
 
-sortByComments = (pageNumber, callback) ->
+sortByComments = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
+		console.log 'entering sortByComments'
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
 		positionLimits = pageNumber+1 *4
 		breaksPerPage = pageNumber+1
 		checkPage = 0
-		b
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
@@ -186,18 +186,20 @@ sortByComments = (pageNumber, callback) ->
 				checkPage += 1
 			if breaksArrSorted.length is 4
 				break
+		console.log 'just before count function'
 		models.Break.count().exec((err, count) ->
-			callback null, breaksArrSorted, count
+				callback null, breaksArrSorted, count, sortPage
+			)
 		)
-	)
-sortByViews = (pageNumber, callback) ->
+
+sortByViews = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*4).limit(4).exec((err, breaks)->
 		breaks_ = (b for b in breaks)
 		models.Break.count().exec((err, count) ->
-			callback null, breaks_, count
+			callback null, breaks_, count, sortPage
 		)
 	)
-sortByVotes = (pageNumber, callback) ->
+sortByVotes = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
 		breaks_ = breaks
 		breaksArr = []
@@ -225,7 +227,7 @@ sortByVotes = (pageNumber, callback) ->
 			if breaksArrSorted.length is 4
 				break
 		models.Break.count().exec((err, count) ->
-			callback null, breaksArrSorted, count
+			callback null, breaksArrSorted, count, sortPage
 		)
 	)
 
