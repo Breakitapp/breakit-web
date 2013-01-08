@@ -176,8 +176,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							j = 0
 							while j < shownBreaks.length
 								
-								#Checking if the break has been shown already
-								#Checking if the album has been shown already...? -> Client needs to add the album id in the shown list.
+								#Checking if the break has been shown already or if the album has been shown already
 								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
 									alreadyShown = true
 									break
@@ -190,7 +189,6 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							if foundBreak.album != null
 								
 								#console.log 'breaks album not null'
-								
 								
 								albumAdded = false
 								k = 0
@@ -218,6 +216,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 						
 						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
 						return Number(-(break_.points - break_.dis*20000000000))
+						
 					#And last the first X breaks are sent to the client
 					best = _.first(sorted, 50)
 					callback null, best
@@ -235,6 +234,7 @@ findThreeRows = (pageNumber,sortPage, callback) ->
 		)
 	)
 
+#Millan
 #search from breaks
 #Should just look for the headline in the initial query.
 searchBreaks = (x, callback) ->
@@ -256,6 +256,7 @@ searchBreaks = (x, callback) ->
 		
 		
 
+#Millan
 sortByComments = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
 	console.log 'entering sortByComments'
@@ -289,6 +290,7 @@ sortByComments = (pageNumber,sortPage, callback) ->
 		)
 	)
 
+#Millan
 sortByViews = (pageNumber,sortPage, callback) ->
 	breaksPerPage = 4
 	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks)->
@@ -297,6 +299,8 @@ sortByViews = (pageNumber,sortPage, callback) ->
 			callback null, breaks_, count, sortPage
 		)
 	)
+	
+#Millan
 sortByVotes = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
 		breaksPerPage = 4
@@ -334,37 +338,15 @@ sortByVotes = (pageNumber,sortPage, callback) ->
 		)
 	)
 
-#finds an x amout of breaks in the vicinity. NOT USED?
-
+#Not used?
 ###
-findNear = (longitude, latitude, page, callback) ->
-	breaks = []
-	models.Break.db.db.executeDbCommand {
-		geoNear: 'breaks' 
-		near : [longitude, latitude] 
-		spherical : true
-		}, (err, docs) ->
-			if err
-				throw err
-			b = docs.documents[0].results
-			if b[0]
-				i = 0
-				while b[page*10+i] and i < 10
-					object = b[page*10+i]
-					found_break = object.obj
-					found_break.dis = object.dis
-					breaks.push found_break
-					i++
-			callback null, breaks
-	return breaks
-###
-
 findInfinite = (page, callback) ->
 	models.Break.find().skip(10*(page-1)).limit(10).exec((err, breaks) ->
 		breaks_ = (b for b in breaks)
 		callback null, breaks_
 		return breaks_
 	)
+###
 	
 findById = (id, callback) ->
 	models.Break.findById(id).exec((err, break_) ->
@@ -490,7 +472,6 @@ root.sortByViews = sortByViews
 root.sortByVotes = sortByVotes
 root.fbShare = fbShare
 root.tweet = tweet
-root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
 root.del = del

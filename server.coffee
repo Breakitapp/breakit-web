@@ -15,9 +15,6 @@ ios					= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
-#blog			= require './app/lib/routes/blog'
-#Dummydata insert
-#dummy					= require './app/lib/models/dummyModel'
 
 server = module.exports = express()
 #poet				= (require 'poet') server
@@ -43,7 +40,6 @@ server.configure ->
 	server.use server.router
 
 ###BLOG UNDER CONSTRUCTION 
-
 poet.set
   posts: './_posts/',
   postsPerPage: 5,
@@ -55,6 +51,7 @@ poet
   .createCategoryRoute()
   .init()
 ###
+
 server.configure "development", ->
 	server.use express.errorHandler(
 		dumpExceptions: true
@@ -76,21 +73,10 @@ server.configure "local", ->
 server.all '/', site.signup
 server.all '/break', site.break_tmp
 
-
 server.configure "local", ->
 	#TESTING FUNCTIONS
 	server.get '/test', test.index
-	server.get '/test/sendForm', test.sendForm
-	server.post '/test/sendForm', test.submitForm
-	server.get '/test/userfeed', test.specifyFeed
-	server.post '/test/userfeed', test.feed
-	server.get '/breaks/new', breaks.webCreate
-	server.post '/breaks/new', breaks.webSubmit
-	server.get '/breaks/enew', breaks.easyWebCreate
-	server.post '/breaks/enew', breaks.easyWebSubmit
-	#USERS
-	server.get '/users/new', user.create
-	server.post '/users/new', user.submit
+
 server.configure "development", ->
 	#TESTING FUNCTIONS
 	server.get '/test', test.index
@@ -105,6 +91,26 @@ server.configure "development", ->
 	#USERS
 	server.get '/users/new', user.create
 	server.post '/users/new', user.submit
+	#Users
+	server.all '/users', user.list
+	server.get '/users/:id', user.view
+	server.post '/users/:id', user.update
+	server.post '/users/delete/:id', user.remove
+	#Breaks (had to use breaks instead of break, since break is a reserved word)
+	server.all '/breaks', breaks.list
+	server.get '/breaks/comment', breaks.comment
+	server.post '/breaks/comment', breaks.postComment
+	server.post '/breaks/vote', breaks.vote
+	server.post '/breaks/delete', breaks.delete
+	#MEDIA INTERFACE
+	server.all '/media', breaks.mediaInterface
+	#server.post '/media/search', breaks.searchMedia
+	#Albums
+	server.all '/albums', albums.list
+	server.get '/albums/near/:page', albums.listNear
+	server.get '/albums/near', albums.listNear
+	server.get '/albums/new', albums.create
+	server.post '/albums/new', albums.submit
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create
@@ -133,41 +139,17 @@ server.get '/ios/mynotifications/:userId', ios.getMyNotifications
 
 #WEB
 #Public break interface
-#server.get '/p/:id', site.public
-#server.post '/p/comment', site.webComment
+server.get '/p/:id', site.public
+server.post '/p/comment', site.webComment
 #Onepager vs2 under editing
-server.get '/p/:id', site.pvs2 # <- naming?? -e
-server.post '/p/comment', site.onePComment
+#server.get '/p/:id', site.pvs2 # <- naming?? -e
+#server.post '/p/comment', site.onePComment
+#add here also other things that the web interface needs to use...
 
 #Signup
 server.get '/signup', site.signup
 server.post '/signup', site.signup_post
 server.get '/signup/send', site.send
-
-#Users
-server.all '/users', user.list
-server.get '/users/:id', user.view
-server.post '/users/:id', user.update
-server.post '/users/delete/:id', user.remove
-
-#Breaks (had to use breaks instead of break, since break is a reserved word)
-server.all '/breaks', breaks.list
-server.get '/breaks/comment', breaks.comment
-server.post '/breaks/comment', breaks.postComment
-server.post '/breaks/vote', breaks.vote
-server.post '/breaks/delete', breaks.delete
-
-#MEDIA INTERFACE
-server.all '/media', breaks.mediaInterface
-#server.post '/media/search', breaks.searchMedia
-
-#Albums
-server.all '/albums', albums.list
-server.get '/albums/near/:page', albums.listNear
-server.get '/albums/near', albums.listNear
-server.get '/albums/new', albums.create
-server.post '/albums/new', albums.submit
-
 
 # BLOG
 #server.get '/blog', blog.index
@@ -184,5 +166,3 @@ server.configure "development", ->
 server.configure "production", ->
 	server.listen 80
 	console.log 'Breakit express server listening to port 80 in dev mode'
-
-#console.log 'Express server listening on port %d in %s mode', server.address().port, server.settings.env

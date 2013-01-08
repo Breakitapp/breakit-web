@@ -120,8 +120,8 @@ exports.report_break = (req, res) ->
 					
 exports.post_comment = (req, res) ->
 	users.findById req.body.userId, (err, author) ->
-		if err
-			throw err
+		if not author
+			res.send 'Invalid user.'
 		else
 			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
 			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
@@ -147,7 +147,7 @@ exports.get_picture = (req, res) ->
 #not needed anymore?
 exports.get_break = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
-		if err
+		if not b
 			console.log err
 			res.send 'Could not find the break'
 		else
