@@ -218,81 +218,120 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 						
 						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
 						return Number(-(break_.points - break_.dis*20000000000))
-
 					#And last the first X breaks are sent to the client
 					best = _.first(sorted, 50)
 					callback null, best
 			
 	return breaks
 	
+#Millan webinterfacea varten
+findThreeRows = (pageNumber,sortPage, callback) ->
+	breaksPerPage = 4
+	models.Break.find().sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+		console.log 'sortPage: ' + sortPage
+		breaks_ = (b for b in breaks)
+		models.Break.count().exec((err, count) ->
+			callback null, breaks_, count, sortPage
+		)
+	)
+
 #search from breaks
 #Should just look for the headline in the initial query.
 searchBreaks = (x, callback) ->
-		console.log x
-		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
-			#Errorhandling goes here //if err throw err
-			breaks_ = breaks
-			breaksArr = []
-			for b in breaks_
-				headline = b.headline.toString().toLowerCase()
-				x = x.toLowerCase()
-				if headline.indexOf(x) != -1
+	breaksPerPage = 4
+	console.log x
+	models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
+		#Errorhandling goes here //if err throw err
+		breaks_ = breaks
+		breaksArr = []
+		for b in breaks_
+			headline = b.headline.toString().toLowerCase()
+			x = x.toLowerCase()
+			if headline.indexOf(x) != -1
+				if breaksArr.length < breaksPerPage
 					breaksArr.push b
-			callback null, breaksArr
-			return breaksArr
-		)
+		callback null, breaksArr
+		return breaksArr
+	)
 		
 		
-#Why sort by date? Multiple arrays of the same stuff...
-sortByComments = (callback) ->
+
+sortByComments = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
-		breaks_ = breaks
-		breaksArr = []
-		breaksArrSorted = []
-		for b in breaks
-			breaksArr.push b
-		for b in breaksArr
-			countLoops = 0
-			wantedBreakPos = 0
-			x = 0
-			for getNextBreak in breaksArr
-				if x < getNextBreak.comments.length
-					x = getNextBreak.comments.length
-					wantedBreakPos = countLoops
-				countLoops += 1
+	console.log 'entering sortByComments'
+	breaks_ = breaks
+	breaksArr = []
+	breaksArrSorted = []
+	breaksPerPage = 4
+	checkIfSkip = 0
+	breaksToSkip = pageNumber*breaksPerPage
+	console.log 'breaks to skip: ' + breaksToSkip
+	for b in breaks
+		breaksArr.push b
+	for b in breaksArr
+		countLoops = 0
+		wantedBreakPos = 0
+		x = 0
+		for getNextBreak in breaksArr
+			if x < getNextBreak.comments.length
+				x = getNextBreak.comments.length
+				wantedBreakPos = countLoops
+			countLoops += 1
+		if checkIfSkip >= breaksToSkip
 			breaksArrSorted.push breaksArr[wantedBreakPos]
-			breaksArr.splice(wantedBreakPos, 1)
-		callback null, breaksArrSorted
-		return breaksArrSorted
+			if breaksArrSorted.length is breaksPerPage
+				break
+		else
+			checkIfSkip += 1
+		breaksArr.splice(wantedBreakPos, 1)
+	models.Break.count().exec((err, count) ->
+			callback null, breaksArrSorted, count, sortPage
+		)
 	)
-sortByViews = (callback) ->
-	models.Break.find().sort({'views': 'descending'}).exec((err, breaks)->
+
+sortByViews = (pageNumber,sortPage, callback) ->
+	breaksPerPage = 4
+	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks)->
 		breaks_ = (b for b in breaks)
-		callback null, breaks_
-		return breaks_
+		models.Break.count().exec((err, count) ->
+			callback null, breaks_, count, sortPage
+		)
 	)
-sortByVotes = (callback) ->
+sortByVotes = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
+		breaksPerPage = 4
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
+		positionLimits = pageNumber+1 *breaksPerPage
+		breaksToSkip = pageNumber*breaksPerPage
+		checkIfSkip = 0
+		console.log 'breaks to skip: ' + breaksToSkip
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
 			countLoops = 0
 			wantedBreakPos = 0
-			x = -10000
+			x = -10000000
 			for getNextBreak in breaksArr
 				score = getNextBreak.upvotes.length - getNextBreak.downvotes.length
+				console.log 'x is: ' + x + ' score is: ' + score
 				if x < score
 					x = score
 					wantedBreakPos = countLoops
-
 				countLoops += 1
-			breaksArrSorted.push breaksArr[wantedBreakPos]
+			if checkIfSkip >= breaksToSkip
+				console.log 'chosen score: ' + x
+				console.log '****'
+				breaksArrSorted.push breaksArr[wantedBreakPos]
+				if breaksArrSorted.length is breaksPerPage
+					break
+			else
+				checkIfSkip += 1
 			breaksArr.splice(wantedBreakPos, 1)
-		callback null, breaksArrSorted
-		return breaksArrSorted
+		models.Break.count().exec((err, count) ->
+			callback null, breaksArrSorted, count, sortPage
+		)
 	)
 
 #finds an x amout of breaks in the vicinity. NOT USED?
@@ -456,3 +495,4 @@ root.findById = findById
 root.vote = vote
 root.del = del
 root.addView = addView
+root.findThreeRows = findThreeRows

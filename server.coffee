@@ -129,11 +129,11 @@ server.get '/ios/mynotifications/:userId', ios.getMyNotifications
 
 #WEB
 #Public break interface
-server.get '/p/:id', site.public
-server.post '/p/comment', site.webComment
+#server.get '/p/:id', site.public
+#server.post '/p/comment', site.webComment
 #Onepager vs2 under editing
-server.get '/onepager/:id', site.pvs2
-server.post '/onepager/comment', site.onePComment
+server.get '/p/:id', site.pvs2
+server.post '/p/comment', site.onePComment
 
 #Signup
 server.get '/signup', site.signup

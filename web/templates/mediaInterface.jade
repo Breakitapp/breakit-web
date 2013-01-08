@@ -6,6 +6,7 @@ html
 		block scripts
 			link(rel='stylesheet', href='/public/css/mediaInt.css')
 			link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
+			script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js")
 			script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
 			script(type='text/javascript', src='../public/js/libs/underscore-min.js')
 			script(type='text/javascript', src='../public/js/libs/backbone-min.js')
@@ -20,10 +21,10 @@ html
 				input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
 				input.searchbutton(type="submit", value="Go")
 			form(method="post", action="/media", name="mediaInterface")
-				input.buttonBg(type="submit",name="live",value="Live")
-				input.buttonBg(type="submit",name="commented",value="Most commented")
-				input.buttonBg(type="submit",name="viewed",value="Most viewed")
-				input.buttonBg(type="submit",name="ranking",value="Ranking")
+				input.buttonBg(type="submit",name="sortPage",value="byDate")
+				input.buttonBg(type="submit",name="sortPage",value="commented")
+				input.buttonBg(type="submit",name="sortPage",value="viewed")
+				input.buttonBg(type="submit",name="sortPage",value="ranking")
 				//
 					input.buttonBg(type="submit",name="pics",value="My pics")
 		#wrapper.centrify
@@ -40,11 +41,21 @@ html
 				for b in breaks
 					li.smallRadius.fullBorderGroove
 						p.smallRadius.fullBorderRidge #{b.headline}
-						a(href="/onepager/" + b._id)
+						a(href="/p/" + b._id)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						score = b.upvotes.length - b.downvotes.length
 						p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
 						p.smallRadius.fullBorderGroove= "Votes: " + score
 						p.smallRadius.fullBorderGroove= "Views: " + b.views
+		form.page(id="pages", method="post", action="/media")
 		#push
 		#footer
+		script
+			$(document).ready(function(){
+				count = #{count}
+				for(i = 0; i < count/4; i++){
+					j=i +1
+					$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
+				}
+				$('#pages').append('<input type="text" name=currentSortPage value=#{sortPageValue}>');
+			});
