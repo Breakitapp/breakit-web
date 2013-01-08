@@ -71,12 +71,14 @@ server.configure "production", ->
 server.configure "local", ->
 	console.log 'RUNNING ON LOCAL SERVER'
 	db = mongoose.connect(settings.mongo_local.db)
+	
 #General
 server.all '/', site.signup
 server.all '/break', site.break_tmp
 
+
 server.configure "local", ->
-	#TESTING FUNCTIONS (to be disabled in production)
+	#TESTING FUNCTIONS
 	server.get '/test', test.index
 	server.get '/test/sendForm', test.sendForm
 	server.post '/test/sendForm', test.submitForm
@@ -86,8 +88,11 @@ server.configure "local", ->
 	server.post '/breaks/new', breaks.webSubmit
 	server.get '/breaks/enew', breaks.easyWebCreate
 	server.post '/breaks/enew', breaks.easyWebSubmit
-
+	#USERS
+	server.get '/users/new', user.create
+	server.post '/users/new', user.submit
 server.configure "development", ->
+	#TESTING FUNCTIONS
 	server.get '/test', test.index
 	server.get '/test/sendForm', test.sendForm
 	server.post '/test/sendForm', test.submitForm
@@ -97,16 +102,15 @@ server.configure "development", ->
 	server.post '/breaks/new', breaks.webSubmit
 	server.get '/breaks/enew', breaks.easyWebCreate
 	server.post '/breaks/enew', breaks.easyWebSubmit
-
+	#USERS
+	server.get '/users/new', user.create
+	server.post '/users/new', user.submit
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create
 server.post '/feedback/new', feedback.submit
 server.get '/feedback/list', feedback.list
 
-#USERS
-server.get '/users/new', user.create
-server.post '/users/new', user.submit
 #iOS
 server.post '/ios', ios.index
 server.post '/ios/login', ios.login
@@ -132,7 +136,7 @@ server.get '/ios/mynotifications/:userId', ios.getMyNotifications
 #server.get '/p/:id', site.public
 #server.post '/p/comment', site.webComment
 #Onepager vs2 under editing
-server.get '/p/:id', site.pvs2
+server.get '/p/:id', site.pvs2 # <- naming?? -e
 server.post '/p/comment', site.onePComment
 
 #Signup
@@ -150,10 +154,8 @@ server.post '/users/delete/:id', user.remove
 server.all '/breaks', breaks.list
 server.get '/breaks/comment', breaks.comment
 server.post '/breaks/comment', breaks.postComment
-#server.post '/breaks/1pcomment', breaks.postComment_1page
 server.post '/breaks/vote', breaks.vote
 server.post '/breaks/delete', breaks.delete
-#server.get '/breaks/:page', breaks.infinite #old
 
 #MEDIA INTERFACE
 server.all '/media', breaks.mediaInterface
@@ -169,9 +171,6 @@ server.post '/albums/new', albums.submit
 
 # BLOG
 #server.get '/blog', blog.index
-
-
-
 
 #Starting the server
 server.configure "local", ->

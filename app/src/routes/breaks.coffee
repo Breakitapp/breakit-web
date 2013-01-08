@@ -13,6 +13,7 @@ exports.list = (req, res) ->
 			else
 				res.render 'breakslist', title : 'All breaks', breaks: breaks_
 			
+#Millan
 exports.mediaInterface= (req, res) ->
 	console.log '******************************************'
 	console.log 'entering Media Interface'
@@ -72,26 +73,13 @@ exports.mediaInterface= (req, res) ->
 				res.send 'No breaks found.'
 			else
 				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
-###
-exports.searchMedia= (req, res) ->
-	x = req.body.searchValue
-	breaks.searchBreaks x, (err, breaks_) ->
-		if err
-			res.send 'No breaks found.'
-		else
-			res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
-###
-exports.infinite = (req, res) ->
-	page = req.params.page
-	breaks.findInfinite page, (err, docs) ->
-		res.send docs
 
 #This is only for web interface		
 exports.easyWebCreate = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
 		res.render 'easyNewBreak', title : 'Create a new Break'
 
-
+#Markon
 exports.easyWebSubmit = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
 		#PARSE request
@@ -150,7 +138,6 @@ exports.comment = (req, res) ->
 
 #This is only for web interface		
 exports.postComment = (req, res) ->
-
 	users.findById req.body.userId, (err, author) ->
 		if err
 			throw err
@@ -164,30 +151,6 @@ exports.postComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					res.send 'Commenting successful. Count: ' + commentCount
-
-###
-exports.postComment_1page = (req, res) ->
-
-	users.findById req.body.userId, (err, author) ->
-		if err
-			throw err
-		else
-			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
-	
-			console.log 'new comment: ' + newComment.comment
-			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
-				if err
-					res.send 'Commenting failed.'
-				else
-					breaks.findById req.body.breakId, (err, break_) ->
-						if err
-							res.send '404'
-						else
-							#console.log 'break: ' +break_
-							res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-			
-			#res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-###
 
 #req needs to contain "which" field ('up' or 'down') and "breakId" field
 exports.vote = (req, res) ->
