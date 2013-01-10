@@ -236,25 +236,6 @@ findThreeRows = (pageNumber,sortPage, callback) ->
 
 #Millan
 #search from breaks
-<<<<<<< HEAD
-#Should just look for the headline in the initial query.
-searchBreaks = (x, callback) ->
-	breaksPerPage = 4
-	console.log x
-	models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
-		#Errorhandling goes here //if err throw err
-		breaks_ = breaks
-		breaksArr = []
-		for b in breaks_
-			headline = b.headline.toString().toLowerCase()
-			x = x.toLowerCase()
-			if headline.indexOf(x) != -1
-				if breaksArr.length < breaksPerPage
-					breaksArr.push b
-		callback null, breaksArr
-		return breaksArr
-	)
-=======
 searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 		console.log 'entering search Breaks'
 		breaksPerPage = 4
@@ -271,8 +252,6 @@ searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 				callback null, breaks_, count, sortPage
 			)
 		)
->>>>>>> c6250fb6fa4c12c44da0bdf212d3f6f36a10229b
-		
 		
 
 #Millan
