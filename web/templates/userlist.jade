@@ -1,4 +1,4 @@
 extend layout
 block contents
 	for user in users
-		p= user._id + " " + user.fName + " " + user.lName + " " + user.nName + " " + user.email
+		include blocks/user

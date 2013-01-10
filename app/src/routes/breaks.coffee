@@ -11,7 +11,8 @@ exports.list = (req, res) ->
 			if err
 				res.send 'No breaks found.'
 			else
-				res.render 'breakslist', title : 'All breaks', breaks: breaks_
+				#TODO change the breakslist.jade to follow the guidelines of templating.
+				res.render 'tests/breakslist', title : 'All breaks', breaks: breaks_
 ###
 exports.searchMedia= (req, res) ->
 	x = req.body.searchValue
@@ -29,7 +30,7 @@ exports.infinite = (req, res) ->
 #This is only for web interface		
 exports.easyWebCreate = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
-		res.render 'easyNewBreak', title : 'Create a new Break'
+		res.render 'tests/easyNewBreak', title : 'Create a new Break'
 
 #Markon
 exports.easyWebSubmit = (req, res) ->
@@ -86,7 +87,7 @@ exports.webSubmit = (req, res) ->
 
 #This is only for web interface	
 exports.comment = (req, res) ->
-	res.render 'comment', title : 'Create a new comment'
+	res.render 'blocks/comment', title : 'Create a new comment'
 
 #This is only for web interface		
 exports.postComment = (req, res) ->

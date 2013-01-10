@@ -3,7 +3,7 @@ albums = require '../models/albumModel'
 exports.list = (req, res) ->	
 	if(req.ip isnt '54.247.69.189')
 		albums.list (albums) ->	
-			res.render 'albumlist', title : 'Breakit albumlist', albums: albums
+			res.render 'blocks/albumlist', title : 'Breakit albumlist', albums: albums
 
 exports.listNear = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
@@ -12,7 +12,7 @@ exports.listNear = (req, res) ->
 		if(!page)
 			page = 0
 		albums.findNear 24.83223594527063, 60.1802242005334, page, (nullvalue, albums) ->
-			res.render 'albumlist_near', title : 'Breakit albumlist', albums: albums
+			res.render 'blocks/albumlist_near', title : 'Breakit albumlist', albums: albums
 	
 exports.create = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
