@@ -150,7 +150,7 @@ searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 		findWord = '/*.'+searchWord+'.*/'
 		console.log 'searchword: ' + searchWord
 		console.log 'requirements for find: ' + findWord
-		models.Break.find({'headline':/kjlj/}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+		models.Break.find({'headline':new RegExp('\/'+searchWord+'\/')}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
 			console.log 'find function'
 			breaks_ = (b for b in breaks)
 			console.log 'breaks: ' + breaks_

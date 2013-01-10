@@ -15,6 +15,7 @@ ios					= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
+mediaint			=require './app/lib/routes/mediainterface'
 #blog			= require './app/lib/routes/blog'
 #Dummydata insert
 #dummy					= require './app/lib/models/dummyModel'
@@ -154,7 +155,7 @@ server.post '/breaks/delete', breaks.delete
 #server.get '/breaks/:page', breaks.infinite #old
 
 #MEDIA INTERFACE
-server.all '/media', breaks.mediaInterface
+server.all '/media', mediaint.mediaInterface
 #server.post '/media/search', breaks.searchMedia
 
 #Albums
