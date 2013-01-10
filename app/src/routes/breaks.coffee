@@ -28,8 +28,9 @@ exports.mediaInterface= (req, res) ->
 		pageNumber = 0
 	else if pageNumber > 0
 		pageNumber -= 1
+	console.log 'testing searchValue: ' + req.body.searchValue
 	console.log 'page number: ' + pageNumber
-	if req.body.searchValue == undefined || req.body.searchValue == 'search'
+	if req.body.searchValue == undefined  && sortPage != 'search' || req.body.searchValue == 'search' && sortPage != 'search'
 		console.log 'search function skipped'
 		if sortPage == 'commented'
 			console.log 'commented function in breaks.coffee'
@@ -66,12 +67,16 @@ exports.mediaInterface= (req, res) ->
 					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count: count, sortPageValue:sortPageValue
 
 	else
-		x = req.body.searchValue
-		breaks.searchBreaks x, (err, breaks_) ->
+		console.log 'entering search value'
+		searchWord = req.body.searchValue
+		sortPage = 'search'
+		console.log 'change sortPage: ' + sortPage
+		breaks.searchBreaks searchWord, pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
 			if err
 				res.send 'No breaks found.'
 			else
-				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+				console.log 'render search results'
+				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
 ###
 exports.searchMedia= (req, res) ->
 	x = req.body.searchValue

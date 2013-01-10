@@ -142,21 +142,21 @@ findThreeRows = (pageNumber,sortPage, callback) ->
 		)
 
 #search from breaks
-searchBreaks = (x, callback) ->
+searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
+		console.log 'entering search Breaks'
 		breaksPerPage = 4
-		console.log x
-		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
-			#Errorhandling goes here //if err throw err
-			breaks_ = breaks
-			breaksArr = []
-			for b in breaks_
-				headline = b.headline.toString().toLowerCase()
-				x = x.toLowerCase()
-				if headline.indexOf(x) != -1
-					if breaksArr.length < breaksPerPage
-						breaksArr.push b
-			callback null, breaksArr
-			return breaksArr
+		breaksToSkip = pageNumber*breaksPerPage
+		checkIfSkip = 0
+		findWord = '/*.'+searchWord+'.*/'
+		console.log 'searchword: ' + searchWord
+		console.log 'requirements for find: ' + findWord
+		models.Break.find({'headline':/kjlj/}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+			console.log 'find function'
+			breaks_ = (b for b in breaks)
+			console.log 'breaks: ' + breaks_
+			models.Break.count().exec((err, count) ->
+				callback null, breaks_, count, sortPage
+			)
 		)
 		
 		
