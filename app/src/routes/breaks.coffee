@@ -12,67 +12,19 @@ exports.list = (req, res) ->
 				res.send 'No breaks found.'
 			else
 				res.render 'breakslist', title : 'All breaks', breaks: breaks_
-			
-#Millan
-exports.mediaInterface= (req, res) ->
-	console.log '******************************************'
-	console.log 'entering Media Interface'
-	pageNumber = req.body.pageNumber
-	currentSortPage = req.body.currentSortPage
-	sortPage = req.body.sortPage
-	if sortPage == undefined && currentSortPage == undefined
-		sortPage = 'byDate'
-	else if sortPage == undefined
-		sortPage = currentSortPage
-	console.log 'sortPage variable is: ' + sortPage
-	if pageNumber == undefined
-		pageNumber = 0
-	else if pageNumber > 0
-		pageNumber -= 1
-	console.log 'page number: ' + pageNumber
-	if req.body.searchValue == undefined || req.body.searchValue == 'search'
-		console.log 'search function skipped'
-		if sortPage == 'commented'
-			console.log 'commented function in breaks.coffee'
-			breaks.sortByComments pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'sort by comments'
-				if err
-					res.send 'No breaks found.'
-				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
-		else if sortPage == 'viewed'
-			console.log 'viewed function in breaks.coffee'
-			breaks.sortByViews pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'sort by views'
-				if err
-					res.send 'No breaks found.'
-				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
-		else if sortPage == 'ranking'
-			console.log 'ranking function in breaks.coffee'
-			breaks.sortByVotes pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'sort by votes'
-				if err
-					res.send 'No breaks found.'
-				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
+###
+exports.searchMedia= (req, res) ->
+	x = req.body.searchValue
+	breaks.searchBreaks x, (err, breaks_) ->
+		if err
+			res.send 'No breaks found.'
 		else
-			breaks.findThreeRows pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'byDate function in breaks.coffee'
-				if err
-					res.send 'No breaks found.'
-				else
-					console.log 'count is: ' + count
-					console.log 'nameSortPage is: ' + sortPageValue
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count: count, sortPageValue:sortPageValue
-
-	else
-		x = req.body.searchValue
-		breaks.searchBreaks x, (err, breaks_) ->
-			if err
-				res.send 'No breaks found.'
-			else
-				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+			res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_
+###
+exports.infinite = (req, res) ->
+	page = req.params.page
+	breaks.findInfinite page, (err, docs) ->
+		res.send docs
 
 #This is only for web interface		
 exports.easyWebCreate = (req, res) ->

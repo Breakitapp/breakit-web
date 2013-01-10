@@ -236,6 +236,7 @@ findThreeRows = (pageNumber,sortPage, callback) ->
 
 #Millan
 #search from breaks
+<<<<<<< HEAD
 #Should just look for the headline in the initial query.
 searchBreaks = (x, callback) ->
 	breaksPerPage = 4
@@ -253,6 +254,24 @@ searchBreaks = (x, callback) ->
 		callback null, breaksArr
 		return breaksArr
 	)
+=======
+searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
+		console.log 'entering search Breaks'
+		breaksPerPage = 4
+		breaksToSkip = pageNumber*breaksPerPage
+		checkIfSkip = 0
+		findWord = '/*.'+searchWord+'.*/'
+		console.log 'searchword: ' + searchWord
+		console.log 'requirements for find: ' + findWord
+		models.Break.find({'headline':new RegExp('\/'+searchWord+'\/')}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+			console.log 'find function'
+			breaks_ = (b for b in breaks)
+			console.log 'breaks: ' + breaks_
+			models.Break.count().exec((err, count) ->
+				callback null, breaks_, count, sortPage
+			)
+		)
+>>>>>>> c6250fb6fa4c12c44da0bdf212d3f6f36a10229b
 		
 		
 

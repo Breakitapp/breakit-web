@@ -15,6 +15,10 @@ ios					= require './app/lib/routes/ios'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
+mediaint			=require './app/lib/routes/mediainterface'
+#blog			= require './app/lib/routes/blog'
+#Dummydata insert
+#dummy					= require './app/lib/models/dummyModel'
 
 server = module.exports = express()
 #poet				= (require 'poet') server
@@ -150,6 +154,32 @@ server.post '/p/comment', site.webComment
 server.get '/signup', site.signup
 server.post '/signup', site.signup_post
 server.get '/signup/send', site.send
+
+#Users
+server.all '/users', user.list
+server.get '/users/:id', user.view
+server.post '/users/:id', user.update
+server.post '/users/delete/:id', user.remove
+
+#Breaks (had to use breaks instead of break, since break is a reserved word)
+server.all '/breaks', breaks.list
+server.get '/breaks/comment', breaks.comment
+server.post '/breaks/comment', breaks.postComment
+#server.post '/breaks/1pcomment', breaks.postComment_1page
+server.post '/breaks/vote', breaks.vote
+server.post '/breaks/delete', breaks.delete
+#server.get '/breaks/:page', breaks.infinite #old
+
+#MEDIA INTERFACE
+server.all '/media', mediaint.mediaInterface
+#server.post '/media/search', breaks.searchMedia
+
+#Albums
+server.all '/albums', albums.list
+server.get '/albums/near/:page', albums.listNear
+server.get '/albums/near', albums.listNear
+server.get '/albums/new', albums.create
+server.post '/albums/new', albums.submit
 
 # BLOG
 #server.get '/blog', blog.index
