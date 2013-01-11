@@ -17,9 +17,6 @@ exports.index = (req, res) ->
 	res.redirect '/signup'
 ###
 
-exports.break_tmp = (req, res) ->
-	res.render 'tmp/break', title: 'Break-template'
-
 ###
 exports.public = (req, res) ->
 	breaks.findById req.params.id, (err, break_) ->
@@ -30,7 +27,7 @@ exports.public = (req, res) ->
 			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
 ###
 
-exports.public= (req, res) ->
+exports.public = (req, res) ->
 	breaks.findById req.params.id, (err, break_) ->
 		if not break_
 			res.send 'Break not found.'
@@ -61,8 +58,8 @@ exports.webComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					res.redirect '/p/' + req.body.breakId
-#Onepager vs2
 
+#Onepager vs2
 exports.pvs2 = (req, res) ->
 	cookieName = ''
 	cookieValue = ''

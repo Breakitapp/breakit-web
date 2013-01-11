@@ -4,24 +4,23 @@
 # Mikko Majuri (majuri.mikko@gmail.com)
 ###
 
-express				= require 'express'
+express			= require 'express'
 site				= require './app/lib/routes/site'
 user				= require './app/lib/routes/user'
-breaks				= require './app/lib/routes/breaks'
-albums				= require './app/lib/routes/albums'
-feedback			= require './app/lib/routes/feedback'
+breaks			= require './app/lib/routes/breaks'
+albums			= require './app/lib/routes/albums'
+feedback		= require './app/lib/routes/feedback'
 test				= require './app/lib/routes/test'
 ios					= require './app/lib/routes/ios'
-settings			= require './settings'
-mongoose			= require 'mongoose'
-stylus				= require 'stylus'
-mediaint			=require './app/lib/routes/mediainterface'
-#blog			= require './app/lib/routes/blog'
+mediaint		= require './app/lib/routes/mediainterface'
+settings		= require './settings'
+mongoose		= require 'mongoose'
+stylus			= require 'stylus'
 #Dummydata insert
+#TODO should probably be in own server environment
 #dummy					= require './app/lib/models/dummyModel'
 
 server = module.exports = express()
-#poet				= (require 'poet') server
 
 #Configuration
 server.configure ->
@@ -38,23 +37,8 @@ server.configure ->
 	server.use express.methodOverride()
 	#CSS templating
 	server.use(stylus.middleware src: publicDir)
-	#POET blog
-#	server.use(poet.middleware src: viewsDir)
 	server.use express.static publicDir
 	server.use server.router
-
-###BLOG UNDER CONSTRUCTION 
-poet.set
-  posts: './_posts/',
-  postsPerPage: 5,
-  metaFormat: 'json'
-poet
-  .createPostRoute()
-  .createPageRoute()
-  .createTagRoute()
-  .createCategoryRoute()
-  .init()
-###
 
 server.configure "development", ->
 	server.use express.errorHandler(
@@ -70,51 +54,54 @@ server.configure "production", ->
 	db = mongoose.connect(settings.mongo_prod.db)
 
 server.configure "local", ->
+	server.use express.errorHandler(
+		dumpExceptions: true
+		showStack: true
+	)
 	console.log 'RUNNING ON LOCAL SERVER'
 	db = mongoose.connect(settings.mongo_local.db)
-	
+
 #General
 server.all '/', site.signup
-server.all '/break', site.break_tmp
 
-server.configure "local", ->
-	#TESTING FUNCTIONS
-	server.get '/test', test.index
-
-server.configure "development", ->
-	#TESTING FUNCTIONS
-	server.get '/test', test.index
-	server.get '/test/sendForm', test.sendForm
-	server.post '/test/sendForm', test.submitForm
-	server.get '/test/userfeed', test.specifyFeed
-	server.post '/test/userfeed', test.feed
-	server.get '/breaks/new', breaks.webCreate
-	server.post '/breaks/new', breaks.webSubmit
-	server.get '/breaks/enew', breaks.easyWebCreate
-	server.post '/breaks/enew', breaks.easyWebSubmit
-	#USERS
-	server.get '/users/new', user.create
-	server.post '/users/new', user.submit
-	#Users
-	server.all '/users', user.list
-	server.get '/users/:id', user.view
-	server.post '/users/:id', user.update
-	server.post '/users/delete/:id', user.remove
-	#Breaks (had to use breaks instead of break, since break is a reserved word)
-	server.all '/breaks', breaks.list
-	server.get '/breaks/comment', breaks.comment
-	server.post '/breaks/comment', breaks.postComment
-	server.post '/breaks/vote', breaks.vote
-	server.post '/breaks/delete', breaks.delete
-	#MEDIA INTERFACE
-	server.all '/media', breaks.mediaInterface
-	#server.post '/media/search', breaks.searchMedia
-	#Albums
-	server.all '/albums', albums.list
-	server.get '/albums/near/:page', albums.listNear
-	server.get '/albums/near', albums.listNear
-	server.get '/albums/new', albums.create
-	server.post '/albums/new', albums.submit
+#Check if server is started as dev or local.
+if String(server.get 'env') is String('local') or String(server.get 'env') is String('development')
+	server.configure ->
+		#TESTING FUNCTIONS
+		server.get '/test', test.index
+		#TESTING FUNCTIONS
+		server.get '/test', test.index
+		server.get '/test/sendForm', test.sendForm
+		server.post '/test/sendForm', test.submitForm
+		server.get '/test/userfeed', test.specifyFeed
+		server.post '/test/userfeed', test.feed
+		server.get '/breaks/new', breaks.webCreate
+		server.post '/breaks/new', breaks.webSubmit
+		server.get '/breaks/enew', breaks.easyWebCreate
+		server.post '/breaks/enew', breaks.easyWebSubmit
+		#USERS
+		server.get '/users/new', user.create
+		server.post '/users/new', user.submit
+		#Users
+		server.all '/users', user.list
+		server.get '/users/:id', user.view
+		server.post '/users/:id', user.update
+		server.post '/users/delete/:id', user.remove
+		#Breaks (had to use breaks instead of break, since break is a reserved word)
+		server.all '/breaks', breaks.list
+		server.get '/breaks/comment', breaks.comment
+		server.post '/breaks/comment', breaks.postComment
+		server.post '/breaks/vote', breaks.vote
+		server.post '/breaks/delete', breaks.delete
+		#MEDIA INTERFACE
+		server.all '/media', breaks.mediaInterface
+		#server.post '/media/search', breaks.searchMedia
+		#Albums
+		server.all '/albums', albums.list
+		server.get '/albums/near/:page', albums.listNear
+		server.get '/albums/near', albums.listNear
+		server.get '/albums/new', albums.create
+		server.post '/albums/new', albums.submit
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create
