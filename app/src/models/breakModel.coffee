@@ -3,10 +3,12 @@ albumModel = require './albumModel'
 commentModel = require './commentModel'
 userModel = require './userModel'
 notificationsModel = require './notificationsModel'
+_ = require 'underscore'
+
 
 class Break
-	constructor: (@longitude, @latitude, @location_name, @story, @headline, @user) ->
-		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @location_name
+	constructor: (@longitude, @latitude, @placeName, @placeId, @story, @headline, @user) ->
+		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @placeName
 
 	saveToDB: (callback) ->
 		
@@ -16,7 +18,8 @@ class Break
 		
 		break_ = new models.Break
 			loc						:		{lon: @longitude, lat: @latitude}
-			location_name			:		@location_name
+			placeName				:		@placeName
+			placeId 				:		@placeId
 			story					:		@story
 			headline				:		@headline
 			user					:		@user
@@ -36,11 +39,12 @@ class Break
 						console.log 'BREAK: Break save failed'
 						throw err
 					else
-					console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
-					callback null, break_
+						console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
+						callback null, break_
 
-createBreak = (longitude, latitude, location_name, story, headline, userId, callback) ->
-	break_ = new Break longitude, latitude, location_name, story, headline, userId
+createBreak = (longitude, latitude, placeName, placeId, story, headline, userId, callback) ->
+	
+	break_ = new Break longitude, latitude, placeName, placeId, story, headline, userId
 	break_.saveToDB (err, b) ->
 		callback err, b
 	
@@ -129,18 +133,108 @@ findAll = (callback) ->
 			callback null, breaks_
 			return breaks_
 		)
+		
+#Similar to AlbumModel getFeed and will replace it in the next iteration.
+getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 	
-
+	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
+	range = 500+100*page
+	#Would like to have a more dynamic way to take the distance into account here... -E
+	
+	breaks = []
+	#This is the geonear mongoose function, that searches for locationbased nodes in db
+	#First it searches for 'range' amount of breaks.
+	models.Break.db.db.executeDbCommand {
+		geoNear: 'breaks'
+		near : [longitude, latitude]
+		num : range
+		spherical : true
+		}, (err, docs) ->
+			
+			console.log 'inside dbcommand'
+			
+			if err
+				throw err
+			else
+				if docs.documents[0].results
+					b = docs.documents[0].results
+					i = 0
+					
+					console.log 'b.length ' + b.length
+					
+					while i < b.length
+						foundBreak = b[i].obj
+						foundBreak.dis = b[i].dis
+						
+						#Now the shown breaks are excluded from results
+						alreadyShown = false
+						
+						if shownBreaks
+							
+							console.log 'shownbreaks exist'
+							
+							j = 0
+							while j < shownBreaks.length
+								
+								#Checking if the break has been shown already or if the album has been shown already
+								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
+									alreadyShown = true
+									break
+								j++
+						if not alreadyShown
+							
+							#console.log 'not shown'
+							
+							#This code ensures that only the best break of an album is included
+							if foundBreak.album != null
+								
+								#console.log 'breaks album not null'
+								
+								albumAdded = false
+								k = 0
+								while k < breaks.length
+									if String(foundBreak.album) is String(breaks[k].album)
+										albumAdded = true
+										if foundBreak.points > breaks[k].points
+											breaks[k] = foundBreak
+										else
+											break
+									k++
+								
+								if not albumAdded
+									breaks.push foundBreak
+								
+							#This break hasn't been shown before
+							else
+								breaks.push foundBreak
+						i++
+					
+					console.log 'nr of breaks: ' + breaks.length
+					
+					#Then the array is sorted based on points
+					sorted = _.sortBy breaks, (break_) ->
+						
+						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
+						return Number(-(break_.points - break_.dis*20000000000))
+						
+					#And last the first X breaks are sent to the client
+					best = _.first(sorted, 50)
+					callback null, best
+			
+	return breaks
+	
+#Millan webinterfacea varten
 findThreeRows = (pageNumber,sortPage, callback) ->
-		breaksPerPage = 4
-		models.Break.find().sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
-			console.log 'sortPage: ' + sortPage
-			breaks_ = (b for b in breaks)
-			models.Break.count().exec((err, count) ->
-				callback null, breaks_, count, sortPage
-			)
+	breaksPerPage = 4
+	models.Break.find().sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+		console.log 'sortPage: ' + sortPage
+		breaks_ = (b for b in breaks)
+		models.Break.count().exec((err, count) ->
+			callback null, breaks_, count, sortPage
 		)
+	)
 
+#Millan
 #search from breaks
 searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 		console.log 'entering search Breaks'
@@ -159,41 +253,42 @@ searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 			)
 		)
 		
-		
 
+#Millan
 sortByComments = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
-		console.log 'entering sortByComments'
-		breaks_ = breaks
-		breaksArr = []
-		breaksArrSorted = []
-		breaksPerPage = 4
-		checkIfSkip = 0
-		breaksToSkip = pageNumber*breaksPerPage
-		console.log 'breaks to skip: ' + breaksToSkip
-		for b in breaks
-			breaksArr.push b
-		for b in breaksArr
-			countLoops = 0
-			wantedBreakPos = 0
-			x = 0
-			for getNextBreak in breaksArr
-				if x < getNextBreak.comments.length
-					x = getNextBreak.comments.length
-					wantedBreakPos = countLoops
-				countLoops += 1
-			if checkIfSkip >= breaksToSkip
-				breaksArrSorted.push breaksArr[wantedBreakPos]
-				if breaksArrSorted.length is breaksPerPage
-					break
-			else
-				checkIfSkip += 1
-			breaksArr.splice(wantedBreakPos, 1)
-		models.Break.count().exec((err, count) ->
-				callback null, breaksArrSorted, count, sortPage
-			)
+	console.log 'entering sortByComments'
+	breaks_ = breaks
+	breaksArr = []
+	breaksArrSorted = []
+	breaksPerPage = 4
+	checkIfSkip = 0
+	breaksToSkip = pageNumber*breaksPerPage
+	console.log 'breaks to skip: ' + breaksToSkip
+	for b in breaks
+		breaksArr.push b
+	for b in breaksArr
+		countLoops = 0
+		wantedBreakPos = 0
+		x = 0
+		for getNextBreak in breaksArr
+			if x < getNextBreak.comments.length
+				x = getNextBreak.comments.length
+				wantedBreakPos = countLoops
+			countLoops += 1
+		if checkIfSkip >= breaksToSkip
+			breaksArrSorted.push breaksArr[wantedBreakPos]
+			if breaksArrSorted.length is breaksPerPage
+				break
+		else
+			checkIfSkip += 1
+		breaksArr.splice(wantedBreakPos, 1)
+	models.Break.count().exec((err, count) ->
+			callback null, breaksArrSorted, count, sortPage
 		)
+	)
 
+#Millan
 sortByViews = (pageNumber,sortPage, callback) ->
 	breaksPerPage = 4
 	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks)->
@@ -202,6 +297,8 @@ sortByViews = (pageNumber,sortPage, callback) ->
 			callback null, breaks_, count, sortPage
 		)
 	)
+	
+#Millan
 sortByVotes = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
 		breaksPerPage = 4
@@ -239,37 +336,15 @@ sortByVotes = (pageNumber,sortPage, callback) ->
 		)
 	)
 
-#finds an x amout of breaks in the vicinity. NOT USED?
-
+#Not used?
 ###
-findNear = (longitude, latitude, page, callback) ->
-	breaks = []
-	models.Break.db.db.executeDbCommand {
-		geoNear: 'breaks' 
-		near : [longitude, latitude] 
-		spherical : true
-		}, (err, docs) ->
-			if err
-				throw err
-			b = docs.documents[0].results
-			if b[0]
-				i = 0
-				while b[page*10+i] and i < 10
-					object = b[page*10+i]
-					found_break = object.obj
-					found_break.dis = object.dis
-					breaks.push found_break
-					i++
-			callback null, breaks
-	return breaks
-###
-
 findInfinite = (page, callback) ->
 	models.Break.find().skip(10*(page-1)).limit(10).exec((err, breaks) ->
 		breaks_ = (b for b in breaks)
 		callback null, breaks_
 		return breaks_
 	)
+###
 	
 findById = (id, callback) ->
 	models.Break.findById(id).exec((err, break_) ->
@@ -277,7 +352,7 @@ findById = (id, callback) ->
 	)
 
 #find break and add one to view
-findAndModify = (id, callback) ->
+addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
@@ -316,17 +391,19 @@ vote = (breakId, userId, direction, callback) ->
 				
 						#calculating new points
 						if (break_.upvotes.length - break_.downvotes.length) > 0
-							break_.points = break_.startingPoints + 500000 * Math.log (break_.upvotes.length - break_.downvotes.length)
+							break_.points = break_.startingPoints + 2500000 * Math.log (break_.upvotes.length - break_.downvotes.length)
 						else if (break_.upvotes.length - break_.downvotes.length) == 0
 							break_.points = break_.startingPoints
 						else
-							break_.points = break_.startingPoints - 500000 * Math.log (break_.downvotes.length - break_.upvotes.length)
+							break_.points = break_.startingPoints - 2500000 * Math.log (break_.downvotes.length - break_.upvotes.length)
 				
+						###
 						if break_.top or (break_.points > a.topBreak.points)
 							break_.top = true
 							albumModel.updateTop break_.album, break_, (err) ->
 								if err
 									throw err
+						###
 				
 						console.log break_.points
 						break_.save (err) ->
@@ -336,13 +413,18 @@ vote = (breakId, userId, direction, callback) ->
 							else
 								console.log 'BREAK: Vote successful: ' + break_._id
 								callback null, break_
-				
+
 del = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
 			callback err
 		else
 			if String(break_.user) is String(userId)
+				break_.remove (err) ->
+					console.log 'Break deleted: ' + breakId
+					callback err
+				
+				###
 				#check if the break is a top break. if so, give the album a new topbreak (or remove the album).
 				if break_.top
 					albumModel.findById break_.album, (err, album) ->
@@ -366,22 +448,21 @@ del = (breakId, userId, callback) ->
 											callback err
 										else
 											break_.remove (err) ->
-												callback err		
-				else	
-					break_.remove (err) ->
-						callback err
+												callback err
+				###
+
 						
 				#delete (or rename) the image file. how?
 				
 			else
 				callback 'Invalid user or user not authorized to delete this break.'
-				
-#modify break?
+			
 
 root = exports ? window
 root.Break = Break
 root.comment = comment
 root.createBreak = createBreak
+root.getFeed = getFeed
 root.findAll = findAll
 root.searchBreaks = searchBreaks
 root.sortByComments = sortByComments
@@ -389,9 +470,8 @@ root.sortByViews = sortByViews
 root.sortByVotes = sortByVotes
 root.fbShare = fbShare
 root.tweet = tweet
-root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
 root.del = del
-root.findAndModify = findAndModify
+root.addView = addView
 root.findThreeRows = findThreeRows

@@ -3,7 +3,7 @@ albums = require '../models/albumModel'
 exports.list = (req, res) ->	
 	if(req.ip isnt '54.247.69.189')
 		albums.list (albums) ->	
-			res.render 'albumlist', title : 'Breakit albumlist', albums: albums
+			res.render 'blocks/albumlist', title : 'Breakit albumlist', albums: albums
 
 exports.listNear = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
@@ -12,7 +12,7 @@ exports.listNear = (req, res) ->
 		if(!page)
 			page = 0
 		albums.findNear 24.83223594527063, 60.1802242005334, page, (nullvalue, albums) ->
-			res.render 'albumlist_near', title : 'Breakit albumlist', albums: albums
+			res.render 'blocks/albumlist_near', title : 'Breakit albumlist', albums: albums
 	
 exports.create = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
@@ -26,15 +26,3 @@ exports.submit = (req, res) ->
 			
 			album.saveToDB () ->
 			res.send 'Created a new album: ' + album.name
-
-###
-exports.getBreak = (req, res) ->
-	albums.getBreak req.params.album, req.params.page, (err, break_) ->
-		if err
-			throw err
-		else
-			console.log break_
-			res.render 'albumFeed', title : 'Feed', break_: break_
-###
-			
-

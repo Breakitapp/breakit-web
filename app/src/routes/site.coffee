@@ -12,45 +12,25 @@ comments = require '../models/commentModel'
 albums = require '../models/albumModel'
 
 
-###
-exports.index = (req, res) ->
-	res.redirect '/signup'
-###
-
-exports.break_tmp = (req, res) ->
-	res.render 'tmp/break', title: 'Break-template'
-
-###
 exports.public = (req, res) ->
 	breaks.findById req.params.id, (err, break_) ->
-		if err
-			res.send '404'
+		if not break_
+			res.send 'Break not found.'
 		else
-			#console.log 'break: ' +break_
-			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-###
-
-exports.public= (req, res) ->
-	breaks.findById req.params.id, (err, break_) ->
-		if err
-			res.send '404'
-		else
-			#console.log 'break: ' +break_
-				if(req.headers.host is 'localhost:3000')
-					#Change this to your own LOCAL user
-					#onepagerUser = '5097ae8bae4d4a8805000001'
-					onepagerUser = '50c9f32b6684c6ac05000001'
-					console.log 'in IF'
-				if(req.headers.host is '54.247.69.189')
-					# PROD SERVER ANON USER
-					onepagerUser = '50a0e4db1f63ba4d72000020'
-				if(req.headers.host is '46.137.122.206')
-					# DEV SERVER ANON USER
-					onepagerUser = '50a369413268496061000002'
-			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u:onepagerUser
+			if(req.headers.host is 'localhost:3000')
+				#Change this to your own LOCAL user
+				#onepagerUser = '5097ae8bae4d4a8805000001'
+				onepagerUser = '50c9f32b6684c6ac05000001'
+				console.log 'in IF'
+			if(req.headers.host is '54.247.69.189')
+				# PROD SERVER ANON USER
+				onepagerUser = '50a0e4db1f63ba4d72000020'
+			if(req.headers.host is '46.137.122.206')
+				# DEV SERVER ANON USER
+				onepagerUser = '50a369413268496061000002'
+			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 
 exports.webComment = (req, res) ->
-
 	users.findById req.body.userId, (err, author) ->
 		if err
 			throw err
@@ -63,8 +43,8 @@ exports.webComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					res.redirect '/p/' + req.body.breakId
-#Onepager vs2
 
+#Onepager vs2
 exports.pvs2 = (req, res) ->
 	cookieName = ''
 	cookieValue = ''
@@ -104,12 +84,9 @@ exports.pvs2 = (req, res) ->
 
 				#for(head in req.headers)
 					#console.log 'head'+head
-				
-				
-				
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 	else
-		breaks.findAndModify req.params.id, (err, break_) ->
+		breaks.addView req.params.id, (err, break_) ->
 			if err
 				res.send '404'
 			else

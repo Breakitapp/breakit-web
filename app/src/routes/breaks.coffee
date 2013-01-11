@@ -11,8 +11,8 @@ exports.list = (req, res) ->
 			if err
 				res.send 'No breaks found.'
 			else
-				res.render 'breakslist', title : 'All breaks', breaks: breaks_
-			
+				#TODO change the breakslist.jade to follow the guidelines of templating.
+				res.render 'tests/breakslist', title : 'All breaks', breaks: breaks_
 ###
 exports.searchMedia= (req, res) ->
 	x = req.body.searchValue
@@ -30,9 +30,9 @@ exports.infinite = (req, res) ->
 #This is only for web interface		
 exports.easyWebCreate = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
-		res.render 'easyNewBreak', title : 'Create a new Break'
+		res.render 'tests/easyNewBreak', title : 'Create a new Break'
 
-
+#Markon
 exports.easyWebSubmit = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
 		#PARSE request
@@ -65,7 +65,10 @@ exports.webCreate = (req, res) ->
 #This is only for web interface	
 exports.webSubmit = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
-		breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
+		
+		console.log 'placeId: ' + req.body.placeId
+		
+		breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 			albums.addBreak break_
 			
 			target_path ='./app/res/images/' + break_._id + '.jpeg'
@@ -84,11 +87,10 @@ exports.webSubmit = (req, res) ->
 
 #This is only for web interface	
 exports.comment = (req, res) ->
-	res.render 'comment', title : 'Create a new comment'
+	res.render 'blocks/comment', title : 'Create a new comment'
 
 #This is only for web interface		
 exports.postComment = (req, res) ->
-
 	users.findById req.body.userId, (err, author) ->
 		if err
 			throw err
@@ -102,30 +104,6 @@ exports.postComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					res.send 'Commenting successful. Count: ' + commentCount
-
-###
-exports.postComment_1page = (req, res) ->
-
-	users.findById req.body.userId, (err, author) ->
-		if err
-			throw err
-		else
-			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
-	
-			console.log 'new comment: ' + newComment.comment
-			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
-				if err
-					res.send 'Commenting failed.'
-				else
-					breaks.findById req.body.breakId, (err, break_) ->
-						if err
-							res.send '404'
-						else
-							#console.log 'break: ' +break_
-							res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-			
-			#res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-###
 
 #req needs to contain "which" field ('up' or 'down') and "breakId" field
 exports.vote = (req, res) ->

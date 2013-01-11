@@ -1,4 +1,4 @@
 extend layout
 block contents
 	for feedback in feedbacks
-		p= '   USER:' + feedback.user_id + '   COMMENT:'+ feedback.comment 
+		include blocks/feedback

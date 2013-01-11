@@ -10,31 +10,37 @@ comments = require '../models/commentModel'
 notifications = require '../models/notificationsModel'
 users = require '../models/userModel'
 feedback = require '../models/feedbackModel'
+report = require '../models/reportModel'
 fs			= require 'fs'
 qs = require('querystring')
 
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
 #The important thing for the client to pick is the albums name, and the topbreak. 
 exports.index = (req, res) ->
+	
+	console.log 'new request object: '+req
+	console.log 'request shownBreaks: '+req.shownBreaks
 	#Change page and location to numbers
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
+	shown 	= null
 	
-	if req.body.shownAlbums
-		tempstr = req.body.shownAlbums.substring(1, req.body.shownAlbums.length - 1)
-		arr = tempstr.split ','
-		console.log arr
+	if req.body.shownBreaks
+		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1)
+		console.log tempstr
+		shown = tempstr.split ','
 		
+	console.log shown
 	
 	#Get albums sorted according to location
-	albums.getFeed lon, lat, page, arr, (err, albums) ->		
+	breaks.getFeed lon, lat, page, shown, (err, breaks) ->
 		if err
 			throw err
 			res.send '404'
 		else
 			#Send the albums as a JSON to client
-			res.send [albums, page]
+			res.send [breaks, page]
 
 
 exports.login = (req, res) 	->
@@ -66,8 +72,17 @@ exports.new_user = (req, res) ->
 
 #create a new break
 exports.post_break = (req, res) ->
-	breaks.createBreak req.body.longitude, req.body.latitude, req.body.location_name, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
-		albums.addBreak break_
+	
+	console.log 'place id: ' + req.body.placeId
+	console.log 'place name: ' + req.body.placeName
+	#
+	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
+		
+		#Only if the break should be in an album...
+		if break_.placeId != undefined
+			console.log 'Adding a new break to an album.'
+			albums.addBreak break_
+		
 		tmp_path = req.files.image.path
 		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
 		target_path ='./app/res/images/' + break_._id + '.jpeg'
@@ -84,11 +99,29 @@ exports.post_break = (req, res) ->
 							throw err
 						else
 							res.send b
+
+exports.delete_break = (req, res) ->
+	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
+	
+	breaks.del req.body.breakId, req.body.userId, (err) ->
+		if err
+			res.send 'Break delete failed.' 
+		else
+			res.send 'Break deleted successfully.'
+			
+exports.report_break = (req, res) ->
+	console.log 'Reported an inappropriate Break: ' + req.body.breakId + ' by user: ' + req.body.userId
+
+	report.createReport req.body.breakId, req.body.userId, (err) ->
+		if err
+			res.send 'Break reporting failed.'
+		else
+			res.send 'Break reported successfully.'
 					
 exports.post_comment = (req, res) ->
 	users.findById req.body.userId, (err, author) ->
-		if err
-			throw err
+		if not author
+			res.send 'Invalid user.'
 		else
 			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
 			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
@@ -114,7 +147,7 @@ exports.get_picture = (req, res) ->
 #not needed anymore?
 exports.get_break = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
-		if err
+		if not b
 			console.log err
 			res.send 'Could not find the break'
 		else
@@ -170,6 +203,9 @@ exports.changeUserAttributes = (req, res) ->
 
 
 exports.getAlbumBreaks = (req, res) ->
+	
+	console.log 'Getting Album Breaks: ' + req.params.albumId + ', page: ' + req.params.page
+	
 	albums.getAlbumBreaks req.params.albumId, req.params.page, (err, foundBreaks)->
 		if err
 			res.send 'error'
