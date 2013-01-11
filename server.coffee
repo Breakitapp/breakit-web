@@ -64,28 +64,25 @@ server.all '/', site.signup
 #Check if server is started as dev or local.
 if String(server.get 'env') is String('local') or String(server.get 'env') is String('development')
 	server.configure ->
-		server.get '/breaks/new', breaks.webCreate
-		server.post '/breaks/new', breaks.webSubmit
-		server.get '/breaks/enew', breaks.easyWebCreate
-		server.post '/breaks/enew', breaks.easyWebSubmit
-		#USERS
+		#Users
 		server.get '/users/new', user.create
 		server.post '/users/new', user.submit
-		#Users
 		server.all '/users', user.list
 		server.get '/users/:id', user.view
 		server.post '/users/:id', user.update
 		server.post '/users/delete/:id', user.remove
-		#Breaks (had to use breaks instead of break, since break is a reserved word)
+		#Breaks 
 		server.all '/breaks', breaks.list
+		server.get '/breaks/new', breaks.webCreate
+		server.post '/breaks/new', breaks.webSubmit
 		server.get '/breaks/comment', breaks.comment
 		server.post '/breaks/comment', breaks.postComment
 		server.post '/breaks/vote', breaks.vote
 		server.post '/breaks/delete', breaks.delete
 		#MEDIA INTERFACE
 		server.all '/media', breaks.mediaInterface
-		#server.post '/media/search', breaks.searchMedia
 		#Albums
+		#Possibly outdated
 		server.all '/albums', albums.list
 		server.get '/albums/near/:page', albums.listNear
 		server.get '/albums/near', albums.listNear
