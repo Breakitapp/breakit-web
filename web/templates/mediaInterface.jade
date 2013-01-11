@@ -1,61 +1,56 @@
-!!! 5
-html
-	head
-		title= title
-		meta(name='viewport', content='width=device-width,initial-scale=1')
-		block scripts
-			link(rel='stylesheet', href='/public/css/mediaInt.css')
-			link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
-			script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js")
-			script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
-			script(type='text/javascript', src='../public/js/libs/underscore-min.js')
-			script(type='text/javascript', src='../public/js/libs/backbone-min.js')
-	body
-		header.boxShadow
-			#header.centrify
-				img.left(src="/public/images/1pager/breakit.png")
-				h1 BREAK
-					span IT
-		#sort.centrify
-			form.searchform(method="post", action="/media", name="mediaInterface")
-				input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
-				input.searchbutton(type="submit", value="Go")
-			form(method="post", action="/media", name="mediaInterface")
-				input.buttonBg(type="submit",name="sortPage",value="byDate")
-				input.buttonBg(type="submit",name="sortPage",value="commented")
-				input.buttonBg(type="submit",name="sortPage",value="viewed")
-				input.buttonBg(type="submit",name="sortPage",value="ranking")
-				//
-					input.buttonBg(type="submit",name="pics",value="My pics")
-		#wrapper.centrify
-			br
-			br
+extend layout
+block scripts
+	link(rel='stylesheet', href='/public/css/mediaInt.css')
+	link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
+	script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js")
+	script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
+block contents
+	header.boxShadow
+		#header.centrify
+			img.left(src="/public/images/1pager/breakit.png")
+			h1 BREAK
+				span IT
+	#sort.centrify
+		form.searchform(method="post", action="/media", name="mediaInterface")
+			input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
+			input.searchbutton(type="submit", value="Go")
+		form(method="post", action="/media", name="mediaInterface")
+			input.buttonBg(type="submit",name="sortPage",value="byDate")
+			input.buttonBg(type="submit",name="sortPage",value="commented")
+			input.buttonBg(type="submit",name="sortPage",value="viewed")
+			input.buttonBg(type="submit",name="sortPage",value="ranking")
 			//
-				p.sortByTag SORT BY
-				form
-					input.sortByTag(type="button",name="time",value="Time")
-					input.sortByTag(type="button",name="place",value="Place")
-					input.sortByTag(type="button",name="tags",value="Tags")
-					input.sortByTag(type="button",name="ranking",value="Ranking")
-			ul
-				for b in breaks
-					li.smallRadius.fullBorderGroove
-						p.smallRadius.fullBorderRidge #{b.headline}
-						a(href="/p/" + b._id)
-							img(src="/ios/picture/" + b._id, alt=b.headline)
-						score = b.upvotes.length - b.downvotes.length
-						p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
-						p.smallRadius.fullBorderGroove= "Votes: " + score
-						p.smallRadius.fullBorderGroove= "Views: " + b.views
-		form.page(id="pages", method="post", action="/media")
-		#push
-		#footer
-		script
-			$(document).ready(function(){
-				count = #{count}
-				for(i = 0; i < count/4; i++){
-					j=i +1
-					$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
-				}
-				$('#pages').append('<input type="text" name=currentSortPage value=#{sortPageValue}>');
-			});
+				input.buttonBg(type="submit",name="pics",value="My pics")
+	#wrapper.centrify
+		br
+		br
+		//
+			p.sortByTag SORT BY
+			form
+				input.sortByTag(type="button",name="time",value="Time")
+				input.sortByTag(type="button",name="place",value="Place")
+				input.sortByTag(type="button",name="tags",value="Tags")
+				input.sortByTag(type="button",name="ranking",value="Ranking")
+		ul
+			for b in breaks
+				li.smallRadius.fullBorderGroove
+					p.smallRadius.fullBorderRidge #{b.headline}
+					a(href="/p/" + b._id)
+						img(src="/ios/picture/" + b._id, alt=b.headline)
+					score = b.upvotes.length - b.downvotes.length
+					p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
+					p.smallRadius.fullBorderGroove= "Votes: " + score
+					p.smallRadius.fullBorderGroove= "Views: " + b.views
+	form.page(id="pages", method="post", action="/media")
+	#push
+	#footer
+block footerscripts
+	script
+		$(document).ready(function(){
+			count = #{count}
+			for(i = 0; i < count/4; i++){
+				j=i +1
+				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
+			}
+			$('#pages').append('<input type="text" name=currentSortPage value=#{sortPageValue}>');
+		});
