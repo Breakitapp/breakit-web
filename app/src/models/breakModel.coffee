@@ -257,33 +257,33 @@ searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 #Millan
 sortByComments = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
-	console.log 'entering sortByComments'
-	breaks_ = breaks
-	breaksArr = []
-	breaksArrSorted = []
-	breaksPerPage = 4
-	checkIfSkip = 0
-	breaksToSkip = pageNumber*breaksPerPage
-	console.log 'breaks to skip: ' + breaksToSkip
-	for b in breaks
-		breaksArr.push b
-	for b in breaksArr
-		countLoops = 0
-		wantedBreakPos = 0
-		x = 0
-		for getNextBreak in breaksArr
-			if x < getNextBreak.comments.length
-				x = getNextBreak.comments.length
-				wantedBreakPos = countLoops
-			countLoops += 1
-		if checkIfSkip >= breaksToSkip
-			breaksArrSorted.push breaksArr[wantedBreakPos]
-			if breaksArrSorted.length is breaksPerPage
-				break
-		else
-			checkIfSkip += 1
-		breaksArr.splice(wantedBreakPos, 1)
-	models.Break.count().exec((err, count) ->
+		console.log 'entering sortByComments'
+		breaks_ = breaks
+		breaksArr = []
+		breaksArrSorted = []
+		breaksPerPage = 4
+		checkIfSkip = 0
+		breaksToSkip = pageNumber*breaksPerPage
+		console.log 'breaks to skip: ' + breaksToSkip
+		for b in breaks
+			breaksArr.push b
+		for b in breaksArr
+			countLoops = 0
+			wantedBreakPos = 0
+			x = 0
+			for getNextBreak in breaksArr
+				if x < getNextBreak.comments.length
+					x = getNextBreak.comments.length
+					wantedBreakPos = countLoops
+				countLoops += 1
+			if checkIfSkip >= breaksToSkip
+				breaksArrSorted.push breaksArr[wantedBreakPos]
+				if breaksArrSorted.length is breaksPerPage
+					break
+			else
+				checkIfSkip += 1
+			breaksArr.splice(wantedBreakPos, 1)
+		models.Break.count().exec((err, count) ->
 			callback null, breaksArrSorted, count, sortPage
 		)
 	)
