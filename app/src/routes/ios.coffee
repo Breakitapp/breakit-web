@@ -58,7 +58,7 @@ exports.login = (req, res) 	->
 			res.send 'confirmed'
 
 #Creates a new user and responds with the userId
-exports.new_user = (req, res) ->
+exports.newUser = (req, res) ->
 	
 	console.log 'New user requested. Nickname: ' + req.body.nickname
 	
@@ -71,7 +71,7 @@ exports.new_user = (req, res) ->
 			res.send user
 
 #create a new break
-exports.post_break = (req, res) ->
+exports.postBreak = (req, res) ->
 	
 	console.log 'place id: ' + req.body.placeId
 	console.log 'place name: ' + req.body.placeName
@@ -100,7 +100,7 @@ exports.post_break = (req, res) ->
 						else
 							res.send b
 
-exports.delete_break = (req, res) ->
+exports.deleteBreak = (req, res) ->
 	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
 	
 	breaks.del req.body.breakId, req.body.userId, (err) ->
@@ -109,7 +109,7 @@ exports.delete_break = (req, res) ->
 		else
 			res.send 'Break deleted successfully.'
 			
-exports.report_break = (req, res) ->
+exports.reportBreak = (req, res) ->
 	console.log 'Reported an inappropriate Break: ' + req.body.breakId + ' by user: ' + req.body.userId
 
 	report.createReport req.body.breakId, req.body.userId, (err) ->
@@ -118,7 +118,7 @@ exports.report_break = (req, res) ->
 		else
 			res.send 'Break reported successfully.'
 					
-exports.post_comment = (req, res) ->
+exports.postComment = (req, res) ->
 	users.findById req.body.userId, (err, author) ->
 		if not author
 			res.send 'Invalid user.'
@@ -139,13 +139,13 @@ exports.vote = (req, res) ->
 		else
 			res.send break_
 
-exports.get_picture = (req, res) ->
+exports.getPicture = (req, res) ->
 	id = req.params.id
 	
 	res.sendfile './app/res/images/' + id + '.jpeg'
 
 #not needed anymore?
-exports.get_break = (req, res) ->
+exports.getBreak = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
 		if not b
 			console.log err
@@ -174,7 +174,7 @@ exports.fbShare = (req, res) ->
 			res.send 'Saved the Facebook share successfully to server'
 
 
-exports.browse_album = (req, res) ->
+exports.browseAlbum = (req, res) ->
 	console.log 'Getting page ' + req.params.page + ' in album ' + req.params.albumId
 	albums.getBreak req.params.albumId, req.params.page, (err, break_) ->
 		if err

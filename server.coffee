@@ -64,14 +64,6 @@ server.all '/', site.signup
 #Check if server is started as dev or local.
 if String(server.get 'env') is String('local') or String(server.get 'env') is String('development')
 	server.configure ->
-		#TESTING FUNCTIONS
-		server.get '/test', test.index
-		#TESTING FUNCTIONS
-		server.get '/test', test.index
-		server.get '/test/sendForm', test.sendForm
-		server.post '/test/sendForm', test.submitForm
-		server.get '/test/userfeed', test.specifyFeed
-		server.post '/test/userfeed', test.feed
 		server.get '/breaks/new', breaks.webCreate
 		server.post '/breaks/new', breaks.webSubmit
 		server.get '/breaks/enew', breaks.easyWebCreate
@@ -108,19 +100,19 @@ server.get '/feedback/list', feedback.list
 #iOS
 server.post '/ios', ios.index
 server.post '/ios/login', ios.login
-server.post '/ios/new_user', ios.new_user
-server.post '/ios/new_break', ios.post_break
-server.post '/ios/delete_break', ios.delete_break
-server.post '/ios/report_break', ios.report_break
-server.post '/ios/comment', ios.post_comment
+server.post '/ios/new_user', ios.newUser
+server.post '/ios/new_break', ios.postBreak
+server.post '/ios/delete_break', ios.deleteBreak
+server.post '/ios/report_break', ios.reportBreak
+server.post '/ios/comment', ios.postComment
 server.post '/ios/vote', ios.vote
 server.post '/ios/feedback', ios.feedbackCreate
 server.post '/ios/tweet', ios.tweet
 server.post '/ios/fb', ios.fbShare
 server.post '/ios/change_nick', ios.changeUserAttributes
-server.get '/ios/picture/:id', ios.get_picture
-server.get '/ios/info/:id', ios.get_break
-server.get '/ios/browse_album/:albumId/:page', ios.browse_album
+server.get '/ios/picture/:id', ios.getPicture
+server.get '/ios/info/:id', ios.getBreak
+server.get '/ios/browse_album/:albumId/:page', ios.browseAlbum
 server.get '/ios/whole_album/:albumId/:page', ios.getAlbumBreaks
 server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
 server.get '/ios/mynotifications/:userId', ios.getMyNotifications
