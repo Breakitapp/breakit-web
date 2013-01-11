@@ -32,7 +32,7 @@ exports.list = (req, res) ->
 		if userlist == null
 			res.send('No users found.')
 		else
-			res.render 'userlist', title : 'Breakit userlist', users: userlist
+			res.render '/tests/userlist', title : 'Breakit userlist', users: userlist
 		
 exports.update = (req,res) ->
 	console.log 'Update on user data received. Id: ' + req.params.id
