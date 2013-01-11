@@ -3,13 +3,12 @@ models = require './mongoModel'
 class Feedback
 	constructor: (@user_id, @comment, @date) ->
 	save: (callback) ->
-		console.log 'hello'
 		@date = new Date()
 		feedback_ = new models.Feedback
 			user_id : @user_id
 			comment : @comment
 			date : @date
-		console.log 'feedback: '+feedback_
+		console.log 'feedback: ' + feedback_
 		feedback_.save (err) ->
 			if err
 				console.log 'FEEDBACK: Feedback save failed'
@@ -20,7 +19,8 @@ class Feedback
 
 #EXPORT ALL THE FUNCTIONS HERE:
 
-#used by ios
+#Used by ios
+#Todo: change the feedback to proper format
 createFeedback = (reqBody, callback) ->
 	console.log 'String from ios: '+ reqBody.feedback
 	splitFeedback = reqBody.feedback.split("#")

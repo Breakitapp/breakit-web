@@ -85,7 +85,7 @@ html
 								img(src="/public/images/1pager/comments.png")
 								p #{b.comments.length}
 					#bottomRight.right
-						form(name="post_comment", action="/onepager/comment", method="post")
+						form(name="post_comment", action="/p/comment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
 							input.hideInput(name = "userId", value=u)
 							input.hideInput(name = "breakId", value=b._id)

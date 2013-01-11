@@ -78,7 +78,7 @@ header img{
 	text-align:left;
 }
 #sort{
-	width:1200px;
+	width:960px;
 }
 #wrapper img{
 	width:200px;
@@ -106,6 +106,7 @@ header img{
 	background-color: #FFF;
 	min-height: 4em;
 	margin-top: -4em;
+	bottom:0;
 	z-index: 10;
 	position: absolute;
 	clear: both;
@@ -242,4 +243,8 @@ p.sortByTag{
 .searchform .searchbutton:active{
 	position:relative;
 	top:2px;
+}
+.page{
+	clear:both;
+	width:100%;
 }

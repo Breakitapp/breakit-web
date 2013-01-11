@@ -5,7 +5,7 @@ userModel = require '../models/userModel'
 exports.create = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
 		users = userModel.list (u)->
-			res.render 'feedback', title : 'Feedback test form', users: u
+			res.render 'feedbackForm', title : 'Feedback test form', users: u
 	
 exports.submit = (req, res) ->
 	if(req.ip isnt '54.247.69.189')
