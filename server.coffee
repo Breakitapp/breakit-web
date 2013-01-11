@@ -5,14 +5,14 @@
 ###
 
 express			= require 'express'
-site				= require './app/lib/routes/site'
-user				= require './app/lib/routes/user'
+site			= require './app/lib/routes/site'
+user			= require './app/lib/routes/user'
 breaks			= require './app/lib/routes/breaks'
 albums			= require './app/lib/routes/albums'
 feedback		= require './app/lib/routes/feedback'
-test				= require './app/lib/routes/test'
-ios					= require './app/lib/routes/ios'
-media		= require './app/lib/routes/mediaInterface'
+test			= require './app/lib/routes/test'
+ios				= require './app/lib/routes/ios'
+media			= require './app/lib/routes/mediaInterface'
 settings		= require './settings'
 mongoose		= require 'mongoose'
 stylus			= require 'stylus'
@@ -119,6 +119,7 @@ server.post '/p/comment', site.webComment
 #Signup
 server.get '/signup', site.signup
 server.post '/signup', site.signup_post
+#Emails the betatesters list (currently to Marko)
 server.get '/signup/send', site.send
 
 #MEDIA INTERFACE
