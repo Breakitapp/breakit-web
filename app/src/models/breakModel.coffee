@@ -341,7 +341,7 @@ findById = (id, callback) ->
 		callback err, break_
 	)
 
-#find break and add one to view
+#find break and add one to view, not used atm in the app
 addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
@@ -387,14 +387,6 @@ vote = (breakId, userId, direction, callback) ->
 						else
 							break_.points = break_.startingPoints - 2500000 * Math.log (break_.downvotes.length - break_.upvotes.length)
 				
-						###
-						if break_.top or (break_.points > a.topBreak.points)
-							break_.top = true
-							albumModel.updateTop break_.album, break_, (err) ->
-								if err
-									throw err
-						###
-				
 						console.log break_.points
 						break_.save (err) ->
 							if err
@@ -413,34 +405,6 @@ del = (breakId, userId, callback) ->
 				break_.remove (err) ->
 					console.log 'Break deleted: ' + breakId
 					callback err
-				
-				###
-				#check if the break is a top break. if so, give the album a new topbreak (or remove the album).
-				if break_.top
-					albumModel.findById break_.album, (err, album) ->
-						if err
-							callback err
-						else
-							albumModel.getBreak album._id, 1, (err, newTop) ->
-								
-								#Check if the album only contains 1 break
-								if String(newTop._id) is String(break_.id)
-									album.remove (err) ->
-										if err
-											callback err
-										else
-											break_.remove (err) ->
-												callback err
-								else
-									album.topBreak = newTop
-									album.save (err) ->
-										if err
-											callback err
-										else
-											break_.remove (err) ->
-												callback err
-				###
-
 						
 				#delete (or rename) the image file. how?
 				
@@ -454,14 +418,17 @@ root.comment = comment
 root.createBreak = createBreak
 root.getFeed = getFeed
 root.findAll = findAll
+
+#media interface stuff
 root.searchBreaks = searchBreaks
 root.sortByComments = sortByComments
 root.sortByViews = sortByViews
 root.sortByVotes = sortByVotes
+root.findThreeRows = findThreeRows
+
+root.addView = addView
 root.fbShare = fbShare
 root.tweet = tweet
 root.findById = findById
 root.vote = vote
 root.del = del
-root.addView = addView
-root.findThreeRows = findThreeRows

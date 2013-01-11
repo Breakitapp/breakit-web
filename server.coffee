@@ -12,7 +12,7 @@ albums			= require './app/lib/routes/albums'
 feedback		= require './app/lib/routes/feedback'
 test				= require './app/lib/routes/test'
 ios					= require './app/lib/routes/ios'
-mediaint		= require './app/lib/routes/mediainterface'
+media		= require './app/lib/routes/mediaInterface'
 settings		= require './settings'
 mongoose		= require 'mongoose'
 stylus			= require 'stylus'
@@ -80,14 +80,10 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		server.post '/breaks/vote', breaks.vote
 		server.post '/breaks/delete', breaks.delete
 		#MEDIA INTERFACE
-		server.all '/media', breaks.mediaInterface
+		#TODO: Check
+		server.all '/media', media.mediaInterface
 		#Albums
-		#Possibly outdated
 		server.all '/albums', albums.list
-		server.get '/albums/near/:page', albums.listNear
-		server.get '/albums/near', albums.listNear
-		server.get '/albums/new', albums.create
-		server.post '/albums/new', albums.submit
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create
