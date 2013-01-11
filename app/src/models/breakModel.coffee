@@ -335,16 +335,6 @@ sortByVotes = (pageNumber,sortPage, callback) ->
 			callback null, breaksArrSorted, count, sortPage
 		)
 	)
-
-#Not used?
-###
-findInfinite = (page, callback) ->
-	models.Break.find().skip(10*(page-1)).limit(10).exec((err, breaks) ->
-		breaks_ = (b for b in breaks)
-		callback null, breaks_
-		return breaks_
-	)
-###
 	
 findById = (id, callback) ->
 	models.Break.findById(id).exec((err, break_) ->
