@@ -79,9 +79,6 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		server.post '/breaks/comment', breaks.postComment
 		server.post '/breaks/vote', breaks.vote
 		server.post '/breaks/delete', breaks.delete
-		#MEDIA INTERFACE
-		#TODO: Check
-		server.all '/media', media.mediaInterface
 		#Albums
 		server.all '/albums', albums.list
 
@@ -125,8 +122,8 @@ server.post '/signup', site.signup_post
 server.get '/signup/send', site.send
 
 #MEDIA INTERFACE
-server.all '/media', mediaint.mediaInterface
-#server.post '/media/search', breaks.searchMedia
+#TODO: Check
+server.all '/media', media.mediaInterface
 
 #Starting the server
 server.configure "local", ->
