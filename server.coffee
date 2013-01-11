@@ -12,13 +12,11 @@ albums				= require './app/lib/routes/albums'
 feedback			= require './app/lib/routes/feedback'
 test				= require './app/lib/routes/test'
 ios					= require './app/lib/routes/ios'
+mediaint			=require './app/lib/routes/mediainterface'
 settings			= require './settings'
 mongoose			= require 'mongoose'
 stylus				= require 'stylus'
-mediaint			=require './app/lib/routes/mediainterface'
-#blog			= require './app/lib/routes/blog'
-#Dummydata insert
-#dummy					= require './app/lib/models/dummyModel'
+
 
 server = module.exports = express()
 #poet				= (require 'poet') server
@@ -80,6 +78,37 @@ server.all '/break', site.break_tmp
 server.configure "local", ->
 	#TESTING FUNCTIONS
 	server.get '/test', test.index
+	server.get '/test/sendForm', test.sendForm
+	server.post '/test/sendForm', test.submitForm
+	server.get '/test/userfeed', test.specifyFeed
+	server.post '/test/userfeed', test.feed
+	server.get '/breaks/new', breaks.webCreate
+	server.post '/breaks/new', breaks.webSubmit
+	server.get '/breaks/enew', breaks.easyWebCreate
+	server.post '/breaks/enew', breaks.easyWebSubmit
+	#USERS
+	server.get '/users/new', user.create
+	server.post '/users/new', user.submit
+	#Users
+	server.all '/users', user.list
+	server.get '/users/:id', user.view
+	server.post '/users/:id', user.update
+	server.post '/users/delete/:id', user.remove
+	#Breaks (had to use breaks instead of break, since break is a reserved word)
+	server.all '/breaks', breaks.list
+	server.get '/breaks/comment', breaks.comment
+	server.post '/breaks/comment', breaks.postComment
+	server.post '/breaks/vote', breaks.vote
+	server.post '/breaks/delete', breaks.delete
+	#MEDIA INTERFACE
+	server.all '/media', breaks.mediaInterface
+	#server.post '/media/search', breaks.searchMedia
+	#Albums
+	server.all '/albums', albums.list
+	server.get '/albums/near/:page', albums.listNear
+	server.get '/albums/near', albums.listNear
+	server.get '/albums/new', albums.create
+	server.post '/albums/new', albums.submit
 
 server.configure "development", ->
 	#TESTING FUNCTIONS
