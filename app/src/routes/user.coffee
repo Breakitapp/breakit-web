@@ -3,11 +3,9 @@ users = require '../models/userModel'
 models = require '../models/mongoModel'
 
 exports.create = (req, res) ->
-	console.log 'I was at create'
-	res.render 'newUser', title : 'Create new Breakit user'
+	res.render 'blocks/newUser', title : 'Create new Breakit user'
 	
 exports.submit = (req, res) ->
-	
 	console.log 'Data for new user received. Email: ' + req.body.em
 	
 	fn = req.body.fn
@@ -17,43 +15,19 @@ exports.submit = (req, res) ->
 	ph = req.body.ph
 
 	users.createUser nn, ph, (err, user) ->
-		console.log 'I was at createUser'
 		if err
 			res.send('Error creating new user')
 		else
 			res.redirect('/users/' + user._id)
-
-###
-	async.waterfall [
-
-		(callback) ->
-			models.User.count {}, (err, c) ->
-				id = c + 1
-				console.log 'New user id assigned: ' + id
-				callback null, id
-		,
-		(id, callback) ->
-			newUser = new user.User id, fn, ln, nn, em, ph
-			callback null, newUser
-	], 
-	(err, newUser) ->
-		newUser.save (err) ->
-			if err
-				res.send 'Error creating new user'
-			else
-				res.send 'New user registered successfully!'
-###
 	
 exports.view = (req,res) ->
-	console.log 'I was at frikking view'
 	users.findById req.params.id, (err, targetUser) ->
-		if err
+		if not targetUser
 			res.send('Did not find user.')
 		else
-			res.render 'viewUser', title : 'User ' + req.params.id, user: targetUser
+			res.render 'blocks/viewUser', title : 'User ' + req.params.id, user: targetUser
     
 exports.list = (req, res) ->
-
 	users.list (userlist) ->
 		if userlist == null
 			res.send('No users found.')
@@ -76,6 +50,4 @@ exports.remove = (req,res) ->
 			res.send('Removing user failed.')
 		else
 		  	res.send('User removed successfully.')
-		
-			
 		
