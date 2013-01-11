@@ -11,7 +11,8 @@ users = require '../models/userModel'
 comments = require '../models/commentModel'
 albums = require '../models/albumModel'
 
-exports.public= (req, res) ->
+
+exports.public = (req, res) ->
 	breaks.findById req.params.id, (err, break_) ->
 		if not break_
 			res.send 'Break not found.'
@@ -43,6 +44,7 @@ exports.webComment = (req, res) ->
 				else
 					res.redirect '/p/' + req.body.breakId
 
+#Onepager vs2
 exports.pvs2 = (req, res) ->
 	cookieName = ''
 	cookieValue = ''
