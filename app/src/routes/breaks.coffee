@@ -11,7 +11,7 @@ exports.list = (req, res) ->
 			res.send 'No breaks found.'
 		else
 			#TODO change the breakslist.jade to follow the guidelines of templating.
-			res.render 'tests/breakslist', title : 'All breaks', breaks: breaks_
+			res.render 'tests/breakList', title : 'All breaks', breaks: breaks_
 
 #This is only for web interface	
 exports.webCreate = (req, res) ->
