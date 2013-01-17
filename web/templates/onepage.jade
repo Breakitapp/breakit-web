@@ -9,7 +9,34 @@ html
 		script(type='text/javascript', src='http://www.datejs.com/build/date.js')
 		script(type="text/javascript", src="/public/js/mousewheel.js")
 		script(type="text/javascript", src="/public/js/jScrollPane.js")
-	body
+		script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDhH--9TqUDZx3LmS9X6SClmyFEplBZeA&sensor=false")
+		script(type="text/javascript")
+			//initialize function that gets the google map with the help of google API
+			function initialize(){
+				var lat = #{b.loc.lat}
+				var lan = #{b.loc.lon}
+				var mapOptions = {
+					center: new google.maps.LatLng(lat, lan),
+					zoom: 13,
+					disableDefaultUI: true,
+					panControl: false,
+					zoomControl: true,
+					scaleControl: false,
+					marker:true,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				//create the map
+					var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+					//Location for the marker
+					var location = new google.maps.LatLng(lat, lan);
+					//Add the marker
+					var marker = new google.maps.Marker({
+						position:location,
+							map:map
+					})
+			}
+	//onLoad starts the function initialize()
+	body(onLoad="initialize();")
 		header.boxShadow
 			#header.centrify
 				img.left(src="/public/images/1pager/breakit.png")
@@ -23,7 +50,8 @@ html
 					#leftContainer.left
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
-						iframe.fullBorderRidge.bottomMargin(width="380", height="280", frameborder="0", scrolling="no",src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=9&amp;output=embed")
+						#map.fullBorderRidge.bottomMargin
+						//(width="380", height="280", frameborder="0", scrolling="no",src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=14&amp;output=embed")
 						#commentField.fullBorderGroove.scroll-pane
 						
 							storydate = b.date

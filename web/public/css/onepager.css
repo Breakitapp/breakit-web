@@ -76,8 +76,10 @@ header img{
     padding-right:20px;
     height:30px;
 }
-iframe{
+#map{
 	margin-bottom:10px;
+	width:380px;
+	height:280px;
 }
 #header h1, #header h1 span{
 	font-weight:100;
