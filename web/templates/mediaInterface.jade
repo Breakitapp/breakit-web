@@ -54,5 +54,5 @@ block footerscripts
 				j=i +1
 				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
 			}
-			$('#pages').append('<input type="text" name=currentSortPage value=#{sortPageValue}>');
+			$('#pages').append('<input type="text" class="hidden" name=currentSortPage value=#{sortPageValue}>');
 		});

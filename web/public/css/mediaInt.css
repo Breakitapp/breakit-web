@@ -24,11 +24,8 @@ a{
 }
 a img{
 	border:0px;
-	opacity:0.8;
 }
-a img:hover{
-	opacity:1;
-}
+
 ul{
 	list-style:none;
 	margin-bottom:50px;
@@ -247,4 +244,7 @@ p.sortByTag{
 .page{
 	clear:both;
 	width:100%;
+}
+.hidden{
+	visibility:hidden;
 }
