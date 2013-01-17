@@ -34,13 +34,17 @@ exports.mediaInterface= (req, res) ->
 	#checks if the requirements for the search function are fullfilled
 	if req.body.searchValue == undefined  && sortPage != 'search' || req.body.searchValue == 'search' && sortPage != 'search'
 		console.log 'search function skipped'
+		#An array to keep all the function calls in one place
 		sortFunctions = 
 			commented: breaks.sortByComments
 			viewed: breaks.sortByViews
 			ranking: breaks.sortByVotes
 			byDate: breaks.findThreeRows
-				
+		
+		#Get the wanted function with the searchword sortPage		
 		sortFunction = sortFunctions[sortPage]
+		
+		#Start the wanted function
 		sortFunction pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
 			console.log 'sort by comments'
 			if err
@@ -48,51 +52,18 @@ exports.mediaInterface= (req, res) ->
 			else
 				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
 				
-
-		#Determinates which sort function to launch
-		###			
-		if sortPage == 'commented'
-			console.log 'commented function in breaks.coffee'
-			breaks.sortByComments pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'sort by comments'
-				if err
-					res.send 'No breaks found.'
-				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
-		else if sortPage == 'viewed'
-			console.log 'viewed function in breaks.coffee'
-			breaks.sortByViews pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'sort by views'
-				if err
-					res.send 'No breaks found.'
-				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
-		else if sortPage == 'ranking'
-			console.log 'ranking function in breaks.coffee'
-			breaks.sortByVotes pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'sort by votes'
-				if err
-					res.send 'No breaks found.'
-				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
-		else
-			breaks.findThreeRows pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'byDate function in breaks.coffee'
-				if err
-					res.send 'No breaks found.'
-				else
-					console.log 'count is: ' + count
-					console.log 'nameSortPage is: ' + sortPageValue
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count: count, sortPageValue:sortPageValue
-###
 	else
 		console.log 'entering search value'
 		searchWord = req.body.searchValue
 		sortPage = 'search'
 		console.log 'change sortPage: ' + sortPage
+		#Start the searchfunction for the wanted breaks. Search funtion needs an extra variable called searchWord that contains the value of the word searched after
+		#TODO:pages wont work while the whole page renders itself leaving the search box value undefined
 		breaks.searchBreaks searchWord, pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
 			if err
 				res.send 'No breaks found.'
 			else
 				console.log 'render search results'
+				if sortPageValue is undefined
+						sortPageValue = 'search'
 				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
