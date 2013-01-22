@@ -13,8 +13,9 @@ html, body{
 	height:100%;
 }
 body{
-    background-image:url(/public/images/1pager/bg.png);
-    background-size:cover;
+    /*background-image:url(/public/images/1pager/bg.png);
+    background-size:cover;*/
+   background-color:white;
 }
 p{
 	font-size:14px;
@@ -138,7 +139,8 @@ header img{
 	border-radius: 3px;
 }
 .fullBorderGroove{
-	border:rgba(243,243,243,0.5) groove 2px;
+	border:#f3f3f3 groove 2px;
+/*rgba(243,243,243,0.5)*/
 }
 .fullBorderRidge{
 	border:rgba(243,243,243,0.5) ridge 2px;
@@ -243,7 +245,7 @@ p.sortByTag{
 }
 .page{
 	clear:both;
-	width:100%;
+	width:500px;
 }
 .hidden{
 	visibility:hidden;
