@@ -36,21 +36,27 @@ block contents
 		ul
 			for b in breaks
 				li.smallRadius.fullBorderGroove
-					p.smallRadius.fullBorderRidge #{b.headline}
+				
+					score = b.upvotes.length - b.downvotes.length
+				
+					p.views= b.views
+					p.comments= b.comments.length
+					p.votes= score
+				
+					//p.smallRadius.fullBorderRidge #{b.headline}
+				
 					a(href="/p/" + b._id)
 						img(src="/ios/picture/" + b._id, alt=b.headline)
-					score = b.upvotes.length - b.downvotes.length
-					p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
-					p.smallRadius.fullBorderGroove= "Votes: " + score
-					p.smallRadius.fullBorderGroove= "Views: " + b.views
-	form.page(id="pages", method="post", action="/media")
-	#push
-	#footer
+					
+					hr
+					p=b.headline
+		form.page(id="pages", method="post", action="/media")
+
 block footerscripts
 	script
 		$(document).ready(function(){
 			count = #{count}
-			for(i = 0; i < count/4; i++){
+			for(i = 0; i < count/6; i++){
 				j=i +1
 				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
 			}

@@ -39,7 +39,7 @@ exports.mediaInterface= (req, res) ->
 			commented: breaks.sortByComments
 			viewed: breaks.sortByViews
 			ranking: breaks.sortByVotes
-			byDate: breaks.findThreeRows
+			byDate: breaks.findMediaRows
 		
 		#Get the wanted function with the searchword sortPage		
 		sortFunction = sortFunctions[sortPage]

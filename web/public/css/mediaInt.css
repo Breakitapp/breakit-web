@@ -25,6 +25,8 @@ a{
 }
 a img{
 	border:0px;
+	display:list-item;
+	width:250px;
 }
 
 ul{
@@ -33,15 +35,13 @@ ul{
 }
 li{
 	display:inline-block;
-	padding:10px;
-	margin-right:10px;
-	margin-bottom:10px;
-	background:rgba(220,220,220,1);
-	float:left;
+	margin:20px;
+	background:#F3F3F3;
 }
 li:hover{
 	background:rgb(255,255,255);
 }
+
 header{
     background:rgba(255,255,255,1);
     height:40px;
@@ -53,7 +53,10 @@ header img{
     padding-right:20px;
     height:30px;
 }
-
+hr{
+	margin: 10px auto;
+	width: 80%;
+}
 #header h1, #header h1 span{
 	font-weight:100;
 }
@@ -65,12 +68,12 @@ header img{
 }
 
 #wrapper p{
-	background:#D1D1D1;
-	padding-left:2px;
-	margin-bottom:4px;
+	width:80%;
+	margin:4px auto;
+	color:#444;
 }
-#wrapper ul,#sort{
-	text-align:center;
+#wrapper ul{
+	text-align:justify;
 }
 #wrapper p{
 	text-align:left;
@@ -78,9 +81,7 @@ header img{
 #sort{
 	width:960px;
 }
-#wrapper img{
-	width:200px;
-}
+
 #wrapper form{
 	margin-bottom:10px;
 }
@@ -92,7 +93,7 @@ header img{
 	cursor:pointer;
 }
 #wrapper form input:active{
-	background:rgb(175,95,95);
+	background:rgb(80,80,80);
 }
 
 #push{
@@ -249,4 +250,30 @@ p.sortByTag{
 }
 .hidden{
 	visibility:hidden;
+}
+#wrapper ul li p.comments,
+#wrapper ul li p.votes,
+#wrapper ul li p.views{
+	width: 50px;
+	color:#fff;
+	padding-top:18px;
+	padding-bottom:5px;
+	display:inline-block;
+	font-weight:bold;
+	text-align:center;
+}
+
+#wrapper ul li p.comments{
+	background: transparent url('/public/images/1pager/comments.png') no-repeat center top;
+	background-size:50px 45px;
+	margin-left:50px;
+}
+#wrapper ul li p.votes{
+	background: transparent url('/public/images/1pager/voteUp.png') no-repeat center top;
+	background-size:50px 38px;
+	float:right;
+}
+#wrapper ul li p.views{
+	background: transparent url('/public/images/1pager/views.png') no-repeat center top;
+	background-size:50px 35px;
 }
