@@ -23,6 +23,7 @@ p{
 a{
 	border:none;
 }
+/*breaks on the page*/
 a img{
 	border:0px;
 	display:list-item;
@@ -36,6 +37,7 @@ ul{
 li{
 	display:inline-block;
 	margin:20px;
+	padding: 10px;
 	background:#F3F3F3;
 }
 li:hover{
@@ -54,7 +56,7 @@ header img{
     height:30px;
 }
 hr{
-	margin: 10px auto;
+	margin: 0px auto 10px auto;
 	width: 80%;
 }
 #header h1, #header h1 span{
@@ -63,8 +65,8 @@ hr{
 #header h1 span{
 	color:#D11414;
 }
-#wrapper, #header{
-	width:940px;
+#wrapper{
+	width:950px;
 }
 
 #wrapper p{
@@ -80,6 +82,7 @@ hr{
 }
 #sort{
 	width:960px;
+	margin: 0 auto;
 }
 
 #wrapper form{
@@ -251,29 +254,28 @@ p.sortByTag{
 .hidden{
 	visibility:hidden;
 }
+.icons{
+	text-align:center;
+}
 #wrapper ul li p.comments,
 #wrapper ul li p.votes,
 #wrapper ul li p.views{
-	width: 50px;
-	color:#fff;
-	padding-top:18px;
-	padding-bottom:5px;
+	width: 80px;
+	color:#444;
 	display:inline-block;
 	font-weight:bold;
-	text-align:center;
+	text-align:left;
+	vertical-align:middle;
+	padding-left: 3px;
 }
 
-#wrapper ul li p.comments{
-	background: transparent url('/public/images/1pager/comments.png') no-repeat center top;
-	background-size:50px 45px;
-	margin-left:50px;
+#wrapper ul li img.icon{
+	height: 10px;
+	margin-left: 5px;
 }
-#wrapper ul li p.votes{
-	background: transparent url('/public/images/1pager/voteUp.png') no-repeat center top;
-	background-size:50px 38px;
-	float:right;
-}
+
 #wrapper ul li p.views{
 	background: transparent url('/public/images/1pager/views.png') no-repeat center top;
 	background-size:50px 35px;
+	display:none;
 }
