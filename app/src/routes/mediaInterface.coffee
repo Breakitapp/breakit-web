@@ -55,7 +55,7 @@ exports.mediaInterface= (req, res) ->
 	else
 		console.log 'entering search value'
 		searchWord = req.body.searchValue
-		sortPage = 'search'
+		sortPage = 'search' 
 		console.log 'change sortPage: ' + sortPage
 		#Start the searchfunction for the wanted breaks. Search funtion needs an extra variable called searchWord that contains the value of the word searched after
 		#TODO:pages wont work while the whole page renders itself leaving the search box value undefined

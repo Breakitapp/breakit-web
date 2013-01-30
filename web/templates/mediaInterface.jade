@@ -59,7 +59,7 @@ block footerscripts
 			count = #{count}
 			for(i = 0; i < count/6; i++){
 				j=i +1
-				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
+				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>'); 
 			}
 			$('#pages').append('<input type="text" class="hidden" name=currentSortPage value=#{sortPageValue}>');
 		});
