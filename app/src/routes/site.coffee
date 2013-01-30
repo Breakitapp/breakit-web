@@ -117,7 +117,7 @@ exports.pvs2 = (req, res) ->
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
-					onepagerUser = '50a0e4db1f63ba4d72000020'
+					onepagerUser = '51092bab602f21cea5c4b0ae'
 				if(req.headers.host is '46.137.122.206')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
@@ -141,7 +141,7 @@ exports.pvs2 = (req, res) ->
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
-					onepagerUser = '50a0e4db1f63ba4d72000020'
+					onepagerUser = '51092bab602f21cea5c4b0ae'
 				if(req.headers.host is '46.137.122.206')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
