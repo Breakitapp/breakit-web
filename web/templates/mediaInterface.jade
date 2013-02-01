@@ -21,9 +21,8 @@ block contents
 			input.buttonBg(type="submit",name="sortPage",value="commented")
 			input.buttonBg(type="submit",name="sortPage",value="viewed")
 			input.buttonBg(type="submit",name="sortPage",value="ranking")
-			//
-				input.buttonBg(type="submit",name="pics",value="My pics")
-	#wrapper.centrify
+			
+	#wrapper
 		br
 		br
 		//
@@ -33,31 +32,32 @@ block contents
 				input.sortByTag(type="button",name="place",value="Place")
 				input.sortByTag(type="button",name="tags",value="Tags")
 				input.sortByTag(type="button",name="ranking",value="Ranking")
-		ul
-			for b in breaks
-				li.smallRadius.fullBorderGroove
-				
-					score = b.upvotes.length - b.downvotes.length
-
-					//p.smallRadius.fullBorderRidge #{b.headline}
-				
-					a(href="/p/" + b._id)
-						img(src="/ios/picture/" + b._id, alt=b.headline)
-					.icons
-						p.views= b.views
-						img.icon(src="public/images/1pager/comments.png",alt="comments")
-						p.comments= "comments " + b.comments.length
-						img.icon(src="public/images/1pager/voteUp.png",alt="vote")
-						p.votes= "votes " + score
-					hr
-					p=b.headline
+		.container.centrify
+			ul
+				for b in breaks
+					li.smallRadius.fullBorderGroove
+					
+						score = b.upvotes.length - b.downvotes.length
+	
+						//p.smallRadius.fullBorderRidge #{b.headline}
+					
+						a(href="/p/" + b._id)
+							img(src="/ios/picture/" + b._id, alt=b.headline)
+						.icons
+							p.views= b.views
+							img.icon(src="public/images/1pager/comments.png",alt="comments")
+							p.comments= "comments " + b.comments.length
+							img.icon(src="public/images/1pager/voteUp.png",alt="vote")
+							p.votes= "votes " + score
+						hr
+						p=b.headline
 		form.page(id="pages", method="post", action="/media")
 
 block footerscripts
 	script
 		$(document).ready(function(){
 			count = #{count}
-			for(i = 0; i < count/6; i++){
+			for(i = 0; i < count/12; i++){
 				j=i +1
 				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>'); 
 			}

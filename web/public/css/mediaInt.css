@@ -33,18 +33,28 @@ a img{
 ul{
 	list-style:none;
 	margin-bottom:50px;
+	
 	-moz-column-count:auto; /* Firefox */
 	-webkit-column-count:auto; /* Safari and Chrome */
 	column-count:auto;
+	-ms-column-count: auto; /* Internet Explorer */
+	-o-column-count: auto; 
 	
-	column-width:280px;
-	-webkit-column-width:280px;
-	-moz-column-width:280px;
+	column-width:270px;
+	-webkit-column-width:270px;
+	-moz-column-width:270px;
+	-ms-column-width: 270; /* Internet Explorer */
+	-o-column-width: 270px;
 }
 li{
 	width:268px;
 	margin:0 20px 20px 20px;
 	background:#FAFAFA;
+	break-inside: avoid; /* W3C */
+	-webkit-column-break-inside: avoid; /* Safari & Chrome */
+	-moz-column-break-inside: avoid; /* Firefox */
+	-ms-column-break-inside: avoid; /* Internet Explorer */
+	-o-column-break-inside: avoid; /* Opera */
 }
 li:hover{
 	background:rgb(255,255,255);
@@ -72,7 +82,7 @@ hr{
 	color:#D11414;
 }
 #wrapper{
-	width:1024px;
+	width:100%;
 }
 
 #wrapper p{
@@ -80,14 +90,12 @@ hr{
 	margin:4px auto;
 	color:#444;
 }
-#wrapper ul{
-	text-align:justify;
-}
+
 #wrapper p{
 	text-align:left;
 }
 #sort{
-	width:960px;
+	max-width:810px;
 	margin: 0 auto;
 }
 
@@ -123,7 +131,9 @@ hr{
 *:focus{
 	outline:none;
 }
-
+.container{
+	max-width:1272px;
+}
 .centrify{
 	margin-left:auto;
 	margin-right:auto;
@@ -186,16 +196,16 @@ p.sortByTag{
 .searchform,.buttonBg {
 	zoom: 1; /* ie7 hack for display:inline-block */
 	*display: inline;
-	border: solid 1px #d2d2d2;
+	border: solid 1px #444;
 	padding: 3px 5px;
 	
 	-webkit-border-radius: 2em;
 	-moz-border-radius: 2em;
 	border-radius: 2em;
 
-	-webkit-box-shadow: 0 1px 0px rgba(0,0,0,.1);
-	-moz-box-shadow: 0 1px 0px rgba(0,0,0,.1);
-	box-shadow: 0 1px 0px rgba(0,0,0,.1);
+	-webkit-box-shadow: 0 1px 0px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 0px rgba(0,0,0,.2);
+	box-shadow: 0 1px 0px rgba(0,0,0,.2);
 
 	background:rgba(220,220,220,1);
 	margin-bottom:10px;

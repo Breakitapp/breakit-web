@@ -225,7 +225,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 	
 #Millan webinterfacea varten
 findMediaRows = (pageNumber,sortPage, callback) ->
-	breaksPerPage = 6
+	breaksPerPage = 12
 	models.Break.find().sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
 		console.log 'sortPage: ' + sortPage
 		breaks_ = (b for b in breaks)
@@ -238,7 +238,7 @@ findMediaRows = (pageNumber,sortPage, callback) ->
 #search from breaks
 searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 		console.log 'entering search Breaks'
-		breaksPerPage = 6
+		breaksPerPage = 12
 		breaksToSkip = pageNumber*breaksPerPage
 		console.log 'searchword: ' + searchWord
 		#checks if the search value matches the search word. If it matches the break is "found"
@@ -260,7 +260,7 @@ sortByComments = (pageNumber,sortPage, callback) ->
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
-		breaksPerPage = 6
+		breaksPerPage = 12
 		checkIfSkip = 0
 		breaksToSkip = pageNumber*breaksPerPage
 		console.log 'breaks to skip: ' + breaksToSkip
@@ -289,7 +289,7 @@ sortByComments = (pageNumber,sortPage, callback) ->
 
 #Millan
 sortByViews = (pageNumber,sortPage, callback) ->
-	breaksPerPage = 6
+	breaksPerPage = 12
 	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks)->
 		breaks_ = (b for b in breaks)
 		models.Break.count().exec((err, count) ->
@@ -300,7 +300,7 @@ sortByViews = (pageNumber,sortPage, callback) ->
 #Millan
 sortByVotes = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
-		breaksPerPage = 6
+		breaksPerPage = 12
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
