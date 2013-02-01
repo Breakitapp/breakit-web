@@ -16,7 +16,7 @@ block contents
 		form.searchform(method="post", action="/media", name="mediaInterface")
 			input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
 			input.searchbutton(type="submit", value="Go")
-		form(method="post", action="/media", name="mediaInterface")
+		form.sortForm(method="post", action="/media", name="mediaInterface")
 			input.buttonBg(type="submit",name="sortPage",value="byDate")
 			input.buttonBg(type="submit",name="sortPage",value="commented")
 			input.buttonBg(type="submit",name="sortPage",value="viewed")
@@ -25,22 +25,12 @@ block contents
 	#wrapper
 		br
 		br
-		//
-			p.sortByTag SORT BY
-			form
-				input.sortByTag(type="button",name="time",value="Time")
-				input.sortByTag(type="button",name="place",value="Place")
-				input.sortByTag(type="button",name="tags",value="Tags")
-				input.sortByTag(type="button",name="ranking",value="Ranking")
 		.container.centrify
-			ul
+			ul.centrify
 				for b in breaks
 					li.smallRadius.fullBorderGroove
-					
 						score = b.upvotes.length - b.downvotes.length
-	
 						//p.smallRadius.fullBorderRidge #{b.headline}
-					
 						a(href="/p/" + b._id)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						.icons
@@ -51,7 +41,7 @@ block contents
 							p.votes= "votes " + score
 						hr
 						p=b.headline
-		form.page(id="pages", method="post", action="/media")
+		form.page.centrify(id="pages", method="post", action="/media")
 
 block footerscripts
 	script
