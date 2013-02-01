@@ -33,28 +33,16 @@ a img{
 ul{
 	list-style:none;
 	margin-bottom:50px;
+	text-align:center;
+	text-align-last: left;
+	width:99%
 	
-	-moz-column-count:auto; /* Firefox */
-	-webkit-column-count:auto; /* Safari and Chrome */
-	column-count:auto;
-	-ms-column-count: auto; /* Internet Explorer */
-	-o-column-count: auto; 
-	
-	column-width:270px;
-	-webkit-column-width:270px;
-	-moz-column-width:270px;
-	-ms-column-width: 270; /* Internet Explorer */
-	-o-column-width: 270px;
 }
 li{
 	width:268px;
 	margin:0 20px 20px 20px;
 	background:#FAFAFA;
-	break-inside: avoid; /* W3C */
-	-webkit-column-break-inside: avoid; /* Safari & Chrome */
-	-moz-column-break-inside: avoid; /* Firefox */
-	-ms-column-break-inside: avoid; /* Internet Explorer */
-	-o-column-break-inside: avoid; /* Opera */
+	float:left;
 }
 li:hover{
 	background:rgb(255,255,255);
@@ -94,24 +82,11 @@ hr{
 #wrapper p{
 	text-align:left;
 }
-#sort{
-	max-width:810px;
+#sort{	
+	max-width:830px;
 	margin: 0 auto;
 }
 
-#wrapper form{
-	margin-bottom:10px;
-}
-#wrapper form input{
-	background:rgb(51,51,51);
-	color:white;
-	border:solid 2px black;
-	width:80px;
-	cursor:pointer;
-}
-#wrapper form input:active{
-	background:rgb(80,80,80);
-}
 
 #push{
 	height:4em;
@@ -132,7 +107,9 @@ hr{
 	outline:none;
 }
 .container{
-	max-width:1272px;
+	max-width:1920px;
+	min-width:320px;
+	overflow:auto;
 }
 .centrify{
 	margin-left:auto;
@@ -190,7 +167,7 @@ p.sortByTag{
 
 /* search form 
 -------------------------------------- */
-.buttonBg, form{
+.buttonBg, .sortForm, .searchform{
 	display: inline-block;
 }
 .searchform,.buttonBg {
@@ -265,7 +242,18 @@ p.sortByTag{
 }
 .page{
 	clear:both;
-	width:500px;
+	min-width:320px;
+	max-width: 1152px;
+}
+.page input{
+	background:rgb(51,51,51);
+	color:white;
+	border:solid 2px black;
+	width:80px;
+	cursor:pointer;
+}
+.page input:active{
+	background:rgb(80,80,80);
 }
 .hidden{
 	visibility:hidden;
