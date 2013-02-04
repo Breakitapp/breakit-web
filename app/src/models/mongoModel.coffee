@@ -32,6 +32,7 @@ BreakSchema = new Schema
 	fbShares				:		[Schema.ObjectId]
 	tweets					:		[Schema.ObjectId]
 
+
 BreakSchema.index {loc: '2d'}
 
 UserSchema = new Schema

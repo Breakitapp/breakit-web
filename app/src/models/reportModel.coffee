@@ -7,7 +7,7 @@ class Report
 	saveToDB: (callback) ->
 				
 		report = new models.Report
-			breakiId				:		@breakId
+			breakiId			:		@breakId
 			userId 				:		@userId
 		
 		report.save (err) ->
@@ -21,6 +21,19 @@ createReport = (breakId, userId, callback) ->
 	report = new Report breakId, userId
 	report.saveToDB (err) ->
 		callback err
+
+list = (callback) ->
+	models.Report.find().exec (err, reports) ->
+		callback err, reports
+
+deleteReport = (reportId, callback) ->
+
+	models.Report.findbyId(reportId).exec (err, report) ->
+		if err
+			callback err, null
+		else
+			report.remove (err) ->
+				callback err, null
 		
 root = exports ? window
 root.Report = Report

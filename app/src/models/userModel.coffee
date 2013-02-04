@@ -22,12 +22,15 @@ class User
 				callback null, user
 
 createUser = (nn, ph, callback) ->
-	newUser = new User nn, ph
-	newUser.saveToDB (err, user) ->
-		#create a new folderstructure for this userId
-		fs.mkdir './app/res/user/' + user.id, '0777', (err) ->
-			fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
-		callback err, user
+	models.User.find({'nName' : nn).exec (err, oldUser) ->
+		if oldUser
+			callback "Nickname taken", null
+		else
+			newUser = new User nn, ph
+			newUser.saveToDB (err, user) ->
+				fs.mkdir './app/res/user/' + user.id, '0777', (err) ->
+					fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
+				callback err, user
 
 addBreak = (userId, break_, callback) ->
 	if typeof break_ is Break
