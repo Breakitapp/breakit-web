@@ -22,7 +22,7 @@ class User
 				callback null, user
 
 createUser = (nn, ph, callback) ->
-	models.User.find({'nName' : nn).exec (err, oldUser) ->
+	models.User.find({'nName' : nn}).exec (err, oldUser) ->
 		if oldUser
 			callback "Nickname taken", null
 		else
