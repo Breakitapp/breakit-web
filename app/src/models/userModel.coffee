@@ -19,9 +19,13 @@ class User
 				callback null, user
 
 createUser = (nn, ph, callback) ->
-	newUser = new User nn, ph
-	newUser.saveToDB (err, user) ->
-		callback err, user
+	models.User.find({'nName' : nn).exec (err, oldUser) ->
+		if oldUser
+			callback "Nickname taken", null
+		else
+			newUser = new User nn, ph
+			newUser.saveToDB (err, user) ->
+				callback err, user
 
 addBreak = (userId, break_, callback) ->
 	if typeof break_ is Break

@@ -65,7 +65,7 @@ exports.newUser = (req, res) ->
 	users.createUser req.body.nickname, 'iPhone', (err, user) ->
 		if err
 			console.log err
-			res.send 'User creation failed'
+			res.send err
 		else
 			console.log 'New user ' + user._id + ' sent to the client.'
 			res.send user

@@ -22,7 +22,7 @@ BreakSchema = new Schema
 	placeId				:			{type: String, default: null} #This is only for the ID of a foursquare album
 	album				:			{type: String, default: null} #This is only for the Breakit album id in case of a foursquare album
 	user				:			{type: String}
-	usernick			:			{type: String}			
+	usernick			:			{type: String}
 	top					:			{type: Boolean, default: false}
 	story				:			{type: String}
 	date				:			{type: Date, default: Date.now}
