@@ -84,6 +84,7 @@ exports.postBreak = (req, res) ->
 			albums.addBreak break_
 		
 		tmp_path = req.files.image.path
+		#TODO error handling. If the path is not present, bad things happen. This should be handled in validations
 		target_path ='./app/res/' + req.body.user + '/images/' + break_._id + '.jpeg'
 		fs.readFile tmp_path, (err, data) ->
 			if err

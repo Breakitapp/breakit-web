@@ -1,4 +1,7 @@
-models = require './mongoModel'
+#TODO refactoring. User creation doesn't seem like DRY
+
+models	= require './mongoModel'
+fs			= require 'fs'
 
 class User
 	constructor: (@nName, @phone) ->
@@ -21,6 +24,11 @@ class User
 createUser = (nn, ph, callback) ->
 	newUser = new User nn, ph
 	newUser.saveToDB (err, user) ->
+		#create a new folderstructure for this userId
+		fs.mkdir './app/res/user/' + user.id, '0777', (err) ->
+			fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
+				console.log err
+			console.log err
 		callback err, user
 
 addBreak = (userId, break_, callback) ->
