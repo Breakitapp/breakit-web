@@ -27,8 +27,6 @@ createUser = (nn, ph, callback) ->
 		#create a new folderstructure for this userId
 		fs.mkdir './app/res/user/' + user.id, '0777', (err) ->
 			fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
-				console.log err
-			console.log err
 		callback err, user
 
 addBreak = (userId, break_, callback) ->

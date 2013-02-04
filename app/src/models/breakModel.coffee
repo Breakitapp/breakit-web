@@ -17,14 +17,14 @@ class Break
 		@startingPoints = Date.now() - epoch
 		
 		break_ = new models.Break
-			loc						:		{lon: @longitude, lat: @latitude}
+			loc							:		{lon: @longitude, lat: @latitude}
 			placeName				:		@placeName
 			placeId 				:		@placeId
-			story					:		@story
+			story						:		@story
 			headline				:		@headline
-			user					:		@user
+			user						:		@user
 			points					:		@startingPoints
-			startingPoints			:		@startingPoints
+			startingPoints	:		@startingPoints
 			
 		break_.upvotes.push @user
 		
