@@ -127,8 +127,6 @@ findAll = (callback) ->
 		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
 			#Errorhandling goes here //if err throw err
 			breaks_ = (b for b in breaks)
-			console.log 'breaks_[0]:'+breaks_[0]
-			console.log 'breaks[0]:'+breaks[0]
 			#MARKO: These breaks_ and breaks seem to be same. Look into this when refactoring
 			callback null, breaks_
 			return breaks_

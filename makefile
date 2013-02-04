@@ -20,7 +20,7 @@ run-d:
 
 # Compile all coffee to js
 compile-coffee:
-	coffee --compile --output web/lib/ web/src/ && coffee --compile --output app/lib/ app/src/ && coffee -c server.coffee && coffee -c settings.coffee
+	coffee --compile --output web/lib/ web/src/ && coffee --compile --output app/lib/ app/src/ && coffee -c server.coffee && coffee -c settings.coffee && coffee -c scripts/migration.coffee
 
 # Run every test!
 run-tests:
