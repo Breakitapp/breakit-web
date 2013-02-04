@@ -75,7 +75,7 @@ exports.postBreak = (req, res) ->
 	
 	console.log 'place id: ' + req.body.placeId
 	console.log 'place name: ' + req.body.placeName
-	#
+
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		
 		#Only if the break should be in an album...
@@ -84,8 +84,7 @@ exports.postBreak = (req, res) ->
 			albums.addBreak break_
 		
 		tmp_path = req.files.image.path
-		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
-		target_path ='./app/res/images/' + break_._id + '.jpeg'
+		target_path ='./app/res/' + req.body.user + '/images/' + break_._id + '.jpeg'
 		fs.readFile tmp_path, (err, data) ->
 			if err
 				throw err

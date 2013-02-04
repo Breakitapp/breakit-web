@@ -5,14 +5,14 @@
 ###
 
 express			= require 'express'
-site			= require './app/lib/routes/site'
-user			= require './app/lib/routes/user'
+site				= require './app/lib/routes/site'
+user				= require './app/lib/routes/user'
 breaks			= require './app/lib/routes/breaks'
 albums			= require './app/lib/routes/albums'
 feedback		= require './app/lib/routes/feedback'
-test			= require './app/lib/routes/test'
-ios				= require './app/lib/routes/ios'
-media			= require './app/lib/routes/mediaInterface'
+test				= require './app/lib/routes/test'
+ios					= require './app/lib/routes/ios'
+media				= require './app/lib/routes/mediaInterface'
 settings		= require './settings'
 mongoose		= require 'mongoose'
 stylus			= require 'stylus'
@@ -21,8 +21,8 @@ server = module.exports = express()
 
 #Configuration
 server.configure ->
-	publicDir = __dirname + '/web'
-	viewsDir  = __dirname + '/web/templates'
+	publicDir	= __dirname + '/web'
+	viewsDir	= __dirname + '/web/templates'
 
 	#Set the views folder
 	server.set 'views', viewsDir
