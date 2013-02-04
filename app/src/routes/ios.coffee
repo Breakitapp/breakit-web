@@ -10,6 +10,7 @@ comments = require '../models/commentModel'
 notifications = require '../models/notificationsModel'
 users = require '../models/userModel'
 feedback = require '../models/feedbackModel'
+report = require '../models/reportModel'
 fs			= require 'fs'
 qs = require('querystring')
 
@@ -28,7 +29,7 @@ exports.index = (req, res) ->
 	console.log 'lon: '+lon
 	
 	if req.body.shownBreaks
-		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1) #change to client "shownBreaks"
+		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1)
 		console.log tempstr
 		shown = tempstr.split ','
 		
@@ -59,7 +60,7 @@ exports.login = (req, res) 	->
 			res.send 'confirmed'
 
 #Creates a new user and responds with the userId
-exports.new_user = (req, res) ->
+exports.newUser = (req, res) ->
 	
 	console.log 'New user requested. Nickname: ' + req.body.nickname
 	
@@ -72,13 +73,16 @@ exports.new_user = (req, res) ->
 			res.send user
 
 #create a new break
-exports.post_break = (req, res) ->
+exports.postBreak = (req, res) ->
 	
+	console.log 'place id: ' + req.body.placeId
+	console.log 'place name: ' + req.body.placeName
 	#
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		
 		#Only if the break should be in an album...
-		if break_.placeId != null
+		if break_.placeId != undefined
+			console.log 'Adding a new break to an album.'
 			albums.addBreak break_
 		
 		tmp_path = req.files.image.path
@@ -97,11 +101,29 @@ exports.post_break = (req, res) ->
 							throw err
 						else
 							res.send b
-					
-exports.post_comment = (req, res) ->
-	users.findById req.body.userId, (err, author) ->
+
+exports.deleteBreak = (req, res) ->
+	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
+	
+	breaks.del req.body.breakId, req.body.userId, (err) ->
 		if err
-			throw err
+			res.send 'Break delete failed.' 
+		else
+			res.send 'Break deleted successfully.'
+			
+exports.reportBreak = (req, res) ->
+	console.log 'Reported an inappropriate Break: ' + req.body.breakId + ' by user: ' + req.body.userId
+
+	report.createReport req.body.breakId, req.body.userId, (err) ->
+		if err
+			res.send 'Break reporting failed.'
+		else
+			res.send 'Break reported successfully.'
+					
+exports.postComment = (req, res) ->
+	users.findById req.body.userId, (err, author) ->
+		if not author
+			res.send 'Invalid user.'
 		else
 			newComment = new comments.Comment req.body.comment, req.body.userId, author.nName
 			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
@@ -119,15 +141,15 @@ exports.vote = (req, res) ->
 		else
 			res.send break_
 
-exports.get_picture = (req, res) ->
+exports.getPicture = (req, res) ->
 	id = req.params.id
 	
 	res.sendfile './app/res/images/' + id + '.jpeg'
 
 #not needed anymore?
-exports.get_break = (req, res) ->
+exports.getBreak = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
-		if err
+		if not b
 			console.log err
 			res.send 'Could not find the break'
 		else
@@ -154,7 +176,7 @@ exports.fbShare = (req, res) ->
 			res.send 'Saved the Facebook share successfully to server'
 
 
-exports.browse_album = (req, res) ->
+exports.browseAlbum = (req, res) ->
 	console.log 'Getting page ' + req.params.page + ' in album ' + req.params.albumId
 	albums.getBreak req.params.albumId, req.params.page, (err, break_) ->
 		if err
@@ -183,6 +205,9 @@ exports.changeUserAttributes = (req, res) ->
 
 
 exports.getAlbumBreaks = (req, res) ->
+	
+	console.log 'Getting Album Breaks: ' + req.params.albumId + ', page: ' + req.params.page
+	
 	albums.getAlbumBreaks req.params.albumId, req.params.page, (err, foundBreaks)->
 		if err
 			res.send 'error'

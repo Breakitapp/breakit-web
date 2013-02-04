@@ -12,33 +12,32 @@ comments = require '../models/commentModel'
 albums = require '../models/albumModel'
 
 
-###
-exports.index = (req, res) ->
-	res.redirect '/signup'
-###
-
-exports.break_tmp = (req, res) ->
-	res.render 'tmp/break', title: 'Break-template'
-
-###
 exports.public = (req, res) ->
-	breaks.findById req.params.id, (err, break_) ->
-		if err
-			res.send '404'
-		else
-			#console.log 'break: ' +break_
-			res.render 'public', title : 'Breakit - ' + break_.headline, b: break_
-###
-
-exports.public= (req, res) ->
-	breaks.findById req.params.id, (err, break_) ->
-		if err
-			res.send '404'
-		else
-			#console.log 'break: ' +break_
+	cookieName = ''
+	cookieValue = ''
+	cookies = {}
+	req.headers.cookie && req.headers.cookie.split(';').forEach (cookie) ->
+		parts = cookie.split '='
+		checkCookie = cookies[parts[0].trim()] = (parts[0] || '').trim()
+		console.log checkCookie
+		if checkCookie is 'breakit'
+			cookieName = cookies[parts[0].trim()] = (parts[0] || '').trim()
+			cookieValue = cookies[parts[0].trim()] = (parts[1] || '').trim()
+			console.log 'cookie ' + cookieName + ' with value ' + cookieValue + ' is now set!'
+	console.log 'name: ' + cookieName
+	console.log 'value: ' + cookieValue
+	console.log 'id: ' + req.params.id 
+	if cookieName is 'breakit' and cookieValue is req.params.id
+		breaks.findById req.params.id, (err, break_) ->
+			if err
+				res.send '404'
+			else
+				#console.log 'break: ' +break_
+				console.log 'ip: '+ req.ip
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
+					#onepagerUser = '5097ae8bae4d4a8805000001'
+					onepagerUser = '50a0a149aa090b8c11000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
@@ -46,10 +45,35 @@ exports.public= (req, res) ->
 				if(req.headers.host is '46.137.122.206')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
-			res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u:onepagerUser
+				console.log 'user: '+ onepagerUser
+				console.log 'user is: '+ onepagerUser
+				console.log 'REQUEST HOST: '+req.headers.host
+
+				#for(head in req.headers)
+					#console.log 'head'+head
+				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
+	else
+		breaks.addView req.params.id, (err, break_) ->
+			if err
+				res.send '404'
+			else
+				#console.log 'break: ' +break_
+				if(req.headers.host is 'localhost:3000')
+					#Change this to your own LOCAL user
+					#onepagerUser = '5097ae8bae4d4a8805000001'
+					onepagerUser = '50a0a149aa090b8c11000001'
+					console.log 'in IF'
+				if(req.headers.host is '54.247.69.189')
+					# PROD SERVER ANON USER
+					onepagerUser = '50a0e4db1f63ba4d72000020'
+				if(req.headers.host is '46.137.122.206')
+					# DEV SERVER ANON USER
+					onepagerUser = '50a369413268496061000002'
+				console.log 'user: '+ onepagerUser
+				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
+			
 
 exports.webComment = (req, res) ->
-
 	users.findById req.body.userId, (err, author) ->
 		if err
 			throw err
@@ -62,6 +86,7 @@ exports.webComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					res.redirect '/p/' + req.body.breakId
+
 #Onepager vs2
 exports.pvs2 = (req, res) ->
 	cookieName = ''
@@ -87,11 +112,12 @@ exports.pvs2 = (req, res) ->
 				console.log 'ip: '+ req.ip
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
+					#onepagerUser = '5097ae8bae4d4a8805000001'
+					onepagerUser = '50c9f32b6684c6ac05000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
-					onepagerUser = '50a0e4db1f63ba4d72000020'
+					onepagerUser = '51092bab602f21cea5c4b0ae'
 				if(req.headers.host is '46.137.122.206')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
@@ -101,23 +127,21 @@ exports.pvs2 = (req, res) ->
 
 				#for(head in req.headers)
 					#console.log 'head'+head
-				
-				
-				
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 	else
-		breaks.findAndModify req.params.id, (err, break_) ->
+		breaks.addView req.params.id, (err, break_) ->
 			if err
 				res.send '404'
 			else
 				#console.log 'break: ' +break_
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
-					onepagerUser = '5097ae8bae4d4a8805000001'
+					#onepagerUser = '5097ae8bae4d4a8805000001'
+					onepagerUser = '50c9f32b6684c6ac05000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
-					onepagerUser = '50a0e4db1f63ba4d72000020'
+					onepagerUser = '51092bab602f21cea5c4b0ae'
 				if(req.headers.host is '46.137.122.206')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
@@ -137,7 +161,7 @@ exports.onePComment = (req, res) ->
 				if err
 					res.send 'Commenting failed.'
 				else
-					res.redirect '/onepager/' + req.body.breakId
+					res.redirect '/p/' + req.body.breakId
 			
 exports.signup = (req, res) ->
 	res.render 'signup_new' #change to signup_new when new template has been tested
@@ -165,6 +189,7 @@ exports.signup_post = (req, res) ->
 				to: req.body.email
 				subject:  'Thank you for registering for Breakit beta'
 				generateTextFromHTML: true
+				#TODO this needs to be in some separate file. this is just stupid.
 				html: '<h1>Welcome to test the Breakit beta</h1> <p>We’re thrilled to have you on board!<br>  We’ll notify you as soon as Breakit is ready for testing. All the feedback that you could possibly come up with at this stage, and later, will be much appreciated. We are not building this service for us personally, it´s being built for you guys out there so do pitch in your ideas for development!<br><br> In the meantime keep updated by checking out our FB page <a href="http://www.facebook.com/breakitstories">Breakit</a> and follow us on Twitter #Breakitapp<br><br> Soon you’ll be able to both share and see things that are happening around you.<br><br> Cheers, <br><br>Breakit team Jolle, Mikko, Marko, Eerik, Binit, and Seb'
 
 	
@@ -176,6 +201,8 @@ exports.signup_post = (req, res) ->
 			
 				res.render('signup_new_confirm')
 
+#This is not the right place for this route.
+#TODO Move this somewhere else
 exports.send = (req, res) ->
 	console.log 'in send'
 	models.BetaUser.find().exec (err, data) ->

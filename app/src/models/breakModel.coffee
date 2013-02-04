@@ -39,8 +39,8 @@ class Break
 						console.log 'BREAK: Break save failed'
 						throw err
 					else
-					console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
-					callback null, break_
+						console.log 'BREAK: Break saved successfully @ ' + break_.loc.lon + ', ' + break_.loc.lat
+						callback null, break_
 
 createBreak = (longitude, latitude, placeName, placeId, story, headline, userId, callback) ->
 	
@@ -50,7 +50,7 @@ createBreak = (longitude, latitude, placeName, placeId, story, headline, userId,
 	
 comment = (comment, breakId, callback) ->
 	findById breakId, (err, break_) ->
-		if err
+		if err 
 			console.log 'BREAK: failed to find break to be commented. Id: ' + breakId
 			callback err, null
 		else
@@ -176,8 +176,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							j = 0
 							while j < shownBreaks.length
 								
-								#Checking if the break has been shown already
-								#Checking if the album has been shown already...? -> Client needs to add the album id in the shown list.
+								#Checking if the break has been shown already or if the album has been shown already
 								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
 									alreadyShown = true
 									break
@@ -190,7 +189,6 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							if foundBreak.album != null
 								
 								#console.log 'breaks album not null'
-								
 								
 								albumAdded = false
 								k = 0
@@ -218,37 +216,54 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 						
 						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
 						return Number(-(break_.points - break_.dis*20000000000))
-
+						
 					#And last the first X breaks are sent to the client
 					best = _.first(sorted, 50)
 					callback null, best
 			
 	return breaks
 	
+#Millan webinterfacea varten
+findMediaRows = (pageNumber,sortPage, callback) ->
+	breaksPerPage = 12
+	models.Break.find().sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+		console.log 'sortPage: ' + sortPage
+		breaks_ = (b for b in breaks)
+		models.Break.count().exec((err, count) ->
+			callback null, breaks_, count, sortPage
+		)
+	)
+
+#Millan
 #search from breaks
-#Should just look for the headline in the initial query.
-searchBreaks = (x, callback) ->
-		console.log x
-		models.Break.find().sort({'date': 'descending'}).exec((err, breaks) ->
-			#Errorhandling goes here //if err throw err
-			breaks_ = breaks
-			breaksArr = []
-			for b in breaks_
-				headline = b.headline.toString().toLowerCase()
-				x = x.toLowerCase()
-				if headline.indexOf(x) != -1
-					breaksArr.push b
-			callback null, breaksArr
-			return breaksArr
+searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
+		console.log 'entering search Breaks'
+		breaksPerPage = 12
+		breaksToSkip = pageNumber*breaksPerPage
+		console.log 'searchword: ' + searchWord
+		#checks if the search value matches the search word. If it matches the break is "found"
+		models.Break.find({'headline':$regex:searchWord}).sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+			console.log 'find function'
+			breaks_ = (b for b in breaks)
+			#counts the breaks that include the searchword in their headlines
+			models.Break.count({'headline':$regex:searchWord}).exec((err, count) ->
+				console.log('count in search: ' + count)
+				callback null, breaks_, count, sortPage
+			)
 		)
 		
-		
-#Why sort by date? Multiple arrays of the same stuff...
-sortByComments = (callback) ->
+
+#Millan
+sortByComments = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'desc'}).exec((err, breaks)->
+		console.log 'entering sortByComments'
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
+		breaksPerPage = 12
+		checkIfSkip = 0
+		breaksToSkip = pageNumber*breaksPerPage
+		console.log 'breaks to skip: ' + breaksToSkip
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
@@ -260,71 +275,64 @@ sortByComments = (callback) ->
 					x = getNextBreak.comments.length
 					wantedBreakPos = countLoops
 				countLoops += 1
-			breaksArrSorted.push breaksArr[wantedBreakPos]
+			if checkIfSkip >= breaksToSkip
+				breaksArrSorted.push breaksArr[wantedBreakPos]
+				if breaksArrSorted.length is breaksPerPage
+					break
+			else
+				checkIfSkip += 1
 			breaksArr.splice(wantedBreakPos, 1)
-		callback null, breaksArrSorted
-		return breaksArrSorted
+		models.Break.count().exec((err, count) ->
+			callback null, breaksArrSorted, count, sortPage
+		)
 	)
-sortByViews = (callback) ->
-	models.Break.find().sort({'views': 'descending'}).exec((err, breaks)->
+
+#Millan
+sortByViews = (pageNumber,sortPage, callback) ->
+	breaksPerPage = 12
+	models.Break.find().sort({'views': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks)->
 		breaks_ = (b for b in breaks)
-		callback null, breaks_
-		return breaks_
+		models.Break.count().exec((err, count) ->
+			callback null, breaks_, count, sortPage
+		)
 	)
-sortByVotes = (callback) ->
+	
+#Millan
+sortByVotes = (pageNumber,sortPage, callback) ->
 	models.Break.find().sort({'date': 'descending'}).exec((err, breaks)->
+		breaksPerPage = 12
 		breaks_ = breaks
 		breaksArr = []
 		breaksArrSorted = []
+		positionLimits = pageNumber+1 *breaksPerPage
+		breaksToSkip = pageNumber*breaksPerPage
+		checkIfSkip = 0
+		console.log 'breaks to skip: ' + breaksToSkip
 		for b in breaks
 			breaksArr.push b
 		for b in breaksArr
 			countLoops = 0
 			wantedBreakPos = 0
-			x = -10000
+			x = -10000000
 			for getNextBreak in breaksArr
 				score = getNextBreak.upvotes.length - getNextBreak.downvotes.length
+				console.log 'x is: ' + x + ' score is: ' + score
 				if x < score
 					x = score
 					wantedBreakPos = countLoops
-
 				countLoops += 1
-			breaksArrSorted.push breaksArr[wantedBreakPos]
+			if checkIfSkip >= breaksToSkip
+				console.log 'chosen score: ' + x
+				console.log '****'
+				breaksArrSorted.push breaksArr[wantedBreakPos]
+				if breaksArrSorted.length is breaksPerPage
+					break
+			else
+				checkIfSkip += 1
 			breaksArr.splice(wantedBreakPos, 1)
-		callback null, breaksArrSorted
-		return breaksArrSorted
-	)
-
-#finds an x amout of breaks in the vicinity. NOT USED?
-
-###
-findNear = (longitude, latitude, page, callback) ->
-	breaks = []
-	models.Break.db.db.executeDbCommand {
-		geoNear: 'breaks' 
-		near : [longitude, latitude] 
-		spherical : true
-		}, (err, docs) ->
-			if err
-				throw err
-			b = docs.documents[0].results
-			if b[0]
-				i = 0
-				while b[page*10+i] and i < 10
-					object = b[page*10+i]
-					found_break = object.obj
-					found_break.dis = object.dis
-					breaks.push found_break
-					i++
-			callback null, breaks
-	return breaks
-###
-
-findInfinite = (page, callback) ->
-	models.Break.find().skip(10*(page-1)).limit(10).exec((err, breaks) ->
-		breaks_ = (b for b in breaks)
-		callback null, breaks_
-		return breaks_
+		models.Break.count().exec((err, count) ->
+			callback null, breaksArrSorted, count, sortPage
+		)
 	)
 	
 findById = (id, callback) ->
@@ -332,8 +340,8 @@ findById = (id, callback) ->
 		callback err, break_
 	)
 
-#find break and add one to view
-findAndModify = (id, callback) ->
+#find break and add one to view, not used atm in the app
+addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
@@ -372,19 +380,11 @@ vote = (breakId, userId, direction, callback) ->
 				
 						#calculating new points
 						if (break_.upvotes.length - break_.downvotes.length) > 0
-							break_.points = break_.startingPoints + 500000 * Math.log (break_.upvotes.length - break_.downvotes.length)
+							break_.points = break_.startingPoints + 2500000 * Math.log (break_.upvotes.length - break_.downvotes.length)
 						else if (break_.upvotes.length - break_.downvotes.length) == 0
 							break_.points = break_.startingPoints
 						else
-							break_.points = break_.startingPoints - 500000 * Math.log (break_.downvotes.length - break_.upvotes.length)
-				
-						###
-						if break_.top or (break_.points > a.topBreak.points)
-							break_.top = true
-							albumModel.updateTop break_.album, break_, (err) ->
-								if err
-									throw err
-						###
+							break_.points = break_.startingPoints - 2500000 * Math.log (break_.downvotes.length - break_.upvotes.length)
 				
 						console.log break_.points
 						break_.save (err) ->
@@ -395,47 +395,21 @@ vote = (breakId, userId, direction, callback) ->
 								console.log 'BREAK: Vote successful: ' + break_._id
 								callback null, break_
 
-#Needs to be updated
 del = (breakId, userId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
 			callback err
 		else
 			if String(break_.user) is String(userId)
-				#check if the break is a top break. if so, give the album a new topbreak (or remove the album).
-				if break_.top
-					albumModel.findById break_.album, (err, album) ->
-						if err
-							callback err
-						else
-							albumModel.getBreak album._id, 1, (err, newTop) ->
-								
-								#Check if the album only contains 1 break
-								if String(newTop._id) is String(break_.id)
-									album.remove (err) ->
-										if err
-											callback err
-										else
-											break_.remove (err) ->
-												callback err
-								else
-									album.topBreak = newTop
-									album.save (err) ->
-										if err
-											callback err
-										else
-											break_.remove (err) ->
-												callback err		
-				else	
-					break_.remove (err) ->
-						callback err
+				break_.remove (err) ->
+					console.log 'Break deleted: ' + breakId
+					callback err
 						
 				#delete (or rename) the image file. how?
 				
 			else
 				callback 'Invalid user or user not authorized to delete this break.'
-				
-#modify break?
+			
 
 root = exports ? window
 root.Break = Break
@@ -443,14 +417,17 @@ root.comment = comment
 root.createBreak = createBreak
 root.getFeed = getFeed
 root.findAll = findAll
+
+#media interface stuff
 root.searchBreaks = searchBreaks
 root.sortByComments = sortByComments
 root.sortByViews = sortByViews
 root.sortByVotes = sortByVotes
+root.findMediaRows = findMediaRows
+
+root.addView = addView
 root.fbShare = fbShare
 root.tweet = tweet
-root.findInfinite = findInfinite
 root.findById = findById
 root.vote = vote
 root.del = del
-root.findAndModify = findAndModify
