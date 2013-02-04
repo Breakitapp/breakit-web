@@ -16,43 +16,40 @@ block contents
 		form.searchform(method="post", action="/media", name="mediaInterface")
 			input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
 			input.searchbutton(type="submit", value="Go")
-		form(method="post", action="/media", name="mediaInterface")
+		form.sortForm(method="post", action="/media", name="mediaInterface")
 			input.buttonBg(type="submit",name="sortPage",value="byDate")
 			input.buttonBg(type="submit",name="sortPage",value="commented")
 			input.buttonBg(type="submit",name="sortPage",value="viewed")
 			input.buttonBg(type="submit",name="sortPage",value="ranking")
-			//
-				input.buttonBg(type="submit",name="pics",value="My pics")
-	#wrapper.centrify
+			
+	#wrapper
 		br
 		br
-		//
-			p.sortByTag SORT BY
-			form
-				input.sortByTag(type="button",name="time",value="Time")
-				input.sortByTag(type="button",name="place",value="Place")
-				input.sortByTag(type="button",name="tags",value="Tags")
-				input.sortByTag(type="button",name="ranking",value="Ranking")
-		ul
-			for b in breaks
-				li.smallRadius.fullBorderGroove
-					p.smallRadius.fullBorderRidge #{b.headline}
-					a(href="/p/" + b._id)
-						img(src="/ios/picture/" + b._id, alt=b.headline)
-					score = b.upvotes.length - b.downvotes.length
-					p.smallRadius.fullBorderGroove= "Comments: " + b.comments.length
-					p.smallRadius.fullBorderGroove= "Votes: " + score
-					p.smallRadius.fullBorderGroove= "Views: " + b.views
-	form.page(id="pages", method="post", action="/media")
-	#push
-	#footer
+		.container.centrify
+			ul.centrify
+				for b in breaks
+					li.smallRadius.fullBorderGroove
+						score = b.upvotes.length - b.downvotes.length
+						//p.smallRadius.fullBorderRidge #{b.headline}
+						a(href="/p/" + b._id)
+							img(src="/ios/picture/" + b._id, alt=b.headline)
+						.icons
+							p.views= b.views
+							img.icon(src="public/images/1pager/comments.png",alt="comments")
+							p.comments= "comments " + b.comments.length
+							img.icon(src="public/images/1pager/voteUp.png",alt="vote")
+							p.votes= "votes " + score
+						hr
+						p=b.headline
+		form.page.centrify(id="pages", method="post", action="/media")
+
 block footerscripts
 	script
 		$(document).ready(function(){
 			count = #{count}
-			for(i = 0; i < count/4; i++){
+			for(i = 0; i < count/12; i++){
 				j=i +1
-				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>');
+				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>'); 
 			}
-			$('#pages').append('<input type="text" name=currentSortPage value=#{sortPageValue}>');
+			$('#pages').append('<input type="text" class="hidden" name=currentSortPage value=#{sortPageValue}>');
 		});
