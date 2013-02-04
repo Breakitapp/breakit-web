@@ -24,7 +24,7 @@ exports.webSubmit = (req, res) ->
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		albums.addBreak break_
 		
-		target_path ='./app/res/images/' + break_._id + '.jpeg'
+		target_path ='./app/res/user/' + break_.user + '/images/' + break_._id + '.jpeg'
 		fs.readFile req.files.image.path, (err, data) ->
 			if err
 				console.log err

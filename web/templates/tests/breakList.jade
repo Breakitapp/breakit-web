@@ -10,6 +10,7 @@ html
 	body
 		block contents
 			for break_ in breaks
+				img(src='/ios/picture/' + break_.id)
 				p= "Break id: " + break_._id + ", headline: " + break_.headline + ", user: " + break_.user + ", album id: " + break_.album + ", created: " + break_.date + ", score: " + (break_.upvotes.length - break_.downvotes.length) + ", points: " + break_.points + ", comment count: " + break_.comments.length + ", top? " + break_.top
 				
 				form(name="input1", action="/breaks/vote", method="post")
