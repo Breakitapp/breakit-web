@@ -85,7 +85,7 @@ exports.postBreak = (req, res) ->
 		
 		tmp_path = req.files.image.path
 		#TODO error handling. If the path is not present, bad things happen. This should be handled in validations
-		target_path ='./app/res/user/' + req.body.user + '/images/' + break_._id + '.jpeg'
+		target_path ='./app/res/user/' + req.body.userId + '/images/' + break_._id + '.jpeg'
 		fs.readFile tmp_path, (err, data) ->
 			if err
 				throw err

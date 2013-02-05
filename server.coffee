@@ -12,6 +12,7 @@ albums			= require './app/lib/routes/albums'
 feedback		= require './app/lib/routes/feedback'
 test				= require './app/lib/routes/test'
 ios					= require './app/lib/routes/ios'
+reports			= require './app/lib/routes/reports'
 media				= require './app/lib/routes/mediaInterface'
 scripts			=	require	'./scripts/migration'
 settings		= require './settings'
@@ -82,6 +83,8 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		server.post '/breaks/delete', breaks.delete
 		#Albums
 		server.all '/albums', albums.list
+		#Reports
+		server.get '/reports', reports.view
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create

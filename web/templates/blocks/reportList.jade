@@ -1,0 +1,14 @@
+extend ../layout
+block contents
+
+	for report in reports
+		img(src='/ios/picture/' + report.breakId)
+		p= "Report id: " + report._id
+		p= "Break id: " + report.breakId
+		p= "reported by User: " + report.userId
+		p= "date: " + report.date
+		form(name="respond", action="/reports/delete", method="post")
+			input(type="hidden", name="breakId", value=report.breakId)
+			input(type="password", name="admincode")
+			input(type="submit", value="Remove")
+		hr
