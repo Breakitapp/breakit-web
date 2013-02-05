@@ -1,9 +1,7 @@
 extend ../layout
 block contents
 
-	p jee
-
 	for report in reports
 		p = "Report id: " + report._id + ", Break id: " + report.breakId + ", reported by User: " + report.userId
-		img(src="/ios/picture/"+report.breakId)
+		img(src='/ios/picture/' + report.breakId)
 		hr 
