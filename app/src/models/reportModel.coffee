@@ -24,7 +24,6 @@ createReport = (breakId, userId, callback) ->
 
 list = (callback) ->
 	models.Report.find().exec (err, reports) ->
-		console.log reports.length
 		callback err, reports
 		
 deleteReportsByBreak = (breakId, callback) ->
