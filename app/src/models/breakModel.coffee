@@ -215,7 +215,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							else
 								breaks.push foundBreak
 								#Add view to break
-								addView foundBreak.id, (err, foundBreak) ->
+								addView foundBreak._id, (err, foundBreak) ->
 									if err
 										console.log 'added view fail'
 									else
