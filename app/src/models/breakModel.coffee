@@ -205,8 +205,8 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								if not albumAdded
 									breaks.push foundBreak
 									#add view to break
-									addView foundBreak.id, (err, foundBreak) ->
-											console.log 'break id for foundBreak is: ' + foundBreak.id
+									addView foundBreak._id, (err, foundBreak) ->
+											console.log 'break id for foundBreak is: ' + foundBreak._id
 										if err
 											console.log 'added view fail'
 										else
