@@ -204,8 +204,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								if not albumAdded
 									breaks.push foundBreak
 									#add view to break
-									break_ = foundBreak
-									addView break_.id, (err, break_) ->
+									addView foundBreak.id, (err, foundBreak) ->
 										if err
 											console.log 'added view fail'
 										else
@@ -214,8 +213,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							else
 								breaks.push foundBreak
 								#Add view to break
-								break_ = foundBreak
-								addView break_.id, (err, break_) ->
+								addView foundBreak.id, (err, foundBreak) ->
 									if err
 										console.log 'added view fail'
 									else
@@ -358,7 +356,8 @@ findById = (id, callback) ->
 addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
-	console.log 'query is: ' + query
+	console.log 'id is: ' + id
+	console.log 'break is: ' + break_
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
 			console.log 'something went wrong'
