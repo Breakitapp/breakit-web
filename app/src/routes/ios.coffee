@@ -4,15 +4,15 @@
 # 
 ###
 
-breaks	= require '../models/breakModel'
-albums	= require '../models/albumModel'
-comments = require '../models/commentModel'
-notifications = require '../models/notificationsModel'
-users = require '../models/userModel'
-feedback = require '../models/feedbackModel'
-report = require '../models/reportModel'
-fs			= require 'fs'
-qs = require('querystring')
+breaks				= require '../models/breakModel'
+albums				= require '../models/albumModel'
+comments			= require '../models/commentModel'
+notifications	= require '../models/notificationsModel'
+users					= require '../models/userModel'
+feedback			= require '../models/feedbackModel'
+report				= require '../models/reportModel'
+fs						= require 'fs'
+qs						= require 'querystring'
 
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
 #The important thing for the client to pick is the albums name, and the topbreak. 
@@ -24,7 +24,7 @@ exports.index = (req, res) ->
 	page	= parseInt req.body.page, 10
 	lon		= parseFloat req.body.lon
 	lat		= parseFloat req.body.lat
-	shown 	= null
+	shown	= null
 	
 	if req.body.shownBreaks
 		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1)
@@ -75,7 +75,7 @@ exports.postBreak = (req, res) ->
 	
 	console.log 'place id: ' + req.body.placeId
 	console.log 'place name: ' + req.body.placeName
-	#
+
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		
 		#Only if the break should be in an album...
@@ -84,8 +84,8 @@ exports.postBreak = (req, res) ->
 			albums.addBreak break_
 		
 		tmp_path = req.files.image.path
-		# for future target_path = '../../../web/public/res/user/' + req.body.user + '/images/' + break_._id + '.png'
-		target_path ='./app/res/images/' + break_._id + '.jpeg'
+		#TODO error handling. If the path is not present, bad things happen. This should be handled in validations
+		target_path ='./app/res/user/' + req.body.user + '/images/' + break_._id + '.jpeg'
 		fs.readFile tmp_path, (err, data) ->
 			if err
 				throw err
@@ -141,8 +141,10 @@ exports.vote = (req, res) ->
 
 exports.getPicture = (req, res) ->
 	id = req.params.id
-	
-	res.sendfile './app/res/images/' + id + '.jpeg'
+	breaks.findById id, (err, break_) ->
+		if err
+			throw err
+		res.sendfile './app/res/user/' + break_.user + '/images/' + break_.id + '.jpeg'
 
 #not needed anymore?
 exports.getBreak = (req, res) ->

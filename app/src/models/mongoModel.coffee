@@ -5,32 +5,33 @@ toLower = (v) ->
 	return v.toLowerCase()
 
 CommentSchema = new Schema
-	comment				:		{type: String}
-	date				:		{type: Date, default: Date.now}
-	user 				: 		{type: String}
-	usernick 			: 		{type: String}
+	comment					:		{type: String}
+	date						:		{type: Date, default: Date.now}
+	user 						:		{type: String}
+	usernick 				:		{type: String}
 
 BreakSchema = new Schema
-	headline			:			{type: String}
-	upvotes				:			[String]
-	downvotes			:			[String]
-	startingPoints		:			{type: Number}
-	points 				:			{type: Number}
-	views				:			{type: Number, default: 0}
-	loc					:			{lon: Number, lat: Number}
-	placeName			:			{type: String} #This is for the address or name of foursquare place
-	placeId				:			{type: String, default: null} #This is only for the ID of a foursquare album
-	album				:			{type: String, default: null} #This is only for the Breakit album id in case of a foursquare album
-	user				:			{type: String}
-	usernick			:			{type: String}
-	top					:			{type: Boolean, default: false}
-	story				:			{type: String}
-	date				:			{type: Date, default: Date.now}
-	tags				:			{type: String}
-	publish				:			{type: Boolean, default: true}
-	comments			:			[Comment]
-	fbShares			:			[Schema.ObjectId]
-	tweets				:			[Schema.ObjectId]
+	headline				:		{type: String}
+	upvotes					:		[String]
+	downvotes				:		[String]
+	startingPoints	:		{type: Number}
+	points 					:		{type: Number}
+	views						:		{type: Number, default: 0}
+	loc							:		{lon: Number, lat: Number}
+	placeName				:		{type: String} #This is for the address or name of foursquare place
+	placeId					:		{type: String, default: null} #This is only for the ID of a foursquare album
+	album						:		{type: String, default: null} #This is only for the Breakit album id in case of a foursquare album
+	user						:		{type: String}
+	usernick				:		{type: String}
+	top							:		{type: Boolean, default: false}
+	story						:		{type: String}
+	date						:		{type: Date, default: Date.now}
+	tags						:		{type: String}
+	publish					:		{type: Boolean, default: true}
+	comments				:		[Comment]
+	fbShares				:		[Schema.ObjectId]
+	tweets					:		[Schema.ObjectId]
+
 
 BreakSchema.index {loc: '2d'}
 
