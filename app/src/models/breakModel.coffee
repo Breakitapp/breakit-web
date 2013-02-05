@@ -205,6 +205,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 									breaks.push foundBreak
 									#add view to break
 									addView foundBreak.id, (err, foundBreak) ->
+											console.log 'break id for foundBreak is: ' + foundBreak.id
 										if err
 											console.log 'added view fail'
 										else
@@ -356,8 +357,6 @@ findById = (id, callback) ->
 addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
-	console.log 'id is: ' + id
-	console.log 'break is: ' + break_
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
 			console.log 'something went wrong'
