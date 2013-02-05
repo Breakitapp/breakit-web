@@ -103,7 +103,9 @@ exports.postBreak = (req, res) ->
 exports.deleteBreak = (req, res) ->
 	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
 	
-	breaks.del req.body.breakId, req.body.userId, (err) ->
+	#userId not used atm
+	
+	breaks.del req.body.breakId, (err) -> 
 		if err
 			res.send 'Break delete failed.' 
 		else
