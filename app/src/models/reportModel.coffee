@@ -36,5 +36,7 @@ deleteReport = (reportId, callback) ->
 				callback err, null
 		
 root = exports ? window
+root.list = list
+root.deleteReport = deleteReport
 root.Report = Report
 root.createReport = createReport
