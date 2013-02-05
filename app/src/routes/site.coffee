@@ -41,7 +41,7 @@ exports.public = (req, res) ->
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
-					onepagerUser = '50a0e4db1f63ba4d72000020'
+					onepagerUser = '5110eff913e66edb527cb501'
 				if(req.headers.host is '46.137.122.206')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
