@@ -182,6 +182,9 @@ exports.browseAlbum = (req, res) ->
 		if err
 			throw err
 		else
+			breaks.addView break_._id, (err, break_) ->
+				if err
+					throw err
 			console.log 'Sending new break info for break: ' + break_._id
 			res.send break_
 

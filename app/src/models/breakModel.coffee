@@ -165,7 +165,6 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 					while i < b.length
 						foundBreak = b[i].obj
 						foundBreak.dis = b[i].dis
-						#foundBreak.id = b[i].id
 						
 						#Now the shown breaks are excluded from results
 						alreadyShown = false
@@ -204,7 +203,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								
 								if not albumAdded
 									breaks.push foundBreak
-									#add view to break
+									#add view to break when feed is loaded
 									addView foundBreak._id, (err, foundBreak) ->
 											console.log 'break id for foundBreak is: ' + foundBreak._id
 										if err
@@ -214,7 +213,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							#This break hasn't been shown before
 							else
 								breaks.push foundBreak
-								#Add view to break
+								#Add view to break when feed is loaded
 								addView foundBreak._id, (err, foundBreak) ->
 									if err
 										console.log 'added view fail'
