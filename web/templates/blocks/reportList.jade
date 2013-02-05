@@ -3,6 +3,8 @@ block contents
 
 	for report in reports
 		p jee
+		p = "jee2"
+		p = "id: " + report._id
 		img(src='/ios/picture/' + report.breakId)
 		p = "Report id: " + report._id + ", Break id: " + report.breakId + ", reported by User: " + report.userId + ", date: " + report.date
 		hr
