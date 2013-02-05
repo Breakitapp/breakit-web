@@ -9,6 +9,8 @@ block contents
 		p= "date: " + report.date
 		form(name="respond", action="/reports/delete", method="post")
 			input(type="hidden", name="breakId", value=report.breakId)
-			input(type="password", name="admincode")
-			input(type="submit", value="Remove")
+			input(type="submit", value="Remove break")
+		form(name="respond", action="/reports/clear", method="post")
+			input(type="hidden", name="breakId", value=report.breakId)
+			input(type="submit", value="It's fine")
 		hr
