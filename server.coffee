@@ -86,7 +86,8 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		#Reports
 		server.get '/reports', reports.login
 		server.post '/reports', reports.view
-		server.post 'reports/delete', reports.delete
+		server.post '/reports/delete', reports.delete
+		server.post '/reports/clear', reports.clear
 
 #Creating a feedback for test
 server.get '/feedback/new', feedback.create

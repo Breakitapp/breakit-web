@@ -14,7 +14,6 @@ exports.view = (req, res) ->
 	else
 		res.redirect('/reports/')
 	
-	
 exports.delete = (req, res) ->
 	breaks.del req.body.breakId, (err) ->
 		if err
@@ -24,4 +23,12 @@ exports.delete = (req, res) ->
 				if err
 					res.send('Break deleted but the reports still remain (error).')
 				else
-					res.redirect('back')
+					res.send('Break deleted succefully.')
+					
+exports.clear = (req, res) ->
+	reports.deleteReportsByBreak req.body.breakId, (err) ->
+		if err
+			res.send('Error removing reports.')
+		else
+			res.send('Reports related to the break removed successfully.')
+
