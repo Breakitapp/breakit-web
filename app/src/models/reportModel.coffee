@@ -2,12 +2,12 @@ models = require './mongoModel'
 
 class Report
 	constructor: (@breakId, @userId) ->
-		console.log Date.now() + ': REPORT FOR INAPPROPRIATE BREAK  '+ @breakId + ' by user ' + @userId
+		console.log Date.now() + ': REPORT FOR INAPPROPRIATE BREAK '+ @breakId + ' by user ' + @userId
 
 	saveToDB: (callback) ->
 				
 		report = new models.Report
-			breakiId			:		@breakId
+			breakId				:		@breakId
 			userId 				:		@userId
 		
 		report.save (err) ->
