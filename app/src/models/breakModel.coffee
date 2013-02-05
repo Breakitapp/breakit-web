@@ -165,7 +165,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 					while i < b.length
 						foundBreak = b[i].obj
 						foundBreak.dis = b[i].dis
-						foundBreak.id = b[i].id
+						#foundBreak.id = b[i].id
 						
 						#Now the shown breaks are excluded from results
 						alreadyShown = false
@@ -206,7 +206,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 									breaks.push foundBreak
 									#add view to break
 									addView foundBreak.id, (err, foundBreak) ->
-											console.log 'break id   for foundBreak is: ' + foundBreak.id
+											console.log 'break id for foundBreak is: ' + foundBreak.id
 										if err
 											console.log 'added view fail'
 										else
