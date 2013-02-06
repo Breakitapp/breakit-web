@@ -37,7 +37,7 @@ exports.public = (req, res) ->
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					#onepagerUser = '5097ae8bae4d4a8805000001'
-					onepagerUser = '50a0a149aa090b8c11000001'
+					onepagerUser = '50c9f32b6684c6ac05000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
@@ -61,11 +61,11 @@ exports.public = (req, res) ->
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					#onepagerUser = '5097ae8bae4d4a8805000001'
-					onepagerUser = '50a0a149aa090b8c11000001'
+					onepagerUser = '50c9f32b6684c6ac05000001'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
-					onepagerUser = '50a0e4db1f63ba4d72000020'
+					onepagerUser = '5110eff913e66edb527cb501'
 				if(req.headers.host is '46.137.122.206')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
