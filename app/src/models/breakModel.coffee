@@ -201,10 +201,23 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								
 								if not albumAdded
 									breaks.push foundBreak
-								
+									#add view to break when feed is loaded
+									addView foundBreak._id, (err, foundBreak) ->
+											console.log 'break id for foundBreak is: ' + foundBreak._id
+										if err
+											console.log 'added view fail'
+										else
+											console.log 'added view succcess'
 							#This break hasn't been shown before
 							else
 								breaks.push foundBreak
+								#Add view to break when feed is loaded
+								addView foundBreak._id, (err, foundBreak) ->
+									if err
+										console.log 'added view fail'
+									else
+										console.log 'added view succcess'
+								
 						i++
 					
 					console.log 'nr of breaks: ' + breaks.length
@@ -345,7 +358,9 @@ addView = (id, callback) ->
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
 			console.log 'something went wrong'
-		callback err, break_
+		else
+			console.log 'views updated'
+			callback err, break_
 	)
 
 
@@ -393,22 +408,18 @@ vote = (breakId, userId, direction, callback) ->
 								console.log 'BREAK: Vote successful: ' + break_._id
 								callback null, break_
 
-del = (breakId, userId, callback) ->
+del = (breakId, callback) ->
 	findById breakId, (err, break_) ->
 		if err
 			callback err
 		else
-			if String(break_.user) is String(userId)
-				break_.remove (err) ->
-					console.log 'Break deleted: ' + breakId
-					callback err
+			#if String(break_.user) is String(userId)
+			break_.remove (err) ->
+				console.log 'Break deleted: ' + breakId
+				callback err
 						
 				#delete (or rename) the image file. how?
 				
-			else
-				callback 'Invalid user or user not authorized to delete this break.'
-			
-
 root = exports ? window
 root.Break = Break
 root.comment = comment

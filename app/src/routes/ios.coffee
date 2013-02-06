@@ -65,7 +65,7 @@ exports.newUser = (req, res) ->
 	users.createUser req.body.nickname, 'iPhone', (err, user) ->
 		if err
 			console.log err
-			res.send err
+			res.send 'Taken.'
 		else
 			console.log 'New user ' + user._id + ' sent to the client.'
 			res.send user
@@ -85,7 +85,7 @@ exports.postBreak = (req, res) ->
 		
 		tmp_path = req.files.image.path
 		#TODO error handling. If the path is not present, bad things happen. This should be handled in validations
-		target_path ='./app/res/user/' + req.body.user + '/images/' + break_._id + '.jpeg'
+		target_path ='./app/res/user/' + req.body.userId + '/images/' + break_._id + '.jpeg'
 		fs.readFile tmp_path, (err, data) ->
 			if err
 				throw err
@@ -103,7 +103,9 @@ exports.postBreak = (req, res) ->
 exports.deleteBreak = (req, res) ->
 	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
 	
-	breaks.del req.body.breakId, req.body.userId, (err) ->
+	#userId not used atm
+	
+	breaks.del req.body.breakId, (err) -> 
 		if err
 			res.send 'Break delete failed.' 
 		else
@@ -182,6 +184,9 @@ exports.browseAlbum = (req, res) ->
 		if err
 			throw err
 		else
+			breaks.addView break_._id, (err, break_) ->
+				if err
+					throw err
 			console.log 'Sending new break info for break: ' + break_._id
 			res.send break_
 
