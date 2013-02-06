@@ -24,20 +24,28 @@ createReport = (breakId, userId, callback) ->
 
 list = (callback) ->
 	models.Report.find().exec (err, reports) ->
-		console.log reports.length
 		callback err, reports
+		
+deleteReportsByBreak = (breakId, callback) ->
+	models.Report.find({breakId : breakId}).exec (err, reports) ->
+		if err
+			callback err
+		else
+			for report in reports
+				report.remove (err) ->
+					callback err
 
 deleteReport = (reportId, callback) ->
-
 	models.Report.findbyId(reportId).exec (err, report) ->
 		if err
-			callback err, null
+			callback err
 		else
 			report.remove (err) ->
-				callback err, null
+				callback err
 		
 root = exports ? window
 root.list = list
 root.deleteReport = deleteReport
+root.deleteReportsByBreak = deleteReportsByBreak
 root.Report = Report
 root.createReport = createReport
