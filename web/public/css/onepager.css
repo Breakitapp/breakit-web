@@ -64,7 +64,7 @@ ul li p{
 	text-align:center !important;
 	color:#A1A1A1;
 	width:40px !important;
-	font-size:14px;
+	font-size:12px;
 }
 ul li:last-child p{
 	color:white;
@@ -140,6 +140,7 @@ header img{
 #bottomRight{
 	margin-right:20px;
 	width:384px;
+	height:70px;
 }
 #push{
 	height:4em;
@@ -162,13 +163,13 @@ header img{
 }
 #commentField p, #bottomContainer p{
 	font-weight:bold;
-	margin-bottom:5px;
 	text-align:justify;
 	padding-left:5px;
 }
 #commentField p{
 	width:345px;
 	margin-left:10px;
+	margin-bottom:5px;
 }
 #bottomContainer #bottomLeft p{
 	width:350px;
@@ -182,7 +183,7 @@ header img{
 }
 #bottomContainer, #middleContainer{
 	margin-left:20px;
-	overflow: visible;
+	overflow: auto;
 }
 #test{
 	border-bottom:rgb(255,255,255) ridge 2px;
