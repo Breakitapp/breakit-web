@@ -9,6 +9,15 @@
 	text-size-adjust:auto;
 	-moz-text-size-adjust:auto;
 }
+/*FONTFACE*/
+@font-face {
+font-family: Aller_Rg;
+src: url(/public/fonts/Aller_Rg.eot); /*IE*/
+}
+@font-face {
+font-family: Aller_Rg;
+src: url(/public/fonts/Aller_Rg.ttf);/*Others*/
+}
 html, body{
 	height:100%;
 }
@@ -85,7 +94,7 @@ header img{
 	height:280px;
 }
 #header h1, #header h1 span{
-	font-weight:100;
+	font-family:Aller_rg, Myriad Pro, Helvetica, Arial, sans-serif;
 }
 #header h1 span{
 	color:#D11414;
@@ -97,19 +106,22 @@ header img{
 #wrapper{
 	background:rgba(239,239,239,1);
 	margin-bottom:50px;
-}
-#wrapper, #borderDiv{
-	height:810px;
+	overflow:auto;
 }
 
-#topContainer{
-	padding-top:10px;
-	padding-bottom:10px;
-}
 
-#topContainer h1{
-	font-size:40px;
+.floatHeadline{
+	position:absolute;
+	z-index:10000;
+	background:rgba(0,0,0,.5);
+	height:40px;
 	width:612px;
+}
+.floatHeadline h1{
+	font-size:28px;
+	color:#fff;
+	font-weight:700;
+	padding-left:5px;
 }
 
 #rightContainer{
@@ -131,6 +143,8 @@ header img{
 }
 #push{
 	height:4em;
+}
+.clear{
 	clear:both;
 }
 #footer{
@@ -163,8 +177,12 @@ header img{
 #bottomLeft, #bottomRight{
 	margin-top:10px;
 }
-#topContainer, #bottomContainer, #middleContainer{
+#middleContainer{
+	padding-top:20px;
+}
+#bottomContainer, #middleContainer{
 	margin-left:20px;
+	overflow: visible;
 }
 #test{
 	border-bottom:rgb(255,255,255) ridge 2px;
@@ -288,3 +306,4 @@ border: 1px solid #eee;
 	border-top-left-radius: 10px;
 	-webkit-border-top-left-radius:10px;
 }
+
