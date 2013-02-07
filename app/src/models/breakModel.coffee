@@ -253,13 +253,13 @@ searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 		breaksToSkip = pageNumber*breaksPerPage
 		console.log 'searchword: ' + searchWord
 		#checks if the search value matches the search word. If it matches the break is "found"
-		models.Break.find({'headline':$regex:searchWord}).sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+		models.Break.find({'headline':$regex:searchWord,$options: 'i'}).sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
 			console.log 'find function'
 			breaks_ = (b for b in breaks)
 			#counts the breaks that include the searchword in their headlines
-			models.Break.count({'headline':$regex:searchWord}).exec((err, count) ->
+			models.Break.count({'headline':$regex:searchWord,$options: 'i'}).exec((err, count) ->
 				console.log('count in search: ' + count)
-				callback null, breaks_, count, sortPage
+				callback null, breaks_, count, sortPage, searchWord
 			)
 		)
 		

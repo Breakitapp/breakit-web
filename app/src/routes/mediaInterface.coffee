@@ -48,7 +48,7 @@ exports.mediaInterface= (req, res) ->
 		sortFunction pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
 			console.log 'sort by comments'
 			if err
-				res.send 'No breaks found.'
+				throw err
 			else
 				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
 				
@@ -59,11 +59,13 @@ exports.mediaInterface= (req, res) ->
 		console.log 'change sortPage: ' + sortPage
 		#Start the searchfunction for the wanted breaks. Search funtion needs an extra variable called searchWord that contains the value of the word searched after
 		#TODO:pages wont work while the whole page renders itself leaving the search box value undefined
-		breaks.searchBreaks searchWord, pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
+		breaks.searchBreaks searchWord, pageNumber, sortPage, (err, breaks_, count, sortPageValue, searchWord) ->
 			if err
-				res.send 'No breaks found.'
+				throw err
 			else
 				console.log 'render search results'
 				if sortPageValue is undefined
 						sortPageValue = 'search'
-				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
+				if searchWord is undefined
+						searchWord = req.body.searchValue
+				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord
