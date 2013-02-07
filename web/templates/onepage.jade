@@ -40,15 +40,17 @@ html
 	body(onLoad="initialize();")
 		header.boxShadow
 			#header.centrify
-				img.left(src="/public/images/1pager/breakit.png")
 				h1 BREAK
 					span IT
 		#wrapper.centrify.fullRadius.fullBorder.insetShadow
 			#borderDiv.outsetShadow
-				#topContainer
-					h1 #{b.headline}
-				#middleContainer
+				//#topContainer
+					//-if mediaInterface
+						a.button.right(href="/media") Media
+				#middleContainer.clear
 					#leftContainer.left
+						.floatHeadline
+							h1 #{b.headline}
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
 						#map.fullBorderRidge.bottomMargin
@@ -91,7 +93,7 @@ html
 									span #{comment.comment}
 								hr.centrify
 										
-				#bottomContainer
+				#bottomContainer.clear
 					#bottomLeft.left
 						img.left(src="/public/images/1pager/profile.png")
 						p.left #{b.usernick}: 
@@ -117,7 +119,7 @@ html
 							input.hideInput(name = "userId", value=u) 
 							input.hideInput(name = "breakId", value=b._id)
 							input.right(type="button", onClick="submitForm()", value="send")
-		#push
+		#push.clear
 		#footer.boxShadow
 	script
 		$(document).ready(function(e) {
