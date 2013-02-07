@@ -39,7 +39,7 @@ UserSchema = new Schema
 	fName			:		{type: String}
 	lName			:		{type: String}
 	nName			:		{type: String, required: true, unique: true}
-	email			:		{type: String, set: toLower, index: true}
+	email			:		{type: String, set: toLower}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
 	

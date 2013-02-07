@@ -57,8 +57,8 @@ comment = (comment, breakId, callback) ->
 			sentUsers = []
 			for breakComment in break_.comments
 				console.log 'in for'
-				if breakComment.user isnt comment.user 
-					if breakComment.user not in sentUsers
+				if breakComment.user isnt comment.user
+					if breakComment.user not in sentUsers and breakComment.user isnt break_.user
 						sentUsers.push breakComment.user
 						type = 'NO_OWNER'
 						notificationsModel.createNotification comment.usernick, breakComment.user, comment.comment, breakId, type, (err)->
@@ -201,23 +201,23 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								
 								if not albumAdded
 									breaks.push foundBreak
-									###
-									breaks.addView req.params.id, (err, break_) ->
+									#add view to break when feed is loaded
+									addView foundBreak._id, (err, foundBreak) ->
+											console.log 'break id for foundBreak is: ' + foundBreak._id
 										if err
 											console.log 'added view fail'
 										else
 											console.log 'added view succcess'
-									###
 							#This break hasn't been shown before
 							else
 								breaks.push foundBreak
-								###
-								breaks.addView req.params.id, (err, break_) ->
-										if err
-											console.log 'added view fail'
-										else
-											console.log 'added view succcess'
-								###
+								#Add view to break when feed is loaded
+								addView foundBreak._id, (err, foundBreak) ->
+									if err
+										console.log 'added view fail'
+									else
+										console.log 'added view succcess'
+								
 						i++
 					
 					console.log 'nr of breaks: ' + breaks.length
@@ -358,7 +358,9 @@ addView = (id, callback) ->
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
 			console.log 'something went wrong'
-		callback err, break_
+		else
+			console.log 'views updated'
+			callback err, break_
 	)
 
 
