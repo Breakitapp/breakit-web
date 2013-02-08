@@ -81,12 +81,6 @@ header{
     background:rgba(255,255,255,1);
     height:40px;
     margin-bottom:20px;
-    clear:both;
-}
-header img{
-    padding-top:5px;
-    padding-right:20px;
-    height:30px;
 }
 #map{
 	margin-bottom:10px;
@@ -96,8 +90,15 @@ header img{
 #header h1, #header h1 span{
 	font-family:Aller_rg, Myriad Pro, Helvetica, Arial, sans-serif;
 }
+#header h1{
+	width:200px;
+}
 #header h1 span{
 	color:#D11414;
+}
+
+#header a{
+
 }
 
 #wrapper,#header{
@@ -196,14 +197,13 @@ header img{
 .left{
 	float:left;
 }
+.right{
+	float:right;
+}
 .fullRadius{
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
-}
-
-.right{
-	float:right;
 }
 .fullBorder{
 	border:rgba(213,213,213,1) solid 2px;

@@ -40,13 +40,16 @@ html
 	body(onLoad="initialize();")
 		header.boxShadow
 			#header.centrify
+				if (typeof mediaInterface != 'undefined')
+					if (mediaInterface == true)
+						a.button.right(href="/media") Media
+						mediaInterface = 'media';
+					else
+						mediaInterface = '';
 				h1 Break
 					span it
-		#wrapper.centrify.fullRadius.fullBorder.insetShadow
+		#wrapper.centrify.fullRadius.fullBorder.insetShadow.clear
 			#borderDiv.outsetShadow
-				//#topContainer
-					//-if mediaInterface
-						a.button.right(href="/media") Media
 				#middleContainer.clear
 					#leftContainer.left
 						.floatHeadline
@@ -130,7 +133,8 @@ html
 						form(name="post_comment", action="/p/comment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
 							input.hideInput(name = "userId", value=u) 
-							input.hideInput(name = "breakId", value=b._id)
+							input.hideInput(name = "breakId", value=b._id)							
+							input.hideInput(name = "mediaInterface", value=mediaInterface)
 							input.right(type="button", onClick="submitForm()", value="send")
 		#push.clear
 		#footer.boxShadow

@@ -13,6 +13,23 @@ albums = require '../models/albumModel'
 
 
 exports.public = (req, res) ->
+	#created a default value for checkMediaInterface variable to be false
+	checkMediaInterface = false
+	#parses the querystring if there is one
+	queryObject = require('url').parse(req.url,true).query
+	#TODO checks the last visited url. IF the last visited url is media interface changes checkMediaInterface value to true
+	getLastVisitedUrl = req.header('Referer')
+	console.log 'last visited: ' + getLastVisitedUrl
+	if getLastVisitedUrl?
+		splitUrl = getLastVisitedUrl.split('/')
+		getLastVisitedUrl = splitUrl[splitUrl.length-1]
+		if getLastVisitedUrl is 'media' 
+			#While checkMediaInterface is true it allows the mediainterface button to appear in onepager
+			checkMediaInterface = true
+			console.log checkMediaInterface
+		#Check if commented has happened while being marked on media interface
+		else if queryObject.name is 'media'
+				checkMediaInterface = true
 	cookieName = ''
 	cookieValue = ''
 	cookies = {}
@@ -37,7 +54,7 @@ exports.public = (req, res) ->
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					#onepagerUser = '5097ae8bae4d4a8805000001'
-					onepagerUser = '50c9f32b6684c6ac05000001'
+					onepagerUser = '509b933292083a3c07000002'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
@@ -51,7 +68,7 @@ exports.public = (req, res) ->
 
 				#for(head in req.headers)
 					#console.log 'head'+head
-				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
+				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 	else
 		breaks.addView req.params.id, (err, break_) ->
 			if err
@@ -61,7 +78,7 @@ exports.public = (req, res) ->
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					#onepagerUser = '5097ae8bae4d4a8805000001'
-					onepagerUser = '50c9f32b6684c6ac05000001'
+					onepagerUser = '509b933292083a3c07000002'
 					console.log 'in IF'
 				if(req.headers.host is '54.247.69.189')
 					# PROD SERVER ANON USER
@@ -70,10 +87,11 @@ exports.public = (req, res) ->
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
-				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
+				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 			
 
 exports.webComment = (req, res) ->
+	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
 			throw err
@@ -85,7 +103,10 @@ exports.webComment = (req, res) ->
 				if err
 					res.send 'Commenting failed.'
 				else
-					res.redirect '/p/' + req.body.breakId
+					if checkMediaInterface is 'media'
+							checkMediaInterface = '?name=' + checkMediaInterface
+					res.redirect '/p/' + req.body.breakId + checkMediaInterface
+					#mediaInterface:checkMediaInterface
 
 #Onepager vs2
 exports.pvs2 = (req, res) ->
