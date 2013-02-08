@@ -86,12 +86,11 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		#Creating a feedback for test
 		server.get '/feedback/new', feedback.create
 		server.post '/feedback/new', feedback.submit
-		server.post '/feedback/reply', feedback.reply
-
 
 #Feedback
 server.get '/feedback', feedback.login
 server.post '/feedback', feedback.view
+server.post '/feedback/reply', feedback.reply
 
 #iOS
 server.post '/ios', ios.index
