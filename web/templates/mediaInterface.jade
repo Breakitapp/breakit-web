@@ -12,8 +12,12 @@ block contents
 			img.left(src="/public/images/1pager/breakit.png")
 			h1 BREAK
 				span IT
-	form.searchform.right(method="post", action="/media", name="mediaInterface")
-		input.searchfield(type="text",value="search", name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
+	form.searchform.left(method="post", action="/media", name="mediaInterface")
+		if(typeof searchWord != 'undefined')
+			searchValue = searchWord;
+		else
+			searchValue = 'search';
+		input.searchfield(type="text",value=searchValue, name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
 		input.searchbutton(type="submit", value="Go")
 	#sort.centrify
 		form.sortForm(method="post", action="/media", name="mediaInterface")
@@ -26,23 +30,18 @@ block contents
 		br
 		br
 		.container.centrify
-			ul.centrify
+			ul
 				for b in breaks
 					li.smallRadius.fullBorderGroove
 						score = b.upvotes.length - b.downvotes.length
-						//p.smallRadius.fullBorderRidge #{b.headline}
 						a(href="/p/" + b._id)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						.icons
-							//p.views= b.views
-							//img.icon(src="public/images/1pager/comments.png",alt="comments")
-							p.comments= "comments &bull; " + b.comments.length
-							//img.icon(src="public/images/1pager/voteUp.png",alt="vote")
-							p.votes= "score &bull; " + score
+							p.information= "comments &bull; " + b.comments.length + "  " + "score &bull; " + score
 						hr
 						p=b.headline
 		form.page.centrify(id="pages", method="post", action="/media")
-
+			input.hidden(type="text", name="searchValue",value=searchValue)
 block footerscripts
 	script
 		$(document).ready(function(){

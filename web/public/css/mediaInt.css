@@ -32,8 +32,6 @@ ul{
 	margin-bottom:50px;
 	text-align:center;
 	text-align-last: left;
-	width:99%
-	
 }
 li{
 	width:268px;
@@ -61,6 +59,7 @@ hr{
 	width: 100%;
 	opacity: 0.2px;
 }
+/*Divs*/
 #header h1, #header h1 span{
 	font-weight:100;
 }
@@ -105,8 +104,7 @@ hr{
 	outline:none;
 }
 .container{
-	max-width:1920px;
-	min-width:320px;
+	width:85%;
 	overflow:auto;
 }
 .centrify{
@@ -184,16 +182,14 @@ p.sortByTag{
 .icons{
 	text-align:center;
 }
-#wrapper ul li p.comments,
-#wrapper ul li p.votes,
-#wrapper ul li p.views{
-	width: 90px;
+#wrapper ul li p.information{
+	width: 100%;
 	color:#666;
 	display:inline-block;
 	font-weight:bold;
-	text-align:left;
-	vertical-align:middle;
+	text-align:center;
 	padding-left: 3px;
+	
 }
 
 #wrapper ul li img.icon{
@@ -204,12 +200,11 @@ p.sortByTag{
 	margin:0;
 	padding:5px 0;
 	height:100%;
-	width:268px;
-	background:#DECDBF;
+	width:100%;
+	background:#DBD9D3;
 	color:#000000;
 }
-/* search form 
--------------------------------------- */
+/* search form -------------------------------------- */
 .buttonBg, .sortForm, .searchform{
 	display: inline-block;
 }
@@ -289,6 +284,7 @@ p.sortByTag{
 	-webkit-border-radius:6px;
 	border-radius:6px;
 	padding:0px 15px;
+	margin-left:50px;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
 	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
