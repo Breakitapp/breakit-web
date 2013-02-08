@@ -88,6 +88,8 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		server.post '/feedback/new', feedback.submit
 		server.post '/feedback/reply', feedback.reply
 
+#Terms & Conditions
+server.get '/terms', site.terms
 
 #Feedback
 server.get '/feedback', feedback.login
