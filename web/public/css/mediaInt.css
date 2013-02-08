@@ -32,8 +32,6 @@ ul{
 	margin-bottom:50px;
 	text-align:center;
 	text-align-last: left;
-	width:99%
-	
 }
 li{
 	width:268px;
@@ -61,6 +59,7 @@ hr{
 	width: 100%;
 	opacity: 0.2px;
 }
+/*Divs*/
 #header h1, #header h1 span{
 	font-weight:100;
 }
@@ -105,8 +104,7 @@ hr{
 	outline:none;
 }
 .container{
-	max-width:1920px;
-	min-width:320px;
+	width:85%;
 	overflow:auto;
 }
 .centrify{
