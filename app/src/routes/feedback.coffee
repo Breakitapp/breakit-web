@@ -37,6 +37,7 @@ exports.view = (req, res) ->
 			if feedbacklist == null
 				res.send('No feedback found.')
 			else
+				console.log 'feedbacklist: ' + feedbacklist
 				res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
 				
 	else
