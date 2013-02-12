@@ -9,13 +9,18 @@ exports.login = (req, res) ->
 exports.reply = (req, res) ->
 	type = 'REPLY_FEEDBACK'
 	breakitUser = 'Breakit'
-	notificationsModel.createNotification breakitUser, req.body.userNick, req.body.reply, '666', type, (err)->
+	notificationsModel.createNotification breakitUser, req.body.userId, req.body.reply, '666', type, (err)->
 		if err
 			console.log 'in callback err'
 			res.send 'ERROR in replying to feedback'
 		else
 			console.log 'in callback success'
-			res.render 'adminlogin_feedback', title: 'Breakit admin login'
+			feedback.list (feedbacklist) ->
+				if feedbacklist == null
+					res.send('No feedback found.')
+				else
+					console.log 'feedbacklist: ' + feedbacklist
+					res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
 exports.create = (req, res) ->
 	users = userModel.list (u)->
 		console.log 'users in feedback.coffee: ' + u
