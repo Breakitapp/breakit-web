@@ -90,6 +90,7 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 
 #Terms & Conditions
 server.get '/terms', site.terms
+server.get '/terms_and_conditions', site.terms_and_conditions
 
 #Feedback
 server.get '/feedback', feedback.login

@@ -246,3 +246,6 @@ exports.send = (req, res) ->
 
 exports.terms = (req, res) ->
 	res.render 'blocks/terms', {title : 'Breakit terms and conditions'}
+
+exports.terms_and_conditions = (req, res) ->
+	res.render 'blocks/terms_and_conditions', {title : 'Breakit terms and conditions'}
