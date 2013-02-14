@@ -15,12 +15,18 @@ exports.reply = (req, res) ->
 			res.send 'ERROR in replying to feedback'
 		else
 			console.log 'in callback success'
-			feedback.list (feedbacklist) ->
-				if feedbacklist == null
-					res.send('No feedback found.')
+			feedback.changeFeedbackStatusAsReplied req.body.feedbackId, (err, feedback_) ->
+				if err
+					console.log 'error in changing feedback status'
+					res.send 'ERROR in changing feedback status'
 				else
-					console.log 'feedbacklist: ' + feedbacklist
-					res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
+					console.log 'successfully updated feedback: '+feedback_.id+' status as replied:true'
+					feedback.list (feedbacklist) ->
+						if feedbacklist == null
+							res.send('No feedback found.')
+						else
+							console.log 'feedbacklist: ' + feedbacklist
+							res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
 exports.create = (req, res) ->
 	users = userModel.list (u)->
 		console.log 'users in feedback.coffee: ' + u

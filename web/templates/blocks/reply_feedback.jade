@@ -3,4 +3,5 @@ form(name="input", action="/feedback/reply", method="post")
 	input(type="text", name="reply")
 	br
 	input(type="hidden", name="userId", value=feedback.user_id)
+	input(type="hidden", name="feedbackId", value=feedback.id)
 	input(type="submit", value="Submit")
