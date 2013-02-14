@@ -97,10 +97,6 @@ header{
 	color:#D11414;
 }
 
-#header a{
-
-}
-
 #wrapper,#header{
 	width:1055px;
 }
@@ -264,9 +260,8 @@ form input, .button{
 	text-shadow:1px 1px 0px #ffffff;
 }
 .button{
-	width:50px;
+	width:40px;
 	height:30px;
-	margin-right:21px;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	border-radius:6px;
