@@ -36,6 +36,22 @@ html
 							map:map
 					})
 			}
+		//[if lte IE 7]>
+			style
+				#bottomRight
+				{
+					width:370px;
+				}
+				#bottomLeft ul
+				{
+					clear:both;
+					width:250px;
+				}
+				#bottomLeft
+				{
+					width:612px;
+				}
+			<![endif]
 	//onLoad starts the function initialize()
 	body(onLoad="initialize();")
 		header.boxShadow

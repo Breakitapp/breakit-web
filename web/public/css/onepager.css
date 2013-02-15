@@ -53,6 +53,8 @@ li{
 	width:60px;
 	display:inline-block;
 	cursor:pointer;
+	zoom:1;
+	*display:inline
 }
 ul li:last-child{
 	width:50px;
@@ -110,9 +112,14 @@ header{
 .floatHeadline{
 	position:absolute;
 	z-index:10000;
-	background:rgba(0,0,0,.5);
 	height:40px;
 	width:612px;
+/*IE*/
+background: transparent;
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000)"; /* IE8 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F000000,endColorstr=#7F000000);   /* IE6 & 7 */
+      zoom: 1;
+      background:rgba(0,0,0,.5);
 }
 .floatHeadline h1{
 	font-size:28px;
@@ -178,6 +185,9 @@ header{
 #middleContainer{
 	padding-top:20px;
 }
+div{
+	zoom: 1;
+}
 #bottomContainer, #middleContainer{
 	margin-left:20px;
 	overflow: auto;
@@ -210,6 +220,7 @@ header{
 .fullBorderRidge{
 	border:rgba(243,243,243,0.5) ridge 2px;
 }
+
 .fullBorderDark{
 	border:rgb(163,163,163) solid 2px;
 }
