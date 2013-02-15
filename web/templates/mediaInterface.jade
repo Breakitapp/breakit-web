@@ -42,13 +42,18 @@ block contents
 						p=b.headline
 		form.page.centrify(id="pages", method="post", action="/media")
 			input.hidden(type="text", name="searchValue",value=searchValue)
+			if(typeof pageNumber == 'undefined')
+				pageNumber = 0;
+			input(type="text", name='pageNumber',value=pageNumber)
+			input(type="submit", name='nextPage',value="next")
 block footerscripts
 	script
 		$(document).ready(function(){
+			alert(#{pageNumber});
 			count = #{count}
 			for(i = 0; i < count/12; i++){
 				j=i +1
-				$('#pages').append('<input type="submit" name=pageNumber value='+j+'>'); 
+				//$('#pages').append('<input type="submit" name=pageNumber value='+j+'>'); 
 			}
 			$('#pages').append('<input type="text" class="hidden" name=currentSortPage value=#{sortPageValue}>');
 		});
