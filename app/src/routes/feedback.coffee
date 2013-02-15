@@ -1,12 +1,35 @@
 feedback = require '../models/feedbackModel'
 userModel = require '../models/userModel'
+notificationsModel = require '../models/notificationsModel'
 
 exports.login = (req, res) ->
 
 	res.render 'adminlogin_feedback', title: 'Breakit admin login'
 
+exports.reply = (req, res) ->
+	type = 'REPLY_FEEDBACK'
+	breakitUser = 'Breakit'
+	notificationsModel.createNotification breakitUser, req.body.userId, req.body.reply, '666', type, (err)->
+		if err
+			console.log 'in callback err'
+			res.send 'ERROR in replying to feedback'
+		else
+			console.log 'in callback success'
+			feedback.changeFeedbackStatusAsReplied req.body.feedbackId, (err, feedback_) ->
+				if err
+					console.log 'error in changing feedback status'
+					res.send 'ERROR in changing feedback status'
+				else
+					console.log 'successfully updated feedback: '+feedback_.id+' status as replied:true'
+					feedback.list (feedbacklist) ->
+						if feedbacklist == null
+							res.send('No feedback found.')
+						else
+							console.log 'feedbacklist: ' + feedbacklist
+							res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
 exports.create = (req, res) ->
 	users = userModel.list (u)->
+		console.log 'users in feedback.coffee: ' + u
 		res.render 'feedbackForm', title : 'Feedback test form', users: u
 	
 exports.submit = (req, res) ->
@@ -25,6 +48,7 @@ exports.view = (req, res) ->
 			if feedbacklist == null
 				res.send('No feedback found.')
 			else
+				console.log 'feedbacklist: ' + feedbacklist
 				res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
 				
 	else

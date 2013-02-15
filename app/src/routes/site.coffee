@@ -264,4 +264,9 @@ exports.send = (req, res) ->
 					console.log "Message sent: " + response.message
 					console.log 'mail sent'
 					res.send('SUCCESS')
-					
+
+exports.terms = (req, res) ->
+	res.render 'blocks/terms', {title : 'Breakit terms and conditions'}
+
+exports.terms_and_conditions = (req, res) ->
+	res.render 'blocks/terms_and_conditions', {title : 'Breakit terms and conditions'}
