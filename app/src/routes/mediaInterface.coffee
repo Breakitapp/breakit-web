@@ -12,7 +12,7 @@ exports.mediaInterface= (req, res) ->
 	
 	#if no sort method is chosen the sortmethod is set to by date
 	if sortPage == undefined && currentSortPage == undefined
-		sortPage = 'byDate'
+		sortPage = 'date'
 	
 	#if there is a current sort method in use this overrides the current sort method
 	else if sortPage == undefined
@@ -25,7 +25,7 @@ exports.mediaInterface= (req, res) ->
 	console.log pageNumber
 
 	#If a pagenumber hasn't been defined it defaults to the first page
-	if pageNumber is undefined || pageNumber == 0
+	if isNaN(pageNumber) or pageNumber is undefined or pageNumber < 0
 		pageNumber = 0
 		console.log 'page number set to 0: ' + pageNumber
 	else
@@ -44,7 +44,7 @@ exports.mediaInterface= (req, res) ->
 			commented: breaks.sortByComments
 			viewed: breaks.sortByViews
 			ranking: breaks.sortByVotes
-			byDate: breaks.findMediaRows
+			date: breaks.findMediaRows
 		
 		#Get the wanted function with the searchword sortPage		
 		sortFunction = sortFunctions[sortPage]

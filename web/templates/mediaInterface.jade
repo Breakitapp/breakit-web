@@ -21,7 +21,7 @@ block contents
 		input.searchbutton(type="submit", value="Go")
 	#sort.centrify
 		form.sortForm(method="post", action="/media", name="mediaInterface")
-			input.buttonBg(type="submit",name="sortPage",value="byDate")
+			input.buttonBg(type="submit",name="sortPage",value="date")
 			input.buttonBg(type="submit",name="sortPage",value="commented")
 			input.buttonBg(type="submit",name="sortPage",value="viewed")
 			input.buttonBg(type="submit",name="sortPage",value="ranking")
@@ -44,16 +44,37 @@ block contents
 			input.hidden(type="text", name="searchValue",value=searchValue)
 			if(typeof pageNumber == 'undefined')
 				pageNumber = 0;
-			input(type="text", name='pageNumber',value=pageNumber)
-			input(type="submit", name='nextPage',value="next")
+			else if(pageNumber > count/12-1)
+				pageNumber = pageNumber -1
+			input.hidden(type="text", name='pageNumber',value=pageNumber)
+			input(type="button", name='firstPage',value="<< first page")
+			input(type="button", name='previousPage', value='< previous page')
+			input(type="submit", name='nextPage',value="next page >")
+			input(type="button", name='lastPage',value="last page >>")
 block footerscripts
 	script
 		$(document).ready(function(){
-			alert(#{pageNumber});
 			count = #{count}
-			for(i = 0; i < count/12; i++){
-				j=i +1
-				//$('#pages').append('<input type="submit" name=pageNumber value='+j+'>'); 
-			}
 			$('#pages').append('<input type="text" class="hidden" name=currentSortPage value=#{sortPageValue}>');
+		});
+		$('input:button[name=previousPage]').click(function(){
+			pageNumber = $("input:text[name=pageNumber]").val();
+			if(pageNumber >= 0) {		
+				pageNumber -= 2;
+				$("input:text[name=pageNumber]").val(pageNumber);
+			}
+			else{
+				pageNumber = -1;				
+			}
+			$('#pages').submit();
+		});
+		$('input:button[name=firstPage]').click(function(){
+			pageNumber = -1;
+			$("input:text[name=pageNumber]").val(pageNumber);
+			$('#pages').submit();
+		});
+		$('input:button[name=lastPage]').click(function(){
+			pageNumber = Math.floor(count/12)-1;
+			$("input:text[name=pageNumber]").val(pageNumber);
+			$('#pages').submit();
 		});
