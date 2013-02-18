@@ -44,15 +44,12 @@ li:hover{
 }
 
 header{
-    background:rgba(51,51,51,1);
+	background-color:#333333;
+    background:rgb(51,51,51,1);
     height:30px;
     margin-bottom:20px;
 }
-header img{
-    padding-top:5px;
-    padding-right:20px;
-    height:30px;
-}
+
 hr{
 	margin-left:-1px;
 	width: 100%;
@@ -62,6 +59,8 @@ hr{
 #header{
 	width:100%;
 	text-align:center;
+	background-color:#333333;
+	margin-bottom:10px;
 }
 #header h1{
 	color:rgb(255,255,255);
@@ -202,7 +201,10 @@ p.sortByTag{
 .searchform{
 	width:150px;
 	height:20px;
+}
+.searchform{
 	position:absolute;
+	left:0;
 }
 
 .searchfield{
