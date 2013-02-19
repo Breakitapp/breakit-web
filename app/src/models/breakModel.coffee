@@ -149,7 +149,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 		spherical : true
 		}, (err, docs) ->
 			
-			console.log 'inside dbcommand'
+			#console.log 'inside dbcommand'
 			
 			if err
 				throw err
@@ -179,7 +179,9 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 									alreadyShown = true
 									break
 								j++
-						if not alreadyShown
+								
+						
+						if not alreadyShown #Break hasn't been shown before
 							
 							#console.log 'not shown'
 							
