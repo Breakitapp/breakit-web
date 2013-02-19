@@ -28,7 +28,7 @@ createFeedback = (reqBody, callback) ->
 	console.log 'splitFeedback 1: ' + splitFeedback[0]
 	console.log 'splitFeedback 2: ' + splitFeedback[1]
 	
-	# FEEBACKS SHOULD BE GOT FROM IOS IN FORM "USER#FEEDBACK"
+	# FEEBACKS SHOULD BE GOT FROM IOS IN FORM "USERID#FEEDBACK"
 	fb_new = new Feedback(splitFeedback[0], splitFeedback[1])
 	fb_new.save (err) ->
 		callback err
@@ -51,9 +51,15 @@ list = (callback) ->
 			feedback = (feedback for feedback in data)
 			callback feedback
 
+changeFeedbackStatusAsReplied = (feedbackId, callback) ->
+	query ={'_id':feedbackId}
+	models.Feedback.findOneAndUpdate(query,{$set:{'replied': true}}).exec((err, feedback_)->
+		callback err, feedback_
+	)
 
 root = exports ? window
 root.Feedback = Feedback
 root.createWebFeedback = createWebFeedback
 root.createFeedback = createFeedback
 root.list = list
+root.changeFeedbackStatusAsReplied = changeFeedbackStatusAsReplied

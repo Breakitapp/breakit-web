@@ -2,6 +2,13 @@
 html
 	head
 		title = title
+		meta(property="og:type",content="article")
+		meta(property="og:url",content="http://breakitapp.com/p/#{b._id}")
+		meta(property="og:image",content="http://breakitapp.com/ios/picture/#{b._id}")
+		meta(property="og:site_name",content=title)
+		meta(property="og:description",content="#{b.story}")
+		meta(property="fb:admins",content="410947535627985")
+		link(rel="image_src",href="http://breakitapp.com/ios/picture/#{b._id}")
 		link(rel='stylesheet', href='/public/css/onepager.css')
 		link(href="/public/css/jScrollPane.css", rel="stylesheet", type="text/css")
 		link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
@@ -36,17 +43,36 @@ html
 							map:map
 					})
 			}
+		//[if lte IE 7]>
+			style
+				#bottomRight
+				{
+					width:370px;
+				}
+				#bottomLeft ul
+				{
+					clear:both;
+					width:250px;
+				}
+				#bottomLeft
+				{
+					width:612px;
+				}
+			<![endif]
 	//onLoad starts the function initialize()
 	body(onLoad="initialize();")
 		header.boxShadow
 			#header.centrify
+				if (typeof mediaInterface != 'undefined')
+					if (mediaInterface == true)
+						a.button.right(href="/media") back
+						mediaInterface = 'media';
+					else
+						mediaInterface = '';
 				h1 Break
 					span it
-		#wrapper.centrify.fullRadius.fullBorder.insetShadow
+		#wrapper.centrify.fullRadius.fullBorder.insetShadow.clear
 			#borderDiv.outsetShadow
-				//#topContainer
-					//-if mediaInterface
-						a.button.right(href="/media") Media
 				#middleContainer.clear
 					#leftContainer.left
 						.floatHeadline
@@ -130,7 +156,8 @@ html
 						form(name="post_comment", action="/p/comment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
 							input.hideInput(name = "userId", value=u) 
-							input.hideInput(name = "breakId", value=b._id)
+							input.hideInput(name = "breakId", value=b._id)							
+							input.hideInput(name = "mediaInterface", value=mediaInterface)
 							input.right(type="button", onClick="submitForm()", value="send")
 		#push.clear
 		#footer.boxShadow
