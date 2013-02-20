@@ -22,7 +22,7 @@ html, body{
 	height:100%;
 }
 body{
-    background:#ffffff;
+    background:#222;
 }
 p{
 	font-size:14px;
@@ -80,26 +80,38 @@ form{
 	width:380px;
 }
 header{
-    background:rgba(255,255,255,1);
-    height:40px;
+    background:#333;
+    height:30px;
     margin-bottom:20px;
-}
-#map{
-	margin-bottom:10px;
-	width:380px;
-	height:280px;
 }
 #header h1, #header h1 span{
 	font-family:Aller_rg, Myriad Pro, Helvetica, Arial, sans-serif;
+	font-weight:100;
+	font-size: 20px;
 }
 #header h1{
-	width:200px;
+	text-align:center;
+	color:#fff;
 }
 #header h1 span{
 	color:#D11414;
 }
-
-#wrapper,#header{
+#header{
+	width:300px;
+}
+#map{
+	margin-bottom:10px;
+	width:380px;
+	height:240px;
+}
+#address{
+	height:40px;
+	width:383px;
+	background:#333;
+	margin-left:1px;
+	margin-bottom:-1px;
+}
+#wrapper{
 	width:1055px;
 }
 #wrapper{
@@ -107,8 +119,6 @@ header{
 	margin-bottom:50px;
 	overflow:auto;
 }
-
-
 .floatHeadline{
 	position:absolute;
 	z-index:10000;
@@ -121,7 +131,7 @@ background: transparent;
       zoom: 1;
       background:rgba(0,0,0,.5);
 }
-.floatHeadline h1{
+.floatHeadline h1, #address h1{
 	font-size:28px;
 	color:#fff;
 	font-weight:700;
@@ -146,21 +156,8 @@ background: transparent;
 	width:384px;
 	height:70px;
 }
-#push{
-	height:4em;
-}
 .clear{
 	clear:both;
-}
-#footer{
-	width: 100%;
-	background-color: #FFF;
-	min-height: 4em;
-	margin-top: -4em;
-	z-index: 10;
-	position: absolute;
-	clear: both;
-	visibility: visible;
 }
 *:focus{
 	outline:none;
@@ -272,12 +269,13 @@ form input, .button{
 }
 .button{
 	width:40px;
-	height:30px;
+	height:20px;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	border-radius:6px;
 	padding-left:6px;
-	padding-top:10px;
+	padding-top:2px;
+	margin-top:3px;
 }
 
 form input:hover, .button:hover {

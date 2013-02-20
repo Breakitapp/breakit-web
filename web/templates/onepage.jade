@@ -61,14 +61,14 @@ html
 			<![endif]
 	//onLoad starts the function initialize()
 	body(onLoad="initialize();")
-		header.boxShadow
-			#header.centrify
-				if (typeof mediaInterface != 'undefined')
+		header
+			if (typeof mediaInterface != 'undefined')
 					if (mediaInterface == true)
-						a.button.right(href="/media") back
+						a.button.left(href="/media") back
 						mediaInterface = 'media';
 					else
 						mediaInterface = '';
+			#header.centrify
 				h1 Break
 					span it
 		#wrapper.centrify.fullRadius.fullBorder.insetShadow.clear
@@ -79,8 +79,9 @@ html
 							h1 #{b.headline}
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
+						#address
+							h1 #{b.placeName}
 						#map.fullBorderRidge.bottomMargin
-						//(width="380", height="280", frameborder="0", scrolling="no",src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=14&amp;output=embed")
 						#commentField.fullBorderGroove.scroll-pane
 						
 							storydate = b.date
@@ -159,8 +160,6 @@ html
 							input.hideInput(name = "breakId", value=b._id)							
 							input.hideInput(name = "mediaInterface", value=mediaInterface)
 							input.right(type="button", onClick="submitForm()", value="send")
-		#push.clear
-		#footer.boxShadow
 	script
 		$(document).ready(function(e) {
 			$("li").mouseover(function() {
