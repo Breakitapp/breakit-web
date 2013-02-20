@@ -198,6 +198,7 @@ exports.feedbackCreate = (req, res) ->
 			res.send 'Error saving feedback'
 		else
 			console.log 'SUBMITTED'
+			res.set 'Content-Type', 'application/json'
 			res.send 'SUCCESS'
 
 exports.changeUserAttributes = (req, res) ->
