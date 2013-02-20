@@ -62,9 +62,7 @@ li{
 ul li.fbook, ul li.twitter{
 	vertical-align: top;
 }
-ul li.twitter{
-	margin-left:-12px;
-}
+
 ul li:last-child{
 	width:50px;
 }
