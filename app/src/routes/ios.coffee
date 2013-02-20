@@ -17,7 +17,7 @@ qs						= require 'querystring'
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
 #The important thing for the client to pick is the albums name, and the topbreak. 
 exports.index = (req, res) ->
-	res.set 'Content-Type', 'application/json'
+	
 	console.log 'new request object: '+req
 	console.log 'request shownBreaks: '+req.shownBreaks
 	#Change page and location to numbers
@@ -44,7 +44,6 @@ exports.index = (req, res) ->
 
 
 exports.login = (req, res) 	->
-	res.set 'Content-Type', 'application/json'
 	console.log 'Login received from user: ' + req.body.userId
 	
 	users.findById req.body.userId, (err, user) ->
@@ -60,7 +59,7 @@ exports.login = (req, res) 	->
 
 #Creates a new user and responds with the userId
 exports.newUser = (req, res) ->
-	res.set 'Content-Type', 'application/json'
+	
 	console.log 'New user requested. Nickname: ' + req.body.nickname
 	
 	users.createUser req.body.nickname, 'iPhone', (err, user) ->
@@ -73,7 +72,7 @@ exports.newUser = (req, res) ->
 
 #create a new break
 exports.postBreak = (req, res) ->
-	res.set 'Content-Type', 'application/json'
+	
 	console.log 'place id: ' + req.body.placeId
 	console.log 'place name: ' + req.body.placeName
 
@@ -102,7 +101,6 @@ exports.postBreak = (req, res) ->
 							res.send b
 
 exports.deleteBreak = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
 	
 	#userId not used atm
@@ -114,7 +112,6 @@ exports.deleteBreak = (req, res) ->
 			res.send 'Break deleted successfully.'
 			
 exports.reportBreak = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	console.log 'Reported an inappropriate Break: ' + req.body.breakId + ' by user: ' + req.body.userId
 
 	report.createReport req.body.breakId, req.body.userId, (err) ->
@@ -124,7 +121,6 @@ exports.reportBreak = (req, res) ->
 			res.send 'Break reported successfully.'
 					
 exports.postComment = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	users.findById req.body.userId, (err, author) ->
 		if not author
 			res.send 'Invalid user.'
@@ -138,7 +134,6 @@ exports.postComment = (req, res) ->
 
 #Takes a req that contains 3 fields: "breakId", "userId"" and "which" ('up' or 'down')
 exports.vote = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	breaks.vote req.body.breakId, req.body.userId, req.body.which, (err, break_) ->
 		if err
 			console.log err
@@ -147,7 +142,6 @@ exports.vote = (req, res) ->
 			res.send break_
 
 exports.getPicture = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	id = req.params.id
 	breaks.findById id, (err, break_) ->
 		if err
@@ -156,7 +150,6 @@ exports.getPicture = (req, res) ->
 
 #not needed anymore?
 exports.getBreak = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	breaks.findById req.params.id, (err, b) ->
 		if not b
 			console.log err
@@ -165,7 +158,6 @@ exports.getBreak = (req, res) ->
 			res.send b
 
 exports.tweet = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	breaks.tweet req.body.breakId, req.body.userId, (err) ->
 		if err
 			console.log err
@@ -175,7 +167,7 @@ exports.tweet = (req, res) ->
 	
 	
 exports.fbShare = (req, res) ->
-	res.set 'Content-Type', 'application/json'
+	
 	console.log 'New FB share by user: ' + req.body.userId
 	
 	breaks.fbShare req.body.breakId, req.body.userId, (err) ->
@@ -187,7 +179,6 @@ exports.fbShare = (req, res) ->
 
 
 exports.browseAlbum = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	console.log 'Getting page ' + req.params.page + ' in album ' + req.params.albumId
 	albums.getBreak req.params.albumId, req.params.page, (err, break_) ->
 		if err
@@ -200,7 +191,6 @@ exports.browseAlbum = (req, res) ->
 			res.send break_
 
 exports.feedbackCreate = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 	console.log 'HANDLING A REQUEST FROM IOS: ' + req.body
 	feedback.createFeedback req.body, (err) ->
 		if err
@@ -208,14 +198,11 @@ exports.feedbackCreate = (req, res) ->
 			res.send 'Error saving feedback'
 		else
 			console.log 'SUBMITTED'
-			res.set 'Content-Type', 'application/json'
-			res.send '{response:SUCCESS}'
+			res.send 'SUCCESS'
 
 exports.changeUserAttributes = (req, res) ->
-	res.set 'Content-Type', 'application/json'
 # needs a json object from the client with userid and a key value pair where key = user's field to be changed and value = new value	
 	users.changeAttributes req.body, (err, user)->
-		res.set 'Content-Type', 'application/json'
 		if err 
 			res.send 'error'
 		else
@@ -223,20 +210,18 @@ exports.changeUserAttributes = (req, res) ->
 
 
 exports.getAlbumBreaks = (req, res) ->
-	res.set 'Content-Type', 'application/json'
+	
 	console.log 'Getting Album Breaks: ' + req.params.albumId + ', page: ' + req.params.page
 	
 	albums.getAlbumBreaks req.params.albumId, req.params.page, (err, foundBreaks)->
-		res.set 'Content-Type', 'application/json'
 		if err
 			res.send 'error'
 		else
 			res.send [foundBreaks, req.params.page]
 
 exports.getMyBreaks = (req, res) ->
-	res.set 'Content-Type', 'application/json'
+	
 	users.getBreaks req.params.userId, req.params.page, (err, foundBreaks)->
-		res.set 'Content-Type', 'application/json'
 		if err
 			res.send 'error'
 		else
@@ -244,9 +229,8 @@ exports.getMyBreaks = (req, res) ->
 			
 
 exports.getMyNotifications = (req, res) ->
-	res.set 'Content-Type', 'application/json'
+	
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
-		res.set 'Content-Type', 'application/json'
 		if err
 			res.send 'error'
 		else
