@@ -83,16 +83,18 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		server.post '/breaks/delete', breaks.delete
 		#Albums
 		server.all '/albums', albums.list
-		#Reports
-		server.get '/reports', reports.login
-		server.post '/reports', reports.view
-		server.post '/reports/delete', reports.delete
-		server.post '/reports/clear', reports.clear
+		#Creating a feedback for test
+		server.get '/feedback/new', feedback.create
+		server.post '/feedback/new', feedback.submit
 
-#Creating a feedback for test
-server.get '/feedback/new', feedback.create
-server.post '/feedback/new', feedback.submit
-server.get '/feedback/list', feedback.list
+#Terms & Conditions
+server.get '/terms', site.terms
+server.get '/terms_and_conditions', site.terms_and_conditions
+
+#Feedback
+server.get '/feedback', feedback.login
+server.post '/feedback', feedback.view
+server.post '/feedback/reply', feedback.reply
 
 #iOS
 server.post '/ios', ios.index
@@ -113,6 +115,12 @@ server.get '/ios/browse_album/:albumId/:page', ios.browseAlbum
 server.get '/ios/whole_album/:albumId/:page', ios.getAlbumBreaks
 server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
 server.get '/ios/mynotifications/:userId', ios.getMyNotifications
+
+#Reports
+server.get '/reports', reports.login
+server.post '/reports', reports.view
+server.post '/reports/delete', reports.delete
+server.post '/reports/clear', reports.clear
 
 #WEB
 #Public break interface

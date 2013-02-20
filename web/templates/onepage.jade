@@ -2,6 +2,13 @@
 html
 	head
 		title = title
+		meta(property="og:type",content="article")
+		meta(property="og:url",content="http://breakitapp.com/p/#{b._id}")
+		meta(property="og:image",content="http://breakitapp.com/ios/picture/#{b._id}")
+		meta(property="og:site_name",content=title)
+		meta(property="og:description",content="#{b.story}")
+		meta(property="fb:app_id",content="410947535627985")
+		link(rel="image_src",href="http://breakitapp.com/ios/picture/#{b._id}")
 		link(rel='stylesheet', href='/public/css/onepager.css')
 		link(href="/public/css/jScrollPane.css", rel="stylesheet", type="text/css")
 		link(href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700', rel='stylesheet', type='text/css')
@@ -36,25 +43,45 @@ html
 							map:map
 					})
 			}
+		//[if lte IE 7]>
+			style
+				#bottomRight
+				{
+					width:370px;
+				}
+				#bottomLeft ul
+				{
+					clear:both;
+					width:250px;
+				}
+				#bottomLeft
+				{
+					width:612px;
+				}
+			<![endif]
 	//onLoad starts the function initialize()
 	body(onLoad="initialize();")
-		header.boxShadow
+		header
+			if (typeof mediaInterface != 'undefined')
+					if (mediaInterface == true)
+						a.button.left(href="/media") back
+						mediaInterface = 'media';
+					else
+						mediaInterface = '';
 			#header.centrify
-				h1 BREAK
-					span IT
-		#wrapper.centrify.fullRadius.fullBorder.insetShadow
+				h1 Break
+					span it
+		#wrapper.centrify.fullRadius.fullBorder.insetShadow.clear
 			#borderDiv.outsetShadow
-				//#topContainer
-					//-if mediaInterface
-						a.button.right(href="/media") Media
 				#middleContainer.clear
 					#leftContainer.left
 						.floatHeadline
 							h1 #{b.headline}
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
+						#address
+							h1 #{b.placeName}
 						#map.fullBorderRidge.bottomMargin
-						//(width="380", height="280", frameborder="0", scrolling="no",src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=14&amp;output=embed")
 						#commentField.fullBorderGroove.scroll-pane
 						
 							storydate = b.date
@@ -109,7 +136,20 @@ html
 								p &nbsp
 							li.viewAmount
 								img(src="/public/images/1pager/viewsIcon.fw.png")
-								p #{b.views}
+								views = b.views;
+								countK = 0;
+								countHundred = 0;
+								if (views>999)
+									while (views>999)
+										countK = countK + 1;
+										views = views-1000;
+									while (views > 99)
+										countHundred = countHundred + 1;
+										views = views - 100
+										
+									p= countK + '.' + countHundred + 'K'
+								else
+									P= views
 							li.comments_count
 								img(src="/public/images/1pager/comments.png")
 								p #{b.comments.length}
@@ -117,10 +157,9 @@ html
 						form(name="post_comment", action="/p/comment", method="post")
 							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
 							input.hideInput(name = "userId", value=u) 
-							input.hideInput(name = "breakId", value=b._id)
+							input.hideInput(name = "breakId", value=b._id)							
+							input.hideInput(name = "mediaInterface", value=mediaInterface)
 							input.right(type="button", onClick="submitForm()", value="send")
-		#push.clear
-		#footer.boxShadow
 	script
 		$(document).ready(function(e) {
 			$("li").mouseover(function() {

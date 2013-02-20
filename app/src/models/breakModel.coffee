@@ -57,8 +57,8 @@ comment = (comment, breakId, callback) ->
 			sentUsers = []
 			for breakComment in break_.comments
 				console.log 'in for'
-				if breakComment.user isnt comment.user 
-					if breakComment.user not in sentUsers
+				if breakComment.user isnt comment.user
+					if breakComment.user not in sentUsers and breakComment.user isnt break_.user
 						sentUsers.push breakComment.user
 						type = 'NO_OWNER'
 						notificationsModel.createNotification comment.usernick, breakComment.user, comment.comment, breakId, type, (err)->
@@ -149,7 +149,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 		spherical : true
 		}, (err, docs) ->
 			
-			console.log 'inside dbcommand'
+			#console.log 'inside dbcommand'
 			
 			if err
 				throw err
@@ -179,7 +179,9 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 									alreadyShown = true
 									break
 								j++
-						if not alreadyShown
+								
+						
+						if not alreadyShown #Break hasn't been shown before
 							
 							#console.log 'not shown'
 							
@@ -253,13 +255,13 @@ searchBreaks = (searchWord, pageNumber, sortPage, callback) ->
 		breaksToSkip = pageNumber*breaksPerPage
 		console.log 'searchword: ' + searchWord
 		#checks if the search value matches the search word. If it matches the break is "found"
-		models.Break.find({'headline':$regex:searchWord}).sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
+		models.Break.find({'headline':$regex:searchWord,$options: 'i'}).sort({'date': 'descending'}).skip(pageNumber*breaksPerPage).limit(breaksPerPage).exec((err, breaks) ->
 			console.log 'find function'
 			breaks_ = (b for b in breaks)
 			#counts the breaks that include the searchword in their headlines
-			models.Break.count({'headline':$regex:searchWord}).exec((err, count) ->
+			models.Break.count({'headline':$regex:searchWord,$options: 'i'}).exec((err, count) ->
 				console.log('count in search: ' + count)
-				callback null, breaks_, count, sortPage
+				callback null, breaks_, count, sortPage, searchWord
 			)
 		)
 		

@@ -32,8 +32,6 @@ ul{
 	margin-bottom:50px;
 	text-align:center;
 	text-align-last: left;
-	width:99%
-	
 }
 li{
 	width:268px;
@@ -46,23 +44,30 @@ li:hover{
 }
 
 header{
-    background:rgba(255,255,255,1);
-    height:40px;
-    margin-bottom:20px;
-    clear:both;
-}
-header img{
-    padding-top:5px;
-    padding-right:20px;
+	background-color:#333333;
+    background:rgb(51,51,51,1);
     height:30px;
+    margin-bottom:20px;
 }
+
 hr{
 	margin-left:-1px;
 	width: 100%;
 	opacity: 0.2px;
 }
+/*Divs*/
+#header{
+	width:100%;
+	text-align:center;
+	background-color:#333333;
+	margin-bottom:10px;
+}
+#header h1{
+	color:rgb(255,255,255);
+}
 #header h1, #header h1 span{
 	font-weight:100;
+	font-size:20px;
 }
 #header h1 span{
 	color:#D11414;
@@ -72,7 +77,7 @@ hr{
 }
 
 #wrapper p{
-	width:80%;
+	width:85%;
 	margin:4px auto;
 	color:#444;
 }
@@ -81,32 +86,15 @@ hr{
 	text-align:left;
 }
 #sort{	
-	max-width:650px;
+	max-width:480px;
 	margin: 0 auto;
 }
 
-
-#push{
-	height:4em;
-	clear:both;
-}
-#footer{
-	width: 100%;
-	background-color: #FFF;
-	min-height: 4em;
-	margin-top: -4em;
-	bottom:0;
-	z-index: 10;
-	position: absolute;
-	clear: both;
-	visibility: visible;
-}
 *:focus{
 	outline:none;
 }
 .container{
-	max-width:1920px;
-	min-width:320px;
+	width:85%;
 	overflow:auto;
 }
 .centrify{
@@ -163,37 +151,35 @@ p.sortByTag{
 	margin-left:60px;
 }
 
-.page{
-	clear:both;
-	min-width:320px;
-	max-width: 1152px;
-}
-.page input{
+.pageButton{
 	background:rgb(51,51,51);
 	color:white;
 	border:solid 2px black;
-	width:80px;
+	width:100px;
 	cursor:pointer;
 }
-.page input:active{
+.pageButton:active{
 	background:rgb(80,80,80);
 }
+.pageForm{
+	clear:both;
+	width:520px;
+	margin-bottom:20px;
+}
 .hidden{
-	visibility:hidden;
+	display:none;
 }
 .icons{
 	text-align:center;
 }
-#wrapper ul li p.comments,
-#wrapper ul li p.votes,
-#wrapper ul li p.views{
-	width: 90px;
+#wrapper ul li p.information{
+	width: 100%;
 	color:#666;
 	display:inline-block;
 	font-weight:bold;
-	text-align:left;
-	vertical-align:middle;
+	text-align:center;
 	padding-left: 3px;
+	
 }
 
 #wrapper ul li img.icon{
@@ -204,14 +190,21 @@ p.sortByTag{
 	margin:0;
 	padding:5px 0;
 	height:100%;
-	width:268px;
-	background:#DECDBF;
+	width:100%;
+	background:#DBD9D3;
 	color:#000000;
 }
-/* search form 
--------------------------------------- */
+/* search form -------------------------------------- */
 .buttonBg, .sortForm, .searchform{
 	display: inline-block;
+}
+.searchform{
+	width:150px;
+	height:20px;
+}
+.searchform{
+	position:absolute;
+	left:0;
 }
 
 .searchfield{
@@ -253,7 +246,7 @@ p.sortByTag{
 	position:relative;
 	top:2px;
 }
-.buttonBg, .searchform{
+.buttonBg{
 	height:30px;
 	width:120px;
 	cursor:pointer;
@@ -272,7 +265,7 @@ p.sortByTag{
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
 	font-weight:bold;
-}.buttonBg, .searchform, .searchfield {
+}.buttonBg, .searchfield {
 	font-family:arial;
 	font-size:12px;
 	color:#777777;
@@ -284,16 +277,8 @@ p.sortByTag{
 	-moz-border-radius:6px 0 0 6px;
 	-webkit-border-radius:6px 0 0 6px;
 	border-radius:6px 0 0 6px;
-}.searchform{
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	padding:0px 15px;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
-	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
-	background-color:#dfdfdf;
-}.buttonBg:active, .searchform{
+}
+.buttonBg:active{
 	position:relative;
 	top:1px;
 }
