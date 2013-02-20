@@ -59,7 +59,7 @@ exports.login = (req, res) 	->
 
 #Creates a new user and responds with the userId
 exports.newUser = (req, res) ->
-	
+	res.set 'Content-Type', 'application/json'	
 	console.log 'New user requested. Nickname: ' + req.body.nickname
 	
 	users.createUser req.body.nickname, 'iPhone', (err, user) ->
@@ -67,9 +67,6 @@ exports.newUser = (req, res) ->
 			console.log err
 			res.send 'Taken.'
 		else
-			console.log 'New user ' + user._id + ' sent to the client.'
-			res.set 'Content-Type', 'application/json'
-			console.log 'returning to client: ' + res.get 'Content-Type'
 			res.send user
 
 #create a new break
