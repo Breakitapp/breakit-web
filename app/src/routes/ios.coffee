@@ -69,6 +69,7 @@ exports.newUser = (req, res) ->
 		else
 			console.log 'New user ' + user._id + ' sent to the client.'
 			res.set 'Content-Type', 'application/json'
+			console.log 'returning to client: ' + res.get 'Content-Type'
 			res.send user
 
 #create a new break
