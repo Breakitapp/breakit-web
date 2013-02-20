@@ -44,6 +44,9 @@ h4{
 hr{
 	width:95%;
 	height:1px;
+	border:0;
+	border-top:1px solid #d2d9d2;
+	border-bottom:1px solid #ffffff;
 }
 ul{
 	list-style:none;
@@ -56,9 +59,16 @@ li{
 	zoom:1;
 	*display:inline
 }
+ul li.fbook, ul li.twitter{
+	vertical-align: top;
+}
+ul li.twitter{
+	margin-left:-12px;
+}
 ul li:last-child{
 	width:50px;
 }
+
 ul li p{
 	position:relative;
 	bottom:40px;
@@ -113,9 +123,7 @@ header{
 }
 #wrapper{
 	width:1055px;
-}
-#wrapper{
-	background:rgba(239,239,239,1);
+	background:rgba(250,250,250,1);
 	margin-bottom:50px;
 	overflow:auto;
 }
@@ -150,6 +158,12 @@ background: transparent;
 	width:385px;
 	background:rgba(234,234,234,1);
 	overflow:auto;
+}
+#commentField p{
+	font-weight:200;
+}
+#commentField span, #commentField p{
+	color:#3e403e
 }
 #bottomRight{
 	margin-right:20px;
