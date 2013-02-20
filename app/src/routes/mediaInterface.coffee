@@ -3,8 +3,6 @@ breaks = require '../models/breakModel'
 #This renders the index of mediainterface
 exports.mediaInterface= (req, res) ->
 	console.log 'entering Media Interface'
-	#checks which page the user wishes to go to
-	pageNumber = req.body.pageNumber
 	
 	#Checks which is the sort method currently in use
 	currentSortPage = req.body.currentSortPage
@@ -12,22 +10,29 @@ exports.mediaInterface= (req, res) ->
 	#Checks if user has chosen a new sort method
 	sortPage = req.body.sortPage
 	
-	#if no sortmethod is chosen the sortmethod is set to by date
+	#if no sort method is chosen the sortmethod is set to by date
 	if sortPage == undefined && currentSortPage == undefined
-		sortPage = 'byDate'
+		sortPage = 'date'
 	
-	#if there is a current sorthmethod in use this overrides the by date sortment
+	#if there is a current sort method in use this overrides the current sort method
 	else if sortPage == undefined
 		sortPage = currentSortPage
 	console.log 'sortPage variable is: ' + sortPage
 	
+		#checks which page the user wishes to go to
+	pageNumber = req.body.pageNumber
+	pageNumber = parseInt pageNumber
+	console.log pageNumber
+
 	#If a pagenumber hasn't been defined it defaults to the first page
-	if pageNumber == undefined
+	if isNaN(pageNumber) or pageNumber is undefined or pageNumber < 0
 		pageNumber = 0
+		console.log 'page number set to 0: ' + pageNumber
+	else
+		#otherwise the pageNumber is increased with 1
+		pageNumber += 1
+		console.log 'page number is now: ' + pageNumber
 	
-	#the page number is decreased by one so that the first page is 0 second is 1 and so on
-	else if pageNumber > 0
-		pageNumber -= 1
 	console.log 'testing searchValue: ' + req.body.searchValue
 	console.log 'page number: ' + pageNumber
 	
@@ -39,7 +44,7 @@ exports.mediaInterface= (req, res) ->
 			commented: breaks.sortByComments
 			viewed: breaks.sortByViews
 			ranking: breaks.sortByVotes
-			byDate: breaks.findMediaRows
+			date: breaks.findMediaRows
 		
 		#Get the wanted function with the searchword sortPage		
 		sortFunction = sortFunctions[sortPage]
@@ -50,7 +55,7 @@ exports.mediaInterface= (req, res) ->
 			if err
 				throw err
 			else
-				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue
+				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, pageNumber:pageNumber
 				
 	else
 		console.log 'entering search value'
@@ -68,4 +73,4 @@ exports.mediaInterface= (req, res) ->
 						sortPageValue = 'search'
 				if searchWord is undefined
 						searchWord = req.body.searchValue
-				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord
+				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord, pageNumber:pageNumber
