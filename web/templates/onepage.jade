@@ -2,12 +2,13 @@
 html
 	head
 		title = title
-		meta(property="og:type",content="article")
 		meta(property="og:url",content="http://breakitapp.com/p/#{b._id}")
 		meta(property="og:image",content="http://breakitapp.com/ios/picture/#{b._id}")
 		meta(property="og:site_name",content=title)
+		meta(property="og:title",content=title)
+		meta(property="og:type",content="website")
+		meta(property="fb:app_id",content="410947535627985")
 		meta(property="og:description",content="#{b.story}")
-		meta(property="fb:admins",content="410947535627985")
 		link(rel="image_src",href="http://breakitapp.com/ios/picture/#{b._id}")
 		link(rel='stylesheet', href='/public/css/onepager.css')
 		link(href="/public/css/jScrollPane.css", rel="stylesheet", type="text/css")
@@ -61,14 +62,36 @@ html
 			<![endif]
 	//onLoad starts the function initialize()
 	body(onLoad="initialize();")
-		header.boxShadow
-			#header.centrify
-				if (typeof mediaInterface != 'undefined')
+		//Facebook
+		div(id="fb-root")
+			script
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) return;
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=410947535627985";
+					fjs.parentNode.insertBefore(js, fjs);
+				}
+				(document, 'script', 'facebook-jssdk'));
+		//Twitter
+		script
+			!function(d,s,id){
+				var js,fjs=d.getElementsByTagName(s)[0];
+				if(!d.getElementById(id)){
+					js=d.createElement(s);
+					js.id=id;js.src="//platform.twitter.com/widgets.js";
+					fjs.parentNode.insertBefore(js,fjs);
+				}
+			}
+			(document,"script","twitter-wjs");
+		header
+			if (typeof mediaInterface != 'undefined')
 					if (mediaInterface == true)
-						a.button.right(href="/media") back
+						a.button.left(href="/media") back
 						mediaInterface = 'media';
 					else
 						mediaInterface = '';
+			#header.centrify
 				h1 Break
 					span it
 		#wrapper.centrify.fullRadius.fullBorder.insetShadow.clear
@@ -79,8 +102,9 @@ html
 							h1 #{b.headline}
 						img(src="/ios/picture/"+b._id, alt="break")
 					#rightContainer.right
+						#address
+							h1 #{b.placeName}
 						#map.fullBorderRidge.bottomMargin
-						//(width="380", height="280", frameborder="0", scrolling="no",src="https://maps.google.fi/maps?f=q&amp;ie=UTF8&amp;;ll="+b.loc.lat+","+b.loc.lon+"&amp;t=m&amp;z=14&amp;output=embed")
 						#commentField.fullBorderGroove.scroll-pane
 						
 							storydate = b.date
@@ -125,14 +149,10 @@ html
 						p.left #{b.usernick}: 
 							span #{b.story}
 						ul.right
-							li.fbook
-								a(href="http://www.facebook.com/breakitstories")
-									img(src="/public/images/1pager/f_logo_gray.png")
-								p &nbsp
 							li.twitter
-								a(href="https://twitter.com/Breakitapp")
-									img(src="/public/images/1pager/twitter_gray.png")
-								p &nbsp
+								a(href="https://twitter.com/share",class="twitter-share-button",data-text="#{b.headline}",data-url="http://breakitapp.com/#{b._id}",data-via="Breakitapp",data-count="vertical", data-size="medium") Tweet
+							li.fbook
+								div(class="fb-like",data-href="http://breakitapp.com/p/#{b._id}",data-send="false",data-layout="box_count",data-width="60",colorscheme="light",data-width="60",width="60px",data-show-faces="false",data-font="arial",data-action="like")							
 							li.viewAmount
 								img(src="/public/images/1pager/viewsIcon.fw.png")
 								views = b.views;
@@ -159,32 +179,18 @@ html
 							input.hideInput(name = "breakId", value=b._id)							
 							input.hideInput(name = "mediaInterface", value=mediaInterface)
 							input.right(type="button", onClick="submitForm()", value="send")
-		#push.clear
-		#footer.boxShadow
 	script
 		$(document).ready(function(e) {
 			$("li").mouseover(function() {
-				if($(this).hasClass("fbook")){
-					$(this).find("img")[0].src = '/public/images/1pager/f_logo_blue.png';
-				}
-				else if($(this).hasClass("twitter")){
-					$(this).find("img")[0].src='/public/images/1pager/twitter_blue.png';
-				}
-				else if($(this).hasClass("comments_count")){
-					$(this).find("p").css("color","#2A30E8");
+				if($(this).hasClass("comments_count")){
+					$(this).find("p").css("color","#5B5B5B");
 				}
 				else if($(this).hasClass("viewAmount")){
 					$(this).find("p").css("color","#5B5B5B");
 				}
 			});
 			$("li").mouseout(function() {
-				if($(this).hasClass("fbook")){
-					$(this).find("img")[0].src='/public/images/1pager/f_logo_gray.png';
-				}
-				else if($(this).hasClass("twitter")){
-					$(this).find("img")[0].src='/public/images/1pager/twitter_gray.png';
-				}
-				else if($(this).hasClass("comments_count")){
+				if($(this).hasClass("comments_count")){
 					$(this).find("p").css("color","white");
 				}
 				else if($(this).hasClass("viewAmount")){
