@@ -152,4 +152,4 @@ server.configure "development", ->
 
 server.configure "production", ->
 	server.listen 80
-	console.log 'Breakit express server listening to port 80 in dev mode'
+	console.log 'Breakit express server listening to port 80 in production mode'

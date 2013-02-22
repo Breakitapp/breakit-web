@@ -112,16 +112,21 @@ html
 							storydate = Date.parse(storydate)
 							newDate = Date.now() - storydate
 							hours = newDate/(1000*60*60)
-							if hours > 24
-									days = Math.round(hours/24)
-									if days > 30
-										months = Math.round(days/30)
-										h4.right #{months}M ago
+							minutes = newDate/(1000*60)
+							if minutes > 60									
+									if hours > 24
+										days = Math.round(hours/24)
+										if days > 30
+											months = Math.round(days/30)
+											h4.right #{months} month ago
+										else
+											h4.right #{Math.round(days)} days ago
 									else
-										h4.right #{Math.round(days)}d ago
+										h4.right #{Math.round(hours)} hours ago
 								else
-									h4.right #{Math.round(hours)}h ago
-							p #{b.usernick}: 
+									h4.right #{Math.round(minutes)} minutes ago
+							p #{b.usernick}
+								br
 								span #{b.story}
 							hr.centrify
 							for comment in b.comments
@@ -129,17 +134,22 @@ html
 								fdate = fdate.toString().substring(0,fdate.toString().length-20)
 								fdate = Date.parse(fdate)
 								newDate = Date.now() - fdate
+								minutes = newDate/(1000*60)
 								hours = newDate/(1000*60*60)
-								if hours > 24
-									days = Math.round(hours/24)
-									if days > 30
-										months = Math.round(days/30)
-										h4.right #{months}M ago
+								if minutes > 60									
+									if hours > 24
+										days = Math.round(hours/24)
+										if days > 30
+											months = Math.round(days/30)
+											h4.right #{months} month ago
+										else
+											h4.right #{Math.round(days)} days ago
 									else
-										h4.right #{Math.round(days)}d ago
+										h4.right #{Math.round(hours)} hours ago
 								else
-									h4.right #{Math.round(hours)}h ago
-								p #{comment.usernick}: 
+									h4.right #{Math.round(minutes)} minutes ago
+								p #{comment.usernick}
+									br
 									span #{comment.comment}
 								hr.centrify
 										
