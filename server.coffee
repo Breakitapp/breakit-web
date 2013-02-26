@@ -64,7 +64,8 @@ server.configure "local", ->
 server.all '/', site.signup
 
 #Check if server is started as dev or local.
-if String(server.get 'env') is String('local') or String(server.get 'env') is String('development')
+if String(server.get 'env') is String('local') 
+#or String(server.get 'env') is String('development')
 	server.configure ->
 		#Users
 		server.get '/users/new', user.create
@@ -86,6 +87,7 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		#Creating a feedback for test
 		server.get '/feedback/new', feedback.create
 		server.post '/feedback/new', feedback.submit
+
 
 #Terms & Conditions
 server.get '/terms', site.terms
