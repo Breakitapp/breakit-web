@@ -112,7 +112,7 @@ html
 							storydate = Date.parse(storydate)
 							newDate = Date.now() - storydate
 							minutes = newDate/(1000*60)
-							hours = minutes*60
+							hours = newDate/(1000*60*60)
 							
 							if minutes > 60									
 									if hours > 24
@@ -141,7 +141,7 @@ html
 								p=newDate
 								minutes = newDate/(1000*60)
 								p=minutes
-								hours = minutes*60
+								hours = newDate/(1000*60*60)
 								if minutes > 60									
 									if hours > 24
 										days = Math.round(hours/24)
