@@ -111,8 +111,9 @@ html
 							storydate = storydate.toString().substring(0,storydate.toString().length-20)
 							storydate = Date.parse(storydate)
 							newDate = Date.now() - storydate
-							hours = newDate/(1000*60*60)
 							minutes = newDate/(1000*60)
+							hours = newDate/(1000*60*60)
+							
 							if minutes > 60									
 									if hours > 24
 										days = Math.round(hours/24)
@@ -131,7 +132,7 @@ html
 							hr.centrify
 							for comment in b.comments
 								fdate = comment.date
-								fdate = fdate.toString().substring(0,fdate.toString().length-20)
+								fdate = fdate.toString().substring(0,fdate.toString().length-18)
 								fdate = Date.parse(fdate)
 								newDate = Date.now() - fdate
 								minutes = newDate/(1000*60)
