@@ -132,15 +132,10 @@ html
 							hr.centrify
 							for comment in b.comments
 								fdate = comment.date
-								p=fdate
 								fdate = fdate.toString().substring(0,fdate.toString().length-18)
-								p=fdate
 								fdate = Date.parse(fdate)
-								p=fdate
 								newDate = Date.now() - fdate
-								p=newDate
 								minutes = newDate/(1000*60)
-								p=minutes
 								hours = newDate/(1000*60*60)
 								if minutes > 60									
 									if hours > 24
