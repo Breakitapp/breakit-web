@@ -89,7 +89,7 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		server.get '/feedback/new', feedback.create
 		server.post '/feedback/new', feedback.submit
 		server.get '/appleConnect/test', appleConnect.push
-		server.get '/appleConnect_apn/test', appleConnect_apn.send
+		server.get '/appleConnect/test2', appleConnect_apn.send
 		
 #Terms & Conditions
 server.get '/terms', site.terms
