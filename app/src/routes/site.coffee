@@ -51,15 +51,16 @@ exports.public = (req, res) ->
 			else
 				#console.log 'break: ' +break_
 				console.log 'ip: '+ req.ip
+				console.log 'this is the header host: ' + req.headers.host
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					#onepagerUser = '5097ae8bae4d4a8805000001'
 					onepagerUser = '509b933292083a3c07000002'
 					console.log 'in IF'
-				if(req.headers.host is '54.247.69.189')
+				if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com')
 					# PROD SERVER ANON USER
 					onepagerUser = '5110eff913e66edb527cb501'
-				if(req.headers.host is '46.137.122.206')
+				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
@@ -75,15 +76,16 @@ exports.public = (req, res) ->
 				res.send '404'
 			else
 				#console.log 'break: ' +break_
+				console.log 'this is the header host: ' + req.headers.host
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					#onepagerUser = '5097ae8bae4d4a8805000001'
 					onepagerUser = '509b933292083a3c07000002'
 					console.log 'in IF'
-				if(req.headers.host is '54.247.69.189')
+				if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com')
 					# PROD SERVER ANON USER
 					onepagerUser = '5110eff913e66edb527cb501'
-				if(req.headers.host is '46.137.122.206')
+				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
