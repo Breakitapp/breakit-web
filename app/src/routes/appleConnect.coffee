@@ -16,7 +16,7 @@ exports.connectAPN = (next) ->
 		# connected
 		next !stream.authorized, stream
 
-exports.hextobin = (hexstr)->
+exports.hextobin = (hexstr) ->
 		buf = new Buffer hexstr.length / 2
 		for [0...hexstr.length/2]
 			buf[_i] = parseInt hexstr[_i * 2], 16 << 4 + parseInt hexstr[_i * 2 + 1], 16
