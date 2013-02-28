@@ -21,7 +21,7 @@ options =
 
 #Important: In a development environment you must set gateway to gateway.sandbox.push.apple.com.
 #TODO: CHECK THAT
-exports.send = ()->
+exports.send = (req, res)->
 	token = 'bc5af2ab 910b4f45 1cc9b197 93136f33 88e10170 124dbeff 3409b9c1 cae57a91'
 	apnsConnection = new apns.Connection options 
 	myDevice = new apns.Device token
@@ -33,7 +33,7 @@ exports.send = ()->
 	note.payload = {'messageFrom': 'Caroline'}
 	note.device = myDevice
 	apnsConnection.sendNotification note
-
+	res.send 'success?'
 ###
 N.B.: If you wish to send notifications containing emoji or other multi-byte characters you will need to set 
 note.encoding = 'ucs2'. This tells node to send the message with 16bit characters, however it also means your 
