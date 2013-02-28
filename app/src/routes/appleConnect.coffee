@@ -9,7 +9,7 @@ caCert = fs.readFileSync 'apple-worldwide-certificate-authority.cer', encoding='
 options = { key: keyPem, cert: certPem, ca: [ caCert ] }
 
 pushnd = { aps: { alert:'This is a test' }}
-hextoken = 'bc5af2ab 910b4f45 1cc9b197 93136f33 88e10170 124dbeff 3409b9c1 cae57a91' # Push token from iPhone app. 32 bytes as hexadecimal string
+hextoken = 'bc5af2ab910b4f451cc9b19793136f3388e10170124dbeff3409b9c1cae57a91' # Push token from iPhone app. 32 bytes as hexadecimal string
 
 
 exports.connectAPN = (next) ->
@@ -55,3 +55,8 @@ exports.push = ()->
 	payload.copy buffer, i, 0, payloadlen
 	exports.connectAPN (auth, stream) ->
 		stream.write buffer # write push notification
+		stream.on('data', function(data) {
+		command = data[0] & 0x0FF;  #always 8
+		status = data[1] & 0x0FF;  #error code
+		msgid =  data[2] << 24 + (data[3] << 16) + (data[4] << 8 ) + data[5]
+		console.log command+':'+status+':'+msgid
