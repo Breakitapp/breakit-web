@@ -15,7 +15,7 @@ ios					= require './app/lib/routes/ios'
 reports			= require './app/lib/routes/reports'
 media				= require './app/lib/routes/mediaInterface'
 appleConnect= require './app/lib/routes/appleConnect'
-appleConnect2= require './app/lib/routes/appleConnect2'
+appleConnect_apn= require './app/lib/routes/appleConnect_apn'
 scripts			=	require	'./scripts/migration'
 settings		= require './settings'
 mongoose		= require 'mongoose'
@@ -89,7 +89,7 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		server.get '/feedback/new', feedback.create
 		server.post '/feedback/new', feedback.submit
 		server.get '/appleConnect/test', appleConnect.push
-		server.get '/appleConnect2/test', appleConnect2.send
+		server.get '/appleConnect_apn/test', appleConnect_apn.send
 		
 #Terms & Conditions
 server.get '/terms', site.terms
