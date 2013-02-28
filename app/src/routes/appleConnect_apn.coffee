@@ -14,7 +14,11 @@ options =
 		port: 2195,                       # gateway port */
 		rejectUnauthorized: true,         # Value of rejectUnauthorized property to be passed through to tls.connect() */
 		enhanced: true,                   # enable enhanced format */
-		errorCallback: undefined,         # Callback when error occurs function(err,notification) */
+		errorCallback: (err, notification) ->
+			if err
+				console.log 'ERROR OCCURRED'
+				console.log 'notification: '+notification
+		,         # Callback when error occurs function(err,notification) */
 		cacheLength: 100,                  # Number of notifications to cache for error purposes */
 		autoAdjustCache: true,            # Whether the cache should grow in response to messages being lost after errors. */
 		connectionTimeout: 0              # The duration the socket should stay alive with no activity in milliseconds. 0 = Disabled. */
@@ -32,6 +36,7 @@ exports.send = (req, res)->
 	note.alert = "You have a new message"
 	note.payload = {'messageFrom': 'Caroline'}
 	note.device = myDevice
+	console.log 'sending: '+ note
 	apnsConnection.sendNotification note
 	res.send 'success?'
 ###
