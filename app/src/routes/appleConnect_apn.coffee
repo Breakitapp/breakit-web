@@ -1,14 +1,14 @@
 apns = require 'apn'
 
 options =
-		cert: 'cert.pem',                 # Certificate file path */
+		cert: 'apns-prod-cert.pem',                 # Certificate file path */
 		certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
-		key:  'key.pem',                  # Key file path */
+		key:  'apns-prod-key-noenc.pem',                  # Key file path */
 		keyData: null,                    # String or Buffer containing key data, as certData */
 		passphrase: null,                 # A passphrase for the Key file */
 		ca: null,                         # String or Buffer of CA data to use for the TLS connection */
-		pfx: 'BreakitPushNotificationDevelopmentKey.p12',	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
-		pfxData: 'BreakitPushNotificationDevelopmentData.p12',# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
+		pfx: null,	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
+		pfxData: null,# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
 #		gateway: 'gateway.push.apple.com',# gateway address */
 		gateway: 'gateway.sandbox.push.apple.com',# gateway address */
 		port: 2195,                       # gateway port */
@@ -32,7 +32,7 @@ exports.send ()->
 	note.alert = "You have a new message"
 	note.payload = {'messageFrom': 'Caroline'}
 	note.device = myDevice
-	apnsConnection.sendNotification(note);
+	apnsConnection.sendNotification note
 
 ###
 N.B.: If you wish to send notifications containing emoji or other multi-byte characters you will need to set 
