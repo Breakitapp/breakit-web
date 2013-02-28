@@ -11,10 +11,11 @@ options = { key: keyPem, cert: certPem, ca: [ caCert ] }
 pushnd = { aps: { alert:'This is a test' }}
 hextoken = 'bc5af2ab 910b4f45 1cc9b197 93136f33 88e10170 124dbeff 3409b9c1 cae57a91' # Push token from iPhone app. 32 bytes as hexadecimal string
 
+
 exports.connectAPN = (next) ->
 	stream = tls.connect 2195, 'gateway.sandbox.push.apple.com', options, ()->
-		# connected
-		next !stream.authorized, stream
+			# connected
+			next !stream.authorized, stream
 
 exports.hextobin = (hexstr) ->
 	buf = new Buffer hexstr.length / 2
@@ -52,5 +53,5 @@ exports.push = ()->
 	
 	payload = Buffer payload
 	payload.copy buffer, i, 0, payloadlen
-	
-	stream.write buffer # write push notification
+	exports.connectAPN (auth, stream) ->
+		stream.write buffer # write push notification
