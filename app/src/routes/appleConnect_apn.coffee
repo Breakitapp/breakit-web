@@ -21,9 +21,9 @@ options =
 
 #Important: In a development environment you must set gateway to gateway.sandbox.push.apple.com.
 #TODO: CHECK THAT
+exports.send = ()->
 apnsConnection = new apns.Connection options 
 
-exports.send ()->
 	myDevice = new apns.Device token
 	note = new apns.Notification()
 	note.expiry = Math.floor (Date.now() / 1000) + 3600 #Expires 1 hour from now.
