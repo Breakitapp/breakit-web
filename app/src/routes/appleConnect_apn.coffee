@@ -18,6 +18,8 @@ options =
 			if err
 				console.log 'ERROR OCCURRED'
 				console.log 'notification: '+notification
+			else
+				console.log 'IN ERROR CB, err=false'
 		,         # Callback when error occurs function(err,notification) */
 		cacheLength: 100,                  # Number of notifications to cache for error purposes */
 		autoAdjustCache: true,            # Whether the cache should grow in response to messages being lost after errors. */
