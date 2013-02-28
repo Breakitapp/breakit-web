@@ -1,9 +1,9 @@
 apns = require 'apn'
 
 options =
-		cert: 'apns-prod-cert.pem',                 # Certificate file path */
+		cert: 'BreakitDevelopmentCert.pem',                 # Certificate file path */
 		certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
-		key:  'apns-prod-key-noenc.pem',                  # Key file path */
+		key:  'BreakitDevelopmentKey.pem',                  # Key file path */
 		keyData: null,                    # String or Buffer containing key data, as certData */
 		passphrase: null,                 # A passphrase for the Key file */
 		ca: null,                         # String or Buffer of CA data to use for the TLS connection */
