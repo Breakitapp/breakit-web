@@ -9,7 +9,7 @@ caCert = fs.readFileSync 'apple-worldwide-certificate-authority.cer', encoding='
 options = { key: keyPem, cert: certPem, ca: [ caCert ] }
 
 pushnd = { aps: { alert:'This is a test' }}
-hextoken = '85ab4a0cf2 ... 238adf' # Push token from iPhone app. 32 bytes as hexadecimal string
+hextoken = 'bc5af2ab 910b4f45 1cc9b197 93136f33 88e10170 124dbeff 3409b9c1 cae57a91' # Push token from iPhone app. 32 bytes as hexadecimal string
 
 exports.connectAPN = (next) ->
 	stream = tls.connect 2195, 'gateway.sandbox.push.apple.com', options, ()->
