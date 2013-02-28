@@ -96,6 +96,7 @@ form{
 header{
     background:#333;
     height:30px;
+    margin-bottom:20px;
 }
 #header h1, #header h1 span{
 	font-family:Aller_rg, Myriad Pro, Helvetica, Arial, sans-serif;
@@ -207,7 +208,6 @@ div{
 }
 #bottomContainer{
 	overflow-y:hidden;
-	margin-bottom:50px;
 }
 #test{
 	border-bottom:rgb(255,255,255) ridge 2px;
