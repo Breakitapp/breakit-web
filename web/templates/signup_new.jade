@@ -1,7 +1,7 @@
 !!! 5
 html
 	head
-		title Breakit beta-signup
+		title Breakit - find out what's happening around you
 		link(rel="stylesheet",href="/public/css/new_splash.css",type="text/css",media="screen")
 		link(rel="stylesheet",href="/public/css/new_splash_fonts.css",type="text/css",media="screen")
 		link(rel='icon', type='image/ico', href='public/images/logos/breakit.ico')
@@ -22,17 +22,15 @@ html
 			p.big 
 				|Share and see what's happening nearby, <br />
 				|right now.
-			p.small Sign up and be the first to know
+			p.small
 			form(action="/signup",method="post",name="signup")
-				label Email:
-				input(type="email",id="email",name="email",placeholder="Enter your email")
+				a(href='https://www.facebook.com/breakitapp')
+					img(src='/public/images/signup/f_logo.png', style='height:90px;')
+				a(href='https://twitter.com/Breakitapp')
+					img(src='/public/images/signup/twitter.png', style='height:90px;, margin-left: 10px;')
+				a(href='https://itunes.apple.com/fi/app/id601768872')
+					img(src='/public/images/signup/appstore.png', style='float:right; margin-right: 40px; height: 90px;')
 				br
-				label Select your phone:
-				select(name="phone")
-					option(value="iPhone") iPhone
-					option(value="Android") Android
-					option(value="wm") Windows
-				input(type="submit",value="GO",id="submit")
 			.iphone-5
 				img(src="/public/images/signup/breakitPhone.png",e="e")
 		.page-content
