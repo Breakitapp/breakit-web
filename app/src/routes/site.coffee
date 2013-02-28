@@ -57,10 +57,10 @@ exports.public = (req, res) ->
 					#onepagerUser = '5097ae8bae4d4a8805000001'
 					onepagerUser = '509b933292083a3c07000002'
 					console.log 'in IF'
-				if(req.headers.host is 'www.breakitapp.com')
+				if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com')
 					# PROD SERVER ANON USER
 					onepagerUser = '5110eff913e66edb527cb501'
-				if(req.headers.host is 'www.breakit.info')
+				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
@@ -82,10 +82,10 @@ exports.public = (req, res) ->
 					#onepagerUser = '5097ae8bae4d4a8805000001'
 					onepagerUser = '509b933292083a3c07000002'
 					console.log 'in IF'
-				if(req.headers.host is 'www.breakitapp.com')
+				if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com')
 					# PROD SERVER ANON USER
 					onepagerUser = '5110eff913e66edb527cb501'
-				if(req.headers.host is 'www.breakit.info')
+				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				console.log 'user: '+ onepagerUser
