@@ -22,6 +22,7 @@ options =
 #Important: In a development environment you must set gateway to gateway.sandbox.push.apple.com.
 #TODO: CHECK THAT
 exports.send = ()->
+	token = 'bc5af2ab 910b4f45 1cc9b197 93136f33 88e10170 124dbeff 3409b9c1 cae57a91'
 	apnsConnection = new apns.Connection options 
 	myDevice = new apns.Device token
 	note = new apns.Notification()
