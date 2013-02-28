@@ -17,10 +17,10 @@ exports.connectAPN = (next) ->
 		next !stream.authorized, stream
 
 exports.hextobin = (hexstr) ->
-		buf = new Buffer hexstr.length / 2
-		for [0...hexstr.length/2]
-			buf[_i] = parseInt hexstr[_i * 2], 16 << 4 + parseInt hexstr[_i * 2 + 1], 16
-		return buf 
+	buf = new Buffer hexstr.length / 2
+	for [0...hexstr.length/2]
+		buf[_i] = parseInt hexstr[_i * 2], 16 << 4 + parseInt hexstr[_i * 2 + 1], 16
+	return buf 
 
 exports.push = ()->
 	payload = JSON.stringify pushnd
@@ -44,7 +44,7 @@ exports.push = ()->
 	
 	buffer[i++] = tokenlen >> 8 & 0xFF # token length
 	buffer[i++] = tokenlen & 0xFF
-	token = hextobin hextoken
+	token = exports.hextobin hextoken
 	token.copy buffer, i, 0, tokenlen
 	i += tokenlen
 	buffer[i++] = payloadlen >> 8 & 0xFF # payload length
