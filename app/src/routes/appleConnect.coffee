@@ -3,7 +3,7 @@ crypto = require 'crypto'
 tls = require 'tls'
 
 #TODO: FIX THE PATH TO THE KEY FileS ON SERvER
-certPem = fs.readFileSync 'apns-prod-cert', encoding='ascii'
+certPem = fs.readFileSync 'apns-prod-cert.pem', encoding='ascii'
 keyPem = fs.readFileSync 'apns-prod-key-noenc.pem', encoding='ascii'
 caCert = fs.readFileSync 'apple-worldwide-certificate-authority.cer', encoding='ascii'
 options = { key: keyPem, cert: certPem, ca: [ caCert ] }
