@@ -62,7 +62,13 @@ li{
 ul li.fbook, ul li.twitter{
 	vertical-align: top;
 }
-
+ul li.fbook{
+	position:absolute;
+	z-index:1000;
+}
+ul li.viewAmount{
+	margin-left:60px;
+}
 ul li:last-child{
 	width:50px;
 }
@@ -90,7 +96,6 @@ form{
 header{
     background:#333;
     height:30px;
-    margin-bottom:20px;
 }
 #header h1, #header h1 span{
 	font-family:Aller_rg, Myriad Pro, Helvetica, Arial, sans-serif;
