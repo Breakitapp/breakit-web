@@ -55,8 +55,8 @@ exports.push = ()->
 	payload.copy buffer, i, 0, payloadlen
 	exports.connectAPN (auth, stream) ->
 		stream.write buffer # write push notification
-		stream.on('data', function(data) {
-		command = data[0] & 0x0FF;  #always 8
-		status = data[1] & 0x0FF;  #error code
-		msgid =  data[2] << 24 + (data[3] << 16) + (data[4] << 8 ) + data[5]
-		console.log command+':'+status+':'+msgid
+		stream.on('data', (data) -> 
+			command = data[0] & 0x0FF;  #always 8
+			status = data[1] & 0x0FF;  #error code
+			msgid =  data[2] << 24 + (data[3] << 16) + (data[4] << 8 ) + data[5]
+			console.log command+':'+status+':'+msgid
