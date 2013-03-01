@@ -8,6 +8,7 @@ breaks				= require '../models/breakModel'
 albums				= require '../models/albumModel'
 comments			= require '../models/commentModel'
 notifications	= require '../models/notificationsModel'
+pushNotifications	= require '../models/pushNotificationsModel'
 users					= require '../models/userModel'
 feedback			= require '../models/feedbackModel'
 report				= require '../models/reportModel'
@@ -240,3 +241,10 @@ exports.getMyNotifications = (req, res) ->
 			for notification in foundNotifications
 				list[i] = 'User: '+notification.user_id_from + 'commented: "'+notification.comment+'" on your break'+notification.user_id_to+'<br />'
 				i++
+
+exports.storeDeviceToken = (req, res) ->
+	pushNotifications.store req.userId, req.deviceToken, (err)->
+		if err
+			res.send 'error'
+		else
+			res.send 'success'
