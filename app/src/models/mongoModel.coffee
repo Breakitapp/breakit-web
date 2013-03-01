@@ -75,6 +75,11 @@ NotificationSchema = new Schema
 	isaNewComment			:		{type: Boolean, default: true}
 	type			:		{type: String}
 
+PushNotificationSchema = new Schema
+	userId : {type: String}
+	deviceToken : {type: String}
+	date : {type: Date, default: Date.now}
+
 ReportSchema = new Schema
 	breakId : {type: String}
 	userId : {type: String}
@@ -82,6 +87,7 @@ ReportSchema = new Schema
 
 Feedback	= mongoose.model 'Feedback', FeedbackSchema
 Notification	= mongoose.model 'Notification', NotificationSchema
+PushNotification	= mongoose.model 'PushNotification', PushNotificationSchema
 Comment		= mongoose.model 'Comment', CommentSchema
 Break			= mongoose.model 'Break', BreakSchema
 User			= mongoose.model 'User', UserSchema
