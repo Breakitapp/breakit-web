@@ -52,16 +52,16 @@ store = (userId, deviceToken, callback) ->
 send = (userId, msgId, callback) ->
 # get user token
 # send message
-	models.PushNotification.findById(userId).exec (err, foundUser) ->
-		if err
-			console.log 'in err (send)'
-			callback err, foundUser
+	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, notifications) ->
+		if foundUser is null
+			console.log 'no user found'
+			callback err, null
 		else
 			console.log 'success finding user'
 			console.log 'user: '+foundUser
-			console.log 'userId: '+foundUser.userId
-			console.log 'token: '+foundUser.deviceToken
-			token = foundUser.deviceToken
+			console.log 'userId: '+foundUser[0].userId
+			console.log 'token: '+foundUser[0].deviceToken
+			token = foundUser[0].deviceToken
 			apnsConnection = new apns.Connection options 
 			myDevice = new apns.Device token
 			note = new apns.Notification()
@@ -73,7 +73,7 @@ send = (userId, msgId, callback) ->
 			note.device = myDevice
 			console.log 'sending: '+ note
 			apnsConnection.sendNotification note
-			callback err, foundUser
+			callback err, foundUser[0]
 
 root = exports ? window
 root.PushNotification = PushNotification
