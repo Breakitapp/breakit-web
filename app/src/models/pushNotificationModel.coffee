@@ -4,7 +4,7 @@ class PushNotification
 	constructor: (@userId, @deviceToken, @date) ->
 	save: (callback) ->
 		@date = new Date()
-		pushNotification_ = new models.pushNotification
+		pushNotification_ = new models.PushNotification
 			userId : @user_id
 			deviceToken : @deviceToken
 			date : @date
