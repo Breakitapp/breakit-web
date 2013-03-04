@@ -102,4 +102,5 @@ exports.Comment		= Comment
 exports.Album			= Album
 exports.Feedback		= Feedback
 exports.Notification		= Notification
+exports.PushNotification		= PushNotification
 exports.Report = Report
