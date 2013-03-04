@@ -21,3 +21,7 @@ store = (userId, deviceToken, callback) ->
 		pushNotification = new PushNotification userId, deviceToken
 		pushNotification.save (err) ->
 			callback err
+
+root = exports ? window
+root.PushNotification = PushNotification
+root.store = store

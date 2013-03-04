@@ -243,7 +243,9 @@ exports.getMyNotifications = (req, res) ->
 				i++
 
 exports.storeDeviceToken = (req, res) ->
-	pushNotifications.store req.userId, req.deviceToken, (err)->
+	pushNotifications.store req.params.userId, req.params.deviceToken, (err)->
+		console.log 'userId: ' + req.params.userId
+		console.log 'deviceToken: ' + req.params.deviceToken
 		if err
 			res.send 'error'
 		else
