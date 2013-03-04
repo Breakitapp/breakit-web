@@ -46,6 +46,7 @@ options =
 
 store = (userId, deviceToken, callback) ->
 	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUsers) ->
+		console.log 'foundUsers: ' + foundUsers
 		if foundUsers is null
 			pushNotification = new PushNotification userId, deviceToken
 			pushNotification.save (err) ->
