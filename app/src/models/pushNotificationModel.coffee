@@ -5,7 +5,7 @@ class PushNotification
 	save: (callback) ->
 		@date = new Date()
 		pushNotification_ = new models.PushNotification
-			userId : @user_id
+			userId : @userId
 			deviceToken : @deviceToken
 			date : @date
 		console.log 'push notification: ' + pushNotification_
