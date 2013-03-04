@@ -45,23 +45,28 @@ options =
 		connectionTimeout: 0              # The duration the socket should stay alive with no activity in milliseconds. 0 = Disabled. */
 
 store = (userId, deviceToken, callback) ->
-	pushNotification = new PushNotification userId, deviceToken
-	pushNotification.save (err) ->
-		callback err
+	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUsers) ->
+		if foundUsers is null
+			pushNotification = new PushNotification userId, deviceToken
+			pushNotification.save (err) ->
+				callback err
+		else
+			console.log 'User already in db'
+			callback err
 
 send = (userId, msgId, callback) ->
 # get user token
 # send message
-	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUser) ->
-		if foundUser is null
+	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUsers) ->
+		if foundUsers is null
 			console.log 'no user found'
 			callback err, null
 		else
 			console.log 'success finding user'
-			console.log 'user: '+foundUser
-			console.log 'userId: '+foundUser[0].userId
-			console.log 'token: '+foundUser[0].deviceToken
-			token = foundUser[0].deviceToken
+			console.log 'user: '+foundUsers
+			console.log 'userId: '+foundUsers[0].userId
+			console.log 'token: '+foundUsers[0].deviceToken
+			token = foundUsers[0].deviceToken
 			apnsConnection = new apns.Connection options 
 			myDevice = new apns.Device token
 			note = new apns.Notification()
@@ -73,7 +78,7 @@ send = (userId, msgId, callback) ->
 			note.device = myDevice
 			console.log 'sending: '+ note
 			apnsConnection.sendNotification note
-			callback err, foundUser[0]
+			callback err, foundUsers[0]
 
 root = exports ? window
 root.PushNotification = PushNotification
