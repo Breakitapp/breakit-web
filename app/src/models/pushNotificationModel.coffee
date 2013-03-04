@@ -72,7 +72,7 @@ send = (userId, msgId, callback) ->
 			note.payload = {'messageFrom': 'Caroline'}
 			note.device = myDevice
 			console.log 'sending: '+ note
-			apnsConnection.sendNotification note'
+			apnsConnection.sendNotification note
 			callback err, foundUser
 
 root = exports ? window
