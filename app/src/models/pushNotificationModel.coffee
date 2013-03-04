@@ -49,7 +49,7 @@ store = (userId, deviceToken, callback) ->
 		console.log 'foundUsers: ' + foundUsers
 		console.log 'foundUsers[0]: ' + foundUsers[0]
 		console.log 'foundUsers length ' + foundUsers.length
-		if foundUsers is null
+		if foundUsers.length is 0
 			pushNotification = new PushNotification userId, deviceToken
 			pushNotification.save (err) ->
 				callback err
