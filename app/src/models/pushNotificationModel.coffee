@@ -58,9 +58,9 @@ send = (userId, msgId, callback) ->
 			callback err, foundUser
 		else
 			console.log 'success finding user'
-			console.log 'user: '´foundUser
-			console.log 'userId: '´foundUser.userId
-			console.log 'token: '´foundUser.deviceToken
+			console.log 'user: '+foundUser
+			console.log 'userId: '+foundUser.userId
+			console.log 'token: '+foundUser.deviceToken
 			token = foundUser.deviceToken
 			apnsConnection = new apns.Connection options 
 			myDevice = new apns.Device token
