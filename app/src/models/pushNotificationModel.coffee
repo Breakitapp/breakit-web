@@ -52,7 +52,7 @@ store = (userId, deviceToken, callback) ->
 send = (userId, msgId, callback) ->
 # get user token
 # send message
-	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, notifications) ->
+	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUser) ->
 		if foundUser is null
 			console.log 'no user found'
 			callback err, null
