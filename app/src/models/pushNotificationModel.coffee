@@ -58,10 +58,12 @@ store = (userId, deviceToken, callback) ->
 			callback err
 
 send = (userId, msgId, callback) ->
-# get user token
-# send message
+# Different type of messages have different ids
 	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUsers) ->
-		if foundUsers is null
+		console.log 'foundUsers: ' + foundUsers
+		console.log 'foundUsers[0]: ' + foundUsers[0]
+		console.log 'foundUsers length ' + foundUsers.length
+		if foundUsers is null or foundUsers.length is 0
 			console.log 'no user found'
 			callback err, null
 		else
@@ -74,10 +76,13 @@ send = (userId, msgId, callback) ->
 			myDevice = new apns.Device token
 			note = new apns.Notification()
 			note.expiry = Math.floor (Date.now() / 1000) + 3600 #Expires 1 hour from now.
-			note.badge = 3
+			note.badge = 1
 			note.sound = "ping.aiff"
-			note.alert = "You have a new message"
-			note.payload = {'messageFrom': 'Caroline'}
+			if msgId is 1
+				note.alert = "Marko is infesting your phone"
+			if msgId is 2
+				note.alert = "You have a new message"
+			note.payload = {'messageFrom': 'Marko'}
 			note.device = myDevice
 			console.log 'sending: '+ note
 			apnsConnection.sendNotification note
