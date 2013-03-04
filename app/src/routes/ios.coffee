@@ -252,3 +252,14 @@ exports.storeDeviceToken = (req, res) ->
 			res.send 'error'
 		else
 			res.send 'success'
+
+exports.sendPushNotification = (req, res) ->
+	console.log 'request: : ' + req
+	console.log 'request body: : ' + req.body
+	console.log 'userId: ' + req.body.userId
+	console.log 'messageId: ' + req.body.msgId
+	pushNotifications.send req.body.userId, req.body.msgId, (err, foundUser) ->
+		if err
+			res.send 'error'
+		else
+			res.send 'success'
