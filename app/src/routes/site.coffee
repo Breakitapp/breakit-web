@@ -93,6 +93,8 @@ exports.public = (req, res) ->
 			
 
 exports.webComment = (req, res) ->
+	#Check for query objects
+	queryObject = require('url').parse(req.url,true).query
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
@@ -105,9 +107,13 @@ exports.webComment = (req, res) ->
 				if err
 					res.send 'Commenting failed.'
 				else
+					#if the media boolean is set to true (page has oriented from media interface)
 					if checkMediaInterface is 'media'
 							checkMediaInterface = '?name=' + checkMediaInterface
-					res.redirect '/p/' + req.body.breakId + checkMediaInterface
+							if typeof queryObject.page isnt 'undefined'
+								#Set the page number to same as from which page it has arrived from media interface
+								pageNumber = '&page' + queryObject.page
+					res.redirect '/p/' + req.body.breakId + checkMediaInterface + pageNumber
 					#mediaInterface:checkMediaInterface
 
 #Onepager vs2

@@ -4,6 +4,9 @@ breaks = require '../models/breakModel'
 exports.mediaInterface= (req, res) ->
 	console.log 'entering Media Interface'
 	
+	#check for query objects
+	queryObject = require('url').parse(req.url,true).query
+	
 	#Checks which is the sort method currently in use
 	currentSortPage = req.body.currentSortPage
 	
@@ -19,11 +22,16 @@ exports.mediaInterface= (req, res) ->
 		sortPage = currentSortPage
 	console.log 'sortPage variable is: ' + sortPage
 	
+	#check if query exists
+	if typeof queryObject.page is 'undefined'
 		#checks which page the user wishes to go to
-	pageNumber = req.body.pageNumber
-	pageNumber = parseInt pageNumber
-	console.log pageNumber
-
+		pageNumber = req.body.pageNumber
+		pageNumber = parseInt pageNumber
+	else
+		#pagenumber is the number recieved from the query
+		pageNumber = queryObject.page-1
+		console.log 'The query page is: ' + pageNumber
+	console.log 'test query: ' + pageNumber
 	#If a pagenumber hasn't been defined it defaults to the first page
 	if isNaN(pageNumber) or pageNumber is undefined or pageNumber < 0
 		pageNumber = 0
@@ -51,7 +59,7 @@ exports.mediaInterface= (req, res) ->
 		
 		#Start the wanted function
 		sortFunction pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-			console.log 'sort by comments'
+			console.log 'sort by ' + sortPage
 			if err
 				throw err
 			else
@@ -63,7 +71,6 @@ exports.mediaInterface= (req, res) ->
 		sortPage = 'search' 
 		console.log 'change sortPage: ' + sortPage
 		#Start the searchfunction for the wanted breaks. Search funtion needs an extra variable called searchWord that contains the value of the word searched after
-		#TODO:pages wont work while the whole page renders itself leaving the search box value undefined
 		breaks.searchBreaks searchWord, pageNumber, sortPage, (err, breaks_, count, sortPageValue, searchWord) ->
 			if err
 				throw err

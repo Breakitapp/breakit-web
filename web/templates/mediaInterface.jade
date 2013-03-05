@@ -34,7 +34,8 @@ block contents
 				for b in breaks
 					li.smallRadius.fullBorderGroove
 						score = b.upvotes.length - b.downvotes.length
-						a(href="/p/" + b._id)
+						//sivun numero lisätty querynä
+						a(href="/p/" + b._id + '?page=' + pageNumber)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						.icons
 							p.information= "comments " + b.comments.length + " &bull; " + "score " + score
