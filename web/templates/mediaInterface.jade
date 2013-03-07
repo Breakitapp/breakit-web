@@ -37,7 +37,7 @@ block contents
 						a(href="/p/" + b._id)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						.icons
-							p.information= "comments &bull; " + b.comments.length + "  " + "score &bull; " + score
+							p.information= "comments " + b.comments.length + " &bull; " + "score " + score
 						hr
 						p=b.headline
 			form.pageForm.centrify(id="pages", method="post", action="/media")
