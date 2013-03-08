@@ -1,9 +1,9 @@
 apns = require 'apn'
 
 options =
-		cert: 'BreakitDevelopmentCert.pem',                 # Certificate file path */
+		cert: 'app/res/keys/BreakitDevServerCert.pem',                 # Certificate file path */
 		certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
-		key:  'BreakitDevelopmentKeyNoenc.pem',                  # Key file path */
+		key:  'app/res/keys/BreakitDevServerPrivateKey-noenc.pem',                  # Key file path */
 		keyData: null,                    # String or Buffer containing key data, as certData */
 		passphrase: null,                 # A passphrase for the Key file */
 		ca: null,                         # String or Buffer of CA data to use for the TLS connection */
@@ -33,7 +33,7 @@ exports.send = (req, res)->
 	myDevice = new apns.Device token
 	note = new apns.Notification()
 	note.expiry = Math.floor (Date.now() / 1000) + 3600 #Expires 1 hour from now.
-	note.badge = 3
+	note.badge = 1
 	note.sound = "ping.aiff"
 	note.alert = "You have a new message"
 	note.payload = {'messageFrom': 'Caroline'}

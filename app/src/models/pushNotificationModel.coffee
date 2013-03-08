@@ -20,9 +20,9 @@ class PushNotification
 				callback null, pushNotification_
 
 options =
-		cert: 'BreakitDevelopmentCert.pem',                 # Certificate file path */
+		cert: 'app/res/keys/BreakitDevServerCert.pem',                 # Certificate file path */
 		certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
-		key:  'BreakitDevelopmentKeyNoenc.pem',                  # Key file path */
+		key:  'app/res/keys/BreakitDevServerPrivateKey-noenc.pem',                  # Key file path */
 		keyData: null,                    # String or Buffer containing key data, as certData */
 		passphrase: null,                 # A passphrase for the Key file */
 		ca: null,                         # String or Buffer of CA data to use for the TLS connection */
