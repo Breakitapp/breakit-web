@@ -59,12 +59,21 @@ exports.login = (req, res) 	->
 			# if the user that can be found with the userid has a token do nothing
 			# else update the token
 		else if user.token
-			console.log 'token is ...'
-			res.send 'confirmed'
-		else
-			console.log 'token: '+user.token
 			console.log 'Login successful.'
 			res.send 'confirmed'
+		else if req.body.token
+			console.log 'in setting req.body.token '
+			users.changeAttributes req.body.token, ()->
+				console.log 'changing attributes'
+				if err
+					console.log 'ERROR IN SETTING THE TOKEN'
+					res.send 'error'
+				else
+					console.log 'SUCCESS IN SETTING THE TOKEN'
+					res.send 'confirmed'
+		else
+			console.log 'no token found, token: '+user.token
+			res.send 'sendToken'
 
 #Creates a new user and responds with the userId
 exports.newUser = (req, res) ->
@@ -249,17 +258,6 @@ exports.getMyNotifications = (req, res) ->
 			for notification in foundNotifications
 				list[i] = 'User: '+notification.user_id_from + 'commented: "'+notification.comment+'" on your break'+notification.user_id_to+'<br />'
 				i++
-
-exports.storeDeviceToken = (req, res) ->
-	console.log 'request: : ' + req
-	console.log 'request body: : ' + req.body
-	console.log 'userId: ' + req.body.userId
-	console.log 'deviceToken: ' + req.body.deviceToken
-	pushNotifications.store req.body.userId, req.body.deviceToken, (err)->
-		if err
-			res.send 'error'
-		else
-			res.send 'success'
 
 exports.sendPushNotification = (req, res) ->
 	console.log 'request: : ' + req

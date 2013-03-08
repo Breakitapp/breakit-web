@@ -28,6 +28,7 @@ createUser = (nn, ph, token, callback) ->
 			callback err, null
 		else
 			console.log 'success in validating user XX'
+			console.log 'token: '+token
 			newUser = new User nn, ph, token
 			newUser.saveToDB (err, user) ->
 				if err
