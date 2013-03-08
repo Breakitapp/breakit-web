@@ -111,7 +111,6 @@ server.post '/ios/feedback', ios.feedbackCreate
 server.post '/ios/tweet', ios.tweet
 server.post '/ios/fb', ios.fbShare
 server.post '/ios/change_nick', ios.changeUserAttributes
-server.post '/ios/registerDeviceForPushNotifications', ios.storeDeviceToken
 server.post '/ios/sendPushNotification', ios.sendPushNotification
 
 server.get '/ios/picture/:id', ios.getPicture
