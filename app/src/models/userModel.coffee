@@ -37,6 +37,7 @@ createUser = (nn, ph, callback) ->
 						fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
 					callback err, user
 
+#What is the purpose of this function? Shouldn't we only validate the nickname in user creation? -E
 validateUser = (nn, ph, callback) ->
 		models.User.find({'nName': {$regex:'^(?i)'+nn+'$'}}).exec (err, data) ->
 			if err
@@ -53,6 +54,7 @@ validateUser = (nn, ph, callback) ->
 					console.log 'data length is: '+data.length
 					console.log 'users are found'
 					callback data.length+' users are found'
+
 
 ###TODO: CHANGE TO USE A MORE SCALABLE METHOD
 It should be noted that searching with regex's case insensitive /i means that mongodb cannot search by index, so queries against large datasets can take a long time.

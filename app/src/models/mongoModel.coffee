@@ -39,6 +39,7 @@ UserSchema = new Schema
 	fName			:		{type: String}
 	lName			:		{type: String}
 	nName			:		{type: String, required: true, unique: true}
+	token			:		{type: String}
 	email			:		{type: String, set: toLower}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
