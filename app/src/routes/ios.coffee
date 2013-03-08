@@ -46,7 +46,6 @@ exports.index = (req, res) ->
 
 exports.login = (req, res) 	->
 	console.log 'Login received from user: ' + req.body.userId
-	
 	users.findById req.body.userId, (err, user) ->
 		if err
 			console.log err
@@ -54,7 +53,16 @@ exports.login = (req, res) 	->
 		else if user is null
 			console.log 'Handled an erroneus login.'
 			res.send 'error'
+		else if user.token is null
+			console.log 'token is null'
+			res.send 'confirmed'
+			# if the user that can be found with the userid has a token do nothing
+			# else update the token
+		else if user.token
+			console.log 'token is ...'
+			res.send 'confirmed'
 		else
+			console.log 'token: '+user.token
 			console.log 'Login successful.'
 			res.send 'confirmed'
 
@@ -63,7 +71,7 @@ exports.newUser = (req, res) ->
 	res.set 'Content-Type', 'application/json'	
 	console.log 'New user requested. Nickname: ' + req.body.nickname
 	
-	users.createUser req.body.nickname, 'iPhone', (err, user) ->
+	users.createUser req.body.nickname, 'iPhone', req.body.token, (err, user) ->
 		if err
 			console.log err
 			res.send 'Taken.'
