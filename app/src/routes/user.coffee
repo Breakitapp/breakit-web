@@ -44,7 +44,7 @@ exports.list = (req, res) ->
 exports.update = (req,res) ->
 	console.log 'Update on user data received. Id: ' + req.params.id
 	
-	users.changeAttributes req.params.id, req.body.fn, req.body.ln, req.body.nn, req.body.em, req.body.ph, (err, user) ->		
+	users.changeAttributes req.params.id, req.body.fn, req.body.ln, req.body.nn, req.body.em, req.body.ph, req.body.token (err, user) ->		
 		if err
 			res.send('User updating failed.')
 		else
