@@ -1,7 +1,5 @@
 ###
 # Breakit web server. Written in Coffeescript
-# v 1.0.0
-# Mikko Majuri (majuri.mikko@gmail.com)
 ###
 
 express			= require 'express'

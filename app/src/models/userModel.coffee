@@ -22,14 +22,48 @@ class User
 				callback null, user
 
 createUser = (nn, ph, callback) ->
-	newUser = new User nn, ph
-	newUser.saveToDB (err, user) ->
+	exports.validateUser nn, ph, (err)->
 		if err
+			console.log 'ERROR OR USER TAKEN'
 			callback err, null
 		else
-			fs.mkdir './app/res/user/' + user.id, '0777', (err) ->
-				fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
-			callback err, user
+			console.log 'success in validating user XX'
+			newUser = new User nn, ph
+			newUser.saveToDB (err, user) ->
+				if err
+					callback err, null
+				else
+					fs.mkdir './app/res/user/' + user.id, '0777', (err) ->
+						fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
+					callback err, user
+
+#What is the purpose of this function? Shouldn't we only validate the nickname in user creation? -E
+validateUser = (nn, ph, callback) ->
+		models.User.find({'nName': {$regex:'^(?i)'+nn+'$'}}).exec (err, data) ->
+			if err
+				console.log 'error in validate'
+				# It shouldn't give an error in any case
+				callback err
+			else
+				if data.length is 0
+					console.log 'length is 0'
+					console.log 'data: ' +data
+					# NO USER FOUND... SAFE TO CREATE A NEW ONE
+					callback null
+				else
+					console.log 'data length is: '+data.length
+					console.log 'users are found'
+					callback data.length+' users are found'
+
+
+###TODO: CHANGE TO USE A MORE SCALABLE METHOD
+It should be noted that searching with regex's case insensitive /i means that mongodb cannot search by index, so queries against large datasets can take a long time.
+Even with small datasets, it's not very efficient. You take a far bigger cpu hit than your query warrants, which could become an issue if you are trying to achieve scale.
+As an alternative, you can store an uppercase copy and search against that. For instance, I have a User table that has a username which is mixed case, but the id is an uppercase copy of the username. This ensures case-sensitive duplication is impossible (having both "Foo" and "foo" will not be allowed), and I can search by id = username.toUpperCase() to get a case-insensitive search for username.
+If your field is large, such as a message body, duplicating data is probably not a good option. I believe using an extraneous indexer like Apache Lucene is the best option in that case.
+check also the status of this: https://jira.mongodb.org/browse/SERVER-90
+###
+
 
 addBreak = (userId, break_, callback) ->
 	if typeof break_ is Break
@@ -126,11 +160,11 @@ list = (callback) ->
 findById = (userId, callback) ->
 	models.User.findById(userId).exec (err, foundUser) ->
 		callback err, foundUser
-  
 
 root = exports ? window
 root.User = User
 root.createUser = createUser
+root.validateUser = validateUser
 root.addBreak = addBreak
 root.remove = remove
 root.changeAttributes = changeAttributes
