@@ -47,7 +47,7 @@ options =
 
 send = (userId, msgId, callback) ->
 # Different type of messages have different ids
-	findById userId, (err, user) ->
+	users.findById userId, (err, user) ->
 		if user is null
 			console.log 'no user found'
 			callback 'no user found', null
