@@ -3,7 +3,6 @@ userModel = require '../models/userModel'
 notificationsModel = require '../models/notificationsModel'
 
 exports.login = (req, res) ->
-
 	res.render 'adminlogin_feedback', title: 'Breakit admin login'
 
 exports.reply = (req, res) ->
@@ -53,3 +52,20 @@ exports.view = (req, res) ->
 				
 	else
 		res.redirect('/feedback/')
+
+exports.remove = (req, res) ->
+	console.log 'req.body.admincode: '+req.body.admincode
+	console.log 'req.body.feedbackId: '+req.body.feedbackId
+	if String(req.body.admincode) is "d0lph1n" #hardcoded password atm. TODO: make the admin authentication properly
+		feedback.changeFeedbackStatusAsReplied req.body.feedbackId, (err, feedback_) ->
+			if err
+				console.log 'error in changing feedback status'
+				res.send 'ERROR in changing feedback status'
+			else
+				console.log 'successfully removed feedback: '+feedback_.id
+				feedback.list (feedbacklist) ->
+					if feedbacklist == null
+						res.send('No feedback found.')
+					else
+						console.log 'feedbacklist: ' + feedbacklist
+						res.render 'feedbacklist', title : 'Breakit feedbacklist', feedbacks: feedbacklist
