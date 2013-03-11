@@ -53,6 +53,7 @@ send = (userId, msgId, callback) ->
 			callback 'no user found', null
 		else
 			console.log 'success finding user'
+			console.log 'found user: '+user.nName
 			token = user.token
 			apnsConnection = new apns.Connection options 
 			console.log 'trying apns with token: ' + user.token
