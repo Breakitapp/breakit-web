@@ -45,6 +45,7 @@ exports.index = (req, res) ->
 
 
 exports.login = (req, res) 	->
+	console.log 'IN LOGIN!!!'
 	console.log 'Login received from user: ' + req.body.userId
 	users.findById req.body.userId, (err, user) ->
 		if err
