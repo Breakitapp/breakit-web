@@ -65,7 +65,11 @@ exports.login = (req, res) 	->
 		else if req.body.token
 			console.log 'in setting req.body.token '
 			console.log 'in setting req.body.token: ' + req.body.token
-			users.changeAttributes '{userId:'+req.body.userId+', token:'+req.body.token+'}', ()->
+			list = {}
+			list['userId'] = req.body.userId
+			list['token'] = req.body.token
+			console.log 'LIST: ' + req.body.token
+			users.changeAttributes req.body.userId, ()->
 				console.log 'changing attributes'
 				if err
 					console.log 'ERROR IN SETTING THE TOKEN'
