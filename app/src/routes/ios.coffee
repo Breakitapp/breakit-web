@@ -69,7 +69,7 @@ exports.login = (req, res) 	->
 			list['userId'] = req.body.userId
 			list['token'] = req.body.token
 			console.log 'LIST: ' + req.body.token
-			users.changeAttributes list, ()->
+			users.changeAttributes list, () ->
 				console.log 'changing attributes'
 				if err
 					console.log 'ERROR IN SETTING THE TOKEN'
