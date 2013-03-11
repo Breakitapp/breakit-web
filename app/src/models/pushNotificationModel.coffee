@@ -47,19 +47,13 @@ options =
 
 send = (userId, msgId, callback) ->
 # Different type of messages have different ids
-	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUsers) ->
-		console.log 'foundUsers: ' + foundUsers
-		console.log 'foundUsers[0]: ' + foundUsers[0]
-		console.log 'foundUsers length ' + foundUsers.length
-		if foundUsers is null or foundUsers.length is 0
+	findById userId, (err, user) ->
+		if user is null
 			console.log 'no user found'
-			callback err, null
+			callback 'no user found', null
 		else
 			console.log 'success finding user'
-			console.log 'user: '+foundUsers
-			console.log 'userId: '+foundUsers[0].userId
-			console.log 'token: '+foundUsers[0].deviceToken
-			token = foundUsers[0].deviceToken
+			token = user.token
 			apnsConnection = new apns.Connection options 
 			myDevice = new apns.Device token
 			note = new apns.Notification()
@@ -74,7 +68,7 @@ send = (userId, msgId, callback) ->
 			note.device = myDevice
 			console.log 'sending: '+ note
 			apnsConnection.sendNotification note
-			callback err, foundUsers[0]
+			callback err, user
 
 root = exports ? window
 root.PushNotification = PushNotification
