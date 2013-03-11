@@ -106,7 +106,7 @@ remove = (userId, callback) ->
 			
 changeAttributes = (json, callback) ->
 # get user and continue from here
-	console.log 'HERE !'
+	console.log 'in changeAttributes'
 	console.log 'JSON: '+json
 	console.log 'userId: '+json.userId
 
@@ -136,6 +136,9 @@ changeAttributes = (json, callback) ->
 				if json.email
 					user.email = json.email
 					console.log 'changing email'
+				if json.token
+					user.token = json.token
+					console.log 'changing token to: '+json.token
 				if json.phone
 					user.phone = json.phone
 					console.log 'changing phone'
