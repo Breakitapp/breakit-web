@@ -168,23 +168,6 @@ findById = (userId, callback) ->
 	models.User.findById(userId).exec (err, foundUser) ->
 		callback err, foundUser
 
-storeDeviceToken = (userId, deviceToken, callback) ->
-	models.User.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUsers) ->
-		console.log 'foundUsers: ' + foundUsers
-		console.log 'foundUsers[0]: ' + foundUsers[0]
-		console.log 'foundUsers[0] token: ' + foundUsers[0].token
-		console.log 'foundUsers length ' + foundUsers.length
-		if foundUsers[0].token = null
-			console.log 'foundUsers token is null'
-			#pushNotification = new PushNotification userId, deviceToken
-			#pushNotification.save (err) ->
-				#callback err
-		else
-			console.log 'User already in db'
-			callback err
-
-
-
 root = exports ? window
 root.User = User
 root.createUser = createUser
