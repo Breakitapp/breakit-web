@@ -1,4 +1,5 @@
 models = require './mongoModel'
+pushNotifications = require './pushNotificationModel'
 
 class Notification
 	constructor: (@user_id_from, @user_id_to, @comment, @breakId, @type) ->
@@ -22,11 +23,14 @@ class Notification
 				callback null, notification_
 				
 createNotification = (from, to, comment, breakId, type, callback) ->
-			console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
-			new_notification = new Notification(from, to, comment, breakId, type)
-			new_notification.save (err)->
-				callback err
-				
+	pushNotifications.send to, 1, (err)->
+		if err
+			console.log 'IN ERR whenn trying to send push notifications'		
+	console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
+	new_notification = new Notification(from, to, comment, breakId, type)
+	new_notification.save (err)->
+		callback err
+		
 getNotifications = (userId, callback) ->
 	models.Notification.find({'user_id_to' : userId}).sort({'date': 'ascending'}).exec (err, notifications) ->
 		if err
