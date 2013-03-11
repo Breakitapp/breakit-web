@@ -78,5 +78,4 @@ send = (userId, msgId, callback) ->
 
 root = exports ? window
 root.PushNotification = PushNotification
-root.store = store
 root.send = send
