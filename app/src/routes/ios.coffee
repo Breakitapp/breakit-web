@@ -64,6 +64,7 @@ exports.login = (req, res) 	->
 			res.send 'confirmed'
 		else if req.body.token
 			console.log 'in setting req.body.token '
+			console.log 'in setting req.body.token: ' + req.body.token
 			users.changeAttributes req.body.token, ()->
 				console.log 'changing attributes'
 				if err
