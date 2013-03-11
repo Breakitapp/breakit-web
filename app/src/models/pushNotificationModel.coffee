@@ -55,6 +55,8 @@ send = (userId, msgId, callback) ->
 			console.log 'success finding user'
 			token = user.token
 			apnsConnection = new apns.Connection options 
+			console.log 'trying apns with token: ' + user.token
+			console.log 'trying apns with token: ' + token
 			myDevice = new apns.Device token
 			note = new apns.Notification()
 			note.expiry = Math.floor (Date.now() / 1000) + 3600 #Expires 1 hour from now.
