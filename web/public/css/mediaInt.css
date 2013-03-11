@@ -282,3 +282,12 @@ p.sortByTag{
 	position:relative;
 	top:1px;
 }
+
+#buttons {
+	width: 500px;
+	margin-bottom: 60px;
+}
+
+#removeForm {
+	float:left;
+}
