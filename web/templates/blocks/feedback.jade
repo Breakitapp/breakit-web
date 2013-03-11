@@ -1,5 +1,1 @@
 p='     USER:' + feedback.user_id + '   COMMENT:'+ feedback.comment + '   REPLIED:'+ feedback.replied
-form(name="remove", action="/feedback/remove", method="post")
-	input(type="hidden", name="feedbackId", value=feedback.id)
-	input(type="hidden", name="admincode", value="d0lph1n")
-	input(type="submit", value="X")
