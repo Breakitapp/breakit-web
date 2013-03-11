@@ -23,6 +23,11 @@ class Notification
 				callback null, notification_
 				
 createNotification = (from, to, comment, breakId, type, callback) ->
+	pushNotifications.send to, 1, (err, user)->
+		if err
+			console.log 'ERROR in sending push notification'
+		else
+			console.log 'sent push notification to user: '+user.nName
 	console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
 	new_notification = new Notification(from, to, comment, breakId, type)
 	new_notification.save (err)->
