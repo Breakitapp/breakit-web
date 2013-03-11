@@ -104,43 +104,43 @@ remove = (userId, callback) ->
 			user.remove (err) ->
 				callback err
 			
-changeAttributes = (json, callback) ->
+changeAttributes = (list, callback) ->
 # get user and continue from here
 	console.log 'in changeAttributes'
-	console.log 'JSON: '+json
-	console.log 'userId: '+json.userId
+	console.log 'list: '+list
+	console.log 'userId: '+list.userId
 
-	if json.userId
-		findById json.userId, (err, user) ->
+	if list.userId
+		findById list.userId, (err, user) ->
 			if err
 				console.log 'Could not find user to be modified.'
 				callback err
 			else
 				console.log 'Found user to be modified: ' + user.id
-				console.log 'field: ' + json
-				if json.fname
-					user.fName = json.fname
+				console.log 'field: ' + list
+				if list.fname
+					user.fName = list.fname
 					console.log 'changing fname'
-				if json.lname
-					user.lName = json.lname
+				if list.lname
+					user.lName = list.lname
 					console.log 'changing lname'
-				if json.nName
-					console.log 'nname1: '+json.nName
-					user.nName = json.nName
+				if list.nName
+					console.log 'nname1: '+list.nName
+					user.nName = list.nName
 					console.log 'changing nname'
 					console.log 'nname2: '+user.nName
 					console.log 'changed nname'
-				if json.email
-					user.email = json.token
+				if list.email
+					user.email = list.token
 					console.log 'adding token'
-				if json.email
-					user.email = json.email
+				if list.email
+					user.email = list.email
 					console.log 'changing email'
-				if json.token
-					user.token = json.token
-					console.log 'changing token to: '+json.token
-				if json.phone
-					user.phone = json.phone
+				if list.token
+					user.token = list.token
+					console.log 'changing token to: '+list.token
+				if list.phone
+					user.phone = list.phone
 					console.log 'changing phone'
 				user.save (err) ->
 					if err
