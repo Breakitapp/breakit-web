@@ -93,7 +93,7 @@ server.get '/terms_and_conditions', site.terms_and_conditions
 server.get '/feedback', feedback.login
 server.post '/feedback', feedback.view
 server.post '/feedback/reply', feedback.reply
-
+server.post '/feedback/remove', feedback.remove
 #iOS
 server.post '/ios', ios.index
 server.post '/ios/login', ios.login
