@@ -1,4 +1,5 @@
 models = require './mongoModel'
+users = require './userModel'
 apns = require 'apn'
 
 
@@ -43,19 +44,6 @@ options =
 		cacheLength: 100,                  # Number of notifications to cache for error purposes */
 		autoAdjustCache: true,            # Whether the cache should grow in response to messages being lost after errors. */
 		connectionTimeout: 0              # The duration the socket should stay alive with no activity in milliseconds. 0 = Disabled. */
-
-store = (userId, deviceToken, callback) ->
-	models.PushNotification.find({'userId' : userId}).sort({'date': 'ascending'}).exec (err, foundUsers) ->
-		console.log 'foundUsers: ' + foundUsers
-		console.log 'foundUsers[0]: ' + foundUsers[0]
-		console.log 'foundUsers length ' + foundUsers.length
-		if foundUsers.length is 0
-			pushNotification = new PushNotification userId, deviceToken
-			pushNotification.save (err) ->
-				callback err
-		else
-			console.log 'User already in db'
-			callback err
 
 send = (userId, msgId, callback) ->
 # Different type of messages have different ids
