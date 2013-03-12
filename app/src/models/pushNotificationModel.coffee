@@ -64,9 +64,9 @@ send = (userId, msgId, callback) ->
 			note.badge = 1
 			note.sound = "ping.aiff"
 			if msgId is 1
-				note.alert = "Marko is infesting your phone"
-			if msgId is 2
-				note.alert = "You have a new message"
+				note.alert = "You have a new notification"
+			#TODO		if msgId is 'COMMENTED_ALSO'
+#				note.alert = "You have a new message"
 			note.payload = {'messageFrom': 'Marko'}
 			note.device = myDevice
 			console.log 'sending: '+ note
