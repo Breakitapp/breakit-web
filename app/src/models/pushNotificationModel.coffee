@@ -64,7 +64,7 @@ send = (userId, msgId, callback) ->
 			note.badge = 1
 			note.sound = "ping.aiff"
 			if msgId is 1
-				note.alert = "You have a new notification"
+				note.alert = "You just received a new notification"
 			#TODO		if msgId is 'COMMENTED_ALSO'
 #				note.alert = "You have a new message"
 			note.payload = {'messageFrom': 'Marko'}
