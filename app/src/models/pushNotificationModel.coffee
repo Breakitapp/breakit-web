@@ -53,7 +53,6 @@ send = (userId, msgId, callback) ->
 			callback 'error from change Badge: '+err
 		else
 			console.log 'SUCCESS IN SETTING THE BADGE'
-			# Different type of messages have different ids
 			console.log 'looking for the user to receive push N.'
 			users.findById userId, (err, user) ->
 				if user is null
