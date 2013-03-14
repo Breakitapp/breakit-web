@@ -47,12 +47,14 @@ options =
 
 send = (userId, msgId, callback) ->
 	exports.changeBadge userId, 1, (err)->
+		console.log 'sending PUSH notification'
 		if err
 			console.log 'ERROR IN SETTING THE BADGE'
 			callback 'error from change Badge: '+err
 		else
 			console.log 'SUCCESS IN SETTING THE BADGE'
 			# Different type of messages have different ids
+			console.log 'looking for the user to receive push N.'
 			users.findById userId, (err, user) ->
 				if user is null
 					console.log 'no user found'
