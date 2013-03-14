@@ -44,7 +44,7 @@ getNotifications = (userId, callback) ->
 					callback 'error from change Badge: '+err
 				else
 					console.log 'SUCCESS IN SETTING THE BADGE'			
-					console.log 'notifications: ' + notifications
+					#console.log 'notifications: ' + notifications
 					callback null, notifications
 					return notifications
 	
