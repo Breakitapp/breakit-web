@@ -43,7 +43,7 @@ UserSchema = new Schema
 	email			:		{type: String, set: toLower}
 	date			:		{type: Date, default: Date.now}
 	phone			:		{type: String, required: true}
-	
+	badge			:		{type: Number, default: 0}	
 #UserSchema.index {email: 1}
 
 #This is only for receiving beta registrations

@@ -46,7 +46,39 @@ options =
 		connectionTimeout: 0              # The duration the socket should stay alive with no activity in milliseconds. 0 = Disabled. */
 
 send = (userId, msgId, callback) ->
-# Different type of messages have different ids
+	exports.changeBadge userId, 1, (err)->
+		if err
+			console.log 'ERROR IN SETTING THE BADGE'
+			callback 'error from change Badge: '+err
+		else
+			console.log 'SUCCESS IN SETTING THE BADGE'
+			# Different type of messages have different ids
+			users.findById userId, (err, user) ->
+				if user is null
+					console.log 'no user found'
+					callback 'no user found', null
+				else
+					console.log 'success finding user'
+					console.log 'found user: '+user.nName
+					token = user.token
+					apnsConnection = new apns.Connection options 
+					console.log 'trying apns with token: ' + user.token
+					console.log 'trying apns with token: ' + token
+					myDevice = new apns.Device token
+					note = new apns.Notification()
+					note.expiry = Math.floor (Date.now() / 1000) + 3600 #Expires 1 hour from now.
+					note.badge = user.badge
+					note.sound = "ping.aiff"
+					if msgId is 1
+						note.alert = "You just received a new notification"
+					note.payload = {'messageFrom': 'Marko'}
+					note.device = myDevice
+					console.log 'sending: '+ note
+					apnsConnection.sendNotification note
+					callback err, user
+
+changeBadge = (userId, increment, callback) ->
+# finding user to get the existing badge count
 	users.findById userId, (err, user) ->
 		if user is null
 			console.log 'no user found'
@@ -54,25 +86,23 @@ send = (userId, msgId, callback) ->
 		else
 			console.log 'success finding user'
 			console.log 'found user: '+user.nName
-			token = user.token
-			apnsConnection = new apns.Connection options 
-			console.log 'trying apns with token: ' + user.token
-			console.log 'trying apns with token: ' + token
-			myDevice = new apns.Device token
-			note = new apns.Notification()
-			note.expiry = Math.floor (Date.now() / 1000) + 3600 #Expires 1 hour from now.
-			note.badge = 1
-			note.sound = "ping.aiff"
-			if msgId is 1
-				note.alert = "You just received a new notification"
-			#TODO		if msgId is 'COMMENTED_ALSO'
-#				note.alert = "You have a new message"
-			note.payload = {'messageFrom': 'Marko'}
-			note.device = myDevice
-			console.log 'sending: '+ note
-			apnsConnection.sendNotification note
-			callback err, user
+			console.log 'user badge: '+user.badge
+			badge = (user.badge + increment)
+			if increment is 0
+				badge = 0
+			console.log 'user new badge: '+badge
+			list = {}
+			list['userId'] = userId
+			list['badge'] = badge
+			users.changeAttributes list, () ->
+				console.log 'changing attributes'
+				if err
+					console.log 'ERROR IN SETTING THE BADGE'
+					callback 'error'
+				else
+					console.log 'SUCCESS IN SETTING THE BADGE'
 
 root = exports ? window
 root.PushNotification = PushNotification
 root.send = send
+root.changeBadge = changeBadge

@@ -86,7 +86,6 @@ exports.login = (req, res) 	->
 exports.newUser = (req, res) ->
 	res.set 'Content-Type', 'application/json'	
 	console.log 'New user requested. Nickname: ' + req.body.nickname
-	
 	users.createUser req.body.nickname, 'iPhone', req.body.token, (err, user) ->
 		if err
 			console.log err
@@ -231,7 +230,6 @@ exports.changeUserAttributes = (req, res) ->
 			res.send 'error'
 		else
 			res.send user
-
 
 exports.getAlbumBreaks = (req, res) ->
 	
