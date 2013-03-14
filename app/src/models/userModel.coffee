@@ -4,7 +4,7 @@ models	= require './mongoModel'
 fs			= require 'fs'
 
 class User
-	constructor: (@nName, @phone, @token) ->
+	constructor: (@nName, @phone, @token, @badge) ->
 				
 		@breaks = null
 		
@@ -13,6 +13,7 @@ class User
 			nName : @nName
 			phone : @phone
 			token : @token
+			badge : @badge
 		user.save (err) ->
 			if err
 				console.log err
@@ -141,6 +142,8 @@ changeAttributes = (list, callback) ->
 				if list.badge
 					user.badge = list.badge
 					console.log 'changing badge to: '+list.badge
+				if list.badge is 0
+					console.log 'WOOHOO! '
 				if list.phone
 					user.phone = list.phone
 					console.log 'changing phone'
