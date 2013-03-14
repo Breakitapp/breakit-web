@@ -251,7 +251,6 @@ exports.getMyBreaks = (req, res) ->
 			
 
 exports.getMyNotifications = (req, res) ->
-	
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
 		if err
 			res.send 'error'
@@ -260,9 +259,11 @@ exports.getMyNotifications = (req, res) ->
 			i = 0
 			res.send foundNotifications
 
+### What is this??
 			for notification in foundNotifications
 				list[i] = 'User: '+notification.user_id_from + 'commented: "'+notification.comment+'" on your break'+notification.user_id_to+'<br />'
 				i++
+###
 
 exports.sendPushNotification = (req, res) ->
 	console.log 'request: : ' + req
