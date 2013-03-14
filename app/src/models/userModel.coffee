@@ -131,14 +131,14 @@ changeAttributes = (list, callback) ->
 					console.log 'nname2: '+user.nName
 					console.log 'changed nname'
 				if list.email
-					user.email = list.token
-					console.log 'adding token'
-				if list.email
 					user.email = list.email
 					console.log 'changing email'
 				if list.token
 					user.token = list.token
 					console.log 'changing token to: '+list.token
+				if list.badge
+					user.badge = list.badge
+					console.log 'changing badge to: '+list.badge
 				if list.phone
 					user.phone = list.phone
 					console.log 'changing phone'

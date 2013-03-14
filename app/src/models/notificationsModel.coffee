@@ -38,9 +38,15 @@ getNotifications = (userId, callback) ->
 		if err
 			callback err, null
 		else
-			console.log 'notifications: ' + notifications
-			callback null, notifications
-			return notifications
+			exports.changeBadge userId, 0, (err)->
+				if err
+					console.log 'ERROR IN SETTING THE BADGE TO 0'
+					callback 'error from change Badge: '+err
+				else
+					console.log 'SUCCESS IN SETTING THE BADGE'			
+					console.log 'notifications: ' + notifications
+					callback null, notifications
+					return notifications
 	
 root = exports ? window
 root.Notification = Notification
