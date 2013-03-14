@@ -4,7 +4,7 @@ models	= require './mongoModel'
 fs			= require 'fs'
 
 class User
-	constructor: (@nName, @phone, @token, @badge) ->
+	constructor: (@nName, @phone, @token) ->
 				
 		@breaks = null
 		
@@ -13,7 +13,6 @@ class User
 			nName : @nName
 			phone : @phone
 			token : @token
-			badge : @badge
 		user.save (err) ->
 			if err
 				console.log err
