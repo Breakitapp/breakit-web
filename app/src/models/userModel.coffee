@@ -109,6 +109,7 @@ changeAttributes = (list, callback) ->
 	console.log 'in changeAttributes'
 	console.log 'list: '+list
 	console.log 'userId: '+list.userId
+	console.log 'badge: '+list.badge
 
 	if list.userId
 		findById list.userId, (err, user) ->
