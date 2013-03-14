@@ -113,6 +113,7 @@ changeAttributes = (list, callback) ->
 
 	if list.userId
 		findById list.userId, (err, user) ->
+			console.log 'badge inside findById: '+ list.badge
 			if err
 				console.log 'Could not find user to be modified.'
 				callback err
@@ -143,6 +144,7 @@ changeAttributes = (list, callback) ->
 				if list.phone
 					user.phone = list.phone
 					console.log 'changing phone'
+				console.log 'going to user save now'
 				user.save (err) ->
 					if err
 						console.log 'USER: User save failed after trying to modify fields.'
