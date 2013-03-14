@@ -95,13 +95,14 @@ changeBadge = (userId, increment, callback) ->
 			list = {}
 			list['userId'] = userId
 			list['badge'] = badge
-			users.changeAttributes list, () ->
+			users.changeAttributes list, (err) ->
 				console.log 'changing attributes'
 				if err
 					console.log 'ERROR IN SETTING THE BADGE'
 					callback 'error'
 				else
 					console.log 'SUCCESS IN SETTING THE BADGE'
+					callback
 
 root = exports ? window
 root.PushNotification = PushNotification
