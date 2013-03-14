@@ -139,11 +139,9 @@ changeAttributes = (list, callback) ->
 				if list.token
 					user.token = list.token
 					console.log 'changing token to: '+list.token
-				if list.badge
+				if list.badge or list.badge is 0
 					user.badge = list.badge
 					console.log 'changing badge to: '+list.badge
-				if list.badge is 0
-					console.log 'WOOHOO! '
 				if list.phone
 					user.phone = list.phone
 					console.log 'changing phone'
