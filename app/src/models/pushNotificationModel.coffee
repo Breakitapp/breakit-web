@@ -95,13 +95,15 @@ changeBadge = (userId, increment, callback) ->
 			list = {}
 			list['userId'] = userId
 			list['badge'] = badge
+			console.log 'user new badge: '+badge
 			users.changeAttributes list, (err) ->
+				console.log 'user new badge: '+badge
 				console.log 'changing attributes'
 				if err
 					console.log 'ERROR IN SETTING THE BADGE'
 					callback 'error'
 				else
-					console.log 'SUCCESS IN SETTING THE BADGE in changing attributes'
+					console.log 'SUCCESS IN SETTING THE BADGE to'+badge+'in changing attributes'
 					callback null
 
 root = exports ? window
