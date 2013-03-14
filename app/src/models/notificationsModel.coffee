@@ -38,7 +38,7 @@ getNotifications = (userId, callback) ->
 		if err
 			callback err, null
 		else
-			exports.changeBadge userId, 0, (err)->
+			pushNotifications.changeBadge userId, 0, (err)->
 				if err
 					console.log 'ERROR IN SETTING THE BADGE TO 0'
 					callback 'error from change Badge: '+err
