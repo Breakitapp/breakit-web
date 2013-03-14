@@ -150,6 +150,7 @@ changeAttributes = (list, callback) ->
 					else
 						console.log 'USER: User modified successfully.'
 						console.log 'USER nname: '+user.nName
+						console.log 'USER badge: '+user.badge
 						callback null, user
 	else
 		console.log 'No user found'
