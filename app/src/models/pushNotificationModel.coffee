@@ -101,8 +101,8 @@ changeBadge = (userId, increment, callback) ->
 					console.log 'ERROR IN SETTING THE BADGE'
 					callback 'error'
 				else
-					console.log 'SUCCESS IN SETTING THE BADGE'
-					callback
+					console.log 'SUCCESS IN SETTING THE BADGE in changing attributes'
+					callback null
 
 root = exports ? window
 root.PushNotification = PushNotification
