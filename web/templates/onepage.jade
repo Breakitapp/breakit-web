@@ -184,12 +184,14 @@ html
 								img(src="/public/images/1pager/comments.png")
 								p #{b.comments.length}
 					#bottomRight.right
-						form(name="post_comment", action="/p/comment", method="post")
-							textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
-							input.hideInput(name = "userId", value=u) 
-							input.hideInput(name = "breakId", value=b._id)							
-							input.hideInput(name = "mediaInterface", value=mediaInterface)
-							input.right(type="button", onClick="submitForm()", value="send")
+							form(name="post_comment", action="/p/comment", method="post")
+								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
+								input.hideInput(name = "userId", value=u) 
+								input.hideInput(name = "breakId", value=b._id)							
+								input.hideInput(name = "mediaInterface", value=mediaInterface)
+								if locals.admin
+									input.hideInput(name = "admin", value="adminLogin")
+								input.right(type="button", onClick="submitForm()", value="send")
 		.footer.clear
 	script
 		$(document).ready(function(e) {
