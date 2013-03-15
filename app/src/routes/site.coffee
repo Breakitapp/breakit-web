@@ -73,7 +73,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				if(req.params.admincode = 'd0lph1n')
-						onepagerUser = req.params.user
+					onepagerUser = req.params.user
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
 				console.log 'REQUEST HOST: '+req.headers.host
