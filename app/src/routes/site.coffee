@@ -86,7 +86,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 
 				#for(head in req.headers)
 					#console.log 'head'+head
-				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
+				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, fromAdmin:'yes'
 	else
 		breaks.addView req.params.id, (err, break_) ->
 			if err
@@ -110,17 +110,20 @@ If the user has logged in through our mediaInterface then it will not use the an
 					console.log 'onepagerUser: ' + req.params.user
 					onepagerUser = req.params.user
 				console.log 'user: '+ onepagerUser
-				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
-			
+				if(req.params.admincode is 'd0lph1n')
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admin:true
+				else
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 
 exports.webComment = (req, res) ->
+	console.log 'in webComment'
+	console.log 'req.body.admin '+req.body.admin
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
 			throw err
 		else
 			newComment = new comments.Comment req.body.comment, author._id, author.nName
-
 			console.log 'New comment from web interface: ' + newComment.comment + ', author(anonymous): ' + author.nName
 			breaks.comment newComment, req.body.breakId, (err, commentCount) ->
 				if err
