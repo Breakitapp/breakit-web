@@ -135,8 +135,7 @@ exports.webComment = (req, res) ->
 						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'
 					else
 						res.redirect '/p/' + req.body.breakId + checkMediaInterface
-					#mediaInterface:checkMediaInterface
-					#Onepager vs2
+
 exports.pvs2 = (req, res) ->
 	cookieName = ''
 	cookieValue = ''
