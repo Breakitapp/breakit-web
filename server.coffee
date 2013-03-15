@@ -143,8 +143,6 @@ server.all '/media', media.mediaInterface
 server.get '/media/login', media.login
 server.post '/media/login', media.view
 server.post '/media/loginAs', media.loginAsAdmin
-server.post '/mediaAdmin', media.loginAsAdmin
-
 
 #Starting the server
 server.configure "local", ->

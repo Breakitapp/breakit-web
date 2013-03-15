@@ -11,7 +11,6 @@ class Break
 		console.log Date.now() + ': CREATED A NEW BREAK '+ @headline + ' to ' + @placeName
 
 	saveToDB: (callback) ->
-		
 		#Assign initial points to the new break based on the creation datetime
 		epoch = new Date(1970, 1, 1)
 		@startingPoints = Date.now() - epoch

@@ -49,13 +49,13 @@ block contents
 							p.information= "comments " + b.comments.length + " &bull; " + "score " + score
 						hr
 						p=b.headline
-			if locals.admin
-				if locals.admin is 'd0lph1n'
-					form.pageForm.centrify(id="pages", method="post", action="/mediaAdmin")
+			if locals.admincode
+				form.pageForm.centrify(id="pages", method="post", action="/media/loginAs")
+					input.hidden(type="text", name="userId",value=user)
+					input.hidden(type="text", name="admincode",value=admincode)
 			else
 				form.pageForm.centrify(id="pages", method="post", action="/media")
 			input.hidden(type="text", name="searchValue",value=searchValue)
-			input.hidden(type="text", name="userId",value=user)
 			if(typeof pageNumber == 'undefined')
 				pageNumber = 0;
 			else if(pageNumber > count/12-1)
