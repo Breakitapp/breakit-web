@@ -4,15 +4,14 @@ models	= require './mongoModel'
 fs			= require 'fs'
 
 class User
-	constructor: (@nName, @phone) ->
-				
+	constructor: (@nName, @phone, @token) ->
 		@breaks = null
 		
 	saveToDB: (callback) ->
 		user = new models.User
 			nName : @nName
 			phone : @phone
-			
+			token : @token
 		user.save (err) ->
 			if err
 				console.log err
@@ -21,14 +20,15 @@ class User
 				console.log 'USER: Saved a new user: ' + user._id
 				callback null, user
 
-createUser = (nn, ph, callback) ->
+createUser = (nn, ph, token, callback) ->
 	exports.validateUser nn, ph, (err)->
 		if err
 			console.log 'ERROR OR USER TAKEN'
 			callback err, null
 		else
 			console.log 'success in validating user XX'
-			newUser = new User nn, ph
+			console.log 'token: '+token
+			newUser = new User nn, ph, token
 			newUser.saveToDB (err, user) ->
 				if err
 					callback err, null
@@ -103,38 +103,47 @@ remove = (userId, callback) ->
 			user.remove (err) ->
 				callback err
 			
-changeAttributes = (json, callback) ->
+changeAttributes = (list, callback) ->
 # get user and continue from here
-	console.log 'HERE !'
-	console.log 'JSON: '+json
-	console.log 'userId: '+json.userId
+	console.log 'in changeAttributes'
+	console.log 'list: '+list
+	console.log 'userId: '+list.userId
+	console.log 'badge: '+list.badge
 
-	if json.userId
-		findById json.userId, (err, user) ->
+	if list.userId
+		findById list.userId, (err, user) ->
+			console.log 'badge inside findById: '+ list.badge
 			if err
 				console.log 'Could not find user to be modified.'
 				callback err
 			else
 				console.log 'Found user to be modified: ' + user.id
-				console.log 'field: ' + json
-				if json.fname
-					user.fName = json.fname
+				console.log 'field: ' + list
+				if list.fname
+					user.fName = list.fname
 					console.log 'changing fname'
-				if json.lname
-					user.lName = json.lname
+				if list.lname
+					user.lName = list.lname
 					console.log 'changing lname'
-				if json.nName
-					console.log 'nname1: '+json.nName
-					user.nName = json.nName
+				if list.nName
+					console.log 'nname1: '+list.nName
+					user.nName = list.nName
 					console.log 'changing nname'
 					console.log 'nname2: '+user.nName
 					console.log 'changed nname'
-				if json.email
-					user.email = json.email
+				if list.email
+					user.email = list.email
 					console.log 'changing email'
-				if json.phone
-					user.phone = json.phone
+				if list.token
+					user.token = list.token
+					console.log 'changing token to: '+list.token
+				if list.badge or list.badge is 0
+					user.badge = list.badge
+					console.log 'changing badge to: '+list.badge
+				if list.phone
+					user.phone = list.phone
 					console.log 'changing phone'
+				console.log 'going to user save now'
 				user.save (err) ->
 					if err
 						console.log 'USER: User save failed after trying to modify fields.'
@@ -142,6 +151,7 @@ changeAttributes = (json, callback) ->
 					else
 						console.log 'USER: User modified successfully.'
 						console.log 'USER nname: '+user.nName
+						console.log 'USER badge: '+user.badge
 						callback null, user
 	else
 		console.log 'No user found'

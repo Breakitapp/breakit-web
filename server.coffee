@@ -12,6 +12,8 @@ test				= require './app/lib/routes/test'
 ios					= require './app/lib/routes/ios'
 reports			= require './app/lib/routes/reports'
 media				= require './app/lib/routes/mediaInterface'
+appleConnect= require './app/lib/routes/appleConnect'
+appleConnect_apn= require './app/lib/routes/appleConnect_apn'
 scripts			=	require	'./scripts/migration'
 settings		= require './settings'
 mongoose		= require 'mongoose'
@@ -84,7 +86,9 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		#Creating a feedback for test
 		server.get '/feedback/new', feedback.create
 		server.post '/feedback/new', feedback.submit
-
+		server.get '/appleConnect/test', appleConnect.push
+		server.get '/appleConnect/test2', appleConnect_apn.send
+		
 #Terms & Conditions
 server.get '/terms', site.terms
 server.get '/terms_and_conditions', site.terms_and_conditions
@@ -107,6 +111,8 @@ server.post '/ios/feedback', ios.feedbackCreate
 server.post '/ios/tweet', ios.tweet
 server.post '/ios/fb', ios.fbShare
 server.post '/ios/change_nick', ios.changeUserAttributes
+server.post '/ios/sendPushNotification', ios.sendPushNotification
+
 server.get '/ios/picture/:id', ios.getPicture
 server.get '/ios/info/:id', ios.getBreak
 server.get '/ios/browse_album/:albumId/:page', ios.browseAlbum

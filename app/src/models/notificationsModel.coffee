@@ -1,4 +1,5 @@
 models = require './mongoModel'
+pushNotifications = require './pushNotificationModel'
 
 class Notification
 	constructor: (@user_id_from, @user_id_to, @comment, @breakId, @type) ->
@@ -22,19 +23,30 @@ class Notification
 				callback null, notification_
 				
 createNotification = (from, to, comment, breakId, type, callback) ->
-			console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
-			new_notification = new Notification(from, to, comment, breakId, type)
-			new_notification.save (err)->
-				callback err
-				
+	pushNotifications.send to, 1, (err, user)->
+		if err
+			console.log 'ERROR in sending push notification'
+		else
+			console.log 'sent push notification to user: '+user.nName
+	console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
+	new_notification = new Notification(from, to, comment, breakId, type)
+	new_notification.save (err)->
+		callback err
+		
 getNotifications = (userId, callback) ->
 	models.Notification.find({'user_id_to' : userId}).sort({'date': 'ascending'}).exec (err, notifications) ->
 		if err
 			callback err, null
 		else
-			console.log 'notifications: ' + notifications
-			callback null, notifications
-			return notifications
+			pushNotifications.changeBadge userId, 0, (err)->
+				if err
+					console.log 'ERROR IN SETTING THE BADGE TO 0'
+					callback 'error from change Badge: '+err
+				else
+					console.log 'SUCCESS IN SETTING THE BADGE to 0 in getNotifications'
+					#console.log 'notifications: ' + notifications
+					callback null, notifications
+					return notifications
 	
 root = exports ? window
 root.Notification = Notification
