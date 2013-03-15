@@ -14,7 +14,7 @@ albums = require '../models/albumModel'
 
 exports.public = (req, res) ->
 	console.log 'LOGGING TO public'
-	console.log 'req.body.user: '+req.params.user
+	console.log 'req.params.user: '+req.params.user
 	console.log 'req.params.admincode: '+req.params.admincode
 	console.log 'req.body.id: (breakId)'+req.params.id
 	
@@ -73,7 +73,9 @@ If the user has logged in through our mediaInterface then it will not use the an
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
 				if(req.params.admincode = 'd0lph1n')
-					onepagerUser = req.params.user
+					console.log 'ADMIN LOGIN IN site.coffee'
+					console.log 'onepagerUser: ' + req.params.user
+					#onepagerUser = req.params.user
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
 				console.log 'REQUEST HOST: '+req.headers.host
