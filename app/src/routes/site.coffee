@@ -118,10 +118,8 @@ If the user has logged in through our mediaInterface then it will not use the an
 				console.log 'HELLO2 !!! '
 				console.log 'HELLO2 !!! '
 				console.log '(String(req.params.admincode) :'+ (String(req.params.admincode))
-				if req.params.admincode
-					console.log 'hello again'
-					#if(String(req.params.admincode) is 'd0lph1n')
-					#res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
+				if(String(req.params.admincode) is 'd0lph1n')
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
 				else
 					console.log 'onepageUser: '+onepagerUser
 					console.log 'media: '+checkMediaInterface
