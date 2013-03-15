@@ -131,7 +131,7 @@ exports.webComment = (req, res) ->
 				else
 					if checkMediaInterface is 'media'
 							checkMediaInterface = '?name=' + checkMediaInterface
-					if admin is true
+					if req.body.admin && if req.body.admin is true
 						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'
 					else
 						res.redirect '/p/' + req.body.breakId + checkMediaInterface
