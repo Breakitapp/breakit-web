@@ -129,7 +129,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 					console.log 'buu'
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
-	console.log 'req.body.admin '+req.body.admincode
+	console.log 'req.body.admincode '+req.body.admincode
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
