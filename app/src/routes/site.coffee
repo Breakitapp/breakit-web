@@ -109,7 +109,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 					console.log 'ADMIN LOGIN IN site.coffee'
 					console.log 'onepagerUser: ' + req.params.user
 					onepagerUser = req.params.user
-				console.log 'user: '+ onepagerUser
+				console.log 'user before rendering: '+ onepagerUser
 				if(req.params.admincode is 'd0lph1n')
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admin:true
 				else
@@ -117,7 +117,8 @@ If the user has logged in through our mediaInterface then it will not use the an
 
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
-	console.log 'req.body.admin '+req.body.admin
+	if reg.body.admin
+		console.log 'req.body.admin '+req.body.admin
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
