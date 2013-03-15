@@ -86,6 +86,8 @@ If the user has logged in through our mediaInterface then it will not use the an
 
 				#for(head in req.headers)
 					#console.log 'head'+head
+				console.log 'HELLO !!!!'
+				console.log 'admincode: '+ req.params.admincode
 				if(req.params.admincode is 'd0lph1n')
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
 				else
@@ -108,12 +110,15 @@ If the user has logged in through our mediaInterface then it will not use the an
 				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
-				if(req.params.admincode is 'd0lph1n')
+				if(String(req.params.admincode) is 'd0lph1n')
 					console.log 'ADMIN LOGIN IN site.coffee'
 					console.log 'onepagerUser: ' + req.params.user
 					onepagerUser = req.params.user
 				console.log 'user before rendering: '+ onepagerUser
-				if(req.params.admincode is 'd0lph1n')
+				console.log 'HELLO2 !!! '
+				console.log 'HELLO2 !!! '
+				console.log '(String(req.params.admincode) :'+(String(req.params.admincode))
+				if(String(req.params.admincode) is 'd0lph1n')
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
 				else
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
