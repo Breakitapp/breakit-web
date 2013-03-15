@@ -130,6 +130,8 @@ If the user has logged in through our mediaInterface then it will not use the an
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
 	console.log 'req.body.admincode '+req.body.admincode
+	#Check for query objects
+	queryObject = require('url').parse(req.url,true).query
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
@@ -141,12 +143,16 @@ exports.webComment = (req, res) ->
 				if err
 					res.send 'Commenting failed.'
 				else
+					#if the media boolean is set to true (page has oriented from media interface)
 					if checkMediaInterface is 'media'
 						checkMediaInterface = '?name=' + checkMediaInterface
+						if typeof queryObject.page isnt 'undefined'
+						#Set the page number to same as from which page it has arrived from media interface
+							pageNumber = '&page' + queryObject.page
 					if req.body.admincode is 'd0lph1n'
-						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ checkMediaInterface
+						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ checkMediaInterface + pageNumber
 					else
-						res.redirect '/p/' + req.body.breakId + checkMediaInterface
+						res.redirect '/p/' + req.body.breakId + checkMediaInterface + pageNumber
 
 exports.pvs2 = (req, res) ->
 	cookieName = ''
