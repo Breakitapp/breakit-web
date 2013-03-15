@@ -111,7 +111,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 					onepagerUser = req.params.user
 				console.log 'user before rendering: '+ onepagerUser
 				if(req.params.admincode is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admin:true
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admin:'d0lph1n'
 				else
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 
@@ -132,7 +132,7 @@ exports.webComment = (req, res) ->
 					if checkMediaInterface is 'media'
 						checkMediaInterface = '?name=' + checkMediaInterface
 					if req.body.admin is 'adminLogin'
-						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'
+						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ checkMediaInterface
 					else
 						res.redirect '/p/' + req.body.breakId + checkMediaInterface
 
