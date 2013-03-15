@@ -125,6 +125,8 @@ If the user has logged in through our mediaInterface then it will not use the an
 				else
 					console.log 'onepageUser: '+onepagerUser
 					console.log 'media: '+checkMediaInterface
+					console.log 'break: '+break_
+					console.log 'break: '+break_.headline
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 					console.log 'buu'
 exports.webComment = (req, res) ->
