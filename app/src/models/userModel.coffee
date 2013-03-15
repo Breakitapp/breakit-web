@@ -5,7 +5,6 @@ fs			= require 'fs'
 
 class User
 	constructor: (@nName, @phone, @token) ->
-				
 		@breaks = null
 		
 	saveToDB: (callback) ->
