@@ -86,7 +86,10 @@ If the user has logged in through our mediaInterface then it will not use the an
 
 				#for(head in req.headers)
 					#console.log 'head'+head
-				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, fromAdmin:'yes'
+				if(req.params.admincode is 'd0lph1n')
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
+				else
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 	else
 		breaks.addView req.params.id, (err, break_) ->
 			if err
@@ -111,13 +114,13 @@ If the user has logged in through our mediaInterface then it will not use the an
 					onepagerUser = req.params.user
 				console.log 'user before rendering: '+ onepagerUser
 				if(req.params.admincode is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admin:'d0lph1n'
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
 				else
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
-	console.log 'req.body.admin '+req.body.admin
+	console.log 'req.body.admin '+req.body.admincode
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
