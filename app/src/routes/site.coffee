@@ -105,6 +105,10 @@ If the user has logged in through our mediaInterface then it will not use the an
 				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
+				if(req.params.admincode is 'd0lph1n')
+					console.log 'ADMIN LOGIN IN site.coffee'
+					console.log 'onepagerUser: ' + req.params.user
+					onepagerUser = req.params.user
 				console.log 'user: '+ onepagerUser
 				res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
 			
