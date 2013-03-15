@@ -83,7 +83,7 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 		#Creating a feedback for test
 		server.get '/feedback/new', feedback.create
 		server.post '/feedback/new', feedback.submit
-
+		
 #Terms & Conditions
 server.get '/terms', site.terms
 server.get '/terms_and_conditions', site.terms_and_conditions
@@ -106,6 +106,8 @@ server.post '/ios/feedback', ios.feedbackCreate
 server.post '/ios/tweet', ios.tweet
 server.post '/ios/fb', ios.fbShare
 server.post '/ios/change_nick', ios.changeUserAttributes
+server.post '/ios/sendPushNotification', ios.sendPushNotification
+
 server.get '/ios/picture/:id', ios.getPicture
 server.get '/ios/info/:id', ios.getBreak
 server.get '/ios/browse_album/:albumId/:page', ios.browseAlbum

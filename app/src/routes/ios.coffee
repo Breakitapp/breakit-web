@@ -8,6 +8,7 @@ breaks				= require '../models/breakModel'
 albums				= require '../models/albumModel'
 comments			= require '../models/commentModel'
 notifications	= require '../models/notificationsModel'
+pushNotifications	= require '../models/pushNotificationModel'
 users					= require '../models/userModel'
 feedback			= require '../models/feedbackModel'
 report				= require '../models/reportModel'
@@ -44,8 +45,8 @@ exports.index = (req, res) ->
 
 
 exports.login = (req, res) 	->
+	console.log 'IN LOGIN!!!'
 	console.log 'Login received from user: ' + req.body.userId
-	
 	users.findById req.body.userId, (err, user) ->
 		if err
 			console.log err
@@ -53,16 +54,39 @@ exports.login = (req, res) 	->
 		else if user is null
 			console.log 'Handled an erroneus login.'
 			res.send 'error'
-		else
+		else if user.token is null
+			console.log 'token is null'
+			res.send 'confirmed'
+			# if the user that can be found with the userid has a token do nothing
+			# else update the token
+		else if user.token
 			console.log 'Login successful.'
 			res.send 'confirmed'
+		else if req.body.token
+			console.log 'in setting req.body.token '
+			console.log 'in setting req.body.token: ' + req.body.token
+			list = {}
+			list['userId'] = req.body.userId
+			list['token'] = req.body.token
+			console.log 'LIST: ' + req.body.token
+			users.changeAttributes list, () ->
+				console.log 'changing attributes'
+				if err
+					console.log 'ERROR IN SETTING THE TOKEN'
+					res.send 'error'
+				else
+					console.log 'SUCCESS IN SETTING THE TOKEN'
+					res.send 'confirmed'
+		else
+			console.log 'no token found, token sent: '+req.body.token
+			console.log 'no token found, user.token: '+user.token
+			res.send 'sendToken'
 
 #Creates a new user and responds with the userId
 exports.newUser = (req, res) ->
 	res.set 'Content-Type', 'application/json'	
 	console.log 'New user requested. Nickname: ' + req.body.nickname
-	
-	users.createUser req.body.nickname, 'iPhone', (err, user) ->
+	users.createUser req.body.nickname, 'iPhone', req.body.token, (err, user) ->
 		if err
 			console.log err
 			res.send 'Taken.'
@@ -207,7 +231,6 @@ exports.changeUserAttributes = (req, res) ->
 		else
 			res.send user
 
-
 exports.getAlbumBreaks = (req, res) ->
 	
 	console.log 'Getting Album Breaks: ' + req.params.albumId + ', page: ' + req.params.page
@@ -228,7 +251,6 @@ exports.getMyBreaks = (req, res) ->
 			
 
 exports.getMyNotifications = (req, res) ->
-	
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
 		if err
 			res.send 'error'
@@ -237,6 +259,19 @@ exports.getMyNotifications = (req, res) ->
 			i = 0
 			res.send foundNotifications
 
+### What is this??
 			for notification in foundNotifications
 				list[i] = 'User: '+notification.user_id_from + 'commented: "'+notification.comment+'" on your break'+notification.user_id_to+'<br />'
 				i++
+###
+
+exports.sendPushNotification = (req, res) ->
+	console.log 'request: : ' + req
+	console.log 'request body: : ' + req.body
+	console.log 'userId: ' + req.body.userId
+	console.log 'messageId: ' + req.body.msgId
+	pushNotifications.send req.body.userId, req.body.msgId, (err, foundUser) ->
+		if err
+			res.send 'error'
+		else
+			res.send 'success'
