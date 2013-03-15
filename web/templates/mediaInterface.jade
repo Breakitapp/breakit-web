@@ -36,7 +36,7 @@ block contents
 						score = b.upvotes.length - b.downvotes.length
 					//- another way to do it: if (typeof(user) !== 'undefined')
 					if locals.user
-						a(href="/p/" + b._id + '?page=' + pageNumber"/"+user+"/"+admincode)
+						a(href="/p/" + b._id + "/"+user+"/"+admincode)
 							img(src="/ios/picture/" + b._id, alt=b.headline)
 						.icons
 							p.information= "comments " + b.comments.length + " &bull; " + "score " + score
