@@ -78,7 +78,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 				if(req.params.admincode is 'd0lph1n')
 					console.log 'ADMIN LOGIN IN site.coffee'
 					console.log 'onepagerUser: ' + req.params.user
-					#onepagerUser = req.params.user
+					onepagerUser = req.params.user
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
 				console.log 'REQUEST HOST: '+req.headers.host
