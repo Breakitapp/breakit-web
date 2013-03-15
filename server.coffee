@@ -123,6 +123,7 @@ server.post '/reports/clear', reports.clear
 #WEB
 #Public break interface
 server.get '/p/:id', site.public
+server.get '/p/:id/:user/:admincode', site.public
 server.post '/p/comment', site.webComment
 #Onepager vs2 under editing
 #server.get '/p/:id', site.pvs2 # <- naming?? -e
@@ -138,6 +139,9 @@ server.get '/signup/send', site.send
 #MEDIA INTERFACE
 #TODO: Check
 server.all '/media', media.mediaInterface
+server.get '/media/login', media.login
+server.post '/media/login', media.view
+server.post '/media/loginAs', media.loginAsAdmin
 
 #Starting the server
 server.configure "local", ->

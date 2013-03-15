@@ -13,6 +13,11 @@ albums = require '../models/albumModel'
 
 
 exports.public = (req, res) ->
+	console.log 'LOGGING TO public'
+	console.log 'req.body.user: '+req.params.user
+	console.log 'req.params.admincode: '+req.params.admincode
+	console.log 'req.body.id: (breakId)'+req.params.id
+	
 	#created a default value for checkMediaInterface variable to be false
 	checkMediaInterface = false
 	#parses the querystring if there is one
@@ -52,6 +57,10 @@ exports.public = (req, res) ->
 				#console.log 'break: ' +break_
 				console.log 'ip: '+ req.ip
 				console.log 'this is the header host: ' + req.headers.host
+				###
+Here is the code that selects the user 'anonymous'. This user has different id depending on the server.
+If the user has logged in through our mediaInterface then it will not use the anonymous user but the selected user.
+				###
 				if(req.headers.host is 'localhost:3000')
 					#Change this to your own LOCAL user
 					#onepagerUser = '5097ae8bae4d4a8805000001'
@@ -63,6 +72,8 @@ exports.public = (req, res) ->
 				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
+				if(req.params.admincode = 'd0lph1n')
+						onepagerUser = req.params.user
 				console.log 'user: '+ onepagerUser
 				console.log 'user is: '+ onepagerUser
 				console.log 'REQUEST HOST: '+req.headers.host

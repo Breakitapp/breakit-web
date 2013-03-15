@@ -4,7 +4,7 @@ block contents
 		label Feedback: 	
 		select(name = "select_user")
 			for user in users
-				option(value=user.nName) #{user.nName}
+				option(value="#{user.id}") #{user.nName}
 		input(type="text", name="feedback")
 		br
 		input(type="submit", value="Submit")
