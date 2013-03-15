@@ -1,0 +1,9 @@
+extend layout
+block contents
+	form(name="input", action="/media/loginAs", method="post")
+		label Users: 	
+		select(name = "userId")
+			for user in users
+				option(value="#{user.id}") #{user.nName}
+		br
+		input(type="submit", value="Login")

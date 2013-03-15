@@ -1,0 +1,7 @@
+extend ./layout
+block contents
+
+	p= "Enter admin password:"
+	form(name="respond", action="/media/login", method="post")
+		input(type="password", name="admincode")
+		input(type="submit", value="Login")
