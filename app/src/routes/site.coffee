@@ -17,7 +17,10 @@ exports.public = (req, res) ->
 	console.log 'req.params.user: '+req.params.user
 	console.log 'req.params.admincode: '+req.params.admincode
 	console.log 'req.body.id: (breakId)'+req.params.id
-	
+	if(req.params.admincode is 'd0lph1n')
+		console.log 'GOES TO IF'
+	else
+		console.log 'GOES NOT'
 	#created a default value for checkMediaInterface variable to be false
 	checkMediaInterface = false
 	#parses the querystring if there is one
@@ -72,7 +75,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 				if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info')
 					# DEV SERVER ANON USER
 					onepagerUser = '50a369413268496061000002'
-				if(req.params.admincode = 'd0lph1n')
+				if(req.params.admincode is 'd0lph1n')
 					console.log 'ADMIN LOGIN IN site.coffee'
 					console.log 'onepagerUser: ' + req.params.user
 					#onepagerUser = req.params.user
