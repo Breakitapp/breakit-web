@@ -117,8 +117,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
-	if reg.body.admin
-		console.log 'req.body.admin '+req.body.admin
+	console.log 'req.body.admin '+req.body.admin
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
