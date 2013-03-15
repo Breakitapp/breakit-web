@@ -49,8 +49,9 @@ block contents
 							p.information= "comments " + b.comments.length + " &bull; " + "score " + score
 						hr
 						p=b.headline
-			if locals.admin is 'd0lph1n'
-				form.pageForm.centrify(id="pages", method="post", action="/mediaAdmin")
+			if locals.admin
+				if locals.admin is 'd0lph1n'
+					form.pageForm.centrify(id="pages", method="post", action="/mediaAdmin")
 			else
 				form.pageForm.centrify(id="pages", method="post", action="/media")
 			input.hidden(type="text", name="searchValue",value=searchValue)
