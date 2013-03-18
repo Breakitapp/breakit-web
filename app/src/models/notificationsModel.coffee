@@ -30,6 +30,7 @@ createNotification = (from, to, comment, breakId, type, callback) ->
 		console.log 'web interface comment by dev anonymous user to be ignored'
 		callback 'ignore web comment by dev'
 	else
+		console.log 'TRYING TO SEND PUSH NOTIFICATION TO USER: '+ to
 		pushNotifications.send to, 1, (err, user)->
 			if err
 				console.log 'ERROR specifics. User to send: '+to+'err:' +err+' user: '+user
