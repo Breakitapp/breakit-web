@@ -204,11 +204,11 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 									breaks.push foundBreak
 									#add view to break when feed is loaded
 									addView foundBreak._id, (err, foundBreak) ->
-											console.log 'break id for foundBreak is: ' + foundBreak._id
+											#console.log 'break id for foundBreak is: ' + foundBreak._id
 										if err
 											console.log 'added view fail'
 										else
-											console.log 'added view succcess'
+											#console.log 'added view succcess'
 							#This break hasn't been shown before
 							else
 								breaks.push foundBreak
@@ -217,7 +217,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 									if err
 										console.log 'added view fail'
 									else
-										console.log 'added view succcess'
+										#console.log 'added view succcess'
 								
 						i++
 					
@@ -360,7 +360,7 @@ addView = (id, callback) ->
 		if err
 			console.log 'something went wrong'
 		else
-			console.log 'views updated'
+			#console.log 'views updated'
 			callback err, break_
 	)
 
