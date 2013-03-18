@@ -58,6 +58,8 @@ comment = (comment, breakId, callback) ->
 				console.log 'in for'
 				if breakComment.user isnt comment.user
 					if breakComment.user not in sentUsers and breakComment.user isnt break_.user and breakComment.user isnt '5110eff913e66edb527cb501' and breakComment.user isnt '50a369413268496061000002'
+						console.log 'SENDING NOTIFICATIONS OF COMMENT'
+						console.log 'SENDING TO userId: '+breakComment.user
 						sentUsers.push breakComment.user
 						type = 'NO_OWNER'
 						notificationsModel.createNotification comment.usernick, breakComment.user, comment.comment, breakId, type, (err)->
