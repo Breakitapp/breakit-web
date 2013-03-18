@@ -25,6 +25,7 @@ class Notification
 createNotification = (from, to, comment, breakId, type, callback) ->
 	pushNotifications.send to, 1, (err, user)->
 		if err
+			console.log 'ERROR specifics. User to send: '+to+'err:' +err+' user: '+user
 			console.log 'ERROR in sending push notification'
 		else
 			console.log 'sent push notification to user: '+user.nName

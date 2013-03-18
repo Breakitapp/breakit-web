@@ -85,7 +85,7 @@ exports.login = (req, res) 	->
 #Creates a new user and responds with the userId
 exports.newUser = (req, res) ->
 	res.set 'Content-Type', 'application/json'	
-	console.log 'New user requested. Nickname: ' + req.body.nickname
+	console.log 'New user requested. Nickname: ' + req.body.nickname + '. Device token: '+req.body.token
 	users.createUser req.body.nickname, 'iPhone', req.body.token, (err, user) ->
 		if err
 			console.log err
