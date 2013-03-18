@@ -130,11 +130,18 @@ If the user has logged in through our mediaInterface then it will not use the an
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
 	console.log 'req.body.admincode '+req.body.admincode
+	console.log 'req.body.userId '+req.body.userId
+	console.log 'req.body.mediaInterface '+req.body.mediaInterface
+	if req.body.admincode is 'd0lph1n'
+		console.log 'admin commenting'
+	else
+		console.log 'no admin'
 	#Check for query objects
 	queryObject = require('url').parse(req.url,true).query
 	checkMediaInterface = req.body.mediaInterface
 	users.findById req.body.userId, (err, author) ->
 		if err
+			console.log 'error in finding user'
 			throw err
 		else
 			newComment = new comments.Comment req.body.comment, author._id, author.nName
