@@ -58,9 +58,6 @@ send = (userId, msgId, callback) ->
 				if user is null
 					console.log 'no user found'
 					callback 'no user found', null
-				if user.nName is ('anonymous' or 'anonymnous')
-					console.log 'web comment'
-					callback 'web comment', null
 				else
 					console.log 'success finding user'
 					console.log 'found user: '+user.nName
