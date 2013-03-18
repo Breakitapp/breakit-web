@@ -23,17 +23,24 @@ class Notification
 				callback null, notification_
 				
 createNotification = (from, to, comment, breakId, type, callback) ->
-	pushNotifications.send to, 1, (err, user)->
-		if err
-			console.log 'ERROR specifics. User to send: '+to+'err:' +err+' user: '+user
-			console.log 'ERROR in sending push notification'
-		else
-			console.log 'sent push notification to user: '+user.nName
-	console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
-	new_notification = new Notification(from, to, comment, breakId, type)
-	new_notification.save (err)->
-		callback err
-		
+	if to is '5110eff913e66edb527cb501'
+		console.log 'web interface comment by prod anonymous user to be ignored'
+		callback 'ignore web comment by prod'
+	else if to is '50a369413268496061000002'
+		console.log 'web interface comment by dev anonymous user to be ignored'
+		callback 'ignore web comment by dev'
+	else
+		pushNotifications.send to, 1, (err, user)->
+			if err
+				console.log 'ERROR specifics. User to send: '+to+'err:' +err+' user: '+user
+				console.log 'ERROR in sending push notification'
+			else
+				console.log 'sent push notification to user: '+user.nName
+		console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
+		new_notification = new Notification(from, to, comment, breakId, type)
+		new_notification.save (err)->
+			callback err
+
 getNotifications = (userId, callback) ->
 	models.Notification.find({'user_id_to' : userId}).sort({'date': 'ascending'}).exec (err, notifications) ->
 		if err
