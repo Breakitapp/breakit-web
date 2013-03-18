@@ -59,7 +59,7 @@ send = (userId, msgId, callback) ->
 					console.log 'no user found'
 					callback 'no user found', null
 				#TODO:remove this anonymnous after it works in testserver
-				if user.nName is 'anonymous' or 'anonymnous'
+				if user.nName is ('anonymous' or 'anonymnous')
 					console.log 'web interface comment to be ignored'
 					callback 'from web interface', null
 					return
