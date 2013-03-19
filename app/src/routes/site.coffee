@@ -139,14 +139,14 @@ exports.webComment = (req, res) ->
 	console.log 'in webComment'
 	console.log 'req.body.admincode '+req.body.admincode
 	console.log 'req.body.userId '+ req.body.userId
-	console.log 'webComment req.body.mediaInterface '+req.body.mediaInterface
+	console.log 'webComment req.body.fromMedia '+req.body.fromMedia
 	if req.body.admincode is 'd0lph1n'
 		console.log 'admin commenting'
 	else
 		console.log 'no admin'
 	#Check for query objects
 	queryObject = require('url').parse(req.url,true).query
-	checkMediaInterface = req.body.mediaInterface
+	fromMedia = req.body.fromMedia
 	users.findById req.body.userId, (err, author) ->
 		if err
 			console.log 'error in finding user'
@@ -160,12 +160,12 @@ exports.webComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					#if the media boolean is set to true (page has oriented from media interface)
-					if checkMediaInterface is 'media'
+					if fromMedia is true
 						if typeof queryObject.page isnt 'undefined'
 						#Set the page number to same as from which page it has arrived from media interface
 							pageNumber = '&page' + queryObject.page
 					if req.body.admincode is 'd0lph1n'
-						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/d0lph1n/' + checkMediaInterface + '/' + pageNumber
+						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/d0lph1n/' + fromMedia + '/' + pageNumber
 					else
 						#media is empty and pagenumber is undefined
 						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/' + 'true' + '/' + '1'
