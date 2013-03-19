@@ -19,6 +19,8 @@ exports.public = (req, res) ->
 	console.log 'TESTING BETTER WAY: req.params.media: '+req.params.media
 	console.log 'req.params.admincode: '+req.params.admincode
 	console.log 'req.body.id: (breakId)'+req.params.id
+	console.log 'req.params.page' + req.params.page
+	
 	if(req.params.admincode is 'd0lph1n')
 		console.log 'GOES TO IF'
 	else
@@ -45,8 +47,9 @@ exports.public = (req, res) ->
 	###
 	if req.params.media is 'true'
 		fromMedia = true
-	if req.params.page
-		console.log 'PAGE IS : ' + page
+
+#	if req.params.page
+#		console.log 'PAGE IS : ' + page
 		
 	cookieName = ''
 	cookieValue = ''
