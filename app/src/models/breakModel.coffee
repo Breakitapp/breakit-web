@@ -357,12 +357,15 @@ findById = (id, callback) ->
 		callback err, break_
 	)
 
-#find break and add one to view, not used atm in the app
+#find break and add one to view, not used atm in the app (only in media interface)
 addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
+	console.log 'id: '+id
+	console.log 'query: '+query
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
+			console.log 'break: '+break_
 			console.log 'something went wrong in find and update'
 		else
 			#console.log 'views updated'
