@@ -24,25 +24,25 @@ exports.public = (req, res) ->
 	else
 		console.log 'GOES NOT'
 	#created a default value for checkMediaInterface variable to be false
-###
-	checkMediaInterface = false
-	#parses the querystring if there is one
-	queryObject = require('url').parse(req.url,true).query
-	#TODO checks the last visited url. IF the last visited url is media interface changes checkMediaInterface value to true
-	getLastVisitedUrl = req.header('Referer')
-	console.log 'TESTING XXXXXX - last visited url: ' + getLastVisitedUrl
-	if getLastVisitedUrl?
-		splitUrl = getLastVisitedUrl.split('/')
-		getLastVisitedUrl = splitUrl[splitUrl.length-1]
+	###
+		checkMediaInterface = false
+		#parses the querystring if there is one
+		queryObject = require('url').parse(req.url,true).query
+		#TODO checks the last visited url. IF the last visited url is media interface changes checkMediaInterface value to true
+		getLastVisitedUrl = req.header('Referer')
 		console.log 'TESTING XXXXXX - last visited url: ' + getLastVisitedUrl
-		if getLastVisitedUrl is 'media' 
-			#While checkMediaInterface is true it allows the mediainterface button to appear in onepager
-			checkMediaInterface = true
-			console.log checkMediaInterface
-		#Check if commented has happened while being marked on media interface
-		else if queryObject.name is 'media'
+		if getLastVisitedUrl?
+			splitUrl = getLastVisitedUrl.split('/')
+			getLastVisitedUrl = splitUrl[splitUrl.length-1]
+			console.log 'TESTING XXXXXX - last visited url: ' + getLastVisitedUrl
+			if getLastVisitedUrl is 'media' 
+				#While checkMediaInterface is true it allows the mediainterface button to appear in onepager
 				checkMediaInterface = true
-###
+				console.log checkMediaInterface
+			#Check if commented has happened while being marked on media interface
+			else if queryObject.name is 'media'
+					checkMediaInterface = true
+	###
 	if req.params.media is 'true'
 		fromMedia = true
 		
