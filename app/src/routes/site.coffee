@@ -102,9 +102,9 @@ If the user has logged in through our mediaInterface then it will not use the an
 				console.log 'HELLO !!!!'
 				console.log 'admincode: '+ req.params.admincode
 				if(req.params.admincode is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, admincode:'d0lph1n'
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, admincode:'d0lph1n', pageNumber:req.params.page
 				else
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, pageNumber:req.params.page
 	else
 		breaks.addView req.params.id, (err, break_) ->
 			if err
@@ -168,7 +168,7 @@ exports.webComment = (req, res) ->
 				else
 					#if the media boolean is set to true (page has oriented from media interface)
 					if fromMedia is true
-						pageNumber = req.params.page
+						pageNumber = req.body.pageNumber
 
 					if req.body.admincode is 'd0lph1n'
 						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/d0lph1n/' + fromMedia + '/' + pageNumber
