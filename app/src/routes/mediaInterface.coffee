@@ -5,33 +5,35 @@ userModel = require '../models/userModel'
 exports.mediaInterface= (req, res) ->
 	console.log 'entering Media Interface'
 	
-	#check for query objects
+	#check for query objects to direct the user to the right page
 	queryObject = require('url').parse(req.url,true).query
+	
 	#Checks which is the sort method currently in use
 	currentSortPage = req.body.currentSortPage
 	
 	#Checks if user has chosen a new sort method
 	sortPage = req.body.sortPage
 	
-	#if no sort method is chosen the sortmethod is set to by date
+	#if no sort method is chosen the sortmethod is set to date
 	if sortPage == undefined && currentSortPage == undefined
 		sortPage = 'date'
 	
-	#if there is a current sort method in use this overrides the current sort method
+	#if there is a current sort method in use the sortPage is redefined to the old sort method
 	else if sortPage == undefined
 		sortPage = currentSortPage
 	console.log 'sortPage variable is: ' + sortPage
 	
-	#check if query exists
+	#check if query for existing page number exists
 	if typeof queryObject.page is 'undefined'
 		#checks which page the user wishes to go to
 		pageNumber = req.body.pageNumber
 		pageNumber = parseInt pageNumber
 	else
-		#pagenumber is the number recieved from the query
+		#if pagenumber is the number recieved from the query the user is dericted to the existing page
 		pageNumber = queryObject.page-1
 		console.log 'The query page is: ' + pageNumber
 	console.log 'test query: ' + pageNumber
+	
 	#If a pagenumber hasn't been defined it defaults to the first page
 	if isNaN(pageNumber) or pageNumber is undefined or pageNumber < 0
 		pageNumber = 0
@@ -63,6 +65,7 @@ exports.mediaInterface= (req, res) ->
 			if err
 				throw err
 			else
+				console.log 'pageNumber before rendering: ' + pageNumber
 				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, pageNumber:pageNumber
 				
 	else
@@ -80,6 +83,7 @@ exports.mediaInterface= (req, res) ->
 						sortPageValue = 'search'
 				if searchWord is undefined
 						searchWord = req.body.searchValue
+				console.log 'pageNumber before rendering: ' + pageNumber
 				res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord, pageNumber:pageNumber
 
 

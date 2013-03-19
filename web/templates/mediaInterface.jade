@@ -54,16 +54,16 @@ block contents
 					input.hidden(type="text", name="admincode",value=admincode)
 			else
 				form.pageForm.centrify(id="pages", name="mediaInterface", method="post", action="/media")
-			input.hidden(type="text", name="searchValue",value=searchValue)
-			if(typeof pageNumber == 'undefined')
-				pageNumber = 0;
-			else if(pageNumber > count/12-1)
-				pageNumber = pageNumber -1
-			input.hidden(type="text", name='pageNumber',value=pageNumber)
-			input.pageButton(type="button", name='firstPage',value="<< first page")
-			input.pageButton(type="button", name='previousPage', value='< previous page')
-			input.pageButton(type="submit", name='nextPage',value="next page >")
-			input.pageButton(type="button", name='lastPage',value="last page >>")
+					input.hidden(type="text", name="searchValue",value=searchValue)
+					if(typeof pageNumber == 'undefined')
+						pageNumber = 0;
+					else if(pageNumber > count/12-1)
+						pageNumber = pageNumber -1
+					input.hidden(type="text", name='pageNumber',value=pageNumber)
+					input.pageButton(type="button", name='firstPage',value="<< first page")
+					input.pageButton(type="button", name='previousPage', value='< previous page')
+					input.pageButton(type="submit", name='nextPage',value="next page >")
+					input.pageButton(type="button", name='lastPage',value="last page >>")
 block footerscripts
 	script
 		$(document).ready(function(){
@@ -72,7 +72,7 @@ block footerscripts
 		});
 		$('input:button[name=previousPage]').click(function(){
 			pageNumber = $("input:text[name=pageNumber]").val();
-			if(pageNumber >= 0) {		
+			if(pageNumber >= 0) {	
 				pageNumber -= 2;
 				$("input:text[name=pageNumber]").val(pageNumber);
 			}
@@ -82,7 +82,9 @@ block footerscripts
 			$('#pages').submit();
 		});
 		$('input:button[name=firstPage]').click(function(){
+			console.log('first: ' + pageNumber);
 			pageNumber = -1;
+			console.log('second: ' + pageNumber);
 			$("input:text[name=pageNumber]").val(pageNumber);
 			$('#pages').submit();
 		});
