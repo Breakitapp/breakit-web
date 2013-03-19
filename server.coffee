@@ -126,6 +126,7 @@ server.post '/reports/clear', reports.clear
 server.get '/p/:id', site.public
 server.get '/p/:id/:user/:admincode/:media/:page', site.public
 server.get '/p/:id/:user/:media/:page', site.public
+server.get '/p/:id/:media/:page', site.public
 server.post '/p/comment', site.webComment
 #Onepager vs2 under editing
 #server.get '/p/:id', site.pvs2 # <- naming?? -e
