@@ -86,8 +86,6 @@ html
 			(document,"script","twitter-wjs");
 		header
 			if (typeof fromMedia != 'undefined')
-					p NOT UNDEFINED
-					p MEDIA INTERFACE #{fromMedia}
 					if (fromMedia == true)
 						a.button.left(href="/media") back
 						fromMedia = 'true';
@@ -186,9 +184,8 @@ html
 								img(src="/public/images/1pager/comments.png")
 								p #{b.comments.length}
 					#bottomRight.right
-							p MEDIA INTERFACE XXXXXXXXXXX: #{fromMedia}
 							form(name="post_comment", action="/p/comment", method="post")
-								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here #{fromMedia}
+								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
 								input.hideInput(name = "userId", value=u) 
 								input.hideInput(name = "breakId", value=b._id)							
 								input.hideInput(name = "fromMedia", value=fromMedia)
