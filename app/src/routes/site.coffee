@@ -13,6 +13,7 @@ albums = require '../models/albumModel'
 
 
 exports.public = (req, res) ->
+	fromMedia = false
 	console.log 'LOGGING TO public'
 	console.log 'req.params.user: '+req.params.user
 	console.log 'TESTING BETTER WAY: req.params.media: '+req.params.media
@@ -23,6 +24,7 @@ exports.public = (req, res) ->
 	else
 		console.log 'GOES NOT'
 	#created a default value for checkMediaInterface variable to be false
+###
 	checkMediaInterface = false
 	#parses the querystring if there is one
 	queryObject = require('url').parse(req.url,true).query
@@ -40,6 +42,10 @@ exports.public = (req, res) ->
 		#Check if commented has happened while being marked on media interface
 		else if queryObject.name is 'media'
 				checkMediaInterface = true
+###
+	if req.params.media is 'true'
+		fromMedia = true
+		
 	cookieName = ''
 	cookieValue = ''
 	cookies = {}
@@ -91,9 +97,9 @@ If the user has logged in through our mediaInterface then it will not use the an
 				console.log 'HELLO !!!!'
 				console.log 'admincode: '+ req.params.admincode
 				if(req.params.admincode is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia, admincode:'d0lph1n'
 				else
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia
 	else
 		breaks.addView req.params.id, (err, break_) ->
 			if err
@@ -121,13 +127,13 @@ If the user has logged in through our mediaInterface then it will not use the an
 				console.log 'HELLO2 !!! '
 				console.log '(String(req.params.admincode) :'+ (String(req.params.admincode))
 				if(String(req.params.admincode) is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface, admincode:'d0lph1n'
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia, admincode:'d0lph1n'
 				else
 					console.log 'onepageUser: '+onepagerUser
-					console.log 'media: '+checkMediaInterface
+					console.log 'media: '+fromMedia
 					console.log 'break: '+break_
 					console.log 'break: '+break_.headline
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia
 
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
@@ -162,7 +168,7 @@ exports.webComment = (req, res) ->
 						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/d0lph1n/' + checkMediaInterface + '/' + pageNumber
 					else
 						#media is empty and pagenumber is undefined
-						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/' + 'media' + '/' + '1'
+						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/' + 'true' + '/' + '1'
 
 
 ### I DON*T KNOW WHY WE ARE KEEPING THIS ANYMORE HEre -Marko
