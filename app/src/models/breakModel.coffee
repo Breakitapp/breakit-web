@@ -48,6 +48,9 @@ createBreak = (longitude, latitude, placeName, placeId, story, headline, userId,
 		callback err, b
 	
 comment = (comment, breakId, callback) ->
+	console.log 'NEW COMMENT OCCURRING'
+	console.log 'comment: '+comment
+	console.log 'breakId: '+breakId
 	findById breakId, (err, break_) ->
 		if err 
 			console.log 'BREAK: failed to find break to be commented. Id: ' + breakId

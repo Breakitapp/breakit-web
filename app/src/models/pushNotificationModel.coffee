@@ -46,6 +46,9 @@ options =
 		connectionTimeout: 0              # The duration the socket should stay alive with no activity in milliseconds. 0 = Disabled. */
 
 send = (userId, msgId, callback) ->
+	console.log 'SENDING PUSH NOTIFICATION'
+	console.log 'userId: '+userId
+	
 	exports.changeBadge userId, 1, (err)->
 		console.log 'sending PUSH notification'
 		if err
