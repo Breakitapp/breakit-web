@@ -15,6 +15,7 @@ albums = require '../models/albumModel'
 exports.public = (req, res) ->
 	console.log 'LOGGING TO public'
 	console.log 'req.params.user: '+req.params.user
+	console.log 'TESTING BETTER WAY: req.params.media: '+req.params.media
 	console.log 'req.params.admincode: '+req.params.admincode
 	console.log 'req.body.id: (breakId)'+req.params.id
 	if(req.params.admincode is 'd0lph1n')
@@ -27,10 +28,11 @@ exports.public = (req, res) ->
 	queryObject = require('url').parse(req.url,true).query
 	#TODO checks the last visited url. IF the last visited url is media interface changes checkMediaInterface value to true
 	getLastVisitedUrl = req.header('Referer')
-	console.log 'last visited: ' + getLastVisitedUrl
+	console.log 'TESTING XXXXXX - last visited url: ' + getLastVisitedUrl
 	if getLastVisitedUrl?
 		splitUrl = getLastVisitedUrl.split('/')
 		getLastVisitedUrl = splitUrl[splitUrl.length-1]
+		console.log 'TESTING XXXXXX - last visited url: ' + getLastVisitedUrl
 		if getLastVisitedUrl is 'media' 
 			#While checkMediaInterface is true it allows the mediainterface button to appear in onepager
 			checkMediaInterface = true
@@ -126,7 +128,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 					console.log 'break: '+break_
 					console.log 'break: '+break_.headline
 					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:checkMediaInterface
-					console.log 'buu'
+
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
 	console.log 'req.body.admincode '+req.body.admincode
@@ -153,14 +155,13 @@ exports.webComment = (req, res) ->
 				else
 					#if the media boolean is set to true (page has oriented from media interface)
 					if checkMediaInterface is 'media'
-						checkMediaInterface = '?name=' + checkMediaInterface
 						if typeof queryObject.page isnt 'undefined'
 						#Set the page number to same as from which page it has arrived from media interface
 							pageNumber = '&page' + queryObject.page
 					if req.body.admincode is 'd0lph1n'
-						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ checkMediaInterface + pageNumber
+						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ '/'+checkMediaInterface +'/'+ pageNumber
 					else
-						res.redirect '/p/' + req.body.breakId
+						res.redirect '/p/' + req.body.breakId+ '/'+req.body.userId+'/'+checkMediaInterface +'/'+ pageNumber
 
 
 ### I DON*T KNOW WHY WE ARE KEEPING THIS AnYMORE HEre -Marko
