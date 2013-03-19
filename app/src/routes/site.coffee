@@ -143,6 +143,7 @@ If the user has logged in through our mediaInterface then it will not use the an
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
 	console.log 'req.body.admincode '+req.body.admincode
+	console.log 'req.body.pageNumber: '+ req.body.pageNumber
 	console.log 'req.body.userId '+ req.body.userId
 	console.log 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 	console.log 'webComment req.body.fromMedia ' + String(req.body.fromMedia)
@@ -167,7 +168,7 @@ exports.webComment = (req, res) ->
 					res.send 'Commenting failed.'
 				else
 					#if the media boolean is set to true (page has oriented from media interface)
-					if fromMedia is true
+					if fromMedia is 'true'
 						pageNumber = req.body.pageNumber
 
 					if req.body.admincode is 'd0lph1n'
