@@ -97,9 +97,9 @@ If the user has logged in through our mediaInterface then it will not use the an
 				console.log 'HELLO !!!!'
 				console.log 'admincode: '+ req.params.admincode
 				if(req.params.admincode is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia, admincode:'d0lph1n'
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, admincode:'d0lph1n'
 				else
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia
 	else
 		breaks.addView req.params.id, (err, break_) ->
 			if err
@@ -127,13 +127,13 @@ If the user has logged in through our mediaInterface then it will not use the an
 				console.log 'HELLO2 !!! '
 				console.log '(String(req.params.admincode) :'+ (String(req.params.admincode))
 				if(String(req.params.admincode) is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia, admincode:'d0lph1n'
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, admincode:'d0lph1n'
 				else
 					console.log 'onepageUser: '+onepagerUser
 					console.log 'media: '+fromMedia
 					console.log 'break: '+break_
 					console.log 'break: '+break_.headline
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, mediaInterface:fromMedia
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia
 
 exports.webComment = (req, res) ->
 	console.log 'in webComment'

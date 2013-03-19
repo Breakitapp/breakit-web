@@ -85,14 +85,14 @@ html
 			}
 			(document,"script","twitter-wjs");
 		header
-			if (typeof mediaInterface != 'undefined')
+			if (typeof fromMedia != 'undefined')
 					p NOT UNDEFINED
-					p MEDIA INTERFACE #{mediaInterface}
-					if (mediaInterface == true)
+					p MEDIA INTERFACE #{fromMedia}
+					if (fromMedia == true)
 						a.button.left(href="/media") back
-						mediaInterface = true;
+						fromMedia = true;
 					else
-						mediaInterface = 'false';
+						fromMedia = 'false';
 			#header.centrify
 				h1 Break
 					span it
@@ -186,12 +186,12 @@ html
 								img(src="/public/images/1pager/comments.png")
 								p #{b.comments.length}
 					#bottomRight.right
-							p MEDIA INTERFACE XXXXXXXXXXX: #{mediaInterface}
+							p MEDIA INTERFACE XXXXXXXXXXX: #{fromMedia}
 							form(name="post_comment", action="/p/comment", method="post")
-								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here #{mediaInterface}
+								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here #{fromMedia}
 								input.hideInput(name = "userId", value=u) 
 								input.hideInput(name = "breakId", value=b._id)							
-								input.hideInput(name = "fromMedia", value=b._id)
+								input.hideInput(name = "fromMedia", value=fromMedia)
 								if locals.admincode == 'd0lph1n' 
 									input.hideInput(name = "admincode", value="d0lph1n")
 								input.right(type="button", onClick="submitForm()", value="send")
