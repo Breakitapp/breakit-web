@@ -159,9 +159,9 @@ exports.webComment = (req, res) ->
 						#Set the page number to same as from which page it has arrived from media interface
 							pageNumber = '&page' + queryObject.page
 					if req.body.admincode is 'd0lph1n'
-						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ '/'+checkMediaInterface +'/'+ pageNumber
+						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ '/' + checkMediaInterface + '/' + pageNumber
 					else
-						res.redirect '/p/' + req.body.breakId+ '/'+req.body.userId+'/'+checkMediaInterface +'/'+ pageNumber
+						res.redirect '/p/' + req.body.breakId+ '/'+req.body.userId+'/'+checkMediaInterface +'/' + pageNumber
 
 
 ### I DON*T KNOW WHY WE ARE KEEPING THIS AnYMORE HEre -Marko
