@@ -74,11 +74,11 @@ block footerscripts
 			pageNumber = $("input:text[name=pageNumber]").val();
 			if(pageNumber >= 0) {		
 				pageNumber -= 2;
-				$("input:text[name=pageNumber]").val(pageNumber);
 			}
 			else{
-				pageNumber = -1;				
+				pageNumber = -1;			
 			}
+			$("input:text[name=pageNumber]").val(pageNumber);
 			$('#pages').submit();
 		});
 		$('input:button[name=firstPage]').click(function(){
