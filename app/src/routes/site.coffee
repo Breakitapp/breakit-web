@@ -45,6 +45,8 @@ exports.public = (req, res) ->
 	###
 	if req.params.media is 'true'
 		fromMedia = true
+	if req.params.page
+		console.log 'PAGE IS : ' + page
 		
 	cookieName = ''
 	cookieValue = ''
@@ -170,7 +172,7 @@ exports.webComment = (req, res) ->
 						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/d0lph1n/' + fromMedia + '/' + pageNumber
 					else
 						#media is empty and pagenumber is undefined
-						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/' + 'true' + '/' + '1'
+						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/' + fromMedia + '/' + pageNumber
 
 
 ### I DON*T KNOW WHY WE ARE KEEPING THIS ANYMORE HEre -Marko
