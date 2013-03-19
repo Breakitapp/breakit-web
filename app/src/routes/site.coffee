@@ -162,6 +162,8 @@ exports.webComment = (req, res) ->
 					else
 						res.redirect '/p/' + req.body.breakId + checkMediaInterface + pageNumber
 
+
+### I DON*T KNOW WHY WE ARE KEEPING THIS AnYMORE HEre -Marko
 exports.pvs2 = (req, res) ->
 	cookieName = ''
 	cookieValue = ''
@@ -222,6 +224,8 @@ exports.pvs2 = (req, res) ->
 				console.log 'user: '+ onepagerUser
 				res.render 'onepage_vs2', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser
 			
+###
+
 #Commenting for Onepager vs2
 exports.onePComment = (req, res) ->
 	users.findById req.body.userId, (err, author) ->

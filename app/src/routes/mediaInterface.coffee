@@ -7,7 +7,6 @@ exports.mediaInterface= (req, res) ->
 	
 	#check for query objects
 	queryObject = require('url').parse(req.url,true).query
-	
 	#Checks which is the sort method currently in use
 	currentSortPage = req.body.currentSortPage
 	
