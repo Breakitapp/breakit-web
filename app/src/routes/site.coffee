@@ -160,7 +160,7 @@ exports.webComment = (req, res) ->
 					if req.body.admincode is 'd0lph1n'
 						res.redirect '/p/' + req.body.breakId + '/'+req.body.userId+'/'+'d0lph1n'+ checkMediaInterface + pageNumber
 					else
-						res.redirect '/p/' + req.body.breakId + checkMediaInterface + pageNumber
+						res.redirect '/p/' + req.body.breakId
 
 
 ### I DON*T KNOW WHY WE ARE KEEPING THIS AnYMORE HEre -Marko
