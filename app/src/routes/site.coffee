@@ -132,13 +132,13 @@ If the user has logged in through our mediaInterface then it will not use the an
 				console.log 'HELLO2 !!! '
 				console.log '(String(req.params.admincode) :'+ (String(req.params.admincode))
 				if(String(req.params.admincode) is 'd0lph1n')
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, admincode:'d0lph1n'
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, admincode:'d0lph1n', pageNumber:req.params.page
 				else
 					console.log 'onepageUser: '+onepagerUser
 					console.log 'media: '+fromMedia
 					console.log 'break: '+break_
 					console.log 'break: '+break_.headline
-					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia
+					res.render 'onepage', title : 'Breakit - ' + break_.headline, b: break_, u: onepagerUser, fromMedia:fromMedia, pageNumber:req.params.page
 
 exports.webComment = (req, res) ->
 	console.log 'in webComment'
