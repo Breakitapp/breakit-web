@@ -21,15 +21,15 @@ class Notification
 			else
 				console.log 'Notification: Notification saved successfully'
 				callback null, notification_
-				
+
 createNotification = (from, to, comment, breakId, type, callback) ->
 	console.log 'TRYING TO SEND PUSH NOTIFICATION TO USER: '+ to
 	pushNotifications.send to, 1, (err, user)->
 		if err
-			console.log 'ERROR specifics. User to send: '+to+'err:' +err+' user: '+user
+			console.log 'ERROR specifics. User to send: '+ to + 'err:' + err + ' user: ' + user
 			console.log 'ERROR in sending push notification'
 		else
-			console.log 'sent push notification to user: '+user.nName
+			console.log 'sent push notification to user: ' + user.nName
 	console.log 'saving as: from:'+from+', to: '+to+', comment: '+comment+', breakid: '+breakId+'type: '+type
 	new_notification = new Notification(from, to, comment, breakId, type)
 	new_notification.save (err)->
