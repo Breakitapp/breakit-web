@@ -144,6 +144,7 @@ exports.webComment = (req, res) ->
 			console.log 'error in finding user'
 			throw err
 		else
+			console.log 'author: ' + author
 			newComment = new comments.Comment req.body.comment, author._id, author.nName
 			console.log 'New comment from web interface: ' + newComment.comment + ', author(anonymous): ' + author.nName
 			breaks.comment newComment, req.body.breakId, (err, commentCount) ->

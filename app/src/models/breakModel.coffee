@@ -363,7 +363,7 @@ addView = (id, callback) ->
 	query ={'_id':id}
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
-			console.log 'something went wrong'
+			console.log 'something went wrong in find and update'
 		else
 			#console.log 'views updated'
 			callback err, break_
