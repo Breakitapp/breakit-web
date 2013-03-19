@@ -165,9 +165,8 @@ exports.webComment = (req, res) ->
 				else
 					#if the media boolean is set to true (page has oriented from media interface)
 					if fromMedia is true
-						if typeof queryObject.page isnt 'undefined'
-						#Set the page number to same as from which page it has arrived from media interface
-							pageNumber = '&page' + queryObject.page
+						pageNumber = req.params.page
+
 					if req.body.admincode is 'd0lph1n'
 						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/d0lph1n/' + fromMedia + '/' + pageNumber
 					else
