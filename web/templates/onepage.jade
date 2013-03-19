@@ -90,7 +90,7 @@ html
 					p MEDIA INTERFACE #{fromMedia}
 					if (fromMedia == true)
 						a.button.left(href="/media") back
-						fromMedia = true;
+						fromMedia = 'true';
 					else
 						fromMedia = 'false';
 			#header.centrify
@@ -191,7 +191,7 @@ html
 								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here #{fromMedia}
 								input.hideInput(name = "userId", value=u) 
 								input.hideInput(name = "breakId", value=b._id)							
-								input.hideInput(name = "fromMedia", value=#{fromMedia})
+								input.hideInput(name = "fromMedia", value=fromMedia)
 								if locals.admincode == 'd0lph1n' 
 									input.hideInput(name = "admincode", value="d0lph1n")
 								input.right(type="button", onClick="submitForm()", value="send")
