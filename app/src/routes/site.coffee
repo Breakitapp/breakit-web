@@ -161,6 +161,7 @@ exports.webComment = (req, res) ->
 					if req.body.admincode is 'd0lph1n'
 						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/d0lph1n/' + checkMediaInterface + '/' + pageNumber
 					else
+						#media is empty and pagenumber is undefined
 						res.redirect '/p/' + req.body.breakId + '/' + req.body.userId + '/' + 'media' + '/' + '1'
 
 
