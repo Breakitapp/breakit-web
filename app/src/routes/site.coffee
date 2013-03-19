@@ -140,7 +140,7 @@ exports.webComment = (req, res) ->
 	console.log 'req.body.admincode '+req.body.admincode
 	console.log 'req.body.userId '+ req.body.userId
 	console.log 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	console.log 'webComment req.body.fromMedia '+ req.body.fromMedia
+	console.log 'webComment req.body.fromMedia ' + req.body.fromMedia
 	if req.body.admincode is 'd0lph1n'
 		console.log 'admin commenting'
 	else

@@ -188,10 +188,10 @@ html
 					#bottomRight.right
 							p MEDIA INTERFACE XXXXXXXXXXX: #{mediaInterface}
 							form(name="post_comment", action="/p/comment", method="post")
-								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
+								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here #{mediaInterface}
 								input.hideInput(name = "userId", value=u) 
 								input.hideInput(name = "breakId", value=b._id)							
-								input.hideInput(name = "fromMedia", value=#{mediaInterface})
+								input.hideInput(name = "fromMedia", value=b._id)
 								if locals.admincode == 'd0lph1n' 
 									input.hideInput(name = "admincode", value="d0lph1n")
 								input.right(type="button", onClick="submitForm()", value="send")
