@@ -86,6 +86,8 @@ html
 			(document,"script","twitter-wjs");
 		header
 			if (typeof mediaInterface != 'undefined')
+					p NOT UNDEFINED
+					p MEDIA INTERFACE #{mediaInterface}
 					if (mediaInterface == true)
 						a.button.left(href="/media") back
 						mediaInterface = true;
@@ -188,7 +190,7 @@ html
 								textarea.left.fullBorderRidge.smallRadius.insetShadow(name = "comment") Write comment here
 								input.hideInput(name = "userId", value=u) 
 								input.hideInput(name = "breakId", value=b._id)							
-								input.hideInput(name = "mediaInterface", value=mediaInterface)
+								input.hideInput(name = "fromMedia", value=mediaInterface)
 								if locals.admincode == 'd0lph1n' 
 									input.hideInput(name = "admincode", value="d0lph1n")
 								input.right(type="button", onClick="submitForm()", value="send")
