@@ -21,7 +21,7 @@ class PushNotification
 				console.log 'Push notification saved successfully'
 				callback null, pushNotification_
 
-optionsProd =
+optionsDev =
 	cert: 'app/res/keys/BreakitDevServerCert.pem',                 # Certificate file path */
 	certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
 	key:  'app/res/keys/BreakitDevServerPrivateKey-noenc.pem',                  # Key file path */
@@ -31,7 +31,7 @@ optionsProd =
 	pfx: null,	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
 	pfxData: null,# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
 #		gateway: 'gateway.push.apple.com',# gateway address */
-	gateway: 'NEW ADDRESS HERE & PORT???',# gateway address */
+	gateway: 'gateway.sandbox.push.apple.com', # gateway address */
 	port: 2195,                       # gateway port */
 	rejectUnauthorized: true,         # Value of rejectUnauthorized property to be passed through to tls.connect() */
 	enhanced: true,                   # enable enhanced format */
@@ -46,7 +46,7 @@ optionsProd =
 	autoAdjustCache: true,            # Whether the cache should grow in response to messages being lost after errors. */
 	connectionTimeout: 0              # The duration the socket should stay alive with no activity in milliseconds. 0 = Disabled. */
 
-optionsDev =
+optionsProd =
 	cert: 'app/res/keys/BreakitProdServerCert.pem',                 # Certificate file path */
 	certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
 	key:  'app/res/keys/BreakitProdServerPrivateKey-noenc.pem',                  # Key file path */
@@ -56,7 +56,7 @@ optionsDev =
 	pfx: null,	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
 	pfxData: null,# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
 #		gateway: 'gateway.push.apple.com',# gateway address */
-	gateway: 'gateway.sandbox.push.apple.com',# gateway address */
+	gateway: 'NEW ADDRESS HERE & PORT???',# gateway address */
 	port: 2195,                       # gateway port */
 	rejectUnauthorized: true,         # Value of rejectUnauthorized property to be passed through to tls.connect() */
 	enhanced: true,                   # enable enhanced format */
@@ -100,7 +100,6 @@ send = (userId, msgId, callback) ->
 					if nconf.get('NODE_ENV') is 'production'
 						apnsConnection = new apns.Connection optionsProd 
 						console.log 'ENVIRONMENT RECOGNIZED AS PROD'
-					console.log 'trying apns with token: ' + user.token
 					console.log 'trying apns with token: ' + token
 					myDevice = new apns.Device token
 					note = new apns.Notification()
