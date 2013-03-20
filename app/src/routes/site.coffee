@@ -348,7 +348,8 @@ exports.webNotificationsLogin = (req, res) ->
 	
 exports.webNotifications = (req, res) ->
 	if String(req.body.admincode) is "d0lph1n"
-		res.render 'sendNotification', title: 'Send notifications to users', admincode: 'd0lph1n'
+		users = userModel.list (u)->
+			res.render 'sendNotification', title: 'Send notifications to users', admincode: 'd0lph1n', users:u
 	
 exports.webSendNotification = (req, res) ->
 	if String(req.body.admincode) is "d0lph1n"
