@@ -2,7 +2,7 @@ extend layout
 block contents
 	form(name="input", action="/feedback/new", method="post")
 		label Feedback: 	
-		select(name = "select_user")
+		select(name = "userId")
 			for user in users
 				option(value="#{user.id}") #{user.nName}
 		input(type="text", name="feedback")
