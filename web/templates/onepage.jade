@@ -86,7 +86,7 @@ html
 			(document,"script","twitter-wjs");
 		header
 			if (typeof fromMedia != 'undefined')
-				if (admincode == 'd0lph1n')
+				if (typeof admincode != 'undefined') && (admincode == 'd0lph1n')
 					a.button.left(href="/media/"+u+"/"+admincode+"/"+pageNumber) back
 					fromMedia = 'true';
 				else if (fromMedia == true)
