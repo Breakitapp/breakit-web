@@ -41,31 +41,36 @@ server.configure "development", ->
 		dumpExceptions: true
 		showStack: true
 	)
-	console.log 'RUNNING ON DEV SERVER'
 	db = mongoose.connect(settings.mongo_dev.db)
+	nconf.env().argv()
+	nconf.set 'NODE_ENV', 'development'
+	console.log 'SETTING THE CONFIGURATION NODE_ENV TO DEV'
+	console.log 'RUNNING ON DEV SERVER'
 
 server.configure "production", ->
 	server.use express.errorHandler()
-	console.log 'RUNNING ON PRODUCTION SERVER'
 	db = mongoose.connect(settings.mongo_prod.db)
+	nconf.env().argv()
+	nconf.set 'NODE_ENV', 'production'
+	console.log 'SETTING THE CONFIGURATION NODE_ENV TO PRODUCTION'
+	console.log 'RUNNING ON PRODUCTION SERVER'
 
 server.configure "local", ->
 	server.use express.errorHandler(
 		dumpExceptions: true
 		showStack: true
 	)
-	console.log 'RUNNING ON LOCAL SERVER'
+	nconf.env().argv()
+	nconf.set 'NODE_ENV', 'local'
 	db = mongoose.connect(settings.mongo_local.db)
+	console.log 'SETTING THE CONFIGURATION NODE_ENV TO LOCAL'
+	console.log 'RUNNING ON LOCAL SERVER'
 
 #General
 server.all '/', site.signup
 
 #Check if server is started as dev or local.
 if String(server.get 'env') is String('local') or String(server.get 'env') is String('development')
-	nconf.env().argv()
-	nconf.set 'database:host', 'breakit.info'
-	nconf.set 'NODE_ENV', 'development'
-	console.log 'SETTING THE CONF'
 	server.configure ->
 		#Users
 		server.get '/users/new', user.create
