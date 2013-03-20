@@ -58,19 +58,20 @@ server.configure "local", ->
 	console.log 'RUNNING ON LOCAL SERVER'
 
 
+### 
 if String(server.get 'env') is String('local')
 	nconf.env().argv()
 	nconf.set 'NODE_ENV', 'local'
 	console.log 'SETTING THE CONFIGURATION NODE_ENV TO LOCAL'
 else if String(server.get 'env') is String('development')
-	#nconf.env().argv()
+	nconf.env().argv()
 	nconf.set 'NODE_ENV', 'development'
 	console.log 'SETTING THE CONFIGURATION NODE_ENV TO DEV'
 else
 	nconf.env().argv()
 	nconf.set 'NODE_ENV', 'production'
 	console.log 'SETTING THE CONFIGURATION NODE_ENV TO PRODUCTION'
-
+###
 #General
 server.all '/', site.signup
 
