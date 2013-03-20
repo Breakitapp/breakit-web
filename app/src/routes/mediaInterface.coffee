@@ -132,7 +132,11 @@ exports.loginAsAdmin = (req, res) ->
 		#check if query for existing page number exists
 		if typeof queryObject.page is 'undefined'
 			#checks which page the user wishes to go to
-			pageNumber = req.body.pageNumber
+			if req.body.pageNumber
+				pageNumber = req.body.pageNumber
+			else
+				pageNumber = req.params.pageNumber
+			console.log 'PAGENUMBER CHECK: '+ req.params.pageNumber + ' body: '+req.body.pageNumber
 			pageNumber = parseInt pageNumber
 		else
 			#if pagenumber is the number recieved from the query the user is dericted to the existing page
