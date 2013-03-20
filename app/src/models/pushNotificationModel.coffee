@@ -91,10 +91,14 @@ send = (userId, msgId, callback) ->
 					console.log 'success finding user'
 					console.log 'found user: '+user.nName
 					token = user.token
+					if nconf.get 'NODE_ENV' is 'local'
+						console.log 'ENVIRONMENT RECOGNIZED AS loCAL'
 					if nconf.get 'NODE_ENV' is 'development'
+						console.log 'ENVIRONMENT RECOGNIZED AS DEV'
 						apnsConnection = new apns.Connection optionsDev 
 					if nconf.get 'NODE_ENV' is 'production'
 						apnsConnection = new apns.Connection optionsProd 
+						console.log 'ENVIRONMENT RECOGNIZED AS PROD'
 					console.log 'trying apns with token: ' + user.token
 					console.log 'trying apns with token: ' + token
 					myDevice = new apns.Device token
