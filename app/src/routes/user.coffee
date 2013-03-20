@@ -9,8 +9,11 @@ nconf = require 'nconf'
 
 #This is used for creating test users through the browsers
 exports.create = (req, res) ->
-	console.log 'NODE_ENV: '+ nconf.get('NODE_ENV')
-	res.send 'TESTING THE CONF: '+nconf.get('database:host')
+	console.log 'in create'
+	console.log 'NODE_ENV: '+ nconf.get 'NODE_ENV'
+	console.log 'db: '+ nconf.get 'database'
+
+	res.send 'TESTING THE CONF: ' + nconf.get 'database'
 	#res.render 'blocks/newUser', title : 'Create new Breakit user'
 
 exports.submit = (req, res) ->

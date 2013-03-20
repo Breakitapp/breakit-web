@@ -62,7 +62,10 @@ server.all '/', site.signup
 
 #Check if server is started as dev or local.
 if String(server.get 'env') is String('local') or String(server.get 'env') is String('development')
-	nconf.set('database:host', 'breakit.info');
+	nconf.env().argv()
+	nconf.set 'database:host', 'breakit.info'
+	nconf.set 'NODE_ENV', 'development'
+	console.log 'SETTING THE CONF'
 	server.configure ->
 		#Users
 		server.get '/users/new', user.create
