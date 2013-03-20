@@ -61,7 +61,7 @@ send = (userId, msgId, callback) ->
 				if user is null
 					console.log 'no user found'
 					callback 'no user found', null
-				else
+				else if user.token
 					console.log 'success finding user'
 					console.log 'found user: '+user.nName
 					token = user.token
@@ -80,6 +80,10 @@ send = (userId, msgId, callback) ->
 					console.log 'sending: '+ note
 					apnsConnection.sendNotification note
 					callback err, user
+				else 
+					console.log 'RECEIVING USER TOKEN IS NOT SET'
+					console.log 'SKIP THIS USER'
+					callback 'user has no token', user
 
 changeBadge = (userId, increment, callback) ->
 # finding user to get the existing badge count
