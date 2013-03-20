@@ -171,6 +171,7 @@ findById = (userId, callback) ->
 	models.User.findById(userId).exec (err, foundUser) ->
 		callback err, foundUser
 
+###
 getBreakLikes = (userId, callback) ->
 	models.Break.find({'user' : userId}).sort({date: 'descending'}).exec (err, breaks) ->
 		if err
@@ -186,8 +187,7 @@ getBreakLikes = (userId, callback) ->
 
 getBreakDislikes = (userId, callback) ->
 	callback 21
-
-
+###
 
 root = exports ? window
 root.User = User
@@ -199,5 +199,7 @@ root.changeAttributes = changeAttributes
 root.list = list
 root.findById = findById
 root.getBreaks = getBreaks
+###
 root.getLikes = getLikes
 root.getDislikes = getDislikes
+###
