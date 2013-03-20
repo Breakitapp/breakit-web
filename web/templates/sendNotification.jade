@@ -1,7 +1,7 @@
 extend layout
 block contents
 	form(name="input", action="/sendNotification", method="post")
-		label Feedback: 	
+		label Notification to send: 	
 		select(name = "userId")
 			for user in users
 				option(value="#{user.id}") #{user.nName}
