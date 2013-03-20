@@ -347,17 +347,17 @@ exports.webNotificationsLogin = (req, res) ->
 	res.render 'webNotificationsLogin', title: 'Breakit admin login'
 	
 exports.webNotifications = (req, res) ->
-if String(req.body.admincode) is "d0lph1n"
-	res.render 'sendNotification', title: 'Send notifications to users'
+	if String(req.body.admincode) is "d0lph1n"
+		res.render 'sendNotification', title: 'Send notifications to users', admincode: 'd0lph1n'
 	
 exports.webSendNotification = (req, res) ->
-if String(req.body.admincode) is "d0lph1n"
-	type = 'WEB_NOTIFICATION'
-	breakitUser = 'Breakit'
-	notificationsModel.createNotification breakitUser, req.body.userId, req.body.notification, '666', type, (err)->
-		if err
-			console.log 'in callback err'
-			res.send 'ERROR in sending web notification'
-		else
-			console.log 'Notification sent successfully'
-			res.render 'sendNotification', title : 'Send notifications to users'
+	if String(req.body.admincode) is "d0lph1n"
+		type = 'WEB_NOTIFICATION'
+		breakitUser = 'Breakit'
+		notificationsModel.createNotification breakitUser, req.body.userId, req.body.notification, '666', type, (err)->
+			if err
+				console.log 'in callback err'
+				res.send 'ERROR in sending web notification'
+			else
+				console.log 'Notification sent successfully'
+				res.render 'sendNotification', title : 'Send notifications to users'

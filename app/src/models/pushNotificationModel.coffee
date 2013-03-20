@@ -11,7 +11,7 @@ class PushNotification
 		pushNotification_ = new models.PushNotification
 			userId : @userId
 			deviceToken : @deviceToken
-			date : @date
+			date : @date 
 		console.log 'push notification: ' + pushNotification_
 		pushNotification_.save (err) ->
 			if err
