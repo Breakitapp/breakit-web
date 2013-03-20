@@ -36,8 +36,14 @@ exports.mediaInterface= (req, res) ->
 	
 	#If a pagenumber hasn't been defined it defaults to the first page
 	if isNaN(pageNumber) or pageNumber is undefined or pageNumber < 0
-		pageNumber = 0
-		console.log 'page number set to 0: ' + pageNumber
+			#ugly FIX TO take the pagenumber parameter
+			if req.params.pageNumber
+				console.log 'pageNumber parameter exists: ' + req.params.pageNumber
+				pageNumber = req.params.pageNumber
+			else
+				pageNumber = 0
+				console.log 'PAGENUMBER CHECK: '+ req.params.pageNumber
+				console.log 'page number set to 0: ' + pageNumber
 	else
 		#otherwise the pageNumber is increased with 1
 		pageNumber += 1
