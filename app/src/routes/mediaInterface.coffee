@@ -189,4 +189,4 @@ exports.loginAsAdmin = (req, res) ->
 					if searchWord is undefined
 							searchWord = req.body.searchValue
 					console.log 'pageNumber before rendering: ' + pageNumber
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord, pageNumber:pageNumber, user:req.body.userId, admincode: 'd0lph1n'
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord, pageNumber:pageNumber, user:userId, admincode: 'd0lph1n'
