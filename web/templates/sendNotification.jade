@@ -9,3 +9,12 @@ block contents
 		input(type="hidden", name="admincode", value=admincode)
 		br
 		input(type="submit", value="Submit")
+		br
+		br
+		br
+	form(name="input", action="/sendNotificationToAll", method="post")
+		label Notification to send: 	
+		input(type="text", name="notification")
+		input(type="hidden", name="admincode", value=admincode)
+		br
+		input(type="submit", value="Send to everybody")
