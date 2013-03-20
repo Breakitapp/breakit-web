@@ -176,6 +176,8 @@ server.post '/media/loginAs', media.loginAsAdmin
 
 server.post '/webNotifications', site.webNotifications
 server.post '/sendNotification', site.webSendNotification
+server.post '/sendNotificationToAll', site.webSendNotificationToAll
+
 server.get '/webNotifications/login', site.webNotificationsLogin
 
 #Starting the server
