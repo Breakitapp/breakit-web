@@ -56,7 +56,7 @@ optionsProd =
 	pfx: null,	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
 	pfxData: null,# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
 #		gateway: 'gateway.push.apple.com',# gateway address */
-	gateway: 'NEW ADDRESS HERE & PORT???',# gateway address */
+	gateway: 'gateway.push.apple.com',# gateway address */
 	port: 2195,                       # gateway port */
 	rejectUnauthorized: true,         # Value of rejectUnauthorized property to be passed through to tls.connect() */
 	enhanced: true,                   # enable enhanced format */
