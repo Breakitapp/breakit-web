@@ -103,7 +103,8 @@ exports.loginAsAdmin = (req, res) ->
 		if String(req.body.admincode) is "d0lph1n"
 			userId = req.body.userId
 		else
-			userId = req.params.userId
+			userId = req.params.user
+
 		console.log 'entering Media Interface as ADMIN'
 		console.log 'req.body: '+req.body
 		console.log 'req.body.userId: '+req.body.userId
