@@ -7,7 +7,9 @@ users = require '../models/userModel'
 
 #This is used for creating test users through the browsers
 exports.create = (req, res) ->
-	res.render 'blocks/newUser', title : 'Create new Breakit user'
+	console.log 'NODE_ENV: '+ nconf.get('NODE_ENV')
+	res.send 'TESTING THE CONF: '+nconf.get('database:host')
+	#res.render 'blocks/newUser', title : 'Create new Breakit user'
 
 exports.submit = (req, res) ->
 	console.log 'Data for new user received. Email: ' + req.body.em

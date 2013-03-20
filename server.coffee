@@ -15,7 +15,7 @@ scripts			=	require	'./scripts/migration'
 settings		= require './settings'
 mongoose		= require 'mongoose'
 stylus			= require 'stylus'
-
+nconf				= require 'nconf'
 server = module.exports = express()
 
 #Configuration
@@ -62,6 +62,7 @@ server.all '/', site.signup
 
 #Check if server is started as dev or local.
 if String(server.get 'env') is String('local') or String(server.get 'env') is String('development')
+	nconf.set('database:host', 'breakit.info');
 	server.configure ->
 		#Users
 		server.get '/users/new', user.create
