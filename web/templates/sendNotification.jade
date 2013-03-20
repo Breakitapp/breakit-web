@@ -1,0 +1,11 @@
+extend layout
+block contents
+	form(name="input", action="/sendNotification", method="post")
+		label Feedback: 	
+		select(name = "select_user")
+			for user in users
+				option(value="#{user.id}") #{user.nName}
+		input(type="text", name="notification")
+		input(type="hidden", name="admincode", value=admincode)
+		br
+		input(type="submit", value="Submit")
