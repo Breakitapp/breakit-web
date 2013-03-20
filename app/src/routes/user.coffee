@@ -4,6 +4,8 @@
 # @authors
 ###
 users = require '../models/userModel'
+nconf = require 'nconf'
+
 
 #This is used for creating test users through the browsers
 exports.create = (req, res) ->
