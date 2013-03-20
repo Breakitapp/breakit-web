@@ -9,13 +9,25 @@ block scripts
 block contents
 	header
 		#header.centrify
-			form.searchform.clear.left(method="post", action="/media", name="mediaInterface")
-				if(typeof searchWord != 'undefined')
-					searchValue = searchWord;
-				else
-					searchValue = 'search';
-				input.searchfield(type="text",value=searchValue, name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
-				input.searchbutton(type="submit", value="Go")
+			if locals.admincode
+				form.searchform.clear.left(method="post", action="/media/loginAs", name="mediaInterface")
+					if(typeof searchWord != 'undefined')
+						searchValue = searchWord;
+					else
+						searchValue = 'search';
+					input.hidden(type="text", name="userId",value=user)
+					input.hidden(type="text", name="admincode",value=admincode)
+					input.searchfield(type="text",value=searchValue, name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
+					input.searchbutton(type="submit", value="Go")
+			else
+				form.searchform.clear.left(method="post", action="/media", name="mediaInterface")
+					if(typeof searchWord != 'undefined')
+						searchValue = searchWord;
+					else
+						searchValue = 'search';
+					input.searchfield(type="text",value=searchValue, name="searchValue", onfocus="if(this.value == 'search') { this.value = ''; }")
+					input.searchbutton(type="submit", value="Go")
+
 			//LOGO: img.left(src="/public/images/1pager/breakit.png")
 			h1 BREAK
 				span IT
