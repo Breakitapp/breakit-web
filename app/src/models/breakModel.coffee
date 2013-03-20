@@ -60,6 +60,7 @@ comment = (comment, breakId, callback) ->
 			for breakComment in break_.comments
 				console.log 'in for'
 				if breakComment.user isnt comment.user
+					console.log 'breakComment.user: '+String(breakComment.user)
 					if breakComment.user not in sentUsers and breakComment.user isnt break_.user and (String(breakComment.user) isnt '5110eff913e66edb527cb501') and (String(breakComment.user) isnt '50a369413268496061000002')
 						console.log 'SENDING NOTIFICATIONS OF COMMENT'
 						console.log 'SENDING TO userId: '+breakComment.user
