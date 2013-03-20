@@ -100,6 +100,10 @@ exports.loginAsAdmin = (req, res) ->
 	console.log 'req.params.admincode' +String(req.params.admincode)
 	console.log 'req.body.admincode' +String(req.body.admincode)
 	if String(req.body.admincode) is "d0lph1n" or String(req.params.admincode) is "d0lph1n"
+		if String(req.body.admincode) is "d0lph1n"
+			userId = req.body.userId
+		else
+			userId = req.params.userId
 		console.log 'entering Media Interface as ADMIN'
 		console.log 'req.body: '+req.body
 		console.log 'req.body.userId: '+req.body.userId
@@ -167,7 +171,7 @@ exports.loginAsAdmin = (req, res) ->
 					throw err
 				else
 					console.log 'pageNumber before rendering: ' + pageNumber
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, pageNumber:pageNumber, user: req.body.userId, admincode: 'd0lph1n'
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, pageNumber:pageNumber, user: userId, admincode: 'd0lph1n'
 					
 		else
 			console.log 'entering search value'

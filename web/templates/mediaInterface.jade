@@ -35,7 +35,7 @@ block contents
 					li.smallRadius.fullBorderGroove
 						score = b.upvotes.length - b.downvotes.length
 						if locals.admincode
-							a(href="/p/" + b._id + "/"+u+"/"+admincode+"/true/"+pageNumber)
+							a(href="/p/" + b._id + "/"+user+"/"+admincode+"/true/"+pageNumber)
 								img(src="/ios/picture/" + b._id, alt=b.headline)
 							.icons
 								p.information= "comments " + b.comments.length + " &bull; " + "score " + score
