@@ -132,11 +132,6 @@ exports.loginAsAdmin = (req, res) ->
 		#check if query for existing page number exists
 		if typeof queryObject.page is 'undefined'
 			#checks which page the user wishes to go to
-			if req.body.pageNumber
-				pageNumber = req.body.pageNumber
-			else
-				pageNumber = req.params.pageNumber
-			console.log 'PAGENUMBER CHECK: '+ req.params.pageNumber + ' body: '+req.body.pageNumber
 			pageNumber = parseInt pageNumber
 		else
 			#if pagenumber is the number recieved from the query the user is dericted to the existing page
@@ -146,8 +141,14 @@ exports.loginAsAdmin = (req, res) ->
 		
 		#If a pagenumber hasn't been defined it defaults to the first page
 		if isNaN(pageNumber) or pageNumber is undefined or pageNumber < 0
-			pageNumber = 0
-			console.log 'page number set to 0: ' + pageNumber
+			#ugly FIX TO take the pagenumber parameter
+			if req.params.pageNumber
+				console.log 'pageNumber parameter exists: ' + req.params.pageNumber
+				pageNumber = req.params.pageNumber
+			else
+				pageNumber = 0
+				console.log 'PAGENUMBER CHECK: '+ req.params.pageNumber
+				console.log 'page number set to 0: ' + pageNumber
 		else
 			#otherwise the pageNumber is increased with 1
 			pageNumber += 1
