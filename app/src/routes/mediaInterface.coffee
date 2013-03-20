@@ -101,24 +101,38 @@ exports.loginAsAdmin = (req, res) ->
 		console.log 'entering Media Interface as ADMIN'
 		console.log 'req.body: '+req.body
 		console.log 'req.body.userId: '+req.body.userId
+		
+		console.log 'entering Media Interface'
+		
+		#check for query objects to direct the user to the right page
+		queryObject = require('url').parse(req.url,true).query
+		
 		#Checks which is the sort method currently in use
 		currentSortPage = req.body.currentSortPage
+		
 		#Checks if user has chosen a new sort method
 		sortPage = req.body.sortPage
-		#if no sort method is chosen the sortmethod is set to by date
+		
+		#if no sort method is chosen the sortmethod is set to date
 		if sortPage == undefined && currentSortPage == undefined
 			sortPage = 'date'
 		
-		#if there is a current sort method in use this overrides the current sort method
+		#if there is a current sort method in use the sortPage is redefined to the old sort method
 		else if sortPage == undefined
 			sortPage = currentSortPage
 		console.log 'sortPage variable is: ' + sortPage
 		
+		#check if query for existing page number exists
+		if typeof queryObject.page is 'undefined'
 			#checks which page the user wishes to go to
-		pageNumber = req.body.pageNumber
-		pageNumber = parseInt pageNumber
-		console.log pageNumber
-	
+			pageNumber = req.body.pageNumber
+			pageNumber = parseInt pageNumber
+		else
+			#if pagenumber is the number recieved from the query the user is dericted to the existing page
+			pageNumber = queryObject.page-1
+			console.log 'The query page is: ' + pageNumber
+		console.log 'test query: ' + pageNumber
+		
 		#If a pagenumber hasn't been defined it defaults to the first page
 		if isNaN(pageNumber) or pageNumber is undefined or pageNumber < 0
 			pageNumber = 0
@@ -146,11 +160,12 @@ exports.loginAsAdmin = (req, res) ->
 			
 			#Start the wanted function
 			sortFunction pageNumber, sortPage, (err, breaks_, count, sortPageValue) ->
-				console.log 'sort by comments'
+				console.log 'sort by ' + sortPage
 				if err
 					throw err
 				else
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, pageNumber:pageNumber, user:req.body.userId, admincode: 'd0lph1n'
+					console.log 'pageNumber before rendering: ' + pageNumber
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, pageNumber:pageNumber, user: req.body.userId, admincode: 'd0lph1n'
 					
 		else
 			console.log 'entering search value'
@@ -158,7 +173,6 @@ exports.loginAsAdmin = (req, res) ->
 			sortPage = 'search' 
 			console.log 'change sortPage: ' + sortPage
 			#Start the searchfunction for the wanted breaks. Search funtion needs an extra variable called searchWord that contains the value of the word searched after
-			#TODO:pages wont work while the whole page renders itself leaving the search box value undefined
 			breaks.searchBreaks searchWord, pageNumber, sortPage, (err, breaks_, count, sortPageValue, searchWord) ->
 				if err
 					throw err
@@ -168,5 +182,5 @@ exports.loginAsAdmin = (req, res) ->
 							sortPageValue = 'search'
 					if searchWord is undefined
 							searchWord = req.body.searchValue
-					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord, pageNumber:pageNumber, user: req.body.userId, admincode: 'd0lph1n'
-				
+					console.log 'pageNumber before rendering: ' + pageNumber
+					res.render 'mediaInterface', title : 'Breakit ', breaks: breaks_, count:count, sortPageValue:sortPageValue, searchWord:searchWord, pageNumber:pageNumber, user:req.body.userId, admincode: 'd0lph1n'
