@@ -21,16 +21,24 @@ class PushNotification
 				callback null, pushNotification_
 
 options =
-		cert: 'app/res/keys/BreakitDevServerCert.pem',                 # Certificate file path */
-		certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
-		key:  'app/res/keys/BreakitDevServerPrivateKey-noenc.pem',                  # Key file path */
+		if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com' or req.headers.host is '54.247.69.189')
+			cert: 'app/res/keys/BreakitProdServerCert.pem',                 # Certificate file path */
+			certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
+			key:  'app/res/keys/BreakitProdServerPrivateKey-noenc.pem',                  # Key file path */
+		if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info' or req.headers.host is '46.137.122.206')
+			cert: 'app/res/keys/BreakitDevServerCert.pem',                 # Certificate file path */
+			certData: null,                   # String or Buffer containing certificate data, if supplied uses this instead of cert file path */
+			key:  'app/res/keys/BreakitDevServerPrivateKey-noenc.pem',                  # Key file path */
 		keyData: null,                    # String or Buffer containing key data, as certData */
 		passphrase: null,                 # A passphrase for the Key file */
 		ca: null,                         # String or Buffer of CA data to use for the TLS connection */
 		pfx: null,	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
 		pfxData: null,# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
 #		gateway: 'gateway.push.apple.com',# gateway address */
-		gateway: 'gateway.sandbox.push.apple.com',# gateway address */
+		if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info' or req.headers.host is '46.137.122.206')
+			gateway: 'gateway.sandbox.push.apple.com',# gateway address */
+		if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com' or req.headers.host is '54.247.69.189')
+			gateway: 'gateway.sandbox.push.apple.com',# gateway address */
 		port: 2195,                       # gateway port */
 		rejectUnauthorized: true,         # Value of rejectUnauthorized property to be passed through to tls.connect() */
 		enhanced: true,                   # enable enhanced format */
