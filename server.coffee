@@ -42,11 +42,17 @@ server.configure "development", ->
 		showStack: true
 	)
 	db = mongoose.connect(settings.mongo_dev.db)
+	nconf.env().argv()
+	nconf.set 'NODE_ENV', 'development'
+	console.log 'SETTING THE CONFIGURATION NODE_ENV TO DEV'
 	console.log 'RUNNING ON DEV SERVER'
 
 server.configure "production", ->
 	server.use express.errorHandler()
 	db = mongoose.connect(settings.mongo_prod.db)
+	nconf.env().argv()
+	nconf.set 'NODE_ENV', 'production'
+	console.log 'SETTING THE CONFIGURATION NODE_ENV TO PRODUCTION'
 	console.log 'RUNNING ON PRODUCTION SERVER'
 
 server.configure "local", ->
@@ -55,10 +61,13 @@ server.configure "local", ->
 		showStack: true
 	)
 	db = mongoose.connect(settings.mongo_local.db)
+	nconf.env().argv()
+	nconf.set 'NODE_ENV', 'local'
+	console.log 'SETTING THE CONFIGURATION NODE_ENV TO LOCAL'
 	console.log 'RUNNING ON LOCAL SERVER'
 
 
-### 
+### Another way to do the conf 
 if String(server.get 'env') is String('local')
 	nconf.env().argv()
 	nconf.set 'NODE_ENV', 'local'
@@ -72,6 +81,7 @@ else
 	nconf.set 'NODE_ENV', 'production'
 	console.log 'SETTING THE CONFIGURATION NODE_ENV TO PRODUCTION'
 ###
+
 #General
 server.all '/', site.signup
 
