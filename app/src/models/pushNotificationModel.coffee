@@ -91,6 +91,7 @@ send = (userId, msgId, callback) ->
 					console.log 'success finding user'
 					console.log 'found user: '+user.nName
 					token = user.token
+					console.log 'ENVIRONMENT: ' + nconf.get 'NODE_ENV'
 					if nconf.get 'NODE_ENV' is 'local'
 						console.log 'ENVIRONMENT RECOGNIZED AS loCAL'
 					if nconf.get 'NODE_ENV' is 'development'
