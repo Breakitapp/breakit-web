@@ -1,6 +1,7 @@
 models = require './mongoModel'
 users = require './userModel'
 apns = require 'apn'
+nconf = require 'nconf'
 
 
 class PushNotification
@@ -90,9 +91,9 @@ send = (userId, msgId, callback) ->
 					console.log 'success finding user'
 					console.log 'found user: '+user.nName
 					token = user.token
-					if req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info' or req.headers.host is '46.137.122.206'
+					if nconf.get 'NODE_ENV' is 'development'
 						apnsConnection = new apns.Connection optionsDev 
-					if req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com' or req.headers.host is '54.247.69.189'
+					if nconf.get 'NODE_ENV' is 'production'
 						apnsConnection = new apns.Connection optionsProd 
 					console.log 'trying apns with token: ' + user.token
 					console.log 'trying apns with token: ' + token
