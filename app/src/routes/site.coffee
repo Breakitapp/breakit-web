@@ -11,6 +11,7 @@ users = require '../models/userModel'
 comments = require '../models/commentModel'
 albums = require '../models/albumModel'
 userModel = require '../models/userModel'
+notificationsModel = require '../models/notificationsModel'
 
 
 exports.public = (req, res) ->
