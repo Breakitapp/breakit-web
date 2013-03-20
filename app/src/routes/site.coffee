@@ -363,4 +363,4 @@ exports.webSendNotification = (req, res) ->
 				res.send 'ERROR in sending web notification'
 			else
 				console.log 'Notification sent successfully'
-				res.render 'sendNotification', title : 'Send notifications to users'
+				res.render 'sendNotification', title : 'Send notifications to users', admincode: 'd0lph1n', users:u
