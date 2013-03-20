@@ -78,10 +78,12 @@ exports.login = (req, res) 	->
 					console.log 'SUCCESS IN SETTING THE TOKEN'
 					res.send 'confirmed'
 		else if req.body.version
+			console.log 'version: ' + req.body.version
 			console.log 'no token found, token sent: '+req.body.token
 			console.log 'no token found, user.token: '+user.token
 			res.send 'sendToken'
 		else
+			console.log 'SEND CONFIRMED in the last else!!! '
 			res.send 'confirmed'
 
 #Creates a new user and responds with the userId
