@@ -144,6 +144,7 @@ server.get '/signup/send', site.send
 server.all '/media', media.mediaInterface
 server.get '/media/login', media.login
 server.get '/media/:pageNumber', media.mediaInterface
+server.get '/media/:user/:admincode/:pageNumber', media.loginAsAdmin
 
 server.post '/media/login', media.view
 server.post '/media/loginAs', media.loginAsAdmin
