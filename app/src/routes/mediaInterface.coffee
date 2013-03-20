@@ -27,6 +27,7 @@ exports.mediaInterface= (req, res) ->
 	if typeof queryObject.page is 'undefined'
 		#checks which page the user wishes to go to
 		pageNumber = req.body.pageNumber
+		console.log 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX PAGENUMBER GOT FROM REQUEST: ' + req.body.pageNumber
 		pageNumber = parseInt pageNumber
 	else
 		#if pagenumber is the number recieved from the query the user is dericted to the existing page
@@ -138,6 +139,8 @@ exports.loginAsAdmin = (req, res) ->
 		#check if query for existing page number exists
 		if typeof queryObject.page is 'undefined'
 			#checks which page the user wishes to go to
+			pageNumber = req.body.pageNumber
+			console.log 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX PAGENUMBER GOT FROM REQUEST: ' + req.body.pageNumber
 			pageNumber = parseInt pageNumber
 		else
 			#if pagenumber is the number recieved from the query the user is dericted to the existing page
