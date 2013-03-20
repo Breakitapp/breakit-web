@@ -171,6 +171,24 @@ findById = (userId, callback) ->
 	models.User.findById(userId).exec (err, foundUser) ->
 		callback err, foundUser
 
+getBreakLikes = (userId, callback) ->
+	models.Break.find({'user' : userId}).sort({date: 'descending'}).exec (err, breaks) ->
+		if err
+			callback err, null
+		else
+			# I don't get why we should need this???
+			console.log 'breaks as returned from mongo db: ' + breaks
+			breaks_ = (b for b in breaks)
+			console.log 'breaks as returned after pushing to an array: ' + breaks_
+			total = total+b.upvotes for b in breaks_
+			console.log 'total: '+total
+		callback 56
+
+getBreakDislikes = (userId, callback) ->
+	callback 21
+
+
+
 root = exports ? window
 root.User = User
 root.createUser = createUser
@@ -181,3 +199,5 @@ root.changeAttributes = changeAttributes
 root.list = list
 root.findById = findById
 root.getBreaks = getBreaks
+root.getLikes = getLikes
+root.getDislikes = getDislikes
