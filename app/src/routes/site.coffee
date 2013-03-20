@@ -10,6 +10,7 @@ breaks = require '../models/breakModel'
 users = require '../models/userModel'
 comments = require '../models/commentModel'
 albums = require '../models/albumModel'
+userModel = require '../models/userModel'
 
 
 exports.public = (req, res) ->
