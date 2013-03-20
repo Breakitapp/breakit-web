@@ -142,6 +142,8 @@ server.get '/signup/send', site.send
 #MEDIA INTERFACE
 #TODO: Check
 server.all '/media', media.mediaInterface
+server.get '/media/:pageNumber', media.mediaInterface
+
 server.get '/media/login', media.login
 server.post '/media/login', media.view
 server.post '/media/loginAs', media.loginAsAdmin
