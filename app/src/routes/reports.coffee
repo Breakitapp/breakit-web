@@ -2,7 +2,6 @@ reports = require '../models/reportModel'
 breaks = require '../models/breakModel'
 
 exports.login = (req, res) ->
-
 	res.render 'adminlogin_reports', title: 'Breakit admin login'
 
 exports.view = (req, res) ->

@@ -174,6 +174,10 @@ server.get '/media/:user/:admincode/:pageNumber', media.loginAsAdmin
 server.post '/media/login', media.view
 server.post '/media/loginAs', media.loginAsAdmin
 
+server.post '/webNotifications', site.webNotifications
+server.post 'sendNotification', site.webSendNotification
+server.get '/webNotifications/login', site.webNotificationsLogin
+
 #Starting the server
 server.configure "local", ->
 	server.listen 3000
