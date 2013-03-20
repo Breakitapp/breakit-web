@@ -365,3 +365,18 @@ exports.webSendNotification = (req, res) ->
 				console.log 'Notification sent successfully'
 				users = userModel.list (u)->
 					res.render 'sendNotification', title : 'Send notifications to users', admincode: 'd0lph1n', users:u
+
+exports.webSendNotificationToAll = (req, res) ->
+	if String(req.body.admincode) is "d0lph1n"
+		type = 'WEB_NOTIFICATION'
+		breakitUser = 'Breakit'
+		users = userModel.list (u)->
+			for user in u
+				notificationsModel.createNotification breakitUser, user.id, req.body.notification, '666', type, (err)->
+					if err
+						console.log 'in callback err'
+						res.send 'ERROR in sending web notification'
+					else
+						console.log 'Notification sent to user: '+user.nName+' successfully'
+			res.render 'sendNotification', title : 'Send notifications to users', admincode: 'd0lph1n', users:u
+

@@ -1,7 +1,7 @@
 extend layout
 block contents
 	form(name="input", action="/sendNotification", method="post")
-		label Feedback: 	
+		label Notification to send: 	
 		select(name = "userId")
 			for user in users
 				option(value="#{user.id}") #{user.nName}
@@ -9,3 +9,12 @@ block contents
 		input(type="hidden", name="admincode", value=admincode)
 		br
 		input(type="submit", value="Submit")
+		br
+		br
+		br
+	form(name="input", action="/sendNotificationToAll", method="post")
+		label Notification to send: 	
+		input(type="text", name="notification")
+		input(type="hidden", name="admincode", value=admincode)
+		br
+		input(type="submit", value="Send to everybody")
