@@ -49,7 +49,7 @@ block contents
 							hr
 							p=b.headline
 				if locals.admincode
-					form.pageForm.centrify (id = "pages", name="mediaInterface", method="post", action="/media/loginAs")
+					form.pageForm.centrify(id="pages", name="mediaInterface", method="post", action="/media/loginAs")
 						input.hidden(type="text", name="searchValue",value=searchValue)
 						if(typeof pageNumber == 'undefined')
 							pageNumber = 0;
