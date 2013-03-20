@@ -30,10 +30,7 @@ optionsProd =
 	pfx: null,	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
 	pfxData: null,# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
 #		gateway: 'gateway.push.apple.com',# gateway address */
-	if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info' or req.headers.host is '46.137.122.206')
-		gateway: 'gateway.sandbox.push.apple.com',# gateway address */
-	if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com' or req.headers.host is '54.247.69.189')
-		gateway: 'gateway.sandbox.push.apple.com',# gateway address */
+	gateway: 'NEW ADDRESS HERE & PORT???',# gateway address */
 	port: 2195,                       # gateway port */
 	rejectUnauthorized: true,         # Value of rejectUnauthorized property to be passed through to tls.connect() */
 	enhanced: true,                   # enable enhanced format */
@@ -58,10 +55,7 @@ optionsDev =
 	pfx: null,	# File path for private key, certificate and CA certs in PFX or PKCS12 format. If supplied will be used instead of certificate and key above */
 	pfxData: null,# PFX or PKCS12 format data containing the private key, certificate and CA certs. If supplied will be used instead of loading from disk. */
 #		gateway: 'gateway.push.apple.com',# gateway address */
-	if(req.headers.host is 'www.breakit.info' or req.headers.host is 'breakit.info' or req.headers.host is '46.137.122.206')
-		gateway: 'gateway.sandbox.push.apple.com',# gateway address */
-	if(req.headers.host is 'www.breakitapp.com' or req.headers.host is 'breakitapp.com' or req.headers.host is '54.247.69.189')
-		gateway: 'gateway.sandbox.push.apple.com',# gateway address */
+	gateway: 'gateway.sandbox.push.apple.com',# gateway address */
 	port: 2195,                       # gateway port */
 	rejectUnauthorized: true,         # Value of rejectUnauthorized property to be passed through to tls.connect() */
 	enhanced: true,                   # enable enhanced format */
@@ -136,9 +130,9 @@ changeBadge = (userId, increment, callback) ->
 			list = {}
 			list['userId'] = userId
 			list['badge'] = badge
-			console.log 'user new badge: '+badge
+			console.log 'user new badge: ' + badge
 			users.changeAttributes list, (err) ->
-				console.log 'user new badge: '+badge
+				console.log 'user new badge: ' + badge
 				console.log 'changing attributes'
 				if err
 					console.log 'ERROR IN SETTING THE BADGE'
