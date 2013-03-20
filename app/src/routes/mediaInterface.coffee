@@ -97,7 +97,9 @@ exports.view = (req, res) ->
 			res.render 'mediaInterfaceUsers', title : 'Feedback test form', users: u
 
 exports.loginAsAdmin = (req, res) ->
-	if String(req.body.admincode) is "d0lph1n"
+	console.log 'req.params.admincode' +String(req.params.admincode)
+	console.log 'req.body.admincode' +String(req.body.admincode)
+	if String(req.body.admincode) is "d0lph1n" or String(req.params.admincode) is "d0lph1n"
 		console.log 'entering Media Interface as ADMIN'
 		console.log 'req.body: '+req.body
 		console.log 'req.body.userId: '+req.body.userId

@@ -86,11 +86,14 @@ html
 			(document,"script","twitter-wjs");
 		header
 			if (typeof fromMedia != 'undefined')
-					if (fromMedia == true)
-						a.button.left(href="/media/"+pageNumber) back
-						fromMedia = 'true';
-					else
-						fromMedia = 'false';
+				if (admincode == 'd0lph1n')
+					a.button.left(href="/media/"+u+"/"+admincode+"/"+pageNumber) back
+					fromMedia = 'true';
+				else if (fromMedia == true)
+					a.button.left(href="/media/"+pageNumber) back
+					fromMedia = 'true';
+				else
+					fromMedia = 'false';
 			#header.centrify
 				h1 Break
 					span it
