@@ -63,7 +63,7 @@ if String(server.get 'env') is String('local')
 	nconf.set 'NODE_ENV', 'local'
 	console.log 'SETTING THE CONFIGURATION NODE_ENV TO LOCAL'
 else if String(server.get 'env') is String('development')
-	nconf.env().argv()
+	#nconf.env().argv()
 	nconf.set 'NODE_ENV', 'development'
 	console.log 'SETTING THE CONFIGURATION NODE_ENV TO DEV'
 else
