@@ -52,8 +52,6 @@ block contents
 				form.pageForm.centrify(id="pages", name="mediaInterface", method="post", action="/media/loginAs")
 					input.hidden(type="text", name="userId",value=user)
 					input.hidden(type="text", name="admincode",value=admincode)
-			else
-				form.pageForm.centrify(id="pages", name="mediaInterface", method="post", action="/media")
 					input.hidden(type="text", name="searchValue",value=searchValue)
 					if(typeof pageNumber == 'undefined')
 						pageNumber = 0;
@@ -64,6 +62,19 @@ block contents
 					input.pageButton(type="button", name='previousPage', value='< previous page')
 					input.pageButton(type="submit", name='nextPage',value="next page >")
 					input.pageButton(type="button", name='lastPage',value="last page >>")
+			else
+				form.pageForm.centrify(id="pages", name="mediaInterface", method="post", action="/media")
+				input.hidden(type="text", name="searchValue",value=searchValue)
+				if(typeof pageNumber == 'undefined')
+					pageNumber = 0;
+				else if(pageNumber > count/12-1)
+					pageNumber = pageNumber -1
+				input.hidden(type="text", name='pageNumber',value=pageNumber)
+				input.pageButton(type="button", name='firstPage',value="<< first page")
+				input.pageButton(type="button", name='previousPage', value='< previous page')
+				input.pageButton(type="submit", name='nextPage',value="next page >")
+				input.pageButton(type="button", name='lastPage',value="last page >>")
+
 block footerscripts
 	script
 		$(document).ready(function(){
