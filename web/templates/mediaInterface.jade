@@ -20,12 +20,21 @@ block contents
 			h1 BREAK
 				span IT
 	#sort.centrify
-		form.sortForm(method="post", action="/media", name="mediaInterface")
-			input.buttonBg(type="submit",name="sortPage",value="date")
-			input.buttonBg(type="submit",name="sortPage",value="commented")
-			input.buttonBg(type="submit",name="sortPage",value="viewed")
-			input.buttonBg(type="submit",name="sortPage",value="ranking")
-			
+		if locals.admincode
+			form.sortForm(method="post", action="/media/loginAs", name="mediaInterface")
+				input.hidden(type="text", name="userId",value=user)
+				input.hidden(type="text", name="admincode",value=admincode)
+				input.buttonBg(type="submit",name="sortPage",value="date")
+				input.buttonBg(type="submit",name="sortPage",value="commented")
+				input.buttonBg(type="submit",name="sortPage",value="viewed")
+				input.buttonBg(type="submit",name="sortPage",value="ranking")
+		else
+			form.sortForm(method="post", action="/media", name="mediaInterface")
+				input.buttonBg(type="submit",name="sortPage",value="date")
+				input.buttonBg(type="submit",name="sortPage",value="commented")
+				input.buttonBg(type="submit",name="sortPage",value="viewed")
+				input.buttonBg(type="submit",name="sortPage",value="ranking")
+
 	#wrapper
 		br
 		br
