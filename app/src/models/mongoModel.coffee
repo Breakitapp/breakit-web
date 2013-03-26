@@ -41,7 +41,7 @@ UserSchema = new Schema
 	token			:		{type: String}
 	email			:		{type: String, set: toLower}
 	date			:		{type: Date, default: Date.now}
-	phone			:		{type: String}
+	phone			:		{type: String, required: true}
 	badge			:		{type: Number, default: 0}	
 #UserSchema.index {email: 1}
 
