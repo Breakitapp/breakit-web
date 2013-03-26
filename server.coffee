@@ -173,6 +173,7 @@ server.get '/media/:user/:admincode/:pageNumber', media.loginAsAdmin
 
 server.post '/media/login', media.view
 server.post '/media/loginAs', media.loginAsAdmin
+server.post '/media/newUser', media.view
 
 server.post '/webNotifications', site.webNotifications
 server.post '/sendNotification', site.webSendNotification
