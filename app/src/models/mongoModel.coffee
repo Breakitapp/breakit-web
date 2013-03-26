@@ -32,7 +32,6 @@ BreakSchema = new Schema
 	fbShares				:		[Schema.ObjectId]
 	tweets					:		[Schema.ObjectId]
 
-
 BreakSchema.index {loc: '2d'}
 
 UserSchema = new Schema
@@ -42,7 +41,7 @@ UserSchema = new Schema
 	token			:		{type: String}
 	email			:		{type: String, set: toLower}
 	date			:		{type: Date, default: Date.now}
-	phone			:		{type: String, required: true}
+	phone			:		{type: String}
 	badge			:		{type: Number, default: 0}	
 #UserSchema.index {email: 1}
 
