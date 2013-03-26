@@ -12,12 +12,12 @@ exports.create = (req, res) ->
 	res.render 'blocks/newUser', title : 'Create new Breakit user'
 
 exports.submit = (req, res) ->
-	console.log 'Data for new user received. Email: ' + req.body.em
+	console.log 'Data for new user received.'
 	
 	nn = req.body.nn
 	
 	#User class constructor only takes in nick and phone
-	users.createUser nn, ph, (err, user) ->
+	users.createUser nn, 'Web User', (err, user) ->
 		if err
 			res.send('Error creating new user')
 		else

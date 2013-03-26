@@ -4,12 +4,13 @@ models	= require './mongoModel'
 fs			= require 'fs'
 
 class User
-	constructor: (@nName, @token) ->
+	constructor: (@nName, @phone, @token) ->
 		@breaks = null
 		
 	saveToDB: (callback) ->
 		user = new models.User
 			nName : @nName
+			phone : @phone
 			token : @token
 		user.save (err) ->
 			if err
@@ -19,7 +20,7 @@ class User
 				console.log 'USER: Saved a new user: ' + user._id
 				callback null, user
 
-createUser = (nn, token, callback) ->
+createUser = (nn, phone, token, callback) ->
 	exports.validateUser nn, (err) ->
 		if err
 			console.log 'ERROR OR USER TAKEN'
@@ -27,7 +28,7 @@ createUser = (nn, token, callback) ->
 		else
 			console.log 'success in validating user XX'
 			console.log 'token: ' + token
-			newUser = new User nn, token
+			newUser = new User nn, phone, token
 			newUser.saveToDB (err, user) ->
 				if err
 					callback err, null

@@ -102,9 +102,20 @@ exports.view = (req, res) ->
 		isNewUser = 'false'
 		if String(req.body.newUser) is "isNew"
 			isNewUser = 'true'
-		users = userModel.list (u) ->
-			console.log 'users in mediainterface: ' + u
-			res.render 'mediaInterfaceUsers', title : 'Feedback test form', users: u, newUser: isNewUser
+			console.log 'Data for new user received.'
+			nn = req.body.nn
+			userModel.createUser nn, 'Web User', null, (err, user) ->
+				if err
+					res.send('Error creating new user')
+					return
+				else
+					users = userModel.list (u) ->
+						console.log 'users in mediainterface: ' + u
+						res.render 'mediaInterfaceUsers', title : 'Feedback test form', users: u, newUser: isNewUser
+		else
+			users = userModel.list (u) ->
+				console.log 'users in mediainterface: ' + u
+				res.render 'mediaInterfaceUsers', title : 'Feedback test form', users: u, newUser: isNewUser
 
 exports.loginAsAdmin = (req, res) ->
 	console.log 'req.params.admincode' +String(req.params.admincode)
