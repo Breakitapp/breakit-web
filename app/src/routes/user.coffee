@@ -14,11 +14,7 @@ exports.create = (req, res) ->
 exports.submit = (req, res) ->
 	console.log 'Data for new user received. Email: ' + req.body.em
 	
-	fn = req.body.fn
-	ln = req.body.ln
 	nn = req.body.nn
-	em = req.body.em
-	ph = req.body.ph
 	
 	#User class constructor only takes in nick and phone
 	users.createUser nn, ph, (err, user) ->

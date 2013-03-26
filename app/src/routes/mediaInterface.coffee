@@ -99,9 +99,12 @@ exports.login = (req, res) ->
 	
 exports.view = (req, res) ->
 	if String(req.body.admincode) is "d0lph1n" #hardcoded password atm. TODO: make the admin authentication properly
+		isNewUser = 'false'
+		if String(req.body.newUser) is "isNew"
+			isNewUser = 'true'
 		users = userModel.list (u) ->
 			console.log 'users in mediainterface: ' + u
-			res.render 'mediaInterfaceUsers', title : 'Feedback test form', users: u
+			res.render 'mediaInterfaceUsers', title : 'Feedback test form', users: u, newUser: isNewUser
 
 exports.loginAsAdmin = (req, res) ->
 	console.log 'req.params.admincode' +String(req.params.admincode)
