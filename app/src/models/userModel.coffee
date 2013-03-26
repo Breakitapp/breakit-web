@@ -4,13 +4,12 @@ models	= require './mongoModel'
 fs			= require 'fs'
 
 class User
-	constructor: (@nName, @phone, @token) ->
+	constructor: (@nName, @token) ->
 		@breaks = null
 		
 	saveToDB: (callback) ->
 		user = new models.User
 			nName : @nName
-			phone : @phone
 			token : @token
 		user.save (err) ->
 			if err
@@ -20,15 +19,15 @@ class User
 				console.log 'USER: Saved a new user: ' + user._id
 				callback null, user
 
-createUser = (nn, ph, token, callback) ->
-	exports.validateUser nn, ph, (err)->
+createUser = (nn, token, callback) ->
+	exports.validateUser nn, (err) ->
 		if err
 			console.log 'ERROR OR USER TAKEN'
 			callback err, null
 		else
 			console.log 'success in validating user XX'
-			console.log 'token: '+token
-			newUser = new User nn, ph, token
+			console.log 'token: ' + token
+			newUser = new User nn, token
 			newUser.saveToDB (err, user) ->
 				if err
 					callback err, null
@@ -38,22 +37,22 @@ createUser = (nn, ph, token, callback) ->
 					callback err, user
 
 #What is the purpose of this function? Shouldn't we only validate the nickname in user creation? -E
-validateUser = (nn, ph, callback) ->
-		models.User.find({'nName': {$regex:'^(?i)'+nn+'$'}}).exec (err, data) ->
-			if err
-				console.log 'error in validate'
-				# It shouldn't give an error in any case
-				callback err
+validateUser = (nn, callback) ->
+	models.User.find({'nName': {$regex:'^(?i)'+nn+'$'}}).exec (err, data) ->
+		if err
+			console.log 'error in validate'
+			# It shouldn't give an error in any case
+			callback err
+		else
+			if data.length is 0
+				console.log 'length is 0'
+				console.log 'data: ' +data
+				# NO USER FOUND... SAFE TO CREATE A NEW ONE
+				callback null
 			else
-				if data.length is 0
-					console.log 'length is 0'
-					console.log 'data: ' +data
-					# NO USER FOUND... SAFE TO CREATE A NEW ONE
-					callback null
-				else
-					console.log 'data length is: '+data.length
-					console.log 'users are found'
-					callback data.length+' users are found'
+				console.log 'data length is: '+data.length
+				console.log 'users are found'
+				callback data.length+' users are found'
 
 
 ###TODO: CHANGE TO USE A MORE SCALABLE METHOD
