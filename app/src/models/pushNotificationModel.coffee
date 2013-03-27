@@ -96,7 +96,9 @@ send = (userId, msgId, callback) ->
 						console.log 'ENVIRONMENT RECOGNIZED AS loCAL'
 					if nconf.get('NODE_ENV') is 'development'
 						console.log 'ENVIRONMENT RECOGNIZED AS DEV'
-						apnsConnection = new apns.Connection optionsDev 
+						#apnsConnection = new apns.Connection optionsDev 
+						#TESTING prod certificates
+						apnsConnection = new apns.Connection optionsProd
 					if nconf.get('NODE_ENV') is 'production'
 						apnsConnection = new apns.Connection optionsProd 
 						console.log 'ENVIRONMENT RECOGNIZED AS PROD'
@@ -110,9 +112,10 @@ send = (userId, msgId, callback) ->
 						note.alert = "You just received a new notification"
 					note.payload = {'messageFrom': 'Marko'}
 					note.device = myDevice
-					console.log 'sending: '+ note
+					console.log 'sending: '+ note.payload
 					apnsConnection.sendNotification note
 					callback err, user
+					return
 				else 
 					console.log 'RECEIVING USER TOKEN IS NOT SET'
 					console.log 'SKIP THIS USER'
