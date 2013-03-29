@@ -29,6 +29,7 @@ exports.index = (req, res) ->
 	shown	= null
 	
 	console.log 'request page: '+page
+	console.log 'shownBreaks: '+shownBreaks
 	
 	if req.body.shownBreaks
 		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1)
@@ -44,6 +45,7 @@ exports.index = (req, res) ->
 			res.send '404'
 		else
 			#Send the albums as a JSON to client
+			console.log 'sending back to client: '+breaks
 			res.send [breaks, page]
 
 
