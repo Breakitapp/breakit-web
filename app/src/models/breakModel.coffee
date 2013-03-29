@@ -174,7 +174,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 						
 						if shownBreaks
 							
-							console.log 'shownbreaks exist'
+#							console.log 'shownbreaks exist'
 							
 							j = 0
 							while j < shownBreaks.length
@@ -182,6 +182,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								#Checking if the break has been shown already or if the album has been shown already
 								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
 									alreadyShown = true
+									console.log 'this break has been already shown'
 									break
 								j++
 								
