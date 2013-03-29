@@ -45,7 +45,8 @@ exports.index = (req, res) ->
 			res.send '404'
 		else
 			#Send the albums as a JSON to client
-			console.log 'sending back to client: '+breaks
+			for b in breaks
+				console.log 'sending back to client: '+b._id
 			res.send [breaks, page]
 
 
