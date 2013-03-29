@@ -362,8 +362,8 @@ findById = (id, callback) ->
 addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
-	console.log 'id: '+id
-	console.log 'query: '+query
+#	console.log 'id: '+id
+#	console.log 'query: '+query
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
 			console.log 'break: '+break_
