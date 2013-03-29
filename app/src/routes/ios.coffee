@@ -20,7 +20,7 @@ qs						= require 'querystring'
 exports.index = (req, res) ->
 	
 	console.log 'new request object: '+req
-	console.log 'request shownBreaks: '+req.shownBreaks
+	console.log 'request shownBreaks: '+req.body.shownBreaks
 
 	#Change page and location to numbers
 	page	= parseInt req.body.page, 10
