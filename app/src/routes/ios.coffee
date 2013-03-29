@@ -29,7 +29,7 @@ exports.index = (req, res) ->
 	shown	= null
 	
 	console.log 'request page: '+page
-	console.log 'shownBreaks: '+shownBreaks
+	console.log 'shownBreaks: '+req.body.shownBreaks
 	
 	if req.body.shownBreaks
 		tempstr = req.body.shownBreaks.substring(1, req.body.shownBreaks.length - 1)
