@@ -174,7 +174,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 						
 						if shownBreaks
 							
-							console.log 'shownbreaks exist'
+#							console.log 'shownbreaks exist'
 							
 							j = 0
 							while j < shownBreaks.length
@@ -182,6 +182,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								#Checking if the break has been shown already or if the album has been shown already
 								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
 									alreadyShown = true
+									console.log 'this break has been already shown: ' + foundBreak._id
 									break
 								j++
 								
@@ -362,8 +363,8 @@ findById = (id, callback) ->
 addView = (id, callback) ->
 	#models.Break.findById(id).exec((err, break_) ->
 	query ={'_id':id}
-	console.log 'id: '+id
-	console.log 'query: '+query
+#	console.log 'id: '+id
+#	console.log 'query: '+query
 	models.Break.findOneAndUpdate(query,{$inc:{'views': 1}}).exec((err, break_)->
 		if err
 			console.log 'break: '+break_

@@ -37,7 +37,7 @@ optionsDev =
 	enhanced: true,                   # enable enhanced format */
 	errorCallback: (err, notification) ->
 		if err
-			console.log 'ERROR OCCURRED'
+			console.log 'ERROR OCCURRED IN THE CALLBACK FROM APNS'
 			console.log 'notification: '+notification
 		else
 			console.log 'IN ERROR CB, err=false'
@@ -62,7 +62,7 @@ optionsProd =
 	enhanced: true,                   # enable enhanced format */
 	errorCallback: (err, notification) ->
 		if err
-			console.log 'ERROR OCCURRED'
+			console.log 'ERROR OCCURRED IN THE CALLBACK FROM APNS'
 			console.log 'notification: '+notification
 		else
 			console.log 'IN ERROR CB, err=false'
@@ -96,9 +96,9 @@ send = (userId, msgId, callback) ->
 						console.log 'ENVIRONMENT RECOGNIZED AS loCAL'
 					if nconf.get('NODE_ENV') is 'development'
 						console.log 'ENVIRONMENT RECOGNIZED AS DEV'
-						#apnsConnection = new apns.Connection optionsDev 
+						apnsConnection = new apns.Connection optionsDev 
 						#TESTING prod certificates
-						apnsConnection = new apns.Connection optionsProd
+						#apnsConnection = new apns.Connection optionsProd
 					if nconf.get('NODE_ENV') is 'production'
 						apnsConnection = new apns.Connection optionsProd 
 						console.log 'ENVIRONMENT RECOGNIZED AS PROD'
