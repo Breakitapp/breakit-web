@@ -19,7 +19,7 @@ qs						= require 'querystring'
 #The important thing for the client to pick is the albums name, and the topbreak. 
 exports.index = (req, res) ->
 	
-	console.log 'new request object: '+req
+	console.log 'new request of feed with lon: ' + req.body.lon +' & lat: ' + req.body.lat
 	console.log 'request shownBreaks: '+req.shownBreaks
 	#Change page and location to numbers
 	page	= parseInt req.body.page, 10
