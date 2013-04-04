@@ -235,7 +235,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 					#Then the array is sorted based on points
 					sorted = _.sortBy breaks, (break_) ->
 						
-						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
+						#200000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
 						return Number(-(break_.points - break_.dis*200000000000))
 						
 					#And last the first X breaks are sent to the client
