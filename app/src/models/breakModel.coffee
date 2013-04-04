@@ -169,7 +169,9 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 					#COMMENT
 					b = docs.documents[0].results
 					#COMMENT
-					if b.length is 0
+					if b.length < 30
+						#IF NOT ENOUGH BREAKS FOUND NEAR (need to do this DRY later by using a callback function to call the mongo code)
+						console.log 'zero breaks so getting the nearest'
 						#COMMENT
 						range = 500 + page*100
 						models.Break.db.db.executeDbCommand {
@@ -183,85 +185,163 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 								else
 									if docs.documents[0].results
 										b = docs.documents[0].results
-					i = 0
-					console.log 'b.length ' + b.length
-					
-					while i < b.length
-						foundBreak = b[i].obj
-						foundBreak.dis = b[i].dis
+										i = 0
+										console.log 'b.length ' + b.length
+										
+										while i < b.length
+											foundBreak = b[i].obj
+											foundBreak.dis = b[i].dis
+											
+											#Now the shown breaks are excluded from results
+											alreadyShown = false
+											
+											if shownBreaks
+												
+					#							console.log 'shownbreaks exist'
+												
+												j = 0
+												while j < shownBreaks.length
+													
+													#Checking if the break has been shown already or if the album has been shown already
+													if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
+														alreadyShown = true
+														console.log 'this break has been already shown: ' + foundBreak._id
+														break
+													j++
+													
+											
+											if not alreadyShown #Break hasn't been shown before
+												
+												#console.log 'not shown'
+												
+												#This code ensures that only the best break of an album is included
+												if foundBreak.album != null
+													
+													#console.log 'breaks album not null'
+													
+													albumAdded = false
+													k = 0
+													while k < breaks.length
+														if String(foundBreak.album) is String(breaks[k].album)
+															albumAdded = true
+															if foundBreak.points > breaks[k].points
+																breaks[k] = foundBreak
+															else
+																break
+														k++
+													
+													if not albumAdded
+														breaks.push foundBreak
+														#add view to break when feed is loaded
+														addView foundBreak._id, (err, foundBreak) ->
+																#console.log 'break id for foundBreak is: ' + foundBreak._id
+															if err
+																console.log 'added view fail'
+															else
+																#console.log 'added view succcess'
+												#This break hasn't been shown before
+												else
+													breaks.push foundBreak
+													#Add view to break when feed is loaded
+													addView foundBreak._id, (err, foundBreak) ->
+														if err
+															console.log 'added view fail'
+														else
+															#console.log 'added view succcess'
+													
+											i++
+										
+										console.log 'nr of breaks: ' + breaks.length
+										
+										#Then the array is sorted based on points
+										sorted = _.sortBy breaks, (break_) ->
+											
+											#2000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
+											# We should change votes to also have more value!!!
+											return Number(-(break_.points - break_.dis*2000000000))
+										#And last the first X breaks are sent to the client
+										best = _.first(sorted, 50)
+										callback null, best
+					else
+					#IF WE FIND ATLEAST 30 BREAKS WE CONTINUE NORMALLY
+						i = 0
+						console.log 'b.length ' + b.length
 						
-						#Now the shown breaks are excluded from results
-						alreadyShown = false
-						
-						if shownBreaks
+						while i < b.length
+							foundBreak = b[i].obj
+							foundBreak.dis = b[i].dis
 							
-#							console.log 'shownbreaks exist'
+							#Now the shown breaks are excluded from results
+							alreadyShown = false
 							
-							j = 0
-							while j < shownBreaks.length
+							if shownBreaks
 								
-								#Checking if the break has been shown already or if the album has been shown already
-								if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
-									alreadyShown = true
-									console.log 'this break has been already shown: ' + foundBreak._id
-									break
-								j++
+	#							console.log 'shownbreaks exist'
 								
-						
-						if not alreadyShown #Break hasn't been shown before
+								j = 0
+								while j < shownBreaks.length
+									
+									#Checking if the break has been shown already or if the album has been shown already
+									if (String(shownBreaks[j]) is String(foundBreak._id)) or (String(shownBreaks[j]) is String(foundBreak.album))
+										alreadyShown = true
+										console.log 'this break has been already shown: ' + foundBreak._id
+										break
+									j++
+									
 							
-							#console.log 'not shown'
-							
-							#This code ensures that only the best break of an album is included
-							if foundBreak.album != null
+							if not alreadyShown #Break hasn't been shown before
 								
-								#console.log 'breaks album not null'
+								#console.log 'not shown'
 								
-								albumAdded = false
-								k = 0
-								while k < breaks.length
-									if String(foundBreak.album) is String(breaks[k].album)
-										albumAdded = true
-										if foundBreak.points > breaks[k].points
-											breaks[k] = foundBreak
-										else
-											break
-									k++
-								
-								if not albumAdded
+								#This code ensures that only the best break of an album is included
+								if foundBreak.album != null
+									
+									#console.log 'breaks album not null'
+									
+									albumAdded = false
+									k = 0
+									while k < breaks.length
+										if String(foundBreak.album) is String(breaks[k].album)
+											albumAdded = true
+											if foundBreak.points > breaks[k].points
+												breaks[k] = foundBreak
+											else
+												break
+										k++
+									
+									if not albumAdded
+										breaks.push foundBreak
+										#add view to break when feed is loaded
+										addView foundBreak._id, (err, foundBreak) ->
+												#console.log 'break id for foundBreak is: ' + foundBreak._id
+											if err
+												console.log 'added view fail'
+											else
+												#console.log 'added view succcess'
+								#This break hasn't been shown before
+								else
 									breaks.push foundBreak
-									#add view to break when feed is loaded
+									#Add view to break when feed is loaded
 									addView foundBreak._id, (err, foundBreak) ->
-											#console.log 'break id for foundBreak is: ' + foundBreak._id
 										if err
 											console.log 'added view fail'
 										else
 											#console.log 'added view succcess'
-							#This break hasn't been shown before
-							else
-								breaks.push foundBreak
-								#Add view to break when feed is loaded
-								addView foundBreak._id, (err, foundBreak) ->
-									if err
-										console.log 'added view fail'
-									else
-										#console.log 'added view succcess'
-								
-						i++
-					
-					console.log 'nr of breaks: ' + breaks.length
-					
-					#Then the array is sorted based on points
-					sorted = _.sortBy breaks, (break_) ->
+									
+							i++
 						
-						#2000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
-						# We should change votes to also have more value!!!
-						return Number(-(break_.points - break_.dis*2000000000))
-					#And last the first X breaks are sent to the client
-					best = _.first(sorted, 50)
-					callback null, best
-			
-	return breaks
+						console.log 'nr of breaks: ' + breaks.length
+						
+						#Then the array is sorted based on points
+						sorted = _.sortBy breaks, (break_) ->
+							
+							#2000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
+							# We should change votes to also have more value!!!
+							return Number(-(break_.points - break_.dis*2000000000))
+						#And last the first X breaks are sent to the client
+						best = _.first(sorted, 50)
+						callback null, best
+					return breaks
 	
 #Millan webinterfacea varten
 findMediaRows = (pageNumber,sortPage, callback) ->
