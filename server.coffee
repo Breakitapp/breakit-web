@@ -10,7 +10,7 @@ albums			= require './app/lib/routes/albums'
 feedback		= require './app/lib/routes/feedback'
 ios					= require './app/lib/routes/ios'
 reports			= require './app/lib/routes/reports'
-blog				= require './app/lib/routes/blog'
+#blog				= require './app/lib/routes/blog'
 media				= require './app/lib/routes/mediaInterface'
 scripts			=	require	'./scripts/migration'
 settings		= require './settings'
@@ -117,7 +117,8 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 #Terms & Conditions
 server.get '/terms', site.terms
 server.get '/terms_and_conditions', site.terms_and_conditions
-server.get '/blog', blog.index
+
+#server.get '/blog', blog.index
 
 
 #Feedback
