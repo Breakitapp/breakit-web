@@ -190,13 +190,14 @@ server.get '/webNotifications/login', site.webNotificationsLogin
 
 
 
-
+###
 server.get( '/blog/post/:post', blog.post
 server.get( '/blog/tag/:tag', blog.post
 server.get( '/blog/category/:category', blog.post
 server.get( '/blog/page/:page', blog.post
+###
 
-
+###
 app.get( '/tag/:tag', function ( req, res ) {
   var taggedPosts = req.poet.postsWithTag( req.params.tag );
   if ( taggedPosts.length ) {
@@ -225,7 +226,7 @@ app.get( '/page/:page', function ( req, res ) {
     page : page
   });
 });
-
+###
 
 #Starting the server
 server.configure "local", ->
