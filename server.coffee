@@ -38,7 +38,7 @@ server.configure ->
 	server.use(stylus.middleware src: publicDir)
 	server.use express.static publicDir
 	server.use server.router
-	server.use poet.middleware()
+#blogstuff:	server.use poet.middleware()
 
 server.configure "development", ->
 	server.use express.errorHandler(
