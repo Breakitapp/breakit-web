@@ -140,17 +140,19 @@ findAll = (callback) ->
 #Similar to AlbumModel getFeed and will replace it in the next iteration.
 getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 	
-	# get closest X elements, depending on which page the user is in. They are the first as the array is sorted by location
-	range = 500+100*page
+	# Changed this to use maxDistance instead. At some point we need to change this to not take into account very old elements.
+	# we can use query parameter to further narrow the results if it is required
+	# the range is in meters, we'll start with a 15km max start radius and add 10km/page
+	range = 15000+10000*page
 	#Would like to have a more dynamic way to take the distance into account here... -E
 	
 	breaks = []
 	#This is the geonear mongoose function, that searches for locationbased nodes in db
-	#First it searches for 'range' amount of breaks.
+	#First it searches breaks within range.
 	models.Break.db.db.executeDbCommand {
 		geoNear: 'breaks'
 		near : [longitude, latitude]
-		num : range
+		maxDistance : range
 		spherical : true
 		}, (err, docs) ->
 			
@@ -233,8 +235,8 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 					#Then the array is sorted based on points
 					sorted = _.sortBy breaks, (break_) ->
 						
-						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
-						return Number(-(break_.points - break_.dis*20000000000))
+						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
+						return Number(-(break_.points - break_.dis*200000000000))
 						
 					#And last the first X breaks are sent to the client
 					best = _.first(sorted, 50)

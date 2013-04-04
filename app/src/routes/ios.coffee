@@ -111,6 +111,10 @@ exports.postBreak = (req, res) ->
 	
 	console.log 'place id: ' + req.body.placeId
 	console.log 'place name: ' + req.body.placeName
+	console.log 'req.body.longitude: ' + req.body.longitude
+	console.log 'req.body.latitude: ' + req.body.latitude
+	console.log 'headline: ' + req.body.headline
+	console.log 'userid: ' + req.body.userId
 
 	breaks.createBreak req.body.longitude, req.body.latitude, req.body.placeName, req.body.placeId, req.body.story, req.body.headline, req.body.userId, (err, break_) ->
 		

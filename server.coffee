@@ -10,6 +10,7 @@ albums			= require './app/lib/routes/albums'
 feedback		= require './app/lib/routes/feedback'
 ios					= require './app/lib/routes/ios'
 reports			= require './app/lib/routes/reports'
+blog				= require './app/lib/routes/blog'
 media				= require './app/lib/routes/mediaInterface'
 scripts			=	require	'./scripts/migration'
 settings		= require './settings'
@@ -17,6 +18,9 @@ mongoose		= require 'mongoose'
 stylus			= require 'stylus'
 nconf				= require 'nconf'
 server = module.exports = express()
+
+poet = require('poet') server
+
 
 #Configuration
 server.configure ->
@@ -35,6 +39,7 @@ server.configure ->
 	server.use(stylus.middleware src: publicDir)
 	server.use express.static publicDir
 	server.use server.router
+	server.use poet.middleware()
 
 server.configure "development", ->
 	server.use express.errorHandler(
@@ -112,6 +117,8 @@ if String(server.get 'env') is String('local') or String(server.get 'env') is St
 #Terms & Conditions
 server.get '/terms', site.terms
 server.get '/terms_and_conditions', site.terms_and_conditions
+server.get '/blog', blog.index
+
 
 #Feedback
 server.get '/feedback', feedback.login
@@ -180,6 +187,45 @@ server.post '/sendNotification', site.webSendNotification
 server.post '/sendNotificationToAll', site.webSendNotificationToAll
 
 server.get '/webNotifications/login', site.webNotificationsLogin
+
+
+
+
+server.get( '/blog/post/:post', blog.post
+server.get( '/blog/tag/:tag', blog.post
+server.get( '/blog/category/:category', blog.post
+server.get( '/blog/page/:page', blog.post
+
+
+app.get( '/tag/:tag', function ( req, res ) {
+  var taggedPosts = req.poet.postsWithTag( req.params.tag );
+  if ( taggedPosts.length ) {
+    res.render( 'tag', {
+      posts : taggedPosts,
+      tag : req.params.tag
+    });
+  }
+});
+
+app.get( '/category/:category', function ( req, res ) {
+  var categorizedPosts = req.poet.postsWithCategory( req.params.category );
+  if ( categorizedPosts.length ) {
+    res.render( 'category', {
+      posts : categorizedPosts,
+      category : req.params.category
+    });
+  }
+});
+
+app.get( '/page/:page', function ( req, res ) {
+  var page = req.params.page,
+    lastPost = page * 3
+  res.render( 'page', {
+    posts : req.poet.getPosts( lastPost - 3, lastPost ),
+    page : page
+  });
+});
+
 
 #Starting the server
 server.configure "local", ->
