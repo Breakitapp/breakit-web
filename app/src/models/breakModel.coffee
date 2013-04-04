@@ -166,9 +166,24 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 				throw err
 			else
 				if docs.documents[0].results
+					#COMMENT
 					b = docs.documents[0].results
+					#COMMENT
+					if b.length is 0
+						#COMMENT
+						range = 500 + page*100
+						models.Break.db.db.executeDbCommand {
+							geoNear: 'breaks'
+							near : [longitude, latitude]
+							num : range
+							spherical : true
+							}, (err, docs) ->
+								if err
+									throw err
+								else
+									if docs.documents[0].results
+										b = docs.documents[0].results
 					i = 0
-					
 					console.log 'b.length ' + b.length
 					
 					while i < b.length
@@ -239,8 +254,9 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 					#Then the array is sorted based on points
 					sorted = _.sortBy breaks, (break_) ->
 						
-						#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
-						return Number(-(break_.points - break_.dis*20000000000))
+						#2000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
+						# We should change votes to also have more value!!!
+						return Number(-(break_.points - break_.dis*2000000000))
 					#And last the first X breaks are sent to the client
 					best = _.first(sorted, 50)
 					callback null, best
