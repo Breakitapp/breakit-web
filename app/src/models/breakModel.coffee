@@ -146,7 +146,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 	# The max value to return is currently 5000 ... for this we need to think of a solution to remove the old ones so this becomes
 	# more dynamic and flexible.
 	# We also need handling of the case when this method returns too little results. Then we need to use the num parameter only.
-	range = 0,002354418465 + 0,000156961231*page
+	range = 0.002354418465 + 0.000156961231*page
 	#Would like to have a more dynamic way to take the distance into account here... -E
 	
 	breaks = []
