@@ -19,8 +19,7 @@ stylus			= require 'stylus'
 nconf				= require 'nconf'
 server = module.exports = express()
 
-poet = require('poet') server
-
+#poet = require('poet') server
 
 #Configuration
 server.configure ->
