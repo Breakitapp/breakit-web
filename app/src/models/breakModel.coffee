@@ -339,6 +339,7 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 							
 							#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 200 seconds.
 							# We should change votes to also have more value!!!
+							console.log 'break_.headline: ' +break_.headline
 							console.log 'break_.points: ' +break_.points
 							console.log 'break_.dis: ' +break_.dis
 							return Number(-(break_.points - break_.dis*20000000000))
