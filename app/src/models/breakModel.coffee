@@ -256,9 +256,11 @@ getFeed = (longitude, latitude, page, shownBreaks, callback) ->
 										#Then the array is sorted based on points
 										sorted = _.sortBy breaks, (break_) ->
 											
-											#2000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
+											#20000000000 multiplier should mean that 100m distance weighs about the same as 1 vote or 2000 seconds.
 											# We should change votes to also have more value!!!
-											return Number(-(break_.points - break_.dis*2000000000))
+											console.log 'break_.points: ' +break_.points
+											console.log 'break_.dis: ' +break_.dis
+											return Number(-(break_.points - break_.dis*200000000000))
 										#And last the first X breaks are sent to the client
 										best = _.first(sorted, 50)
 										callback null, best
