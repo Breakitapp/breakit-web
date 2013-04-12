@@ -63,7 +63,7 @@ optionsProd =
 	errorCallback: (err, notification) ->
 		if err
 			console.log 'ERROR OCCURRED IN THE CALLBACK FROM APNS'
-			console.log 'notification: '+notification
+			console.log 'ERROR: '+err
 		else
 			console.log 'IN ERROR CB, err=false'
 	,         # Callback when error occurs function(err,notification) */
