@@ -281,7 +281,6 @@ exports.getWelcomeScreenPics = (req, res) ->
 						console.log 'PICTURE: '+ file
 						console.log 'ERROR IN READING PICTURE!'
 					else
-						console.log 'PIC: ' + file
 						picsToShow.push file
 			res.send picsToShow
 	
