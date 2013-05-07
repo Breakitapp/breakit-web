@@ -276,15 +276,18 @@ exports.getWelcomeScreenPics = (req, res) ->
 		else
 			for b in breaks
 				console.log 'PATH: ./app/res/user/' + b.user + '/images/' + b._id + '.jpeg'
+				res.writeHead 200, {'Content-Type': 'text/html'}
+				res.write '<html><body>'
 				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', (err, file)->
 					if err
 						console.log 'PICTURE: '+ file
 						console.log 'ERROR IN READING PICTURE!'
 					else
 						console.log 'Pushing a new file to picsToShow'
-						res.writeHead 200, {'Content-Type': 'image/jpeg'}
-						res.write file
-			res.end 'STOP'
+						res.write '<img src="data:image/jpeg;base64,'
+						res.write new Buffer(file).toString('base64')
+						res.write '"/>'
+			res.end '</body></html>'
 
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
