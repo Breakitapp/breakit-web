@@ -279,16 +279,12 @@ exports.getMyBreaks = (req, res) ->
 
 exports.getWelcomeScreenPics = (req, res) ->
 	filenameArray = fs.readdirSync './app/res/images/thumbs/'
-	shuffle = (filenameArray) ->
-		i = filenameArray.length
-		while --i > 0
-			j = ~~(Math.random() * (i + 1))
-			t = filenameArray[j]
-			filenameArray[j] = filenameArray[i]
-			filenameArray[i] = t
-		filenameArray
-
-	console.log 'filenameArray: '+filenameArray
+	i = filenameArray.length
+	while --i > 0
+		j = ~~(Math.random() * (i + 1))
+		t = filenameArray[j]
+		filenameArray[j] = filenameArray[i]
+		filenameArray[i] = t
 	res.send filenameArray
 
 exports.getMyNotifications = (req, res) ->
