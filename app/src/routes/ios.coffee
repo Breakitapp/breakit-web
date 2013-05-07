@@ -291,6 +291,7 @@ exports.getWelcomeScreenPics = (req, res) ->
 							res.write new Buffer(image).toString('base64')
 							res.write '"/>'
 							callback
+	res.end '</body></html>'
 						###
 						fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', (err, file)->
 							if err
