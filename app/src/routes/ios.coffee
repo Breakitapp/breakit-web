@@ -283,10 +283,13 @@ exports.getWelcomeScreenPics = (req, res) ->
 						console.log 'PICTURE: '+ file
 						console.log 'ERROR IN READING PICTURE!'
 					else
-						console.log 'Pushing a new file to picsToShow'
+						console.log 'Pushing a new file: '+b.id+' to picsToShow'
 						res.write '<img src="data:image/jpeg;base64,'
 						res.write new Buffer(file).toString('base64')
 						res.write '"/>'
+						console.log 'wrote the html'
+				console.log 'exiting file read'
+			console.log 'out of loop'
 			res.end '</body></html>'
 
 exports.getMyNotifications = (req, res) ->
