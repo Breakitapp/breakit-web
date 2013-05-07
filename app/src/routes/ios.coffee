@@ -136,10 +136,10 @@ exports.postBreak = (req, res) ->
 					throw err
 					res.send err
 				else
-					easyimg.thumbnail {
-					src: './app/res/user/' + req.body.userId + '/images/' + break_._id + '.jpeg', dst: './app/res/user/' + req.body.userId + '/images/thumbs/' + break_._id + '.jpeg', width: 128, height:128,x:0,y:0}, (err, image)->
+					easyimg.thumbnail { src: './app/res/user/' + req.body.userId + '/images/' + break_._id + '.jpeg', dst: './app/res/user/' + req.body.userId + '/images/thumbs/' + break_._id + '.jpeg', width: 128, height:128,x:0,y:0}, (err, image)->
 						if err
 							console.log 'error in creating thumb'
+							console.log 'err:'+err
 						else
 							console.log 'success in creating a thumbnail'
 							breaks.findById break_._id, (err, b) ->
