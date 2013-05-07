@@ -268,15 +268,20 @@ exports.getMyBreaks = (req, res) ->
 			
 
 exports.getWelcomeScreenPics = (req, res) ->
-	breaksToShow = breaks.getFeed
-	for b in breaksToShow
-		fs.readFile './app/res/user/' + b.user + '/images/' + b.id + '.jpeg', (err, file)->
-			if err
-				console.log 'ERROR IN READING PICTURE!'
-			else
-				console.log 'PIC: '+data
-				picsToShow.push data
-	res.send picsToShow
+	picsToShow = []
+	breaks.getFeed 23.889313, 60.288854, 1, null, (err, breaks) ->
+		if err
+			throw err
+			res.send '404'
+		else
+			for b in breaks
+				fs.readFile './app/res/user/' + b.user + '/images/' + b.id + '.jpeg', (err, file)->
+					if err
+						console.log 'ERROR IN READING PICTURE!'
+					else
+						console.log 'PIC: '+data
+						picsToShow.push data
+			res.send picsToShow
 	
 
 exports.getMyNotifications = (req, res) ->
