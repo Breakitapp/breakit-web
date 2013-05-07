@@ -138,11 +138,15 @@ exports.postBreak = (req, res) ->
 				else
 					easyimg.thumbnail {
 					src: './app/res/user/' + req.body.userId + '/images/' + break_._id + '.jpeg', dst: './app/res/user/' + req.body.userId + '/images/thumbs/' + break_._id + '.jpeg', width: 128, height:128,x:0,y:0}, (err, image)->
-					breaks.findById break_._id, (err, b) ->
 						if err
-							throw err
+							console.log 'error in creating thumb'
 						else
-							res.send b
+							console.log 'success in creating a thumbnail'
+							breaks.findById break_._id, (err, b) ->
+								if err
+									throw err
+								else
+									res.send b
 
 exports.deleteBreak = (req, res) ->
 	console.log 'Request to delete Break: ' + req.body.breakId + ' by user: ' + req.body.userId
