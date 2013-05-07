@@ -281,10 +281,16 @@ exports.getWelcomeScreenPics = (req, res) ->
 			async.forEach breaks, (b, callback) ->
 				console.log 'break: '+b
 				easyimg.resize {
-					src: './app/res/user/' + b.user + '/images/' + b._id + '.jpeg',
-					dst: './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg',
-					width: 80, height:80}, 
-					()->
+					src: './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', dst: './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', width: 80, height:80}, (err, image)->
+						if err
+							console.log 'ERROR IN RESIZING IMAGE'
+						else
+							console.log 'writing image'
+							res.write '<img src="data:image/jpeg;base64,'
+							res.write new Buffer(image).toString('base64')
+							res.write '"/>'
+							callback
+						###
 						fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', (err, file)->
 							if err
 								console.log 'PICTURE: '+ file
@@ -296,7 +302,7 @@ exports.getWelcomeScreenPics = (req, res) ->
 								res.write '"/>'
 								console.log 'wrote the html'
 								callback
-
+						###
 
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
