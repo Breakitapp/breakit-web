@@ -290,9 +290,7 @@ exports.getWelcomeScreenPics = (req, res) ->
 						res.write '"/>'
 						console.log 'wrote the html'
 						callback
-				console.log 'exiting file read'
-			console.log 'out of loop'
-			res.end '</body></html>'
+
 
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
