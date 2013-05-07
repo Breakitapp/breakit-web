@@ -14,6 +14,7 @@ feedback			= require '../models/feedbackModel'
 report				= require '../models/reportModel'
 fs						= require 'fs'
 qs						= require 'querystring'
+async					= require 'async'
 
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
 #The important thing for the client to pick is the albums name, and the topbreak. 
@@ -276,8 +277,8 @@ exports.getWelcomeScreenPics = (req, res) ->
 		else
 			res.writeHead 200, {'Content-Type': 'text/html'}
 			res.write '<html><body>'
-			for b in breaks
-				console.log 'PATH: ./app/res/user/' + b.user + '/images/' + b._id + '.jpeg'
+			async.forEach breaks, (b, callback) ->
+				console.log 'break: '+b
 				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', (err, file)->
 					if err
 						console.log 'PICTURE: '+ file
@@ -288,6 +289,7 @@ exports.getWelcomeScreenPics = (req, res) ->
 						res.write new Buffer(file).toString('base64')
 						res.write '"/>'
 						console.log 'wrote the html'
+						callback
 				console.log 'exiting file read'
 			console.log 'out of loop'
 			res.end '</body></html>'
