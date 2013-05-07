@@ -136,7 +136,9 @@ exports.postBreak = (req, res) ->
 					throw err
 					res.send err
 				else
-					easyimg.thumbnail { src: './app/res/user/' + req.body.userId + '/images/' + break_._id + '.jpeg', dst: './app/res/user/' + req.body.userId + '/images/thumbs/' + break_._id + '.jpeg', width: 128, height:128,x:0,y:0}, (err, image)->
+					console.log 'XXXXXXXXXXXXXXXXXXXXXXXX CREATING THUMBNAIL XXXXXXXXXXXXXXXXXXXXXXX'
+					# Could be changed later to use USER folders. a thumbs subfolder for userid/images has already been created
+					easyimg.thumbnail { src: './app/res/user/' + req.body.userId + '/images/' + break_._id + '.jpeg', dst: './app/res/images/thumbs/' + break_._id + '.jpeg', width: 128, height:128,x:0,y:0}, (err, image)->
 						if err
 							console.log 'error in creating thumb'
 							console.log 'err:'+err
@@ -276,33 +278,8 @@ exports.getMyBreaks = (req, res) ->
 			
 
 exports.getWelcomeScreenPics = (req, res) ->
-	# GET THE LON AND LAT FROM THE REQUEST
-	picsToShow = []
-	breaks.getFeed 23.889313, 60.288854, 1, null, (err, breaks) ->
-		if err
-			throw err
-			res.send '404'
-		else
-			res.writeHead 200, {'Content-Type': 'text/html'}
-			res.write '<html><body>'
-			async.forEach breaks, (b, callback) ->
-				console.log 'break: '+b
-				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', (err, file)->
-					if err
-						console.log 'PICTURE: '+ file
-						console.log 'ERROR IN READING PICTURE!'
-					else
-						console.log 'Pushing a new file: '+b._id+' to picsToShow'
-						res.write '<img src="data:image/jpeg;base64,'
-						res.write new Buffer(file).toString('base64')
-						res.write '"/>'
-						console.log 'wrote the html'
-						callback
-
-				### CODE TO RESIZE THE IMAGES 
-				easyimg.resize {
-					src: './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', dst: './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', width: 80, height:80}, (err, image)->
-				###
+	filenameArray = fs.readdirSync './app/res/images/thumbs/'
+	res.send filenameArray
 
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
