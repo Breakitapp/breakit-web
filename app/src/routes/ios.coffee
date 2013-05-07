@@ -281,9 +281,10 @@ exports.getWelcomeScreenPics = (req, res) ->
 						console.log 'PICTURE: '+ file
 						console.log 'ERROR IN READING PICTURE!'
 					else
+						console.log 'Pushing a new file to picsToShow'
 						picsToShow.push file
-			res.send picsToShow
-	
+						res.writeHead 200, {'Content-Type': 'image/jpeg'}
+						res.end file
 
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
