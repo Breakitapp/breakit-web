@@ -284,6 +284,7 @@ exports.getWelcomeScreenPics = (req, res) ->
 					src: './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', dst: './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', width: 80, height:80}, (err, image)->
 						if err
 							console.log 'ERROR IN RESIZING IMAGE'
+							console.log 'ERROR: '+ err
 						else
 							console.log 'writing image'
 							res.write '<img src="data:image/jpeg;base64,'
