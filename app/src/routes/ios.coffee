@@ -275,8 +275,8 @@ exports.getWelcomeScreenPics = (req, res) ->
 			res.send '404'
 		else
 			for b in breaks
-				console.log 'PATH: ./app/res/user/' + b.user + '/images/' + b.id + '.jpeg'
-				fs.readFile './app/res/user/' + b.user + '/images/' + b.id + '.jpeg', (err, file)->
+				console.log 'PATH: ./app/res/user/' + b.user + '/images/' + b._id + '.jpeg'
+				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', (err, file)->
 					if err
 						console.log 'PICTURE: '+ file
 						console.log 'ERROR IN READING PICTURE!'
