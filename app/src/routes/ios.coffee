@@ -283,8 +283,10 @@ exports.getWelcomeScreenPics = (req, res) ->
 					else
 						console.log 'Pushing a new file to picsToShow'
 						picsToShow.push file
-						res.writeHead 200, {'Content-Type': 'image/jpeg'}
-						res.end file
+	for pic in picsToShow
+		res.writeHead 200, {'Content-Type': 'image/jpeg'}
+		res.write pic
+	res.end
 
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
