@@ -290,7 +290,6 @@ exports.getWelcomeScreenPics = (req, res) ->
 								console.log 'PICTURE: '+ file
 								console.log 'ERROR IN READING PICTURE!'
 							else
-								easyimg.resize <options>, <callback_function>)
 								console.log 'Pushing a new file: '+b._id+' to picsToShow'
 								res.write '<img src="data:image/jpeg;base64,'
 								res.write new Buffer(file).toString('base64')
