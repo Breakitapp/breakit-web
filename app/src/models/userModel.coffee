@@ -35,6 +35,7 @@ createUser = (nn, phone, token, callback) ->
 				else
 					fs.mkdir './app/res/user/' + user.id, '0777', (err) ->
 						fs.mkdir './app/res/user/' + user.id + '/images', '0777', (err) ->
+							fs.mkdir './app/res/user/' + user.id + '/images/thumbs', '0777', (err) ->
 					callback err, user
 
 #What is the purpose of this function? Shouldn't we only validate the nickname in user creation? -E
