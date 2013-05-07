@@ -274,10 +274,10 @@ exports.getWelcomeScreenPics = (req, res) ->
 			throw err
 			res.send '404'
 		else
+			res.writeHead 200, {'Content-Type': 'text/html'}
+			res.write '<html><body>'
 			for b in breaks
 				console.log 'PATH: ./app/res/user/' + b.user + '/images/' + b._id + '.jpeg'
-				res.writeHead 200, {'Content-Type': 'text/html'}
-				res.write '<html><body>'
 				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', (err, file)->
 					if err
 						console.log 'PICTURE: '+ file
