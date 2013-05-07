@@ -188,6 +188,9 @@ server.post '/sendNotificationToAll', site.webSendNotificationToAll
 
 server.get '/webNotifications/login', site.webNotificationsLogin
 
+server.get '/welcome', ios.getWelcomeScreenPics
+
+
 
 
 ###

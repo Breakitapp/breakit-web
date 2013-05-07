@@ -267,6 +267,18 @@ exports.getMyBreaks = (req, res) ->
 			res.send [foundBreaks, req.params.page]
 			
 
+exports.getWelcomeScreenPics = (req, res) ->
+	breaksToShow = breaks.getFeed
+	for b in breaksToShow
+		fs.readFile './app/res/user/' + b.user + '/images/' + b.id + '.jpeg', (err, file)->
+			if err
+				console.log 'ERROR IN READING PICTURE!'
+			else
+				console.log 'PIC: '+data
+				picsToShow.push data
+	res.send picsToShow
+	
+
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
 		if err
