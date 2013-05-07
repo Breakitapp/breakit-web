@@ -270,6 +270,7 @@ exports.getMyBreaks = (req, res) ->
 			
 
 exports.getWelcomeScreenPics = (req, res) ->
+	# GET THE LON AND LAT FROM THE REQUEST
 	picsToShow = []
 	breaks.getFeed 23.889313, 60.288854, 1, null, (err, breaks) ->
 		if err
@@ -277,9 +278,10 @@ exports.getWelcomeScreenPics = (req, res) ->
 			res.send '404'
 		else
 			res.writeHead 200, {'Content-Type': 'text/html'}
+			res.write '<html><body>'
 			async.forEach breaks, (b, callback) ->
 				console.log 'break: '+b
-				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', (err, file)->
+				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', (err, file)->
 					if err
 						console.log 'PICTURE: '+ file
 						console.log 'ERROR IN READING PICTURE!'
@@ -295,9 +297,6 @@ exports.getWelcomeScreenPics = (req, res) ->
 				easyimg.resize {
 					src: './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', dst: './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', width: 80, height:80}, (err, image)->
 				###
-
-
-	###
 
 exports.getMyNotifications = (req, res) ->
 	notifications.getNotifications req.params.userId, (err, foundNotifications)->
