@@ -15,6 +15,7 @@ report				= require '../models/reportModel'
 fs						= require 'fs'
 qs						= require 'querystring'
 async					= require 'async'
+easyimg				= require 'easyimage'
 
 #Main page for ios, response sends 10 albums / page, ordered according to distance only.
 #The important thing for the client to pick is the albums name, and the topbreak. 
@@ -279,17 +280,23 @@ exports.getWelcomeScreenPics = (req, res) ->
 			res.write '<html><body>'
 			async.forEach breaks, (b, callback) ->
 				console.log 'break: '+b
-				fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '.jpeg', (err, file)->
-					if err
-						console.log 'PICTURE: '+ file
-						console.log 'ERROR IN READING PICTURE!'
-					else
-						console.log 'Pushing a new file: '+b._id+' to picsToShow'
-						res.write '<img src="data:image/jpeg;base64,'
-						res.write new Buffer(file).toString('base64')
-						res.write '"/>'
-						console.log 'wrote the html'
-						callback
+				easyimg.resize {
+					src: './app/res/user/' + b.user + '/images/' + b._id + '.jpeg',
+					dst: './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg',
+					width: 80, height:80}, 
+					()->
+						fs.readFile './app/res/user/' + b.user + '/images/' + b._id + '_thumb.jpeg', (err, file)->
+							if err
+								console.log 'PICTURE: '+ file
+								console.log 'ERROR IN READING PICTURE!'
+							else
+								easyimg.resize <options>, <callback_function>)
+								console.log 'Pushing a new file: '+b._id+' to picsToShow'
+								res.write '<img src="data:image/jpeg;base64,'
+								res.write new Buffer(file).toString('base64')
+								res.write '"/>'
+								console.log 'wrote the html'
+								callback
 
 
 exports.getMyNotifications = (req, res) ->
