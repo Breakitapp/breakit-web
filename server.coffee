@@ -141,6 +141,7 @@ server.post '/ios/change_nick', ios.changeUserAttributes
 server.post '/ios/sendPushNotification', ios.sendPushNotification
 
 server.get '/ios/picture/:id', ios.getPicture
+server.get '/ios/thumb/:filename', ios.getThumb
 server.get '/ios/info/:id', ios.getBreak
 server.get '/ios/browse_album/:albumId/:page', ios.browseAlbum
 server.get '/ios/whole_album/:albumId/:page', ios.getAlbumBreaks

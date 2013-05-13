@@ -198,6 +198,11 @@ exports.getPicture = (req, res) ->
 			throw err
 		res.sendfile './app/res/user/' + break_.user + '/images/' + break_.id + '.jpeg'
 
+exports.getThumb = (req, res) ->
+	id = req.params.filename
+		res.sendfile './app/res/images/thumbs/' + filename
+
+
 #not needed anymore?
 exports.getBreak = (req, res) ->
 	breaks.findById req.params.id, (err, b) ->
