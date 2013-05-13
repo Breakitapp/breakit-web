@@ -199,9 +199,8 @@ exports.getPicture = (req, res) ->
 		res.sendfile './app/res/user/' + break_.user + '/images/' + break_.id + '.jpeg'
 
 exports.getThumb = (req, res) ->
-	id = req.params.filename
+	filename = req.params.filename
 		res.sendfile './app/res/images/thumbs/' + filename
-
 
 #not needed anymore?
 exports.getBreak = (req, res) ->
