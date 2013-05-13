@@ -200,7 +200,7 @@ exports.getPicture = (req, res) ->
 
 exports.getThumb = (req, res) ->
 	filename = req.params.filename
-		res.sendfile './app/res/images/thumbs/' + filename
+	res.sendfile './app/res/images/thumbs/' + filename
 
 #not needed anymore?
 exports.getBreak = (req, res) ->
