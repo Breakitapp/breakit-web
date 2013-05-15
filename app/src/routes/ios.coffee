@@ -300,6 +300,17 @@ exports.getMyNotifications = (req, res) ->
 			i = 0
 			res.send foundNotifications
 
+
+
+exports.getAlbumSize  = (req, res) ->
+	console.log 'getting size'
+	albums.getAlbumSize req.params.albumId, (err, size)->
+		if err
+			res.send 'error'
+		else
+			res.send 'we got something. size: '+ size
+
+
 ### What is this??
 			for notification in foundNotifications
 				list[i] = 'User: '+notification.user_id_from + 'commented: "'+notification.comment+'" on your break'+notification.user_id_to+'<br />'

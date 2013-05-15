@@ -89,9 +89,17 @@ getAlbumBreaks = (albumId, page, callback) ->
 			breaks_ = (b for b in breaks)
 			callback null, breaks_
 			return breaks_
-			
-remove = (id) ->
+
+getAlbumSize = (albumId, callback) ->
+	models.Break.count {'album' : albumId}, (err, size) ->
+		if err
+			callback err, null
+		else
+			callback null, size
+		return size
+
 	#This need to iteratively remove all breaks too? Or atleast remove the album field from them.
+remove = (id) ->
 	models.Album.findByIdAndRemove id, (err) ->
 		if err
 			throw err
@@ -107,5 +115,6 @@ root.list = list
 root.addBreak = addBreak
 root.getBreak = getBreak
 root.getAlbumBreaks = getAlbumBreaks
+root.getAlbumSize = getAlbumSize
 root.remove = remove
 

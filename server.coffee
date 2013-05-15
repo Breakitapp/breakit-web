@@ -147,7 +147,7 @@ server.get '/ios/browse_album/:albumId/:page', ios.browseAlbum
 server.get '/ios/whole_album/:albumId/:page', ios.getAlbumBreaks
 server.get '/ios/mybreaks/:userId/:page', ios.getMyBreaks
 server.get '/ios/mynotifications/:userId', ios.getMyNotifications
-
+server.get '/ios/albumSize/:albumId', ios.getAlbumSize
 #Reports
 server.get '/reports', reports.login
 server.post '/reports', reports.view
