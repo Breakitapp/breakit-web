@@ -64,6 +64,8 @@ optionsProd =
 		if err
 			console.log 'ERROR OCCURRED IN THE CALLBACK FROM APNS'
 			console.log 'ERROR: '+err
+			console.log 'NOTIFICATION: '+notification
+
 		else
 			console.log 'IN ERROR CB, err=false'
 	,         # Callback when error occurs function(err,notification) */
@@ -96,7 +98,8 @@ send = (userId, msgId, callback) ->
 						console.log 'ENVIRONMENT RECOGNIZED AS loCAL'
 					if nconf.get('NODE_ENV') is 'development'
 						console.log 'ENVIRONMENT RECOGNIZED AS DEV'
-						apnsConnection = new apns.Connection optionsProd
+							apnsConnection = new apns.Connection optionsDev
+						#WHEN TESTING PRODUCTION, USE THIS: apnsConnection = new apns.Connection optionsProd
 						#TESTING prod certificates
 						#apnsConnection = new apns.Connection optionsProd
 					if nconf.get('NODE_ENV') is 'production'
