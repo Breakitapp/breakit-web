@@ -1,7 +1,3 @@
 extend ../layout
 block contents
-	for album in albums
-		if album.breaks
-			p= "album id: " + album._id + ", album name: " + album.name + ", lon: " + album.loc.lon + ", lat: " + album.loc.lat + ", break count: " + album.breaks.length + ", first break: " + album.breaks[0] + ", top break: " + album.topBreak._id + " " + album.topBreak.headline + ", comment count in top: " + album.topBreak.comments.length
-		else
-			p= "album name: " + album.name +", lon: " + album.loc.lon + ", lat: " + album.loc.lat
+	p TESTING!!!
