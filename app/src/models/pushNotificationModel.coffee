@@ -100,7 +100,7 @@ send = (userId, msgId, callback) ->
 						console.log 'ENVIRONMENT RECOGNIZED AS DEV'
 							apnsConnection = new apns.Connection optionsDev
 						#WHEN TESTING PRODUCTION, USE THIS: apnsConnection = new apns.Connection optionsProd
-						#TESTING prod certificates
+						#TESTING prod certificates.
 						#apnsConnection = new apns.Connection optionsProd
 					if nconf.get('NODE_ENV') is 'production'
 						apnsConnection = new apns.Connection optionsProd 
