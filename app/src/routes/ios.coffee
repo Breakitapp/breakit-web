@@ -308,7 +308,7 @@ exports.getAlbumSize  = (req, res) ->
 		if err
 			res.send 'error'
 		else
-			res.send size
+			res.send ''+size
 
 
 ### What is this??
