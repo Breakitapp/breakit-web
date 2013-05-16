@@ -37,8 +37,9 @@ optionsDev =
 	enhanced: true,                   # enable enhanced format */
 	errorCallback: (err, notification) ->
 		if err
-			console.log 'ERROR OCCURRED IN THE CALLBACK FROM APNS'
+			console.log 'dev: ERROR OCCURRED IN THE CALLBACK FROM APNS'
 			console.log 'notification: '+notification
+			console.log 'Error: '+err
 		else
 			console.log 'IN ERROR CB, err=false'
 	,         # Callback when error occurs function(err,notification) */
@@ -62,9 +63,10 @@ optionsProd =
 	enhanced: true,                   # enable enhanced format */
 	errorCallback: (err, notification) ->
 		if err
-			console.log 'ERROR OCCURRED IN THE CALLBACK FROM APNS'
+			console.log 'prod: ERROR OCCURRED IN THE CALLBACK FROM APNS'
 			console.log 'ERROR: '+err
 			console.log 'NOTIFICATION: '+notification
+			console.log 'Error: '+err
 
 		else
 			console.log 'IN ERROR CB, err=false'
